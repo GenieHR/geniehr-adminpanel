@@ -1,4 +1,4 @@
-﻿pp<%@ Page Title="Quick Reports" Language="C#" MasterPageFile="~/UbietyMenu.Master" AutoEventWireup="true" CodeBehind="dashboard.aspx.cs" Inherits="adminpanel.dashboard" %>
+﻿<%@ Page Title="Quick Reports" Language="C#" MasterPageFile="~/UbietyMenu.Master" AutoEventWireup="true" CodeBehind="dashboard.aspx.cs" Inherits="adminpanel.dashboard" %>
 
 
 <asp:Content ID="Content2" ContentPlaceHolderID="body" runat="server">
