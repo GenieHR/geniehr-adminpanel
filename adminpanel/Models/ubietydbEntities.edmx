@@ -1,0 +1,1594 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ubietydbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Address">
+          <Key>
+            <PropertyRef Name="AddressId" />
+          </Key>
+          <Property Name="AddressId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AddressTypId" Type="int" Nullable="false" />
+          <Property Name="AddressName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Address1" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Address2" Type="nvarchar" MaxLength="100" />
+          <Property Name="City" Type="nvarchar" MaxLength="50" />
+          <Property Name="State" Type="nvarchar" MaxLength="50" />
+          <Property Name="Pincode" Type="nvarchar" MaxLength="50" />
+          <Property Name="CoordinateId" Type="int" />
+        </EntityType>
+        <EntityType Name="AddressType">
+          <Key>
+            <PropertyRef Name="AddressTypeId" />
+          </Key>
+          <Property Name="AddressTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AddressTypeName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Attendance">
+          <Key>
+            <PropertyRef Name="AttendanceId" />
+          </Key>
+          <Property Name="AttendanceId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmpId" Type="int" Nullable="false" />
+          <Property Name="MarkFlagId" Type="int" />
+          <Property Name="MarkTime" Type="datetime" Nullable="false" />
+          <Property Name="latitude" Type="float" />
+          <Property Name="longitude" Type="float" />
+          <Property Name="markcount" Type="int" />
+        </EntityType>
+        <EntityType Name="AttendanceFlag">
+          <Key>
+            <PropertyRef Name="AttendanceFlagId" />
+          </Key>
+          <Property Name="AttendanceFlagId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FlagName" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ClaimHead">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmpId" Type="int" Nullable="false" />
+          <Property Name="ClaimNumber" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="ClaimTitle" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Status" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ClaimLine">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="ClaimId" />
+            <PropertyRef Name="ClaimLineId" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClaimId" Type="int" Nullable="false" />
+          <Property Name="ClaimLineId" Type="int" Nullable="false" />
+          <Property Name="ClaimType" Type="int" Nullable="false" />
+          <Property Name="Purpose" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="LocOut" Type="tinyint" Nullable="false" />
+          <Property Name="HotelName" Type="nvarchar" MaxLength="100" />
+          <Property Name="ExpenseDate" Type="datetime" Nullable="false" />
+          <Property Name="FromDate" Type="datetime" />
+          <Property Name="ToDate" Type="datetime" />
+          <Property Name="AccNoOfNights" Type="int" />
+          <Property Name="TravelFromPlace" Type="nvarchar" MaxLength="255" />
+          <Property Name="TravelToPlace" Type="nvarchar" MaxLength="255" />
+          <Property Name="TravelMode" Type="char" MaxLength="1" />
+          <Property Name="Distance" Type="float" />
+          <Property Name="Rate" Type="money" />
+          <Property Name="OtherClaimTypeDesc" Type="nvarchar(max)" />
+          <Property Name="TotalAmount" Type="money" Nullable="false" />
+          <Property Name="BillType" Type="tinyint" />
+          <Property Name="LineStatus" Type="int" Nullable="false" />
+          <Property Name="EmpRemarks" Type="nvarchar(max)" />
+          <Property Name="ManagerRemarks" Type="nvarchar(max)" />
+          <Property Name="OrgRemarks" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="ClaimStatus">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ClaimStatusHistory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClaimId" Type="int" Nullable="false" />
+          <Property Name="StatusId" Type="int" Nullable="false" />
+          <Property Name="StatusDateTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="ClientId" />
+          </Key>
+          <Property Name="ClientId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClientName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="OrgId" Type="int" />
+          <Property Name="ClientLogoURL" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="EmpClient">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmpId" Type="int" Nullable="false" />
+          <Property Name="ClientId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="EmpId" />
+          </Key>
+          <Property Name="EmpId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmpNum" Type="nvarchar" MaxLength="50" />
+          <Property Name="EmpName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="ProfilePic" Type="nvarchar" MaxLength="100" />
+          <Property Name="EmpStatus" Type="int" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="PrimaryMobile" Type="bigint" />
+          <Property Name="Designation" Type="varchar" MaxLength="50" />
+          <Property Name="AuthUserId" Type="varchar" MaxLength="255" />
+          <Property Name="CompanyId" Type="int" />
+        </EntityType>
+        <EntityType Name="EmpStatus">
+          <Key>
+            <PropertyRef Name="EmpStatusId" />
+          </Key>
+          <Property Name="EmpStatusId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StatusName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EntityAddresses">
+          <Key>
+            <PropertyRef Name="EntityAddressId" />
+          </Key>
+          <Property Name="EntityAddressId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EntityId" Type="int" Nullable="false" />
+          <Property Name="EntityTypId" Type="int" Nullable="false" />
+          <Property Name="AddressId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EntityType">
+          <Key>
+            <PropertyRef Name="EntityTypeId" />
+          </Key>
+          <Property Name="EntityTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EntityTypeName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Group">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GroupTypeId" Type="int" Nullable="false" />
+          <Property Name="GroupName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="GroupEmployee">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GroupId" Type="int" Nullable="false" />
+          <Property Name="EmpId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="GroupIncharge">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GroupId" Type="int" Nullable="false" />
+          <Property Name="InchargeId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="GroupType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GroupType" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="ClientId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Login">
+          <Key>
+            <PropertyRef Name="LoginId" />
+          </Key>
+          <Property Name="LoginId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="EmpId" Type="int" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Organization">
+          <Key>
+            <PropertyRef Name="OrgId" />
+          </Key>
+          <Property Name="OrgId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrgName" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'ubietydb.dbo.attByClient' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="attByClient">
+          <Key>
+            <PropertyRef Name="empid" />
+            <PropertyRef Name="EmpName" />
+          </Key>
+          <Property Name="empid" Type="int" Nullable="false" />
+          <Property Name="MarkDate" Type="nvarchar" MaxLength="10" />
+          <Property Name="MarkTime" Type="char" MaxLength="5" />
+          <Property Name="Coordinates" Type="nvarchar" MaxLength="61" />
+          <Property Name="CompanyId" Type="int" />
+          <Property Name="EmpName" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'ubietydb.dbo.attendancereport' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="attendancereport">
+          <Key>
+            <PropertyRef Name="empid" />
+          </Key>
+          <Property Name="empid" Type="int" Nullable="false" />
+          <Property Name="inlatitude" Type="float" />
+          <Property Name="outlatitude" Type="float" />
+          <Property Name="inlongitude" Type="float" />
+          <Property Name="outlongitude" Type="float" />
+          <Property Name="inmarktime" Type="datetime" />
+          <Property Name="outmarktime" Type="datetime" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'ubietydb.dbo.attRepTemp' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="attRepTemp">
+          <Key>
+            <PropertyRef Name="attendanceid" />
+            <PropertyRef Name="empid" />
+          </Key>
+          <Property Name="attendanceid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="empid" Type="int" Nullable="false" />
+          <Property Name="MarkDate" Type="char" MaxLength="10" />
+          <Property Name="MarkTime" Type="char" MaxLength="5" />
+          <Property Name="Coordinates" Type="nvarchar" MaxLength="61" />
+          <Property Name="MarkCount" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="clientEmployee">
+          <Key>
+            <PropertyRef Name="EmpId" />
+            <PropertyRef Name="empname" />
+          </Key>
+          <Property Name="EmpId" Type="int" Nullable="false" />
+          <Property Name="companyId" Type="int" />
+          <Property Name="empname" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Address_AddressType">
+          <End Role="AddressType" Type="Self.AddressType" Multiplicity="1" />
+          <End Role="Address" Type="Self.Address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AddressType">
+              <PropertyRef Name="AddressTypeId" />
+            </Principal>
+            <Dependent Role="Address">
+              <PropertyRef Name="AddressTypId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Attendance_AttendanceFlag">
+          <End Role="AttendanceFlag" Type="Self.AttendanceFlag" Multiplicity="0..1" />
+          <End Role="Attendance" Type="Self.Attendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AttendanceFlag">
+              <PropertyRef Name="AttendanceFlagId" />
+            </Principal>
+            <Dependent Role="Attendance">
+              <PropertyRef Name="MarkFlagId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Attendance_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Attendance" Type="Self.Attendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="Attendance">
+              <PropertyRef Name="EmpId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClaimHead_ClaimStatus">
+          <End Role="ClaimStatus" Type="Self.ClaimStatus" Multiplicity="1" />
+          <End Role="ClaimHead" Type="Self.ClaimHead" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClaimStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ClaimHead">
+              <PropertyRef Name="Status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClaimHead_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="ClaimHead" Type="Self.ClaimHead" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="ClaimHead">
+              <PropertyRef Name="EmpId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClaimLine_ClaimHead">
+          <End Role="ClaimHead" Type="Self.ClaimHead" Multiplicity="1" />
+          <End Role="ClaimLine" Type="Self.ClaimLine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClaimHead">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ClaimLine">
+              <PropertyRef Name="ClaimId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClaimLine_ClaimStatus">
+          <End Role="ClaimStatus" Type="Self.ClaimStatus" Multiplicity="1" />
+          <End Role="ClaimLine" Type="Self.ClaimLine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClaimStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ClaimLine">
+              <PropertyRef Name="LineStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClaimStatusHistory_ClaimHead">
+          <End Role="ClaimHead" Type="Self.ClaimHead" Multiplicity="1" />
+          <End Role="ClaimStatusHistory" Type="Self.ClaimStatusHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClaimHead">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ClaimStatusHistory">
+              <PropertyRef Name="ClaimId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClaimStatusHistory_ClaimStatus">
+          <End Role="ClaimStatus" Type="Self.ClaimStatus" Multiplicity="1" />
+          <End Role="ClaimStatusHistory" Type="Self.ClaimStatusHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClaimStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ClaimStatusHistory">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_EmpStatus">
+          <End Role="EmpStatus" Type="Self.EmpStatus" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmpStatus">
+              <PropertyRef Name="EmpStatusId" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="EmpStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EntityAddresses_Address">
+          <End Role="Address" Type="Self.Address" Multiplicity="1" />
+          <End Role="EntityAddresses" Type="Self.EntityAddresses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Address">
+              <PropertyRef Name="AddressId" />
+            </Principal>
+            <Dependent Role="EntityAddresses">
+              <PropertyRef Name="AddressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EntityAddresses_EntityType">
+          <End Role="EntityType" Type="Self.EntityType" Multiplicity="1" />
+          <End Role="EntityAddresses" Type="Self.EntityAddresses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EntityType">
+              <PropertyRef Name="EntityTypeId" />
+            </Principal>
+            <Dependent Role="EntityAddresses">
+              <PropertyRef Name="EntityTypId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Group_GroupType">
+          <End Role="GroupType" Type="Self.GroupType" Multiplicity="1" />
+          <End Role="Group" Type="Self.Group" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GroupType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Group">
+              <PropertyRef Name="GroupTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GroupEmployee_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="GroupEmployee" Type="Self.GroupEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="GroupEmployee">
+              <PropertyRef Name="EmpId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GroupEmployee_Group">
+          <End Role="Group" Type="Self.Group" Multiplicity="1" />
+          <End Role="GroupEmployee" Type="Self.GroupEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Group">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GroupEmployee">
+              <PropertyRef Name="GroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GroupIncharge_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="GroupIncharge" Type="Self.GroupIncharge" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="GroupIncharge">
+              <PropertyRef Name="InchargeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GroupIncharge_Group">
+          <End Role="Group" Type="Self.Group" Multiplicity="1" />
+          <End Role="GroupIncharge" Type="Self.GroupIncharge" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Group">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GroupIncharge">
+              <PropertyRef Name="GroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GroupType_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="GroupType" Type="Self.GroupType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ClientId" />
+            </Principal>
+            <Dependent Role="GroupType">
+              <PropertyRef Name="ClientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Login_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Login" Type="Self.Login" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="Login">
+              <PropertyRef Name="LoginId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="getAttendanceByClientsDays" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="clientId" Type="int" Mode="In" />
+          <Parameter Name="numDays" Type="int" Mode="In" />
+        </Function>
+        <Function Name="getEmpOfGroups" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="clientId" Type="int" Mode="In" />
+          <Parameter Name="groupId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="getIST" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="datetime" />
+        <EntityContainer Name="ubietydbModelStoreContainer">
+          <EntitySet Name="Address" EntityType="Self.Address" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AddressType" EntityType="Self.AddressType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Attendance" EntityType="Self.Attendance" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AttendanceFlag" EntityType="Self.AttendanceFlag" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ClaimHead" EntityType="Self.ClaimHead" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ClaimLine" EntityType="Self.ClaimLine" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ClaimStatus" EntityType="Self.ClaimStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ClaimStatusHistory" EntityType="Self.ClaimStatusHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmpClient" EntityType="Self.EmpClient" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmpStatus" EntityType="Self.EmpStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EntityAddresses" EntityType="Self.EntityAddresses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EntityType" EntityType="Self.EntityType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Group" EntityType="Self.Group" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GroupEmployee" EntityType="Self.GroupEmployee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GroupIncharge" EntityType="Self.GroupIncharge" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GroupType" EntityType="Self.GroupType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Login" EntityType="Self.Login" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Organization" EntityType="Self.Organization" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="attByClient" EntityType="Self.attByClient" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [attByClient].[empid] AS [empid], 
+    [attByClient].[MarkDate] AS [MarkDate], 
+    [attByClient].[MarkTime] AS [MarkTime], 
+    [attByClient].[Coordinates] AS [Coordinates], 
+    [attByClient].[CompanyId] AS [CompanyId], 
+    [attByClient].[EmpName] AS [EmpName]
+    FROM [dbo].[attByClient] AS [attByClient]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="attendancereport" EntityType="Self.attendancereport" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [attendancereport].[empid] AS [empid], 
+    [attendancereport].[inlatitude] AS [inlatitude], 
+    [attendancereport].[outlatitude] AS [outlatitude], 
+    [attendancereport].[inlongitude] AS [inlongitude], 
+    [attendancereport].[outlongitude] AS [outlongitude], 
+    [attendancereport].[inmarktime] AS [inmarktime], 
+    [attendancereport].[outmarktime] AS [outmarktime]
+    FROM [dbo].[attendancereport] AS [attendancereport]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="attRepTemp" EntityType="Self.attRepTemp" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [attRepTemp].[attendanceid] AS [attendanceid], 
+    [attRepTemp].[empid] AS [empid], 
+    [attRepTemp].[MarkDate] AS [MarkDate], 
+    [attRepTemp].[MarkTime] AS [MarkTime], 
+    [attRepTemp].[Coordinates] AS [Coordinates], 
+    [attRepTemp].[MarkCount] AS [MarkCount]
+    FROM [dbo].[attRepTemp] AS [attRepTemp]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="clientEmployee" EntityType="Self.clientEmployee" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [clientEmployee].[EmpId] AS [EmpId], 
+    [clientEmployee].[companyId] AS [companyId], 
+    [clientEmployee].[empname] AS [empname]
+    FROM [dbo].[clientEmployee] AS [clientEmployee]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Address_AddressType" Association="Self.FK_Address_AddressType">
+            <End Role="AddressType" EntitySet="AddressType" />
+            <End Role="Address" EntitySet="Address" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Attendance_AttendanceFlag" Association="Self.FK_Attendance_AttendanceFlag">
+            <End Role="AttendanceFlag" EntitySet="AttendanceFlag" />
+            <End Role="Attendance" EntitySet="Attendance" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Attendance_Employee" Association="Self.FK_Attendance_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Attendance" EntitySet="Attendance" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClaimHead_ClaimStatus" Association="Self.FK_ClaimHead_ClaimStatus">
+            <End Role="ClaimStatus" EntitySet="ClaimStatus" />
+            <End Role="ClaimHead" EntitySet="ClaimHead" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClaimHead_Employee" Association="Self.FK_ClaimHead_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="ClaimHead" EntitySet="ClaimHead" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClaimLine_ClaimHead" Association="Self.FK_ClaimLine_ClaimHead">
+            <End Role="ClaimHead" EntitySet="ClaimHead" />
+            <End Role="ClaimLine" EntitySet="ClaimLine" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClaimLine_ClaimStatus" Association="Self.FK_ClaimLine_ClaimStatus">
+            <End Role="ClaimStatus" EntitySet="ClaimStatus" />
+            <End Role="ClaimLine" EntitySet="ClaimLine" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClaimStatusHistory_ClaimHead" Association="Self.FK_ClaimStatusHistory_ClaimHead">
+            <End Role="ClaimHead" EntitySet="ClaimHead" />
+            <End Role="ClaimStatusHistory" EntitySet="ClaimStatusHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClaimStatusHistory_ClaimStatus" Association="Self.FK_ClaimStatusHistory_ClaimStatus">
+            <End Role="ClaimStatus" EntitySet="ClaimStatus" />
+            <End Role="ClaimStatusHistory" EntitySet="ClaimStatusHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_EmpStatus" Association="Self.FK_Employee_EmpStatus">
+            <End Role="EmpStatus" EntitySet="EmpStatus" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EntityAddresses_Address" Association="Self.FK_EntityAddresses_Address">
+            <End Role="Address" EntitySet="Address" />
+            <End Role="EntityAddresses" EntitySet="EntityAddresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EntityAddresses_EntityType" Association="Self.FK_EntityAddresses_EntityType">
+            <End Role="EntityType" EntitySet="EntityType" />
+            <End Role="EntityAddresses" EntitySet="EntityAddresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Group_GroupType" Association="Self.FK_Group_GroupType">
+            <End Role="GroupType" EntitySet="GroupType" />
+            <End Role="Group" EntitySet="Group" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GroupEmployee_Employee" Association="Self.FK_GroupEmployee_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="GroupEmployee" EntitySet="GroupEmployee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GroupEmployee_Group" Association="Self.FK_GroupEmployee_Group">
+            <End Role="Group" EntitySet="Group" />
+            <End Role="GroupEmployee" EntitySet="GroupEmployee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GroupIncharge_Employee" Association="Self.FK_GroupIncharge_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="GroupIncharge" EntitySet="GroupIncharge" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GroupIncharge_Group" Association="Self.FK_GroupIncharge_Group">
+            <End Role="Group" EntitySet="Group" />
+            <End Role="GroupIncharge" EntitySet="GroupIncharge" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GroupType_Client" Association="Self.FK_GroupType_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="GroupType" EntitySet="GroupType" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Login_Employee" Association="Self.FK_Login_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Login" EntitySet="Login" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ubietydbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Address">
+          <Key>
+            <PropertyRef Name="AddressId" />
+          </Key>
+          <Property Name="AddressId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AddressTypId" Type="Int32" Nullable="false" />
+          <Property Name="AddressName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address1" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Address2" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Pincode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CoordinateId" Type="Int32" />
+          <NavigationProperty Name="AddressType" Relationship="Self.FK_Address_AddressType" FromRole="Address" ToRole="AddressType" />
+          <NavigationProperty Name="EntityAddresses" Relationship="Self.FK_EntityAddresses_Address" FromRole="Address" ToRole="EntityAddresses" />
+        </EntityType>
+        <EntityType Name="AddressType">
+          <Key>
+            <PropertyRef Name="AddressTypeId" />
+          </Key>
+          <Property Name="AddressTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AddressTypeName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Addresses" Relationship="Self.FK_Address_AddressType" FromRole="AddressType" ToRole="Address" />
+        </EntityType>
+        <EntityType Name="Attendance">
+          <Key>
+            <PropertyRef Name="AttendanceId" />
+          </Key>
+          <Property Name="AttendanceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmpId" Type="Int32" Nullable="false" />
+          <Property Name="MarkFlagId" Type="Int32" />
+          <Property Name="MarkTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="latitude" Type="Double" />
+          <Property Name="longitude" Type="Double" />
+          <Property Name="markcount" Type="Int32" />
+          <NavigationProperty Name="AttendanceFlag" Relationship="Self.FK_Attendance_AttendanceFlag" FromRole="Attendance" ToRole="AttendanceFlag" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_Attendance_Employee" FromRole="Attendance" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="AttendanceFlag">
+          <Key>
+            <PropertyRef Name="AttendanceFlagId" />
+          </Key>
+          <Property Name="AttendanceFlagId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FlagName" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Attendances" Relationship="Self.FK_Attendance_AttendanceFlag" FromRole="AttendanceFlag" ToRole="Attendance" />
+        </EntityType>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="ClientId" />
+          </Key>
+          <Property Name="ClientId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="OrgId" Type="Int32" />
+          <Property Name="ClientLogoURL" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="GroupTypes" Relationship="ubietydbModel.FK_GroupType_Client" FromRole="Client" ToRole="GroupType" />
+        </EntityType>
+        <EntityType Name="EmpClient">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmpId" Type="Int32" Nullable="false" />
+          <Property Name="ClientId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="EmpId" />
+          </Key>
+          <Property Name="EmpId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmpNum" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EmpName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProfilePic" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="EmpStatus" Type="Int32" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PrimaryMobile" Type="Int64" />
+          <Property Name="Designation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AuthUserId" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="CompanyId" Type="Int32" />
+          <NavigationProperty Name="Attendances" Relationship="Self.FK_Attendance_Employee" FromRole="Employee" ToRole="Attendance" />
+          <NavigationProperty Name="EmpStatu" Relationship="Self.FK_Employee_EmpStatus" FromRole="Employee" ToRole="EmpStatus" />
+          <NavigationProperty Name="Login" Relationship="Self.FK_Login_Employee" FromRole="Employee" ToRole="Login" />
+          <NavigationProperty Name="GroupEmployees" Relationship="ubietydbModel.FK_GroupEmployee_Employee" FromRole="Employee" ToRole="GroupEmployee" />
+          <NavigationProperty Name="GroupIncharges" Relationship="ubietydbModel.FK_GroupIncharge_Employee" FromRole="Employee" ToRole="GroupIncharge" />
+          <NavigationProperty Name="ClaimHeads" Relationship="ubietydbModel.FK_ClaimHead_Employee" FromRole="Employee" ToRole="ClaimHead" />
+        </EntityType>
+        <EntityType Name="EmpStatu">
+          <Key>
+            <PropertyRef Name="EmpStatusId" />
+          </Key>
+          <Property Name="EmpStatusId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StatusName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK_Employee_EmpStatus" FromRole="EmpStatus" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="EntityAddress">
+          <Key>
+            <PropertyRef Name="EntityAddressId" />
+          </Key>
+          <Property Name="EntityAddressId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EntityId" Type="Int32" Nullable="false" />
+          <Property Name="EntityTypId" Type="Int32" Nullable="false" />
+          <Property Name="AddressId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Address" Relationship="Self.FK_EntityAddresses_Address" FromRole="EntityAddresses" ToRole="Address" />
+          <NavigationProperty Name="EntityType" Relationship="Self.FK_EntityAddresses_EntityType" FromRole="EntityAddresses" ToRole="EntityType" />
+        </EntityType>
+        <EntityType Name="EntityType">
+          <Key>
+            <PropertyRef Name="EntityTypeId" />
+          </Key>
+          <Property Name="EntityTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EntityTypeName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="EntityAddresses" Relationship="Self.FK_EntityAddresses_EntityType" FromRole="EntityType" ToRole="EntityAddresses" />
+        </EntityType>
+        <EntityType Name="Login">
+          <Key>
+            <PropertyRef Name="LoginId" />
+          </Key>
+          <Property Name="LoginId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EmpId" Type="Int32" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_Login_Employee" FromRole="Login" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="Organization">
+          <Key>
+            <PropertyRef Name="OrgId" />
+          </Key>
+          <Property Name="OrgId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrgName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="attendancereport">
+          <Key>
+            <PropertyRef Name="empid" />
+          </Key>
+          <Property Name="empid" Type="Int32" Nullable="false" />
+          <Property Name="inlatitude" Type="Double" />
+          <Property Name="outlatitude" Type="Double" />
+          <Property Name="inlongitude" Type="Double" />
+          <Property Name="outlongitude" Type="Double" />
+          <Property Name="inmarktime" Type="DateTime" Precision="3" />
+          <Property Name="outmarktime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="attRepTemp">
+          <Key>
+            <PropertyRef Name="attendanceid" />
+            <PropertyRef Name="empid" />
+          </Key>
+          <Property Name="attendanceid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="empid" Type="Int32" Nullable="false" />
+          <Property Name="MarkDate" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="MarkTime" Type="String" MaxLength="5" FixedLength="true" Unicode="false" />
+          <Property Name="Coordinates" Type="String" MaxLength="61" FixedLength="false" Unicode="true" />
+          <Property Name="MarkCount" Type="Int32" />
+        </EntityType>
+        <Association Name="FK_Address_AddressType">
+          <End Role="AddressType" Type="Self.AddressType" Multiplicity="1" />
+          <End Role="Address" Type="Self.Address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AddressType">
+              <PropertyRef Name="AddressTypeId" />
+            </Principal>
+            <Dependent Role="Address">
+              <PropertyRef Name="AddressTypId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EntityAddresses_Address">
+          <End Role="Address" Type="Self.Address" Multiplicity="1" />
+          <End Role="EntityAddresses" Type="Self.EntityAddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Address">
+              <PropertyRef Name="AddressId" />
+            </Principal>
+            <Dependent Role="EntityAddresses">
+              <PropertyRef Name="AddressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Attendance_AttendanceFlag">
+          <End Role="AttendanceFlag" Type="Self.AttendanceFlag" Multiplicity="0..1" />
+          <End Role="Attendance" Type="Self.Attendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AttendanceFlag">
+              <PropertyRef Name="AttendanceFlagId" />
+            </Principal>
+            <Dependent Role="Attendance">
+              <PropertyRef Name="MarkFlagId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Attendance_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Attendance" Type="Self.Attendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="Attendance">
+              <PropertyRef Name="EmpId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_EmpStatus">
+          <End Role="EmpStatus" Type="Self.EmpStatu" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmpStatus">
+              <PropertyRef Name="EmpStatusId" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="EmpStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Login_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Login" Type="Self.Login" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="Login">
+              <PropertyRef Name="LoginId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EntityAddresses_EntityType">
+          <End Role="EntityType" Type="Self.EntityType" Multiplicity="1" />
+          <End Role="EntityAddresses" Type="Self.EntityAddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EntityType">
+              <PropertyRef Name="EntityTypeId" />
+            </Principal>
+            <Dependent Role="EntityAddresses">
+              <PropertyRef Name="EntityTypId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ubietydbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Addresses" EntityType="Self.Address" />
+          <EntitySet Name="AddressTypes" EntityType="Self.AddressType" />
+          <EntitySet Name="Attendances" EntityType="Self.Attendance" />
+          <EntitySet Name="AttendanceFlags" EntityType="Self.AttendanceFlag" />
+          <EntitySet Name="Clients" EntityType="Self.Client" />
+          <EntitySet Name="EmpClients" EntityType="Self.EmpClient" />
+          <EntitySet Name="Employees" EntityType="Self.Employee" />
+          <EntitySet Name="EmpStatus" EntityType="Self.EmpStatu" />
+          <EntitySet Name="EntityAddresses" EntityType="Self.EntityAddress" />
+          <EntitySet Name="EntityTypes" EntityType="Self.EntityType" />
+          <EntitySet Name="Logins" EntityType="Self.Login" />
+          <EntitySet Name="Organizations" EntityType="Self.Organization" />
+          <EntitySet Name="attendancereports" EntityType="Self.attendancereport" />
+          <EntitySet Name="attRepTemps" EntityType="Self.attRepTemp" />
+          <AssociationSet Name="FK_Address_AddressType" Association="Self.FK_Address_AddressType">
+            <End Role="AddressType" EntitySet="AddressTypes" />
+            <End Role="Address" EntitySet="Addresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EntityAddresses_Address" Association="Self.FK_EntityAddresses_Address">
+            <End Role="Address" EntitySet="Addresses" />
+            <End Role="EntityAddresses" EntitySet="EntityAddresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Attendance_AttendanceFlag" Association="Self.FK_Attendance_AttendanceFlag">
+            <End Role="AttendanceFlag" EntitySet="AttendanceFlags" />
+            <End Role="Attendance" EntitySet="Attendances" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Attendance_Employee" Association="Self.FK_Attendance_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Attendance" EntitySet="Attendances" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_EmpStatus" Association="Self.FK_Employee_EmpStatus">
+            <End Role="EmpStatus" EntitySet="EmpStatus" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Login_Employee" Association="Self.FK_Login_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Login" EntitySet="Logins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EntityAddresses_EntityType" Association="Self.FK_EntityAddresses_EntityType">
+            <End Role="EntityType" EntitySet="EntityTypes" />
+            <End Role="EntityAddresses" EntitySet="EntityAddresses" />
+          </AssociationSet>
+          <EntitySet Name="Groups" EntityType="ubietydbModel.Group" />
+          <EntitySet Name="GroupEmployees" EntityType="ubietydbModel.GroupEmployee" />
+          <EntitySet Name="GroupIncharges" EntityType="ubietydbModel.GroupIncharge" />
+          <EntitySet Name="GroupTypes" EntityType="ubietydbModel.GroupType" />
+          <AssociationSet Name="FK_GroupEmployee_Employee" Association="ubietydbModel.FK_GroupEmployee_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="GroupEmployee" EntitySet="GroupEmployees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GroupIncharge_Employee" Association="ubietydbModel.FK_GroupIncharge_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="GroupIncharge" EntitySet="GroupIncharges" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Group_GroupType" Association="ubietydbModel.FK_Group_GroupType">
+            <End Role="GroupType" EntitySet="GroupTypes" />
+            <End Role="Group" EntitySet="Groups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GroupEmployee_Group" Association="ubietydbModel.FK_GroupEmployee_Group">
+            <End Role="Group" EntitySet="Groups" />
+            <End Role="GroupEmployee" EntitySet="GroupEmployees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GroupIncharge_Group" Association="ubietydbModel.FK_GroupIncharge_Group">
+            <End Role="Group" EntitySet="Groups" />
+            <End Role="GroupIncharge" EntitySet="GroupIncharges" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GroupType_Client" Association="ubietydbModel.FK_GroupType_Client">
+            <End Role="Client" EntitySet="Clients" />
+            <End Role="GroupType" EntitySet="GroupTypes" />
+          </AssociationSet>
+          <FunctionImport Name="getEmpOfGroups" ReturnType="Collection(ubietydbModel.getEmpOfGroups_Result)" />
+          <FunctionImport Name="getEmpOfGroups1" ReturnType="Collection(ubietydbModel.getEmpOfGroups1_Result)">
+            <Parameter Name="clientId" Mode="In" Type="Int32" />
+            <Parameter Name="groupId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="ClaimHeads" EntityType="ubietydbModel.ClaimHead" />
+          <EntitySet Name="ClaimLines" EntityType="ubietydbModel.ClaimLine" />
+          <EntitySet Name="ClaimStatus" EntityType="ubietydbModel.ClaimStatu" />
+          <EntitySet Name="ClaimStatusHistories" EntityType="ubietydbModel.ClaimStatusHistory" />
+          <AssociationSet Name="FK_ClaimHead_ClaimStatus" Association="ubietydbModel.FK_ClaimHead_ClaimStatus">
+            <End Role="ClaimStatu" EntitySet="ClaimStatus" />
+            <End Role="ClaimHead" EntitySet="ClaimHeads" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClaimHead_Employee" Association="ubietydbModel.FK_ClaimHead_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="ClaimHead" EntitySet="ClaimHeads" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClaimLine_ClaimHead" Association="ubietydbModel.FK_ClaimLine_ClaimHead">
+            <End Role="ClaimHead" EntitySet="ClaimHeads" />
+            <End Role="ClaimLine" EntitySet="ClaimLines" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClaimStatusHistory_ClaimHead" Association="ubietydbModel.FK_ClaimStatusHistory_ClaimHead">
+            <End Role="ClaimHead" EntitySet="ClaimHeads" />
+            <End Role="ClaimStatusHistory" EntitySet="ClaimStatusHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClaimLine_ClaimStatus" Association="ubietydbModel.FK_ClaimLine_ClaimStatus">
+            <End Role="ClaimStatu" EntitySet="ClaimStatus" />
+            <End Role="ClaimLine" EntitySet="ClaimLines" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClaimStatusHistory_ClaimStatus" Association="ubietydbModel.FK_ClaimStatusHistory_ClaimStatus">
+            <End Role="ClaimStatu" EntitySet="ClaimStatus" />
+            <End Role="ClaimStatusHistory" EntitySet="ClaimStatusHistories" />
+          </AssociationSet>
+          <EntitySet Name="attByClients" EntityType="ubietydbModel.attByClient" />
+          <EntitySet Name="clientEmployees" EntityType="ubietydbModel.clientEmployee" />
+          <FunctionImport Name="getAttendanceByClientsDays" ReturnType="Collection(ubietydbModel.getAttendanceByClientsDays_Result1)">
+            <Parameter Name="clientId" Mode="In" Type="Int32" />
+            <Parameter Name="numDays" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <EntityType Name="Group">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GroupTypeId" Type="Int32" Nullable="false" />
+          <Property Name="GroupName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="GroupType" Relationship="ubietydbModel.FK_Group_GroupType" FromRole="Group" ToRole="GroupType" />
+          <NavigationProperty Name="GroupEmployees" Relationship="ubietydbModel.FK_GroupEmployee_Group" FromRole="Group" ToRole="GroupEmployee" />
+          <NavigationProperty Name="GroupIncharges" Relationship="ubietydbModel.FK_GroupIncharge_Group" FromRole="Group" ToRole="GroupIncharge" />
+        </EntityType>
+        <EntityType Name="GroupEmployee">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GroupId" Type="Int32" Nullable="false" />
+          <Property Name="EmpId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Employee" Relationship="ubietydbModel.FK_GroupEmployee_Employee" FromRole="GroupEmployee" ToRole="Employee" />
+          <NavigationProperty Name="Group" Relationship="ubietydbModel.FK_GroupEmployee_Group" FromRole="GroupEmployee" ToRole="Group" />
+        </EntityType>
+        <EntityType Name="GroupIncharge">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GroupId" Type="Int32" Nullable="false" />
+          <Property Name="InchargeId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Employee" Relationship="ubietydbModel.FK_GroupIncharge_Employee" FromRole="GroupIncharge" ToRole="Employee" />
+          <NavigationProperty Name="Group" Relationship="ubietydbModel.FK_GroupIncharge_Group" FromRole="GroupIncharge" ToRole="Group" />
+        </EntityType>
+        <EntityType Name="GroupType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GroupType1" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Groups" Relationship="ubietydbModel.FK_Group_GroupType" FromRole="GroupType" ToRole="Group" />
+          <Property Name="ClientId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Client" Relationship="ubietydbModel.FK_GroupType_Client" FromRole="GroupType" ToRole="Client" />
+        </EntityType>
+        <Association Name="FK_GroupEmployee_Employee">
+          <End Type="ubietydbModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="ubietydbModel.GroupEmployee" Role="GroupEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="GroupEmployee">
+              <PropertyRef Name="EmpId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GroupIncharge_Employee">
+          <End Type="ubietydbModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="ubietydbModel.GroupIncharge" Role="GroupIncharge" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="GroupIncharge">
+              <PropertyRef Name="InchargeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Group_GroupType">
+          <End Type="ubietydbModel.GroupType" Role="GroupType" Multiplicity="1" />
+          <End Type="ubietydbModel.Group" Role="Group" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GroupType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Group">
+              <PropertyRef Name="GroupTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GroupEmployee_Group">
+          <End Type="ubietydbModel.Group" Role="Group" Multiplicity="1" />
+          <End Type="ubietydbModel.GroupEmployee" Role="GroupEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Group">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GroupEmployee">
+              <PropertyRef Name="GroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GroupIncharge_Group">
+          <End Type="ubietydbModel.Group" Role="Group" Multiplicity="1" />
+          <End Type="ubietydbModel.GroupIncharge" Role="GroupIncharge" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Group">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GroupIncharge">
+              <PropertyRef Name="GroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GroupType_Client">
+          <End Type="ubietydbModel.Client" Role="Client" Multiplicity="1" />
+          <End Type="ubietydbModel.GroupType" Role="GroupType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ClientId" />
+            </Principal>
+            <Dependent Role="GroupType">
+              <PropertyRef Name="ClientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="getEmpOfGroups_Result">
+          <Property Type="String" Name="AuthUserId" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="EmpName" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="GroupName" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="getEmpOfGroups1_Result">
+          <Property Type="Int32" Name="EmpId" Nullable="false" />
+          <Property Type="String" Name="EmpNum" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="EmpName" Nullable="false" MaxLength="100" />
+        </ComplexType>
+        <EntityType Name="ClaimHead">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmpId" Type="Int32" Nullable="false" />
+          <Property Name="ClaimNumber" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimTitle" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ClaimStatu" Relationship="ubietydbModel.FK_ClaimHead_ClaimStatus" FromRole="ClaimHead" ToRole="ClaimStatu" />
+          <NavigationProperty Name="Employee" Relationship="ubietydbModel.FK_ClaimHead_Employee" FromRole="ClaimHead" ToRole="Employee" />
+          <NavigationProperty Name="ClaimLines" Relationship="ubietydbModel.FK_ClaimLine_ClaimHead" FromRole="ClaimHead" ToRole="ClaimLine" />
+          <NavigationProperty Name="ClaimStatusHistories" Relationship="ubietydbModel.FK_ClaimStatusHistory_ClaimHead" FromRole="ClaimHead" ToRole="ClaimStatusHistory" />
+        </EntityType>
+        <EntityType Name="ClaimLine">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="ClaimId" />
+            <PropertyRef Name="ClaimLineId" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClaimId" Type="Int32" Nullable="false" />
+          <Property Name="ClaimLineId" Type="Int32" Nullable="false" />
+          <Property Name="ClaimType" Type="Int32" Nullable="false" />
+          <Property Name="Purpose" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LocOut" Type="Byte" Nullable="false" />
+          <Property Name="HotelName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ExpenseDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FromDate" Type="DateTime" Precision="3" />
+          <Property Name="ToDate" Type="DateTime" Precision="3" />
+          <Property Name="AccNoOfNights" Type="Int32" />
+          <Property Name="TravelFromPlace" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="TravelToPlace" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="TravelMode" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="Distance" Type="Double" />
+          <Property Name="Rate" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="OtherClaimTypeDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TotalAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="BillType" Type="Byte" />
+          <Property Name="LineStatus" Type="Int32" Nullable="false" />
+          <Property Name="EmpRemarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ManagerRemarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OrgRemarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ClaimHead" Relationship="ubietydbModel.FK_ClaimLine_ClaimHead" FromRole="ClaimLine" ToRole="ClaimHead" />
+          <NavigationProperty Name="ClaimStatu" Relationship="ubietydbModel.FK_ClaimLine_ClaimStatus" FromRole="ClaimLine" ToRole="ClaimStatu" />
+        </EntityType>
+        <EntityType Name="ClaimStatu">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Status" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ClaimHeads" Relationship="ubietydbModel.FK_ClaimHead_ClaimStatus" FromRole="ClaimStatu" ToRole="ClaimHead" />
+          <NavigationProperty Name="ClaimLines" Relationship="ubietydbModel.FK_ClaimLine_ClaimStatus" FromRole="ClaimStatu" ToRole="ClaimLine" />
+          <NavigationProperty Name="ClaimStatusHistories" Relationship="ubietydbModel.FK_ClaimStatusHistory_ClaimStatus" FromRole="ClaimStatu" ToRole="ClaimStatusHistory" />
+        </EntityType>
+        <EntityType Name="ClaimStatusHistory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClaimId" Type="Int32" Nullable="false" />
+          <Property Name="StatusId" Type="Int32" Nullable="false" />
+          <Property Name="StatusDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="ClaimHead" Relationship="ubietydbModel.FK_ClaimStatusHistory_ClaimHead" FromRole="ClaimStatusHistory" ToRole="ClaimHead" />
+          <NavigationProperty Name="ClaimStatu" Relationship="ubietydbModel.FK_ClaimStatusHistory_ClaimStatus" FromRole="ClaimStatusHistory" ToRole="ClaimStatu" />
+        </EntityType>
+        <Association Name="FK_ClaimHead_ClaimStatus">
+          <End Type="ubietydbModel.ClaimStatu" Role="ClaimStatu" Multiplicity="1" />
+          <End Type="ubietydbModel.ClaimHead" Role="ClaimHead" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClaimStatu">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ClaimHead">
+              <PropertyRef Name="Status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClaimHead_Employee">
+          <End Type="ubietydbModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="ubietydbModel.ClaimHead" Role="ClaimHead" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="ClaimHead">
+              <PropertyRef Name="EmpId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClaimLine_ClaimHead">
+          <End Type="ubietydbModel.ClaimHead" Role="ClaimHead" Multiplicity="1" />
+          <End Type="ubietydbModel.ClaimLine" Role="ClaimLine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClaimHead">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ClaimLine">
+              <PropertyRef Name="ClaimId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClaimStatusHistory_ClaimHead">
+          <End Type="ubietydbModel.ClaimHead" Role="ClaimHead" Multiplicity="1" />
+          <End Type="ubietydbModel.ClaimStatusHistory" Role="ClaimStatusHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClaimHead">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ClaimStatusHistory">
+              <PropertyRef Name="ClaimId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClaimLine_ClaimStatus">
+          <End Type="ubietydbModel.ClaimStatu" Role="ClaimStatu" Multiplicity="1" />
+          <End Type="ubietydbModel.ClaimLine" Role="ClaimLine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClaimStatu">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ClaimLine">
+              <PropertyRef Name="LineStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClaimStatusHistory_ClaimStatus">
+          <End Type="ubietydbModel.ClaimStatu" Role="ClaimStatu" Multiplicity="1" />
+          <End Type="ubietydbModel.ClaimStatusHistory" Role="ClaimStatusHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClaimStatu">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ClaimStatusHistory">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="attByClient">
+          <Key>
+            <PropertyRef Name="empid" />
+            <PropertyRef Name="EmpName" />
+          </Key>
+          <Property Name="empid" Type="Int32" Nullable="false" />
+          <Property Name="MarkDate" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Coordinates" Type="String" MaxLength="61" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyId" Type="Int32" />
+          <Property Name="EmpName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="clientEmployee">
+          <Key>
+            <PropertyRef Name="EmpId" />
+            <PropertyRef Name="empname" />
+          </Key>
+          <Property Name="EmpId" Type="Int32" Nullable="false" />
+          <Property Name="companyId" Type="Int32" />
+          <Property Name="empname" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <ComplexType Name="getAttendanceByClientsDays_Result">
+          <Property Type="String" Name="Emp_Name" Nullable="false" MaxLength="100" />
+          <Property Type="DateTime" Name="MarkDate" Nullable="true" />
+          <Property Type="Time" Name="MarkingTime" Nullable="true" />
+          <Property Type="String" Name="Coordinates" Nullable="true" MaxLength="61" />
+          <Property Type="Int32" Name="MarkCount" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="getAttendanceByClientsDays_Result1">
+          <Property Type="Int32" Name="EmpId" Nullable="false" />
+          <Property Type="String" Name="Emp_Name" Nullable="false" MaxLength="100" />
+          <Property Type="DateTime" Name="MarkDate" Nullable="true" />
+          <Property Type="Time" Name="MarkingTime" Nullable="true" />
+          <Property Type="String" Name="Coordinates" Nullable="true" MaxLength="61" />
+          <Property Type="Int32" Name="MarkCount" Nullable="true" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ubietydbModelStoreContainer" CdmEntityContainer="ubietydbEntities">
+          <EntitySetMapping Name="Addresses">
+            <EntityTypeMapping TypeName="ubietydbModel.Address">
+              <MappingFragment StoreEntitySet="Address">
+                <ScalarProperty Name="AddressId" ColumnName="AddressId" />
+                <ScalarProperty Name="AddressTypId" ColumnName="AddressTypId" />
+                <ScalarProperty Name="AddressName" ColumnName="AddressName" />
+                <ScalarProperty Name="Address1" ColumnName="Address1" />
+                <ScalarProperty Name="Address2" ColumnName="Address2" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Pincode" ColumnName="Pincode" />
+                <ScalarProperty Name="CoordinateId" ColumnName="CoordinateId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AddressTypes">
+            <EntityTypeMapping TypeName="ubietydbModel.AddressType">
+              <MappingFragment StoreEntitySet="AddressType">
+                <ScalarProperty Name="AddressTypeId" ColumnName="AddressTypeId" />
+                <ScalarProperty Name="AddressTypeName" ColumnName="AddressTypeName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Attendances">
+            <EntityTypeMapping TypeName="ubietydbModel.Attendance">
+              <MappingFragment StoreEntitySet="Attendance">
+                <ScalarProperty Name="AttendanceId" ColumnName="AttendanceId" />
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+                <ScalarProperty Name="MarkFlagId" ColumnName="MarkFlagId" />
+                <ScalarProperty Name="MarkTime" ColumnName="MarkTime" />
+                <ScalarProperty Name="latitude" ColumnName="latitude" />
+                <ScalarProperty Name="longitude" ColumnName="longitude" />
+                <ScalarProperty Name="markcount" ColumnName="markcount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AttendanceFlags">
+            <EntityTypeMapping TypeName="ubietydbModel.AttendanceFlag">
+              <MappingFragment StoreEntitySet="AttendanceFlag">
+                <ScalarProperty Name="AttendanceFlagId" ColumnName="AttendanceFlagId" />
+                <ScalarProperty Name="FlagName" ColumnName="FlagName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Clients">
+            <EntityTypeMapping TypeName="ubietydbModel.Client">
+              <MappingFragment StoreEntitySet="Client">
+                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+                <ScalarProperty Name="ClientName" ColumnName="ClientName" />
+                <ScalarProperty Name="OrgId" ColumnName="OrgId" />
+                <ScalarProperty Name="ClientLogoURL" ColumnName="ClientLogoURL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmpClients">
+            <EntityTypeMapping TypeName="ubietydbModel.EmpClient">
+              <MappingFragment StoreEntitySet="EmpClient">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="ubietydbModel.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+                <ScalarProperty Name="EmpNum" ColumnName="EmpNum" />
+                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
+                <ScalarProperty Name="ProfilePic" ColumnName="ProfilePic" />
+                <ScalarProperty Name="EmpStatus" ColumnName="EmpStatus" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PrimaryMobile" ColumnName="PrimaryMobile" />
+                <ScalarProperty Name="Designation" ColumnName="Designation" />
+                <ScalarProperty Name="AuthUserId" ColumnName="AuthUserId" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmpStatus">
+            <EntityTypeMapping TypeName="ubietydbModel.EmpStatu">
+              <MappingFragment StoreEntitySet="EmpStatus">
+                <ScalarProperty Name="EmpStatusId" ColumnName="EmpStatusId" />
+                <ScalarProperty Name="StatusName" ColumnName="StatusName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EntityAddresses">
+            <EntityTypeMapping TypeName="ubietydbModel.EntityAddress">
+              <MappingFragment StoreEntitySet="EntityAddresses">
+                <ScalarProperty Name="EntityAddressId" ColumnName="EntityAddressId" />
+                <ScalarProperty Name="EntityId" ColumnName="EntityId" />
+                <ScalarProperty Name="EntityTypId" ColumnName="EntityTypId" />
+                <ScalarProperty Name="AddressId" ColumnName="AddressId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EntityTypes">
+            <EntityTypeMapping TypeName="ubietydbModel.EntityType">
+              <MappingFragment StoreEntitySet="EntityType">
+                <ScalarProperty Name="EntityTypeId" ColumnName="EntityTypeId" />
+                <ScalarProperty Name="EntityTypeName" ColumnName="EntityTypeName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Logins">
+            <EntityTypeMapping TypeName="ubietydbModel.Login">
+              <MappingFragment StoreEntitySet="Login">
+                <ScalarProperty Name="LoginId" ColumnName="LoginId" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Organizations">
+            <EntityTypeMapping TypeName="ubietydbModel.Organization">
+              <MappingFragment StoreEntitySet="Organization">
+                <ScalarProperty Name="OrgId" ColumnName="OrgId" />
+                <ScalarProperty Name="OrgName" ColumnName="OrgName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="attendancereports">
+            <EntityTypeMapping TypeName="ubietydbModel.attendancereport">
+              <MappingFragment StoreEntitySet="attendancereport">
+                <ScalarProperty Name="empid" ColumnName="empid" />
+                <ScalarProperty Name="inlatitude" ColumnName="inlatitude" />
+                <ScalarProperty Name="outlatitude" ColumnName="outlatitude" />
+                <ScalarProperty Name="inlongitude" ColumnName="inlongitude" />
+                <ScalarProperty Name="outlongitude" ColumnName="outlongitude" />
+                <ScalarProperty Name="inmarktime" ColumnName="inmarktime" />
+                <ScalarProperty Name="outmarktime" ColumnName="outmarktime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="attRepTemps">
+            <EntityTypeMapping TypeName="ubietydbModel.attRepTemp">
+              <MappingFragment StoreEntitySet="attRepTemp">
+                <ScalarProperty Name="attendanceid" ColumnName="attendanceid" />
+                <ScalarProperty Name="empid" ColumnName="empid" />
+                <ScalarProperty Name="MarkDate" ColumnName="MarkDate" />
+                <ScalarProperty Name="MarkTime" ColumnName="MarkTime" />
+                <ScalarProperty Name="Coordinates" ColumnName="Coordinates" />
+                <ScalarProperty Name="MarkCount" ColumnName="MarkCount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Groups">
+            <EntityTypeMapping TypeName="ubietydbModel.Group">
+              <MappingFragment StoreEntitySet="Group">
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+                <ScalarProperty Name="GroupTypeId" ColumnName="GroupTypeId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GroupEmployees">
+            <EntityTypeMapping TypeName="ubietydbModel.GroupEmployee">
+              <MappingFragment StoreEntitySet="GroupEmployee">
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+                <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GroupIncharges">
+            <EntityTypeMapping TypeName="ubietydbModel.GroupIncharge">
+              <MappingFragment StoreEntitySet="GroupIncharge">
+                <ScalarProperty Name="InchargeId" ColumnName="InchargeId" />
+                <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GroupTypes">
+            <EntityTypeMapping TypeName="ubietydbModel.GroupType">
+              <MappingFragment StoreEntitySet="GroupType">
+                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+                <ScalarProperty Name="GroupType1" ColumnName="GroupType" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="getEmpOfGroups1" FunctionName="ubietydbModel.Store.getEmpOfGroups">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ubietydbModel.getEmpOfGroups1_Result">
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+                <ScalarProperty Name="EmpNum" ColumnName="EmpNum" />
+                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="ClaimHeads">
+            <EntityTypeMapping TypeName="ubietydbModel.ClaimHead">
+              <MappingFragment StoreEntitySet="ClaimHead">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ClaimTitle" ColumnName="ClaimTitle" />
+                <ScalarProperty Name="ClaimNumber" ColumnName="ClaimNumber" />
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClaimLines">
+            <EntityTypeMapping TypeName="ubietydbModel.ClaimLine">
+              <MappingFragment StoreEntitySet="ClaimLine">
+                <ScalarProperty Name="OrgRemarks" ColumnName="OrgRemarks" />
+                <ScalarProperty Name="ManagerRemarks" ColumnName="ManagerRemarks" />
+                <ScalarProperty Name="EmpRemarks" ColumnName="EmpRemarks" />
+                <ScalarProperty Name="LineStatus" ColumnName="LineStatus" />
+                <ScalarProperty Name="BillType" ColumnName="BillType" />
+                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+                <ScalarProperty Name="OtherClaimTypeDesc" ColumnName="OtherClaimTypeDesc" />
+                <ScalarProperty Name="Rate" ColumnName="Rate" />
+                <ScalarProperty Name="Distance" ColumnName="Distance" />
+                <ScalarProperty Name="TravelMode" ColumnName="TravelMode" />
+                <ScalarProperty Name="TravelToPlace" ColumnName="TravelToPlace" />
+                <ScalarProperty Name="TravelFromPlace" ColumnName="TravelFromPlace" />
+                <ScalarProperty Name="AccNoOfNights" ColumnName="AccNoOfNights" />
+                <ScalarProperty Name="ToDate" ColumnName="ToDate" />
+                <ScalarProperty Name="FromDate" ColumnName="FromDate" />
+                <ScalarProperty Name="ExpenseDate" ColumnName="ExpenseDate" />
+                <ScalarProperty Name="HotelName" ColumnName="HotelName" />
+                <ScalarProperty Name="LocOut" ColumnName="LocOut" />
+                <ScalarProperty Name="Purpose" ColumnName="Purpose" />
+                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+                <ScalarProperty Name="ClaimLineId" ColumnName="ClaimLineId" />
+                <ScalarProperty Name="ClaimId" ColumnName="ClaimId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClaimStatus">
+            <EntityTypeMapping TypeName="ubietydbModel.ClaimStatu">
+              <MappingFragment StoreEntitySet="ClaimStatus">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClaimStatusHistories">
+            <EntityTypeMapping TypeName="ubietydbModel.ClaimStatusHistory">
+              <MappingFragment StoreEntitySet="ClaimStatusHistory">
+                <ScalarProperty Name="StatusDateTime" ColumnName="StatusDateTime" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="ClaimId" ColumnName="ClaimId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="attByClients">
+            <EntityTypeMapping TypeName="ubietydbModel.attByClient">
+              <MappingFragment StoreEntitySet="attByClient">
+                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="Coordinates" ColumnName="Coordinates" />
+                <ScalarProperty Name="MarkDate" ColumnName="MarkDate" />
+                <ScalarProperty Name="empid" ColumnName="empid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="clientEmployees">
+            <EntityTypeMapping TypeName="ubietydbModel.clientEmployee">
+              <MappingFragment StoreEntitySet="clientEmployee">
+                <ScalarProperty Name="empname" ColumnName="empname" />
+                <ScalarProperty Name="companyId" ColumnName="companyId" />
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="getAttendanceByClientsDays" FunctionName="ubietydbModel.Store.getAttendanceByClientsDays">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ubietydbModel.getAttendanceByClientsDays_Result1">
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+                <ScalarProperty Name="Emp_Name" ColumnName="Emp Name" />
+                <ScalarProperty Name="MarkDate" ColumnName="MarkDate" />
+                <ScalarProperty Name="MarkingTime" ColumnName="MarkingTime" />
+                <ScalarProperty Name="Coordinates" ColumnName="Coordinates" />
+                <ScalarProperty Name="MarkCount" ColumnName="MarkCount" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

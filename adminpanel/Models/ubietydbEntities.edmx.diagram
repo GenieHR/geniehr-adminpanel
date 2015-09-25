@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="d76620c6670b4486b189f239cd5a8336" Name="Diagram1" ZoomLevel="28">
+        <EntityTypeShape EntityType="ubietydbModel.Address" Width="1.5" PointX="12" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="ubietydbModel.AddressType" Width="1.5" PointX="9.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ubietydbModel.Attendance" Width="1.5" PointX="5.25" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ubietydbModel.AttendanceFlag" Width="1.5" PointX="3" PointY="15.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ubietydbModel.Client" Width="1.5" PointX="1.5" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ubietydbModel.EmpClient" Width="1.5" PointX="12.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ubietydbModel.Employee" Width="1.5" PointX="3" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="ubietydbModel.EmpStatu" Width="1.5" PointX="0.75" PointY="11.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ubietydbModel.EntityAddress" Width="1.5" PointX="14.25" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ubietydbModel.EntityType" Width="1.5" PointX="12" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ubietydbModel.Login" Width="1.5" PointX="5.25" PointY="14.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ubietydbModel.Organization" Width="1.5" PointX="12.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ubietydbModel.attendancereport" Width="1.5" PointX="14.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ubietydbModel.attRepTemp" Width="1.5" PointX="7.75" PointY="14.75" IsExpanded="true" />
+        <AssociationConnector Association="ubietydbModel.FK_Address_AddressType" ManuallyRouted="false" />
+        <AssociationConnector Association="ubietydbModel.FK_EntityAddresses_Address" ManuallyRouted="false" />
+        <AssociationConnector Association="ubietydbModel.FK_Attendance_AttendanceFlag" ManuallyRouted="false" />
+        <AssociationConnector Association="ubietydbModel.FK_Attendance_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="ubietydbModel.FK_Employee_EmpStatus" ManuallyRouted="false" />
+        <AssociationConnector Association="ubietydbModel.FK_Login_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="ubietydbModel.FK_EntityAddresses_EntityType" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ubietydbModel.Group" Width="1.5" PointX="6" PointY="2" />
+        <EntityTypeShape EntityType="ubietydbModel.GroupEmployee" Width="1.5" PointX="8.25" PointY="8.125" />
+        <EntityTypeShape EntityType="ubietydbModel.GroupIncharge" Width="1.5" PointX="8.25" PointY="11.125" />
+        <EntityTypeShape EntityType="ubietydbModel.GroupType" Width="1.5" PointX="3.75" PointY="2.125" />
+        <AssociationConnector Association="ubietydbModel.FK_GroupEmployee_Employee" />
+        <AssociationConnector Association="ubietydbModel.FK_GroupIncharge_Employee" />
+        <AssociationConnector Association="ubietydbModel.FK_Group_GroupType" />
+        <AssociationConnector Association="ubietydbModel.FK_GroupEmployee_Group" />
+        <AssociationConnector Association="ubietydbModel.FK_GroupIncharge_Group" />
+        <AssociationConnector Association="ubietydbModel.FK_GroupType_Client" />
+        <EntityTypeShape EntityType="ubietydbModel.ClaimHead" Width="1.5" PointX="5.25" PointY="6.75" />
+        <EntityTypeShape EntityType="ubietydbModel.ClaimLine" Width="1.5" PointX="10.5" PointY="5.125" />
+        <EntityTypeShape EntityType="ubietydbModel.ClaimStatu" Width="1.5" PointX="3" PointY="7.125" />
+        <EntityTypeShape EntityType="ubietydbModel.ClaimStatusHistory" Width="1.5" PointX="7.5" PointY="5" />
+        <AssociationConnector Association="ubietydbModel.FK_ClaimHead_ClaimStatus" />
+        <AssociationConnector Association="ubietydbModel.FK_ClaimHead_Employee" />
+        <AssociationConnector Association="ubietydbModel.FK_ClaimLine_ClaimHead" />
+        <AssociationConnector Association="ubietydbModel.FK_ClaimStatusHistory_ClaimHead" />
+        <AssociationConnector Association="ubietydbModel.FK_ClaimLine_ClaimStatus" />
+        <AssociationConnector Association="ubietydbModel.FK_ClaimStatusHistory_ClaimStatus" />
+        <EntityTypeShape EntityType="ubietydbModel.attByClient" Width="1.5" PointX="14.75" PointY="8.75" />
+        <EntityTypeShape EntityType="ubietydbModel.clientEmployee" Width="1.5" PointX="9.75" PointY="14.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

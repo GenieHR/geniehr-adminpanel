@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>    
+
+    <!--<script src="js/plugins/date/core.js"></script>-->
+    <script src="js/plugins/date/date.js"></script>
+    <script src="js/plugins/date/extras.js"></script>
+    <script src="js/plugins/date/parser.js"></script>
+    <script src="js/plugins/date/sugarpak.js"></script>
+    <script src="js/plugins/date/time.js"></script>
+
+    <title></title>
+</head>
+<body>
+    <script>
+        //var dateFld = Date.parse("2015-09-16 10:56:15.637", "yyyy-MM-dd hh:mm:ss.SSS");
+
+        var val = [];
+
+        var today = [];
+        var yesterday = [];
+        var thisweek = [];
+        var lastweek = [];
+        var thismonth = [];
+        var lastmonth = [];
+
+        val[0] = "2015-09-16 10:56:15.637";
+        val[1] = "2015-09-15 10:56:15.637";
+        val[2] = "2015-09-14 10:56:15.637";
+        val[3] = "2015-09-13 10:56:15.637";
+        val[4] = "2015-09-12 10:56:15.637";
+        val[5] = "2015-09-11 10:56:15.637";
+        val[6] = "2015-08-31 10:56:15.637";
+
+        var dateFld, index;
+
+        for (index = 0; index < val.length; index++) {
+
+            dateFld = Date.parseExact(val[index].split('.')[0], "yyyy-MM-dd hh:mm:ss");
+
+            if (dateFld.clearTime().equals(Date.today().clearTime())) {
+                today[today.length] = index;
+                thisweek[thisweek.length] = index;
+                thismonth[thismonth.length] = index;
+                continue;
+            }
+
+            if (dateFld.clearTime().between(Date.monday(), Date.next().sunday())) {
+                thisweek[thisweek.length] = index;
+                thismonth[thismonth.length] = index;
+                continue;
+            }
+
+            if (Date.today().getMonth() == dateFld.clearTime().getMonth()) {
+                thismonth[thismonth.length] = index;
+            }
+
+            if (dateFld.clearTime().between(Date.last().week().monday(), Date.last().sunday())) {
+                lastweek[lastweek.length] = index;
+            }
+
+            if (Date.today().getMonth()-1 == dateFld.clearTime().getMonth()) {
+                lastmonth[lastmonth.length] = index;
+            }
+        }
+        
+        for (index = 0; index < thisweek.length; index++) {
+            alert(val[thisweek[index]]);
+        }
+
+    </script>
+</body>
+</html>
