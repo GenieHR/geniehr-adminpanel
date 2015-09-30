@@ -1,4 +1,4 @@
-﻿    <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="AddClaim.aspx.cs" MasterPageFile="~/UbietyMenu.Master" Inherits="Admin.AddClaim" Title="Add Claim" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="AddClaim.aspx.cs" MasterPageFile="~/UbietyMenu.Master" Inherits="Admin.AddClaim" Title="Add Claim" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="body" Runat="Server">
 <script src="js/plugins/date/date.js"></script>

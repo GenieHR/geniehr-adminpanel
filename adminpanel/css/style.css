@@ -1380,6 +1380,42 @@ button.dim:active:before {
   margin: 0;
   color: #777777;
 }
+
+.travelbox .panel-heading .traveldate {
+        /*float:right;*/
+        margin-top:7px;
+}
+
+.travelbox .panel-body {
+    min-height:120px;
+
+}
+
+.travelbox .panel-footer.auth-but  {
+    opacity : 0;
+    transition: opacity .1s ease-in ;
+    align-content:center;
+}
+
+.travelbox .panel-footer.auth-but:hover  { 
+    opacity : 1;
+
+}
+
+.travelbox .panel-body p.purpose {
+    color:blue;
+}
+
+
+.amount {
+    font-weight: bold;
+    text-align: right;
+}
+
+.amount:before {
+    content:"Rs. ";
+}
+
 .panel .slidedown .glyphicon,
 .chat .glyphicon {
   margin-right: 5px;

@@ -34,8 +34,7 @@ namespace Admin
             //roleManager.Create(new IdentityRole("ClientManager"));
             //roleManager.Create(new IdentityRole("ClientEmployee"));
 
-
-           //DefaultConnection1 context = new DefaultConnection1();
+			//DefaultConnection1 context = new DefaultConnection1();
 
             //var userStore = new UserStore<IdentityUser>();
             //var UserManager = new UserManager<IdentityUser>(userStore);
