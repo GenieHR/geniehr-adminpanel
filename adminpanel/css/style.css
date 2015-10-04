@@ -3437,7 +3437,13 @@ body.body-small .footer.fixed {
 .table > thead > tr > th {
   border-bottom: 1px solid #DDDDDD;
   vertical-align: bottom;
+  text-align:center;
 }
+.curr {
+  text-align:right;
+}
+
+
 .table > thead > tr > th,
 .table > tbody > tr > th,
 .table > tfoot > tr > th,
