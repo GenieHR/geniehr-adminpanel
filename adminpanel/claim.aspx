@@ -23,7 +23,6 @@
                             <li><a data-toggle="tab" href="#tabHotel">Hotel</a></li>
                             <li><a data-toggle="tab" href="#tabFood">Food</a></li>
                             <li><a data-toggle="tab" href="#tabOthers">Others</a></li>
-
                         </ul>
                         <div class="tab-content ">
 
@@ -32,7 +31,7 @@
                                     <div class="row">
 
                                         <div class="col-lg-8 col-sm-8 col-md-8">
-                                            <form method="get" class="form-horizontal">
+                                            <form id="summaryForm" method="get" class="form-horizontal">
 
                                                 <div class="form-group">
                                                     <label class="col-sm-2 control-label">Purpose</label>
@@ -109,36 +108,18 @@
                                     <div class="hr-line-dashed" style="margin-top: 0px"></div>
                                     <div class="row">
                                         <div class="col-lg-12">
-                                            <table class=" table table-stripped table-bordered table-hover table-condensed">
+                                            <table id="expensesTable" class=" table table-stripped table-bordered table-hover table-condensed">
                                                 <thead>
                                                     <tr>
+                                                        <th style="width: 10%;">Type </th>
                                                         <th style="width: 10%;">Date </th>
-                                                        <th style="width: 70%">Purpose</th>
+                                                        <th style="width: 60%">Notes</th>
                                                         <th style="width: 10%" class="curr">Amount</th>
                                                         <th style="width: 10%">Manage</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <td>Travel</td>
-                                                        <td>Purpose</td>
-                                                        <td class="curr">0.00</td>
-                                                        <td class="text-center text-info"><i class="fa fa-pencil"></i>&nbsp;&nbsp;  <i class="fa fa-trash"></i></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Travel</td>
-                                                        <td>Purpose</td>
-                                                        <td class="curr">0.00</td>
-                                                        <td class="text-center text-info"><i class="fa fa-pencil"></i>&nbsp;&nbsp;  <i class="fa fa-trash "></i></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Travel</td>
-                                                        <td>Purpose</td>
-                                                        <td class="curr">0.00</td>
-                                                        <td class="text-center text-info"><i class="fa fa-pencil "></i>&nbsp;&nbsp;  <i class="fa fa-trash "></i></td>
-                                                    </tr>
                                                 </tbody>
-
                                             </table>
                                         </div>
                                     </div>
@@ -148,7 +129,7 @@
                             <div id="tabTravel" class="tab-pane">
                                 <div class="panel-body">
 
-                                    <form method="get" class="form-horizontal">
+                                    <form id="travelForm" method="get" class="form-horizontal">
 
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">Travel Purpose</label>
@@ -234,7 +215,7 @@
                                             </div>
                                             <div class="col-sm-6">
             
-                                                <input type="button" id="travelButton" class="pull-right btn btn-success" value="Add Expense" onclick="addExpense('Travel')" />
+                                                <input type="submit" class="pull-right btn btn-success" value="Add Expense" /><%--onclick="addExpense('Travel')"--%>
                                             </div>
                                         </div>
                                     </form>
@@ -245,12 +226,12 @@
                             <div id="tabHotel" class="tab-pane">
                                 <div class="panel-body">
 
-                                    <form method="get" class="form-horizontal">
+                                    <form id="hotelForm" method="get" class="form-horizontal">
 
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">Hotel Name</label>
                                             <div class="col-sm-10">
-                                                <input type="text" id="hotelname" class="form-control" />
+                                                <input type="text" required="required" id="hotelname" class="form-control" />
                                             </div>
                                         </div>
                                         <div class="hr-line-dashed"></div>
@@ -260,7 +241,7 @@
                                             <div class="col-sm-4">
                                                 <div class="input-group m-b">
                                                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                    <input type="date" id="stayfromdate" class="form-control" />
+                                                    <input type="date" required="required" id="stayfromdate" class="form-control" />
                                                 </div>
                                             </div>
                                             <label class="col-sm-2 control-label">Stay To Date</label>
@@ -268,7 +249,7 @@
                                             <div class="col-sm-4">
                                                 <div class="input-group m-b">
                                                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                    <input type="date" id="staytodate" class="form-control" />
+                                                    <input type="date" required="required" id="staytodate" class="form-control" />
                                                 </div>
                                             </div>
 
@@ -288,7 +269,7 @@
                                             <div class="col-sm-4">
                                                 <div class="input-group m-b">
                                                     <span class="input-group-addon">&#x20B9</span>
-                                                    <input type="number" id="hotelrate" class="form-control" />
+                                                    <input type="number" id="hotelrate" required="required" class="form-control" />
                                                     <span class="input-group-addon">per night</span>
                                                 </div>
                                             </div>
@@ -297,7 +278,7 @@
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">Remarks</label>
                                             <div class="col-sm-10">
-                                                <input type="text" id="hotelremarks" class="form-control" />
+                                                <input type="text" required="required" id="hotelremarks" class="form-control" />
                                             </div>
                                         </div>
                                         <div class="hr-line-dashed"></div>
@@ -307,11 +288,11 @@
                                             <div class="col-sm-4">
                                                 <div class="input-group m-b">
                                                     <span class="input-group-addon">&#x20B9</span>
-                                                    <input type="number" id="hotelamount" class="form-control" />
+                                                    <input type="number" required="required" id="hotelamount" class="form-control" />
                                                 </div>
                                             </div>
                                             <div class="col-sm-6">
-                                                <input type="button" onclick="addExpense('Hotel')" class="pull-right btn btn-success" value="Add Expense" />
+                                                <input type="submit" class="pull-right btn btn-success" value="Add Expense" /><%--onclick="addExpense('Hotel')"--%>
                                             </div>
                                         </div>
                                     </form>
@@ -322,12 +303,12 @@
                             <div id="tabFood" class="tab-pane">
                                 <div class="panel-body">
 
-                                    <form method="get" class="form-horizontal">
+                                    <form id="foodForm" method="get" class="form-horizontal">
 
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">Restaurant Name</label>
                                             <div class="col-sm-10">
-                                                <input type="text" id="restaurantname" class="form-control" />
+                                                <input type="text" required="required" id="restaurantname" class="form-control" />
                                             </div>
                                         </div>
 
@@ -337,7 +318,7 @@
 
                                             <div class="col-sm-4">
                                                 <div class="input-group m-b"><span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                    <input type="date" id="foodexpensedate" class="form-control" /></div>
+                                                    <input type="date" required="required" id="foodexpensedate" class="form-control" /></div>
                                             </div>
                                             <label class="col-sm-2 control-label">No. of Persons</label>
 
@@ -349,7 +330,7 @@
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">Remarks</label>
                                             <div class="col-sm-10">
-                                                <input type="text" id="foodremarks" class="form-control" />
+                                                <input type="text" required="required" id="foodremarks" class="form-control" />
                                             </div>
                                         </div>
                                         <div class="hr-line-dashed"></div>
@@ -359,43 +340,39 @@
                                             <div class="col-sm-4">
                                                 <div class="input-group m-b">
                                                     <span class="input-group-addon">&#x20B9</span>
-                                                    <input type="number" id="foodtotalamount" class="form-control" />
+                                                    <input type="number" required="required" id="foodtotalamount" class="form-control" />
                                                 </div>
                                             </div>
                                             <div class="col-sm-6">
-                                                <input type="button" onclick="addExpense('Food')" class="pull-right btn btn-success" value="Add Expense" />
+                                                <input type="submit" class="pull-right btn btn-success" value="Add Expense" /> <%--onclick="addExpense('Food')"--%>
                                             </div>
                                         </div>
                                     </form>
-
                                 </div>
                             </div>
 
                             <div id="tabOthers" class="tab-pane">
                                 <div class="panel-body">
-                                    <form method="get" class="form-horizontal">
-
+                                    <form id="othersForm" method="get" class="form-horizontal">
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">Expense Description</label>
                                             <div class="col-sm-10">
-                                                <input type="text" id="otherdesc" class="form-control" />
+                                                <input type="text" required="required" id="otherdesc" class="form-control" />
                                             </div>
                                         </div>
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">Expense Date</label>
-
                                             <div class="col-sm-4">
                                                 <div class="input-group m-b"><span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                    <input type="date" id="otherexpensedate" class="form-control" /></div>
+                                                    <input type="date" required="required" id="otherexpensedate" class="form-control" /></div>
                                             </div>
-
                                         </div>
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">Remarks</label>
                                             <div class="col-sm-10">
-                                                <input type="text" id="otherexpenseremarks" class="form-control" />
+                                                <input type="text" required="required" id="otherexpenseremarks" class="form-control" />
                                             </div>
                                         </div>
                                         <div class="hr-line-dashed"></div>
@@ -405,11 +382,11 @@
                                             <div class="col-sm-4">
                                                 <div class="input-group m-b">
                                                     <span class="input-group-addon">&#x20B9</span>
-                                                    <input type="number" id="otherexpenseamt" class="form-control" />
+                                                    <input type="number" required="required" id="otherexpenseamt" class="form-control" />
                                                 </div>
                                             </div>
                                             <div class="col-sm-6">
-                                                <input type="button" onclick="addExpense('Others')" class="pull-right btn btn-success" value="Add Expense" />
+                                                <input type="submit" class="pull-right btn btn-success" value="Add Expense" /><%--onclick="addExpense('Others')"--%>
                                             </div>
                                         </div>
                                     </form>
@@ -423,34 +400,75 @@
     </div>
     <script>
 
+        var newId = 0;
         var claimJSON = $.parseJSON('{"empid":"","claimpurpose":"","claimdate":"","totalamount":"","managername":"","status":"","Travels":[],"Hotels":[],"Food":[],"Others":[]}');
+
         function addExpense(expenseType) {
+            newId++;
             switch (expenseType) {
                 case 'Travel':
-                    claimJSON.Travels.push({ "purpose": $('#travelpurpose').val(), "traveldate": $("#traveldate").val(), "modeoftravel": $('input[name=modeoftravel]:checked').val(), "from": $("#travelfrom").val(), "to": $("#travelto").val(), "distance": $("#traveldistance").val(), "rate": $("#travelrate").val(), "remarks": $("#travelremarks").val(), "totalamount": $("#travelamount").val() });
+                    claimJSON.Travels.push({ "travelid":newId, "purpose": $('#travelpurpose').val(), "traveldate": $("#traveldate").val(), "modeoftravel": $('input[name=modeoftravel]:checked').val(), "from": $("#travelfrom").val(), "to": $("#travelto").val(), "distance": $("#traveldistance").val(), "rate": $("#travelrate").val(), "remarks": $("#travelremarks").val(), "totalamount": $("#travelamount").val() });
                     calculateSummTravelAmt();
+                    $('#expensesTable  tbody').append('<tr id="'+ newId + '"><td>Travel</td><td>' + $("#traveldate").val() + '</td><td>' + $('#travelpurpose').val() + '</td><td class="curr">' + $("#travelamount").val() + '</td><td class="text-center text-info"><i class="fa fa-pencil"></i>&nbsp;&nbsp;  <i class="fa fa-trash"></i></tr>');
+
                     break;
                 case 'Hotel':
-                    claimJSON.Hotels.push({ "hotelname": $("#hotelname").val(), "stayfromdate": $("#stayfromdate").val(), "staytodate": $("#staytodate").val(), "noofnights": $("#").val(), "rate": $("#hotelrate").val(), "remarks": $("#hotelremarks").val(), "totalamount": $("#hotelamount").val() });
+                    claimJSON.Hotels.push({ "hotelsid":newId, "hotelname": $("#hotelname").val(), "stayfromdate": $("#stayfromdate").val(), "staytodate": $("#staytodate").val(), "noofnights": $("#").val(), "rate": $("#hotelrate").val(), "remarks": $("#hotelremarks").val(), "totalamount": $("#hotelamount").val() });
                     calculateSummHotelAmt();
-                    break;
+                    $('#expensesTable  tbody').append('<tr id="'+ newId + '"><td>Hotel</td><td>' + $("#staytodate").val() + '</td><td>' + $('#hotelname').val() + '</td><td class="curr">' + $("#hotelamount").val() + '</td><td class="text-center text-info"><i class="fa fa-pencil"></i>&nbsp;&nbsp;  <i class="fa fa-trash"></i></tr>');
+
+                  break;
                 case 'Food':
-                    claimJSON.Food.push({"restaurantname":$("#restaurantname").val(),"expensedate":$("#foodexpensedate").val(),"noofpersons":$("#foodnoofpersons").val(),"remarks":$("#foodremarks").val(),"totalamount":$("#foodtotalamount").val()});
+                    claimJSON.Food.push({"foodid":newId,"restaurantname":$("#restaurantname").val(),"expensedate":$("#foodexpensedate").val(),"noofpersons":$("#foodnoofpersons").val(),"remarks":$("#foodremarks").val(),"totalamount":$("#foodtotalamount").val()});
                     calculateSummFoodAmt();
-                    break;
+                    $('#expensesTable  tbody').append('<tr id="'+ newId + '"><td>Food</td><td>' + $("#foodexpensedate").val() + '</td><td>' + $('#restaurantname').val() + '</td><td class="curr">' + $("#foodtotalamount").val() + '</td><td class="text-center text-info"><i class="fa fa-pencil"></i>&nbsp;&nbsp;  <i class="fa fa-trash"></i></tr>');
+                 
+                   break;
                 case 'Others':
-                    claimJSON.Others.push({"otherdesc":$("#otherdesc").val(), "otherexpensedate": $("#otherexpensedate").val(), "otherexpenseremarks":$("#otherexpenseremarks").val(), "otherexpenseamt": $("#otherexpenseamt").val() });
+                    claimJSON.Others.push({"othersid":newId, "otherdesc":$("#otherdesc").val(), "otherexpensedate": $("#otherexpensedate").val(), "otherexpenseremarks":$("#otherexpenseremarks").val(), "otherexpenseamt": $("#otherexpenseamt").val() });
                     calculateSummOthersAmt();
+                    $('#expensesTable  tbody').append('<tr id="'+ newId + '"><td>Others</td><td>' + $("#otherexpensedate").val() + '</td><td>' + $('#otherdesc').val() + '</td><td class="curr">' + $("#otherexpenseamt").val() + '</td><td class="text-center text-info"><i class="fa fa-pencil"></i>&nbsp;&nbsp;  <i class="fa fa-trash"></i></tr>');
+                   
                     break;
 
                 default:
-
-                
             }
             calculateTotalAmt();
         }
 
         
+        $("#foodForm").submit(function (event) {
+            event.preventDefault();
+
+
+            addExpense('Food');
+
+        });
+
+        $("#travelForm").submit(function (event) {
+            event.preventDefault();
+
+
+            addExpense('Travel');
+
+        });
+
+        $("#hotelForm").submit(function (event) {
+            event.preventDefault();
+
+
+            addExpense('Hotel');
+
+        });
+
+        $("#othersForm").submit(function (event) {
+            event.preventDefault();
+
+
+            addExpense('Others');
+
+        });
+
 
         function calculateTotalAmt() {
              var totamt = parseInt($("#sumTravelAmt").html()) + parseInt($("#sumHotelAmt").html())  + parseInt($("#sumFoodAmt").html())  + parseInt($("#summOthAmt").html()) ; 
@@ -466,7 +484,6 @@
             for (p = 0; p < i; p++) {
                 totAmt += parseInt(claimJSON.Travels[p].totalamount);
             }
-            alert(totAmt);
             $("#sumTravelAmt").html(totAmt );
         }
 
@@ -505,6 +522,8 @@
             }
 
             $("#summOthAmt").html(totAmt);
+
+prompt("", JSON.stringify(claimJSON));
         }
 
 
