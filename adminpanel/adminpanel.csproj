@@ -252,6 +252,8 @@
     <Content Include="css\normalize.css" />
     <Content Include="css\plugins\autocomplete\jquery.auto-complete.css" />
     <Content Include="css\plugins\datapicker\datepicker3.css" />
+    <Content Include="css\plugins\footable\fonts\footable.svg" />
+    <Content Include="css\plugins\footable\footable.core.css" />
     <Content Include="css\plugins\toastr\toastr.min.css" />
     <Content Include="css\spinners.css" />
     <Content Include="css\style.css" />
@@ -395,6 +397,10 @@
     <Content Include="fonts\font-awesome\fonts\fontawesome-webfonte0a5.ttf" />
     <Content Include="fonts\font-awesome\fonts\fontawesome-webfonte0a5.woff" />
     <Content Include="fonts\font-awesome\fonts\fontawesome-webfonte0a5.woff2" />
+    <Content Include="css\plugins\footable\fonts\footable.eot" />
+    <Content Include="css\plugins\footable\fonts\footable.ttf" />
+    <Content Include="css\plugins\footable\fonts\footable.woff" />
+    <Content Include="css\plugins\footable\fonts\footabled41d.eot" />
     <None Include="Properties\PublishProfiles\admintp.pubxml" />
     <None Include="Properties\PublishProfiles\ubietyadmin %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\ubietyadmin.pubxml" />

@@ -39,7 +39,7 @@ namespace Admin
                 }
                 else if (System.Web.HttpContext.Current.User.IsInRole("ClientEmployee"))
                 {
-                    Response.Redirect("~/AddClaim.aspx");
+                    Response.Redirect("~/Claim.aspx");
                 }
                 else if (System.Web.HttpContext.Current.User.IsInRole("SuperAdmin"))
                 {

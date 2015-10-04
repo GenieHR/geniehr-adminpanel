@@ -1,23 +1,26 @@
-﻿﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="UbietyMenu.master.cs" Inherits="Admin.UbietyMenu"  %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="UbietyMenu.master.cs" Inherits="Admin.UbietyMenu"  %>
 
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head runat="server">
-    
-    <asp:ContentPlaceHolder ID="head" runat="server">
+    <title></title>
+    <link href="css/plugins/footable/footable.core.css" rel="stylesheet" />
     
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css"/>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+
     <script src="js/plugins/paging/paging.js"></script>
-    
+        <script src="js/plugins/footable/footable.all.min.js"></script>
     <link href="fonts/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
     <link href="css/bootstrap.min.css" rel="stylesheet" />
     <link href="css/animate.css" rel="stylesheet"/>
     <link href="css/style.css" rel="stylesheet"/>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    
 
     </asp:ContentPlaceHolder>
 </head>
@@ -42,14 +45,9 @@
         <asp:ContentPlaceHolder   ID="body" runat="server" />
             </div>
          </div>
-      <!-- Mainly scripts -->
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
-    <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 
-    <!-- Custom and plugin javascript -->
+    <script src="js/bootstrap.min.js"></script>
     <script src="js/inspinia.js"></script>
-    <script src="js/plugins/pace/pace.min.js"></script>
 
 </body>
 </html>
