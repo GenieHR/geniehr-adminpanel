@@ -12,7 +12,7 @@
 
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css"/>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-
+    <link href="css/plugins/toastr/toastr.min.css" rel="stylesheet" />
     <script src="js/plugins/paging/paging.js"></script>
         <script src="js/plugins/footable/footable.all.min.js"></script>
     <link href="fonts/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
@@ -47,7 +47,8 @@
          </div>
 
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
     <script src="js/inspinia.js"></script>
-
+    <script src="js/plugins/toastr/toastr.min.js"></script>
 </body>
 </html>

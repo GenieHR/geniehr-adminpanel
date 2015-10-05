@@ -62,7 +62,6 @@
             $("#notification").append('<div class="alert alert-danger">Wrong Credentials, Please try again.</div>');
         }
 
-        
     </script>
 </body>
 
