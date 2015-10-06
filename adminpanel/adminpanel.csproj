@@ -599,6 +599,7 @@
     </Compile>
     <Compile Include="Controllers\AttendanceController.cs" />
     <Compile Include="Controllers\ClaimHeadsController.cs" />
+    <Compile Include="Controllers\claimJSONsController.cs" />
     <Compile Include="Controllers\ClaimLinesController.cs" />
     <Compile Include="Controllers\ClientsController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
@@ -684,6 +685,9 @@
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ClaimHead.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\claimJSON.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ClaimLine.cs">

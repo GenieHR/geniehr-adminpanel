@@ -51,6 +51,7 @@ namespace adminpanel.Models
         public virtual DbSet<ClaimStatusHistory> ClaimStatusHistories { get; set; }
         public virtual DbSet<attByClient> attByClients { get; set; }
         public virtual DbSet<clientEmployee> clientEmployees { get; set; }
+        public virtual DbSet<claimJSON> claimJSONs { get; set; }
     
         public virtual ObjectResult<getEmpOfGroups_Result> getEmpOfGroups()
         {
@@ -81,6 +82,19 @@ namespace adminpanel.Models
                 new ObjectParameter("numDays", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getAttendanceByClientsDays_Result1>("getAttendanceByClientsDays", clientIdParameter, numDaysParameter);
+        }
+    
+        public virtual ObjectResult<string> getNextClaimNo(string empNum, Nullable<int> empId)
+        {
+            var empNumParameter = empNum != null ?
+                new ObjectParameter("EmpNum", empNum) :
+                new ObjectParameter("EmpNum", typeof(string));
+    
+            var empIdParameter = empId.HasValue ?
+                new ObjectParameter("EmpId", empId) :
+                new ObjectParameter("EmpId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("getNextClaimNo", empNumParameter, empIdParameter);
         }
     }
 }

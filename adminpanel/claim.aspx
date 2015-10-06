@@ -1,6 +1,30 @@
 ﻿<%@ Page Title="Claims" Language="C#" MasterPageFile="~/UbietyMenu.Master" AutoEventWireup="true" CodeBehind="claim.aspx.cs" Inherits="adminpanel.claim" %>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="body" runat="server">
+    <style>
+        .vertical-alignment-helper {
+    display:table;
+    height: 100%;
+    width: 100%;
+    pointer-events:none; /* This makes sure that we can still click outside of the modal to close it */
+}
+.vertical-align-center {
+    /* To center vertically */
+    display: table-cell;
+    vertical-align: middle;
+    pointer-events:none;
+}
+.modal-content {
+    /* Bootstrap sets the size of the modal in the modal-dialog class, we need to inherit it */
+    width:inherit;
+    height:inherit;
+    /* To center horizontally */
+    margin: 0 auto;
+    pointer-events: all;
+}
+ 
+
+    </style>
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
             <h2>Add A New Claim</h2>
@@ -35,7 +59,7 @@
                                                 <div class="form-group">
                                                     <label class="col-sm-2 control-label">Purpose</label>
                                                     <div class="col-sm-10">
-                                                        <input type="text" required="required" class="form-control" />
+                                                        <input type="text" required="required" id="claimPurpose" class="form-control" />
                                                     </div>
                                                 </div>
 
@@ -139,7 +163,7 @@
                                         </div>
                                     </div>
                                     <div class="row text-center">
-                                    <input type="button" value="Submit Claim" class="btn btn-info" />
+                                    <input type="button" value="Submit Claim" onclick="javascript:submitClaim()" class="btn btn-info" />
                                     </div>
                                 </div>
                             </div>
@@ -424,14 +448,35 @@
             </div>
         </div>
     </div>
+
+
+
+<div class="modal fade" id="myModal">
+    <div class="vertical-alignment-helper">
+        <div class="modal-dialog vertical-align-center">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div id="loadingContent" class="text-center">
+                        <h3>Submitting claim, Please wait.</h3>
+                        <i class="fa fa-2x fa-spinner fa-pulse"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+   
     <script>
+
+        $('#myModal').on('hidden.bs.modal', function () {
+            window.location = 'claim.aspx';
+        })
 
         var newId = 0;
         var claimJSON = $.parseJSON('{"empid":"","travelExpense":0, "foodExpense":0, "hotelExpense":0,"otherExpense":0, "totalExpense":0, "claimpurpose":"","claimdate":"","totalamount":"","managername":"","status":"","Travels":[],"Hotels":[],"Food":[],"Others":[]}');
 
-
         $("#claimDate").datepicker({ dateFormat: 'dd-mm-yy' }).datepicker("setDate", new Date());
-
 
 
         function addExpense(expenseType) {
@@ -491,14 +536,45 @@
             $('.nav-tabs a[href="#' + tab + '"]').tab('show');
         }
 
-        $("#summaryForm").submit(function (event) {
-            event.preventDefault();
+        function submitClaim() {
 
-            //addExpense('Food');
-            //$('#foodForm').trigger("reset");
-            //activateTab('tabSummary');
+            $('#myModal').modal({
+                backdrop: 'static',
+                keyboard: false
+            })
 
-        });
+            $('#myModal').modal();
+            
+            claimJSON.travelExpense = parseInt($("#sumTravelAmt").html());
+            claimJSON.claimpurpose = $("#claimPurpose").val();
+
+            claimJSON.foodExpense = parseInt($("#sumFoodAmt").html());
+            claimJSON.hotelExpense = parseInt($("#sumHotelAmt").html());
+            claimJSON.otherExpense = parseInt($("#summOthAmt").html());
+            claimJSON.totalExpense = parseInt($("#summTotAmt").html());
+
+            
+            var uploadVal = {
+                "EmpId": 1,
+                "EmpNum": "Rel-123",
+                "claimDate": $("#claimDate").val(),
+                "claimPurpose": claimJSON.claimpurpose,
+                "claimText": JSON.stringify(claimJSON),
+                "totalAmount": parseInt($("#summTotAmt").html())
+            };
+
+
+
+            $.ajax({
+                url: 'api/claimJSONs',
+                type: 'post',
+                dataType: 'json',
+                success: function (data) {
+                    $("#loadingContent").html('<h3>Claim Submitted Succesfully</h3><a data-dismiss="modal">Close</a>');
+                },
+                data: uploadVal
+            });
+        }
 
         $("#foodForm").submit(function (event) {
             event.preventDefault();

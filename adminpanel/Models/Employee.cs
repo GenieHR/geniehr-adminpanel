@@ -20,6 +20,7 @@ namespace adminpanel.Models
             this.GroupEmployees = new HashSet<GroupEmployee>();
             this.GroupIncharges = new HashSet<GroupIncharge>();
             this.ClaimHeads = new HashSet<ClaimHead>();
+            this.claimJSONs = new HashSet<claimJSON>();
         }
     
         public int EmpId { get; set; }
@@ -39,5 +40,6 @@ namespace adminpanel.Models
         public virtual ICollection<GroupEmployee> GroupEmployees { get; set; }
         public virtual ICollection<GroupIncharge> GroupIncharges { get; set; }
         public virtual ICollection<ClaimHead> ClaimHeads { get; set; }
+        public virtual ICollection<claimJSON> claimJSONs { get; set; }
     }
 }

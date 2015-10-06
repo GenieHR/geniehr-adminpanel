@@ -12,18 +12,16 @@ namespace adminpanel.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Attendance
+    public partial class claimJSON
     {
-        public int AttendanceId { get; set; }
+        public int id { get; set; }
         public int EmpId { get; set; }
-        public Nullable<int> MarkFlagId { get; set; }
-        public System.DateTime MarkTime { get; set; }
-        public Nullable<double> latitude { get; set; }
-        public Nullable<double> longitude { get; set; }
-        public Nullable<int> markcount { get; set; }
-        public string locationdesc { get; set; }
+        public string claimNo { get; set; }
+        public System.DateTime claimDate { get; set; }
+        public string claimPurpose { get; set; }
+        public string claimText { get; set; }
+        public decimal totalAmount { get; set; }
     
-        public virtual AttendanceFlag AttendanceFlag { get; set; }
         public virtual Employee Employee { get; set; }
     }
 }

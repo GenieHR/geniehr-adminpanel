@@ -37,6 +37,7 @@
           <Property Name="latitude" Type="float" />
           <Property Name="longitude" Type="float" />
           <Property Name="markcount" Type="int" />
+          <Property Name="locationdesc" Type="nvarchar" MaxLength="1000" />
         </EntityType>
         <EntityType Name="AttendanceFlag">
           <Key>
@@ -54,6 +55,18 @@
           <Property Name="ClaimNumber" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="ClaimTitle" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="Status" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="claimJSON">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmpId" Type="int" Nullable="false" />
+          <Property Name="claimNo" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="claimDate" Type="datetime" Nullable="false" />
+          <Property Name="claimPurpose" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="claimText" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="totalAmount" Type="money" Nullable="false" />
         </EntityType>
         <EntityType Name="ClaimLine">
           <Key>
@@ -317,6 +330,18 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_claimJSON_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="claimJSON" Type="Self.claimJSON" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="claimJSON">
+              <PropertyRef Name="EmpId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ClaimLine_ClaimHead">
           <End Role="ClaimHead" Type="Self.ClaimHead" Multiplicity="1" />
           <End Role="ClaimLine" Type="Self.ClaimLine" Multiplicity="*" />
@@ -494,12 +519,17 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <Parameter Name="groupId" Type="int" Mode="In" />
         </Function>
         <Function Name="getIST" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="datetime" />
+        <Function Name="getNextClaimNo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EmpNum" Type="nvarchar" Mode="In" />
+          <Parameter Name="EmpId" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="ubietydbModelStoreContainer">
           <EntitySet Name="Address" EntityType="Self.Address" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AddressType" EntityType="Self.AddressType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Attendance" EntityType="Self.Attendance" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AttendanceFlag" EntityType="Self.AttendanceFlag" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ClaimHead" EntityType="Self.ClaimHead" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="claimJSON" EntityType="Self.claimJSON" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ClaimLine" EntityType="Self.ClaimLine" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ClaimStatus" EntityType="Self.ClaimStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ClaimStatusHistory" EntityType="Self.ClaimStatusHistory" Schema="dbo" store:Type="Tables" />
@@ -572,6 +602,10 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <AssociationSet Name="FK_ClaimHead_Employee" Association="Self.FK_ClaimHead_Employee">
             <End Role="Employee" EntitySet="Employee" />
             <End Role="ClaimHead" EntitySet="ClaimHead" />
+          </AssociationSet>
+          <AssociationSet Name="FK_claimJSON_Employee" Association="Self.FK_claimJSON_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="claimJSON" EntitySet="claimJSON" />
           </AssociationSet>
           <AssociationSet Name="FK_ClaimLine_ClaimHead" Association="Self.FK_ClaimLine_ClaimHead">
             <End Role="ClaimHead" EntitySet="ClaimHead" />
@@ -671,6 +705,7 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <Property Name="markcount" Type="Int32" />
           <NavigationProperty Name="AttendanceFlag" Relationship="Self.FK_Attendance_AttendanceFlag" FromRole="Attendance" ToRole="AttendanceFlag" />
           <NavigationProperty Name="Employee" Relationship="Self.FK_Attendance_Employee" FromRole="Attendance" ToRole="Employee" />
+          <Property Name="locationdesc" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="AttendanceFlag">
           <Key>
@@ -718,6 +753,7 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <NavigationProperty Name="GroupEmployees" Relationship="ubietydbModel.FK_GroupEmployee_Employee" FromRole="Employee" ToRole="GroupEmployee" />
           <NavigationProperty Name="GroupIncharges" Relationship="ubietydbModel.FK_GroupIncharge_Employee" FromRole="Employee" ToRole="GroupIncharge" />
           <NavigationProperty Name="ClaimHeads" Relationship="ubietydbModel.FK_ClaimHead_Employee" FromRole="Employee" ToRole="ClaimHead" />
+          <NavigationProperty Name="claimJSONs" Relationship="ubietydbModel.FK_claimJSON_Employee" FromRole="Employee" ToRole="claimJSON" />
         </EntityType>
         <EntityType Name="EmpStatu">
           <Key>
@@ -980,6 +1016,15 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <FunctionImport Name="getAttendanceByClientsDays" ReturnType="Collection(ubietydbModel.getAttendanceByClientsDays_Result1)">
             <Parameter Name="clientId" Mode="In" Type="Int32" />
             <Parameter Name="numDays" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="claimJSONs" EntityType="ubietydbModel.claimJSON" />
+          <AssociationSet Name="FK_claimJSON_Employee" Association="ubietydbModel.FK_claimJSON_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="claimJSON" EntitySet="claimJSONs" />
+          </AssociationSet>
+          <FunctionImport Name="getNextClaimNo" ReturnType="Collection(String)">
+            <Parameter Name="EmpNum" Mode="In" Type="String" />
+            <Parameter Name="EmpId" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="Group">
@@ -1279,6 +1324,31 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <Property Type="String" Name="Coordinates" Nullable="true" MaxLength="61" />
           <Property Type="Int32" Name="MarkCount" Nullable="true" />
         </ComplexType>
+        <EntityType Name="claimJSON">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmpId" Type="Int32" Nullable="false" />
+          <Property Name="claimNo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="claimDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="claimPurpose" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="claimText" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="totalAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <NavigationProperty Name="Employee" Relationship="ubietydbModel.FK_claimJSON_Employee" FromRole="claimJSON" ToRole="Employee" />
+        </EntityType>
+        <Association Name="FK_claimJSON_Employee">
+          <End Type="ubietydbModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="ubietydbModel.claimJSON" Role="claimJSON" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="claimJSON">
+              <PropertyRef Name="EmpId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1311,6 +1381,7 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <EntitySetMapping Name="Attendances">
             <EntityTypeMapping TypeName="ubietydbModel.Attendance">
               <MappingFragment StoreEntitySet="Attendance">
+                <ScalarProperty Name="locationdesc" ColumnName="locationdesc" />
                 <ScalarProperty Name="AttendanceId" ColumnName="AttendanceId" />
                 <ScalarProperty Name="EmpId" ColumnName="EmpId" />
                 <ScalarProperty Name="MarkFlagId" ColumnName="MarkFlagId" />
@@ -1568,6 +1639,20 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="claimJSONs">
+            <EntityTypeMapping TypeName="ubietydbModel.claimJSON">
+              <MappingFragment StoreEntitySet="claimJSON">
+                <ScalarProperty Name="totalAmount" ColumnName="totalAmount" />
+                <ScalarProperty Name="claimText" ColumnName="claimText" />
+                <ScalarProperty Name="claimPurpose" ColumnName="claimPurpose" />
+                <ScalarProperty Name="claimDate" ColumnName="claimDate" />
+                <ScalarProperty Name="claimNo" ColumnName="claimNo" />
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="getNextClaimNo" FunctionName="ubietydbModel.Store.getNextClaimNo" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
