@@ -415,8 +415,6 @@
         $(".modal-body #imageId").attr('src', url + myimageId);
     });
 
-    
-
     </script>
 
 </asp:Content>

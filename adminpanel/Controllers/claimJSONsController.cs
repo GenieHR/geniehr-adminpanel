@@ -26,6 +26,8 @@ namespace adminpanel.Controllers
         [ResponseType(typeof(claimJSON))]
         public IHttpActionResult GetclaimJSON(int id)
         {
+            db.Configuration.ProxyCreationEnabled = false;
+
             claimJSON claimJSON = db.claimJSONs.Find(id);
             if (claimJSON == null)
             {

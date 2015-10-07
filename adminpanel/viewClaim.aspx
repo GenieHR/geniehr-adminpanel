@@ -55,15 +55,6 @@
                                                         <input type="text" readonly class="form-control" value="Create" />
                                                     </div>
                                                 </div>
-                                                <hr class="hr-line-dashed" style="margin-top: 0px" />
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">Manager</label>
-
-                                                    <div class="col-sm-10">
-                                                        <input type="text" readonly class="form-control" />
-                                                    </div>
-
-                                                </div>
                                             </form>
                                         </div>
                                         <div class="col-lg-4 col-sm-4 col-md-4">
@@ -71,8 +62,8 @@
                                                 <thead>
                                                     <tr>
                                                         <th style="width: 50%">Expense</th>
-                                                        <th style="width: 25%">Amount ( &#x20B9 )</th>
-                                                        <th style="width: 25%">Approved ( &#x20B9 )</th>
+                                                        <th style="width: 23%">Claimed ( &#x20B9 )</th>
+                                                        <th style="width: 27%">Approved ( &#x20B9 )</th>
 
                                                     </tr>
                                                 </thead>
@@ -80,26 +71,26 @@
                                                     <tr>
                                                         <td>Travel</td>
                                                         <td class="curr" id="sumTravelAmt">0.00</td>
-                                                        <td  ><input id="sumTravelAmtA" type="number" /></td>
+                                                        <td  ><input style="width:60px" id="sumTravelAmtA" onclick="this.select();" type="number" /></td>
 
                                                     </tr>
                                                     <tr>
                                                         <td>Hotel</td>
                                                         <td class="curr" id="sumHotelAmt">0.00</td>
-                                                        <td  ><input id="sumHotelAmtA" type="number" /></td>
+                                                        <td  ><input style="width:60px" id="sumHotelAmtA" onclick="this.select();" type="number" /></td>
 
 
                                                     </tr>
                                                     <tr>
                                                         <td>Food</td>
                                                         <td class="curr" id="sumFoodAmt">0.00</td>
-                                                        <td  ><input id="sumFoodAmtA" type="number" /></td>
+                                                        <td  ><input style="width:60px" id="sumFoodAmtA" onclick="this.select();" type="number" /></td>
                                                     </tr>
 
                                                     <tr>
                                                         <td>Others</td>
                                                         <td class="curr" id="summOthAmt">0.00</td>
-                                                        <td  ><input id="summOthAmtA" type="number" /></td>
+                                                        <td  ><input style="width:60px" id="summOthAmtA" onclick="this.select();" type="number" /></td>
 
                                                     </tr>
                                                 </tbody>
@@ -107,7 +98,7 @@
                                                     <tr style="background-color: lightgray">
                                                         <td><b>Total</b></td>
                                                         <td class="curr"><b id="summTotAmt">0.00</b></td>
-                                                        <td><input id="summTotAmtA" type="number" /></td>
+                                                        <td><input style="width:60px" id="summTotAmtA" onclick="this.select();" type="number" /></td>
 
                                                     </tr>
                                                 </tfoot>
@@ -115,19 +106,7 @@
                                         </div>
 
                                     </div>
-                                    <div class="hr-line-dashed" style="margin-top: 0px"></div>
 
-                                        <div class="row" >
-                                            <div class="col-sm-2">
-                                            <label class=" control-label">Add Expense</label>
-                                                </div>
-                                    <div class=" text-left col-sm-10">
-                                        <input type="button" value="Travel" onclick="javascript: activateTab('tabTravel')" class="btn btn-success btn-xs" />
-                                        <input type="button" value="Hotel" onclick="javascript: activateTab('tabHotel')" class="btn btn-success btn-xs" />
-                                        <input type="button" value="Food" onclick="javascript: activateTab('tabFood')" class="btn btn-success btn-xs" />
-                                        <input type="button" value="Other" onclick="javascript: activateTab('tabOthers')" class="btn btn-success btn-xs" />
-                                        </div>
-                                    </div>
                                     <br />
 
                                     <div class="row">
@@ -149,7 +128,7 @@
                                         </div>
                                     </div>
                                     <div class="row text-center">
-                                    <input type="button" value="Submit Claim" class="btn btn-info" />
+                                    <input type="button" value="Save Changes" class="btn btn-info" />
                                     </div>
                                 </div>
                             </div>
@@ -434,8 +413,66 @@
             </div>
         </div>
     </div>
+
     <script>
 
+        var claimJSON;
+        $(document).ready(function () {
+
+            $.ajax({
+                url: "api/claimJSONs/16",
+            }).done(function (result) {
+
+                claimJSON = JSON.parse(result.claimText);
+
+                $("#sumTravelAmt").html(claimJSON.travelExpense);
+                $("#sumTravelAmtA").val(claimJSON.travelExpense);
+
+                $("#sumFoodAmt").html(claimJSON.foodExpense);
+                $("#sumFoodAmtA").val(claimJSON.foodExpense);
+
+                $("#summOthAmt").html(claimJSON.otherExpense);
+                $("#summOthAmtA").val(claimJSON.otherExpense);
+
+                $("#sumHotelAmt").html(claimJSON.hotelExpense);
+                $("#sumHotelAmtA").val(claimJSON.hotelExpense);
+
+                $("#summTotAmt").html(claimJSON.totalExpense);
+                $("#summTotAmtA").val(claimJSON.totalExpense);
+
+                $("#claimPurpose").val(result.claimPurpose);
+
+                var i = 0;
+
+                for (i = 0; i < claimJSON.Travels.length; i++) {
+                    $('#expensesTable  tbody').append('<tr><td>Travel</td><td>' + claimJSON.Travels[i].traveldate + '</td><td>' + claimJSON.Travels[i].purpose + '</td><td class="curr">' + claimJSON.Travels[i].totalamount + '</td><td><input type="number" value="' + claimJSON.Travels[i].totalamount + '" /></td><td class="text-center text-info"><i class="fa fa-eye"></i></tr>');
+                }
+
+                for (i = 0; i < claimJSON.Hotels.length; i++) {
+                    $('#expensesTable  tbody').append('<tr><td>Hotel</td><td>' + claimJSON.Hotels[i].staytodate + '</td><td>' + claimJSON.Hotels[i].hotelname + '</td><td class="curr">' + claimJSON.Hotels[i].totalamount + '</td><td><input type="number" value="' + claimJSON.Hotels[i].totalamount + '" /></td><td class="text-center text-info"><i class="fa fa-eye"></i></tr>');
+                }
+                
+                for (i = 0; i < claimJSON.Food.length; i++) {
+                    $('#expensesTable  tbody').append('<tr><td>Food</td><td>' + claimJSON.Food[i].expensedate + '</td><td>' + claimJSON.Food[i].restaurantname + '</td><td class="curr">' + claimJSON.Food[i].totalamount + '</td><td><input type="number" value="' + claimJSON.Food[i].totalamount + '" /></td><td class="text-center text-info"><i class="fa fa-eye"></i></tr>');
+
+                }
+
+                for (i = 0; i < claimJSON.Others.length; i++) {
+                    $('#expensesTable  tbody').append('<tr><td>Others</td><td>' + claimJSON.Others[i].otherexpensedate + '</td><td>' + claimJSON.Others[i].otherdesc + '</td><td class="curr">' + claimJSON.Others[i].otherexpenseamt + '</td><td><input type="number" value="' + claimJSON.Others[i].otherexpenseamt + '" /></td><td class="text-center text-info"><i class="fa fa-eye"></i></tr>');
+
+                }
+
+
+
+            });
+        });
+
+    </script>
+
+
+    <%--<script>
+
+        
         var newId = 0;
         var claimJSON = $.parseJSON('{"empid":"","travelExpense":0, "foodExpense":0, "hotelExpense":0,"otherExpense":0, "totalExpense":0, "claimpurpose":"","claimdate":"","totalamount":"","managername":"","status":"","Travels":[],"Hotels":[],"Food":[],"Others":[]}');
 
@@ -603,5 +640,5 @@
 
         }
 
-    </script>
+    </script>--%>
 </asp:Content>
