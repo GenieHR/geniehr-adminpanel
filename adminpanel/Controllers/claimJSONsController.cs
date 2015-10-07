@@ -24,7 +24,7 @@ namespace adminpanel.Controllers
 
         // GET: api/claimJSONs/5
         [ResponseType(typeof(claimJSON))]
-        public IHttpActionResult GetclaimJSON(int id)
+        public dynamic GetclaimJSON(int id)
         {
             db.Configuration.ProxyCreationEnabled = false;
 
@@ -35,6 +35,12 @@ namespace adminpanel.Controllers
             }
 
             return Ok(claimJSON);
+
+            //return db.claimJSONs.Where(b => b.id == claimJSON.id)
+            //                     .Include(b => b.Employee)
+            //                     .ToList();
+
+
         }
 
         // PUT: api/claimJSONs/5

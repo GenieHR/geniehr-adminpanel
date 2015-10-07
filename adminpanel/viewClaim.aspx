@@ -17,8 +17,8 @@
                 <div class="tabs-container">
                     <div class="tabs-top">
                         <ul class="nav nav-tabs">
-                            <li><a data-toggle="tab" href="#tabSummary">Summary</a></li>
-                            <li class="active"><a data-toggle="tab" href="#tabTravel">Travel</a></li>
+                            <li class="active"><a data-toggle="tab" href="#tabSummary">Summary</a></li>
+                            <li><a data-toggle="tab" href="#tabTravel">Travel</a></li>
                             <li><a data-toggle="tab" href="#tabHotel">Hotel</a></li>
                             <li><a data-toggle="tab" href="#tabFood">Food</a></li>
                             <li><a data-toggle="tab" href="#tabOthers">Others</a></li>
@@ -30,12 +30,38 @@
                                     <div class="row">
 
                                         <div class="col-lg-8 col-sm-8 col-md-8">
+
                                             <form id="summaryForm" method="get" class="form-horizontal">
+
+                                                
+
+                                                <div class="form-group">
+                                                    <label class="col-sm-2 control-label">Claim No.</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="text" disabled="disabled" id="claimNo"  class="form-control" />
+                                                    </div>
+                                                </div>
+
+                                                <div class="hr-line-dashed"></div>
+                                                
+                                                <div class="form-group">
+                                                    <label class="col-sm-2 control-label">Name</label>
+                                                    <div class="col-sm-4">
+                                                        <input type="text" disabled="disabled" id="empName"  class="form-control" />
+                                                    </div>
+                                              
+                                                    <label class="col-sm-2 control-label">Emp Num</label>
+                                                    <div class="col-sm-4">
+                                                        <input type="text" disabled="disabled"  id="empNum" class="form-control" />
+                                                    </div>
+                                                </div>
+
+                                                <div class="hr-line-dashed"></div>
 
                                                 <div class="form-group">
                                                     <label class="col-sm-2 control-label">Purpose</label>
                                                     <div class="col-sm-10">
-                                                        <input type="text" required="required" id="claimPurpose" readonly class="form-control" />
+                                                        <input type="text" disabled="disabled" id="claimPurpose" class="form-control" />
                                                     </div>
                                                 </div>
 
@@ -96,9 +122,8 @@
                                                 </tbody>
                                                 <tfoot>
                                                     <tr style="background-color: lightgray">
-                                                        <td><b>Total</b></td>
-                                                        <td class="curr"><b id="summTotAmt">0.00</b></td>
-                                                        <td><input style="width:60px" id="summTotAmtA" onclick="this.select();" type="number" /></td>
+                                                        <td><b>Approved Amount</b></td>
+                                                        <td colspan="2" class="curr"><b id="summTotAmt">0.00</b></td>
 
                                                     </tr>
                                                 </tfoot>
@@ -107,7 +132,8 @@
 
                                     </div>
 
-                                    <br />
+                                                <div style="margin-top:0px" class="hr-line-dashed"></div>
+                                   
 
                                     <div class="row">
                                         <div class="col-lg-12">
@@ -141,7 +167,7 @@
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">Travel Purpose</label>
                                             <div class="col-sm-10">
-                                                <input type="text" required="required" id="travelpurpose" class="form-control" />
+                                                <input type="text" disabled="disabled" id="travelpurpose" class="form-control" />
                                             </div>
                                         </div>
                                         <div class="hr-line-dashed"></div>
@@ -151,21 +177,21 @@
                                             <div class="col-sm-4">
                                                 <div class="input-group m-b">
                                                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                    <input type="date" required="required" id="traveldate" class="form-control" />
+                                                    <input type="date" disabled="disabled" id="traveldate" class="form-control" />
                                                 </div>
                                             </div>
                                             <label class="col-sm-2 control-label">Mode of Travel</label>
                                             <div class="col-sm-4">
                                                 <label class="checkbox-inline">
-                                                    <input type="radio" required="required" name="modeoftravel" value="Auto" id="inlineCheckbox1" />
+                                                    <input type="radio" disabled="disabled" name="modeoftravel" value="Auto" id="inlineCheckbox1" />
                                                     Auto
                                                 </label>
                                                 <label class="checkbox-inline">
-                                                    <input type="radio" required="required" value="Train" name="modeoftravel" id="inlineCheckbox2" />
+                                                    <input type="radio" disabled="disabled" value="Train" name="modeoftravel" id="inlineCheckbox2" />
                                                     Train
                                                 </label>
                                                 <label class="checkbox-inline">
-                                                    <input type="radio" required="required" value="Bus" name="modeoftravel" id="inlineCheckbox3" />
+                                                    <input type="radio" disabled="disabled" value="Bus" name="modeoftravel" id="inlineCheckbox3" />
                                                     Bus
                                                 </label>
                                             </div>
@@ -176,13 +202,13 @@
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">From</label>
                                             <div class="col-sm-4">
-                                                <input type="text" required="required" id="travelfrom" class="form-control" />
+                                                <input type="text" disabled="disabled" id="travelfrom" class="form-control" />
 
 
                                             </div>
                                             <label class="col-sm-2 control-label">To</label>
                                             <div class="col-sm-4">
-                                                <input type="text" required="required" id="travelto" class="form-control" />
+                                                <input type="text" disabled="disabled" id="travelto" class="form-control" />
                                             </div>
                                         </div>
 
@@ -192,7 +218,7 @@
 
                                             <div class="col-sm-4">
                                                 <div class="input-group m-b">
-                                                    <input type="text" required="required" id="traveldistance" class="form-control" /><span class="input-group-addon">Kms</span>
+                                                    <input type="text" disabled="disabled" id="traveldistance" class="form-control" /><span class="input-group-addon">Kms</span>
                                                 </div>
                                             </div>
                                             <label class="col-sm-2 control-label">Rate</label>
@@ -209,7 +235,7 @@
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">Remarks</label>
                                             <div class="col-sm-10">
-                                                <input type="text" id="travelremarks" class="form-control" />
+                                                <input type="text" disabled="disabled" id="travelremarks" class="form-control" />
                                             </div>
                                         </div>
                                         <div class="hr-line-dashed"></div>
@@ -219,13 +245,10 @@
                                             <div class="col-sm-4">
                                                 <div class="input-group m-b">
                                                     <span class="input-group-addon">&#x20B9</span>
-                                                    <input type="number" required="required" id="travelamount" class="form-control" />
+                                                    <input type="number" disabled="disabled" id="travelamount" class="form-control" />
                                                 </div>
                                             </div>
-                                            <div class="col-sm-6">
-
-                                                <input type="submit" class="pull-right btn btn-success" value="Add Expense" /><%--onclick="addExpense('Travel')"--%>
-                                            </div>
+                                            
                                         </div>
                                     </form>
 
@@ -240,7 +263,7 @@
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">Hotel Name</label>
                                             <div class="col-sm-10">
-                                                <input type="text" required="required" id="hotelname" class="form-control" />
+                                                <input type="text" disabled="disabled" id="hotelname" class="form-control" />
                                             </div>
                                         </div>
                                         <div class="hr-line-dashed"></div>
@@ -250,7 +273,7 @@
                                             <div class="col-sm-4">
                                                 <div class="input-group m-b">
                                                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                    <input type="date" required="required" id="stayfromdate" class="form-control" />
+                                                    <input type="date" disabled="disabled" id="stayfromdate" class="form-control" />
                                                 </div>
                                             </div>
                                             <label class="col-sm-2 control-label">Stay To Date</label>
@@ -258,7 +281,7 @@
                                             <div class="col-sm-4">
                                                 <div class="input-group m-b">
                                                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                    <input type="date" required="required" id="staytodate" class="form-control" />
+                                                    <input type="date" disabled="disabled" id="staytodate" class="form-control" />
                                                 </div>
                                             </div>
 
@@ -271,7 +294,7 @@
 
                                             <div class="col-sm-4">
                                                 <div class="input-group m-b">
-                                                    <input type="number" id="noofnights" class="form-control" /><span class="input-group-addon">Nights</span>
+                                                    <input type="number" id="noofnights" disabled="disabled" class="form-control" /><span class="input-group-addon">Nights</span>
                                                 </div>
                                             </div>
                                             <label class="col-sm-2 control-label">Rate</label>
@@ -279,7 +302,7 @@
                                             <div class="col-sm-4">
                                                 <div class="input-group m-b">
                                                     <span class="input-group-addon">&#x20B9</span>
-                                                    <input type="number" id="hotelrate" required="required" class="form-control" />
+                                                    <input type="number" id="hotelrate" disabled="disabled" class="form-control" />
                                                     <span class="input-group-addon">per night</span>
                                                 </div>
                                             </div>
@@ -288,7 +311,7 @@
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">Remarks</label>
                                             <div class="col-sm-10">
-                                                <input type="text" required="required" id="hotelremarks" class="form-control" />
+                                                <input type="text" disabled="disabled" id="hotelremarks" class="form-control" />
                                             </div>
                                         </div>
                                         <div class="hr-line-dashed"></div>
@@ -298,12 +321,10 @@
                                             <div class="col-sm-4">
                                                 <div class="input-group m-b">
                                                     <span class="input-group-addon">&#x20B9</span>
-                                                    <input type="number" required="required" id="hotelamount" class="form-control" />
+                                                    <input type="number" disabled="disabled"  id="hotelamount" class="form-control" />
                                                 </div>
                                             </div>
-                                            <div class="col-sm-6">
-                                                <input type="submit" class="pull-right btn btn-success" value="Add Expense" /><%--onclick="addExpense('Hotel')"--%>
-                                            </div>
+                                            
                                         </div>
                                     </form>
 
@@ -318,7 +339,7 @@
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">Restaurant Name</label>
                                             <div class="col-sm-10">
-                                                <input type="text" required="required" id="restaurantname" class="form-control" />
+                                                <input type="text" disabled="disabled" id="restaurantname" class="form-control" />
                                             </div>
                                         </div>
 
@@ -329,20 +350,20 @@
                                             <div class="col-sm-4">
                                                 <div class="input-group m-b">
                                                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                    <input type="date" required="required" id="foodexpensedate" class="form-control" />
+                                                    <input type="date" disabled="disabled" id="foodexpensedate" class="form-control" />
                                                 </div>
                                             </div>
                                             <label class="col-sm-2 control-label">No. of Persons</label>
 
                                             <div class="col-sm-4">
-                                                <input type="text" id="foodnoofpersons" class="form-control" />
+                                                <input type="text" disabled="disabled" id="foodnoofpersons" class="form-control" />
                                             </div>
                                         </div>
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">Remarks</label>
                                             <div class="col-sm-10">
-                                                <input type="text" required="required" id="foodremarks" class="form-control" />
+                                                <input type="text" disabled="disabled" id="foodremarks" class="form-control" />
                                             </div>
                                         </div>
                                         <div class="hr-line-dashed"></div>
@@ -352,13 +373,10 @@
                                             <div class="col-sm-4">
                                                 <div class="input-group m-b">
                                                     <span class="input-group-addon">&#x20B9</span>
-                                                    <input type="number" required="required" id="foodtotalamount" class="form-control" />
+                                                    <input type="number" disabled="disabled" id="foodtotalamount" class="form-control" />
                                                 </div>
                                             </div>
-                                            <div class="col-sm-6">
-                                                <input type="submit" class="pull-right btn btn-success" value="Add Expense" />
-                                                <%--onclick="addExpense('Food')"--%>
-                                            </div>
+                                            
                                         </div>
                                     </form>
                                 </div>
@@ -370,7 +388,7 @@
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">Expense Description</label>
                                             <div class="col-sm-10">
-                                                <input type="text" required="required" id="otherdesc" class="form-control" />
+                                                <input type="text" disabled="disabled" id="otherdesc" class="form-control" />
                                             </div>
                                         </div>
                                         <div class="hr-line-dashed"></div>
@@ -379,7 +397,7 @@
                                             <div class="col-sm-4">
                                                 <div class="input-group m-b">
                                                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                    <input type="date" required="required" id="otherexpensedate" class="form-control" />
+                                                    <input type="date" disabled="disabled" id="otherexpensedate" class="form-control" />
                                                 </div>
                                             </div>
                                         </div>
@@ -387,7 +405,7 @@
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">Remarks</label>
                                             <div class="col-sm-10">
-                                                <input type="text" required="required" id="otherexpenseremarks" class="form-control" />
+                                                <input type="text" disabled="disabled" id="otherexpenseremarks" class="form-control" />
                                             </div>
                                         </div>
                                         <div class="hr-line-dashed"></div>
@@ -397,12 +415,10 @@
                                             <div class="col-sm-4">
                                                 <div class="input-group m-b">
                                                     <span class="input-group-addon">&#x20B9</span>
-                                                    <input type="number" required="required" id="otherexpenseamt" class="form-control" />
+                                                    <input type="number" disabled="disabled" id="otherexpenseamt" class="form-control" />
                                                 </div>
                                             </div>
-                                            <div class="col-sm-6">
-                                                <input type="submit" class="pull-right btn btn-success" value="Add Expense" /><%--onclick="addExpense('Others')"--%>
-                                            </div>
+                                           
                                         </div>
                                     </form>
                                 </div>
@@ -413,7 +429,7 @@
             </div>
         </div>
     </div>
-
+    
     <script>
 
         var claimJSON;
@@ -438,9 +454,22 @@
                 $("#sumHotelAmtA").val(claimJSON.hotelExpense);
 
                 $("#summTotAmt").html(claimJSON.totalExpense);
-                $("#summTotAmtA").val(claimJSON.totalExpense);
 
                 $("#claimPurpose").val(result.claimPurpose);
+
+                $("#claimDate").val(result.claimDate.substring(0,10));
+                $("#claimNo").val(result.claimNo);
+
+                $.ajax({
+                    url: "GetEmpDetail/of/" + result.EmpId,
+                }).done(function (empDetails) {
+                    $("#empName").val(empDetails.employee[0].EmpName);
+                    $("#empNum").val(empDetails.employee[0].EmpNum);
+
+                });
+
+
+
 
                 var i = 0;
 
@@ -454,16 +483,11 @@
                 
                 for (i = 0; i < claimJSON.Food.length; i++) {
                     $('#expensesTable  tbody').append('<tr><td>Food</td><td>' + claimJSON.Food[i].expensedate + '</td><td>' + claimJSON.Food[i].restaurantname + '</td><td class="curr">' + claimJSON.Food[i].totalamount + '</td><td><input type="number" value="' + claimJSON.Food[i].totalamount + '" /></td><td class="text-center text-info"><i class="fa fa-eye"></i></tr>');
-
                 }
 
                 for (i = 0; i < claimJSON.Others.length; i++) {
                     $('#expensesTable  tbody').append('<tr><td>Others</td><td>' + claimJSON.Others[i].otherexpensedate + '</td><td>' + claimJSON.Others[i].otherdesc + '</td><td class="curr">' + claimJSON.Others[i].otherexpenseamt + '</td><td><input type="number" value="' + claimJSON.Others[i].otherexpenseamt + '" /></td><td class="text-center text-info"><i class="fa fa-eye"></i></tr>');
-
                 }
-
-
-
             });
         });
 
