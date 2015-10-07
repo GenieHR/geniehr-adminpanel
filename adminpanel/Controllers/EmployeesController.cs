@@ -123,13 +123,19 @@ namespace Admin.Controllers
 
             if (result.Succeeded)
             {
+                string roleid = employee.EmpStatus == 4?"ClientEmployee":"ClientAdmin";
                 employee.AuthUserId = user.Id;
                 employee.ProfilePic = "0";
                 employee.EmpStatus = 1;
                 db.Employees.Add(employee);
+
                 if (db.SaveChanges() != 1)
                 { 
                      manager.Delete(user);
+                }
+                else
+                {
+                    manager.AddToRole(employee.AuthUserId, roleid);
                 }
             }
             return CreatedAtRoute("DefaultApi", new { id = employee.EmpId }, employee);
@@ -199,16 +205,15 @@ namespace Admin.Controllers
             return empclients;
         }
 
-        [Route("api/addEmpToRole/{EmpId}/{RoleId}")]
-        [HttpGet]
-        public dynamic addEmployeeToRole(int EmpId, string RoleId)
-        {
-            var userStore = new UserStore<IdentityUser>();
-            var manager = new UserManager<IdentityUser>(userStore);
+        
+        //public dynamic addEmployeeToRole(int EmpId, string RoleId)
+        //{
+        //    var userStore = new UserStore<IdentityUser>();
+        //    var manager = new UserManager<IdentityUser>(userStore);
 
-            Employee emp = db.Employees.Find(EmpId);
+        //    Employee emp = db.Employees.Find(EmpId);
 
-            return manager.AddToRole(emp.AuthUserId, RoleId); 
-        }
+        //    return ; 
+        //}
     }
 }

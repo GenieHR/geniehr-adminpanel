@@ -82,7 +82,7 @@
                                 <div class="form-group"><label class="col-sm-2 control-label">Role</label>
 
                                     <div class="col-sm-10">
-                                        <div style="margin-top:5px;"><label> <input type="radio"  value="ClientAdmin"  name="RoleOfUser"/> Client Admin </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label> <input type="radio" checked="checked" value="ClientEmployee"  name="RoleOfUser"/> Client Employee </label></div>
+                                        <div style="margin-top:5px;"><label> <input type="radio"  value="5"  name="RoleOfUser"/> Client Admin </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label> <input type="radio" checked="checked" value="4"  name="RoleOfUser"/> Client Employee </label></div>
                                     </div>
                                 </div>
 
@@ -125,20 +125,16 @@
                 empJSON.empname = $('#empname').val();
                 empJSON.email = $('#email').val();
                 empJSON.primarymobile = $('#mobile').val();
-
+                empJSON.empstatus = parseInt($('input[name=RoleOfUser]:checked').val());
 
                 $.ajax({
                     url: 'api/Employees',
                     type: 'post',
                     dataType: 'json',
                     success: function (data) {
-                        $.ajax({
-                            url: 'api/addEmpToRole/' + data.EmpId + '/' + $('input[name=RoleOfUser]:checked').val(),
-                            type: 'post',
-                            success: function () {
-                                $("#userCreateStatus").html('<span class="text-success">' + data.EmpName + '</span> created successfully' );
-                            }
-                        });
+                        $("#formoid").trigger('reset');
+                        $("#userCreateStatus").html('<span class="text-success">' + data.EmpName + '</span> created successfully' );
+                        $("#showProgress").html('<h5><a data-dismiss="modal">Close<h5>');
                     },
                     data: empJSON
                 });
