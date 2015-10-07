@@ -69,6 +69,7 @@ namespace Admin.Controllers
         [ResponseType(typeof(void))]
         public IHttpActionResult PutEmployee(int id, Employee employee)
         {
+            
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -115,25 +116,25 @@ namespace Admin.Controllers
             var user = new IdentityUser() { UserName = employee.Email, Email = employee.Email, PhoneNumber = employee.PrimaryMobile.ToString() };
 
             // TODO Environment Varialbe
+            
             IdentityResult result = manager.Create(user, WebConfigurationManager.AppSettings["DefaultPassword"]);
+        
             // IdentityResult result = manager.Create(user, Environment.GetEnvironmentVariable("DefaultPassword"));
 
             if (result.Succeeded)
             {
                 employee.AuthUserId = user.Id;
                 employee.ProfilePic = "0";
+                employee.EmpStatus = 1;
                 db.Employees.Add(employee);
-                if (db.SaveChanges() == 1)
-                {
-                    manager.AddToRole(user.Id, "ClientEmployee");
-                }
-                else 
+                if (db.SaveChanges() != 1)
                 { 
                      manager.Delete(user);
                 }
             }
             return CreatedAtRoute("DefaultApi", new { id = employee.EmpId }, employee);
         }
+
 
         // DELETE: api/Employees/5
         [ResponseType(typeof(Employee))]
@@ -196,6 +197,18 @@ namespace Admin.Controllers
 
             var empclients = context.Employees.Where(b => b.CompanyId == ClientId).ToList();
             return empclients;
+        }
+
+        [Route("api/addEmpToRole/{EmpId}/{RoleId}")]
+        [HttpGet]
+        public dynamic addEmployeeToRole(int EmpId, string RoleId)
+        {
+            var userStore = new UserStore<IdentityUser>();
+            var manager = new UserManager<IdentityUser>(userStore);
+
+            Employee emp = db.Employees.Find(EmpId);
+
+            return manager.AddToRole(emp.AuthUserId, RoleId); 
         }
     }
 }

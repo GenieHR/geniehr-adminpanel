@@ -54,7 +54,6 @@ namespace adminpanel.Controllers
 
             gi.InchargeId = EmpId;
             gi.GroupId = GroupId;
-            
 
             db.GroupIncharges.Add(gi);
             

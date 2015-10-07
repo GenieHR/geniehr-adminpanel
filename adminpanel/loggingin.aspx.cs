@@ -45,6 +45,10 @@ namespace Admin
                 {
                     Response.Redirect("~/Dashboard.aspx");
                 }
+                else if (System.Web.HttpContext.Current.User.IsInRole("ClientManager"))
+                {
+                    Response.Redirect("~/main.aspx");
+                }
             }
         }
     

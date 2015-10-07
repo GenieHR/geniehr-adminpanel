@@ -267,6 +267,7 @@
     <Content Include="img\logos\1.png" />
     <Content Include="img\logos\2.png" />
     <Content Include="img\logos\3.png" />
+    <Content Include="img\logos\4.png" />
     <Content Include="img\pp\0.png" />
     <Content Include="img\pp\20.png" />
     <Content Include="img\pp\23.png" />
@@ -368,6 +369,7 @@
     <Content Include="loggingin.aspx" />
     <Content Include="login.aspx" />
     <Content Include="logout.aspx" />
+    <Content Include="main.aspx" />
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
@@ -660,6 +662,13 @@
     </Compile>
     <Compile Include="logout.aspx.designer.cs">
       <DependentUpon>logout.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="main.aspx.cs">
+      <DependentUpon>main.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="main.aspx.designer.cs">
+      <DependentUpon>main.aspx</DependentUpon>
     </Compile>
     <Compile Include="Models\Address.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>

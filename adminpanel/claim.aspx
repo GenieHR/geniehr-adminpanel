@@ -470,6 +470,7 @@
         $('#myModal').on('hidden.bs.modal', function () {
             window.location = 'claim.aspx';
         })
+
         var newId = 0;
         var claimJSON = $.parseJSON('{"travelExpense":0, "foodExpense":0, "hotelExpense":0,"otherExpense":0, "totalExpense":0, "claimpurpose":"","Travels":[],"Hotels":[],"Food":[],"Others":[]}');
         $("#claimDate").datepicker({ dateFormat: 'dd-mm-yy' }).datepicker("setDate", new Date());
@@ -522,12 +523,25 @@
             $('.nav-tabs a[href="#' + tab + '"]').tab('show');
         }
         function submitClaim() {
+            
+            if(parseInt($("#summTotAmt").html()) == 0) {
+                alert("Add atleast one expense");
+                return false;
+            }
+
+            if( $.trim($("#claimPurpose").val()) == "") {
+                alert("Claim pupose cannot be blank");
+                $("#claimPurpose").focus();
+                return false;
+            }
+
             $('#myModal').modal({
                 backdrop: 'static',
                 keyboard: false
             })
+
             $('#myModal').modal();
-            
+           
             claimJSON.travelExpense = parseInt($("#sumTravelAmt").html());
             claimJSON.claimpurpose = $("#claimPurpose").val();
             claimJSON.foodExpense = parseInt($("#sumFoodAmt").html());
@@ -558,8 +572,15 @@
             $('#foodForm').trigger("reset");
             activateTab('tabSummary');
         });
+
         $("#travelForm").submit(function (event) {
             event.preventDefault();
+
+            if($("#travelamount").val() <= 0) {
+                alert("Claimed amount should be positive value");
+                return false;
+            }
+            
             addExpense('Travel');
             $('#travelForm').trigger("reset");
             activateTab('tabSummary');
@@ -577,14 +598,15 @@
             activateTab('tabSummary');
         });
         var claimJSON = $.parseJSON('{"empid":"","travelExpense":0, "foodExpense":0, "hotelExpense":0,"otherExpense":0, "totalExpense":0, "claimpurpose":"","claimdate":"","totalamount":"","managername":"","status":"","Travels":[],"Hotels":[],"Food":[],"Others":[]}');
+
         function populateSummary() {
             claimJSON.travelExpense = parseInt($("#sumTravelAmt").html());
             claimJSON.foodExpense = parseInt($("#sumFoodAmt").html());
             claimJSON.hotelExpense = parseInt($("#sumHotelAmt").html());
             claimJSON.otherExpense = parseInt($("#summOthAmt").html());
             claimJSON.totalExpense = $("#summTotAmt").html();
-            prompt("", JSON.stringify(claimJSON));
         }
+
         function calculateTotalAmt() {
             var totamt = parseInt($("#sumTravelAmt").html()) + parseInt($("#sumHotelAmt").html()) + parseInt($("#sumFoodAmt").html()) + parseInt($("#summOthAmt").html());
             $("#summTotAmt").html(totamt);
