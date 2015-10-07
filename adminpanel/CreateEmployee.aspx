@@ -134,7 +134,14 @@
                     success: function (data) {
                         $("#formoid").trigger('reset');
                         $("#userCreateStatus").html('<span class="text-success">' + data.EmpName + '</span> created successfully' );
-                        $("#showProgress").html('<h5><a data-dismiss="modal">Close<h5>');
+                        if (localStorage.getItem("fromGrpMngmt") == 1) {
+                            $("#showProgress").html('<h4><a href="groupmanagement.aspx">Back To Group Management<h4>');
+
+                        }
+                        else
+                            {
+                            $("#showProgress").html('<h5><a data-dismiss="modal">Close<h5>');
+                        }
                     },
                     data: empJSON
                 });

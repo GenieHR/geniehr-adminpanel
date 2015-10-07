@@ -28,27 +28,46 @@ namespace Admin
                 Session["Designation"] = employee.Designation;
                 Session["EmpNum"] = employee.EmpNum;
 
-                if (System.Web.HttpContext.Current.User.IsInRole("ClientAdmin"))
-                {
-                    Session["ClientId"] = employee.CompanyId;
-                    Response.Redirect("~/GroupManagement.aspx");
-                }
+                
                 if (System.Web.HttpContext.Current.User.IsInRole("OrgEmployee"))
                 {
                     Response.Redirect("~/showclients.aspx");
                 }
+                else if (System.Web.HttpContext.Current.User.IsInRole("ClientAdmin"))
+                {
+                    Session["ClientId"] = employee.CompanyId;
+                    Session["SelectClientId"] = employee.CompanyId;
+
+                    Client client = context.Clients.Find(employee.CompanyId);
+                    Session["ClientName"] = client.ClientName;
+
+                    Response.Redirect("~/GroupManagement.aspx");
+                }
+                else if (System.Web.HttpContext.Current.User.IsInRole("ClientManager"))
+                {
+                    Session["ClientId"] = employee.CompanyId;
+                    Session["SelectClientId"] = employee.CompanyId;
+
+                    Client client = context.Clients.Find(employee.CompanyId);
+                    Session["ClientName"] = client.ClientName;
+
+                    Response.Redirect("~/main.aspx");
+                }
                 else if (System.Web.HttpContext.Current.User.IsInRole("ClientEmployee"))
                 {
+                    Session["ClientId"] = employee.CompanyId;
+                    Session["SelectClientId"] = employee.CompanyId;
+
+                    Client client = context.Clients.Find(employee.CompanyId);
+                    Session["ClientName"] = client.ClientName;
+
                     Response.Redirect("~/Claim.aspx");
                 }
                 else if (System.Web.HttpContext.Current.User.IsInRole("SuperAdmin"))
                 {
                     Response.Redirect("~/Dashboard.aspx");
                 }
-                else if (System.Web.HttpContext.Current.User.IsInRole("ClientManager"))
-                {
-                    Response.Redirect("~/main.aspx");
-                }
+                
             }
         }
     

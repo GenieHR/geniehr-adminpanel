@@ -9,6 +9,8 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using adminpanel.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity;
 
 namespace adminpanel.Controllers
 {
@@ -46,7 +48,7 @@ namespace adminpanel.Controllers
 
         [Route("api/make/{EmpId}/inchargeof/{GroupId}")]
         [HttpGet]
-        public int addInchargeToGroup(int EmpId, int GroupId)
+        public dynamic addInchargeToGroup(int EmpId, int GroupId)
         {
             db.Configuration.ProxyCreationEnabled = false;
 
@@ -56,8 +58,17 @@ namespace adminpanel.Controllers
             gi.GroupId = GroupId;
 
             db.GroupIncharges.Add(gi);
+
             
-            return db.SaveChanges();
+            if (db.SaveChanges() == 1)
+            {
+                var userStore = new UserStore<IdentityUser>();
+                var UserManager = new UserManager<IdentityUser>(userStore);
+                var user = UserManager.FindById(db.Employees.Find(EmpId).AuthUserId);
+               return UserManager.AddToRole(user.Id, "ClientAdmin");
+            }
+
+            return 0;
         }
 
         [Route("api/remove/{EmpId}/inchargeof/{GroupId}")]
@@ -68,8 +79,17 @@ namespace adminpanel.Controllers
 
             db.GroupIncharges.Remove(grpIncharge);
 
-            return db.SaveChanges();
+            db.SaveChanges();
 
+            if (db.GroupIncharges.Where(b => b.InchargeId == EmpId).Count() == 0)
+            {
+                var userStore = new UserStore<IdentityUser>();
+                var UserManager = new UserManager<IdentityUser>(userStore);
+                var user = UserManager.FindById(db.Employees.Find(EmpId).AuthUserId);
+                 UserManager.RemoveFromRole(user.Id, "ClientAdmin");
+            }
+
+            return 1;
         }
 
         // PUT: api/GroupIncharges/5

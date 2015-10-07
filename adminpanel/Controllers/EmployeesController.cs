@@ -135,12 +135,12 @@ namespace Admin.Controllers
                 }
                 else
                 {
+                    manager.AddToRole(employee.AuthUserId, "ClientEmployee");
                     manager.AddToRole(employee.AuthUserId, roleid);
                 }
             }
             return CreatedAtRoute("DefaultApi", new { id = employee.EmpId }, employee);
         }
-
 
         // DELETE: api/Employees/5
         [ResponseType(typeof(Employee))]

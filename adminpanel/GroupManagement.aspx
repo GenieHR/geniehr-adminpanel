@@ -16,7 +16,7 @@
             <h1>Group Management</h1>
             <ol class="breadcrumb">
                 <li>
-                    <h5>GenieHR Solutions Pvt. Ltd.</h5>
+                    <h4><%= Session["ClientName"] %></h4>
                 </li>
             </ol>
         </div>
@@ -142,6 +142,10 @@
             </div>
         </div>
     </div>
+
+
+    
+
 
 
     <script src="js/plugins/validate/jquery.validate.min.js"></script>
@@ -304,7 +308,7 @@
 
             $('#addEmployeeFormDiv').empty();
 
-            $('#addEmployeeFormDiv').append('<div class="row"> <div class="col-lg-6"> <div class="input-group"> <input type="text" placeholder="Add Employee" id="empName" name="empName" class="form-control"/> <span class="input-group-btn"> <button class="btn btn-primary" onclick="addEmployeeToGroup('+ groupId +')" type="button" >Add</button> </span> </div></div></div>');
+            $('#addEmployeeFormDiv').append('<div class="row"> <div class="col-lg-6"> <div class="input-group"> <input type="text" placeholder="Add Employee" id="empName" name="empName" class="form-control"/> <span class="input-group-btn"> <button class="btn btn-primary" onclick="addEmployeeToGroup('+ groupId +')" type="button" >Add</button> </span> </div></div><div class="col-lg-6"><span class="pull-right"><input type="button" class="btn btn-success" onclick="showCreateEmployee()" value="New Employee"/></span></div></div>');
 
             $("#empName").autocomplete({
                 source: function(request, response) {
@@ -418,8 +422,12 @@
             });
         }
 
+        function showCreateEmployee() {
+            localStorage.setItem("fromGrpMngmt","1");
+            window.location = "CreateEmployee.aspx";
 
-    </script>
+        }
+            </script>
 
 </asp:Content>
 
