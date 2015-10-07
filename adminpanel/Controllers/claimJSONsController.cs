@@ -72,30 +72,22 @@ namespace adminpanel.Controllers
 
         // POST: api/claimJSONs
         [ResponseType(typeof(claimJSON))]
-        public IHttpActionResult PostclaimJSON(dynamic dynClaimJSON)
+        public IHttpActionResult PostclaimJSON(claimJSON claimJSON)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            claimJSON claimJSON = new claimJSON();
 
 
-
-            
-            claimJSON.EmpId = dynClaimJSON.EmpId;
-            claimJSON.claimNo = getNextClaimNo(dynClaimJSON.EmpId, dynClaimJSON.EmpNum); 
-            claimJSON.claimDate = dynClaimJSON.claimDate;
-            claimJSON.claimText = dynClaimJSON.claimText;
-            claimJSON.totalAmount = dynClaimJSON.totalAmount;
+            claimJSON.claimNo = db.getNextClaimNo(claimJSON.EmpId).FirstOrDefault(); 
 
 
             db.claimJSONs.Add(claimJSON);
 
             try
             {
-                claimJSON.claimNo = "123";
                 db.SaveChanges();
             }
             catch (DbUpdateException)

@@ -520,7 +520,6 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
         </Function>
         <Function Name="getIST" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="datetime" />
         <Function Name="getNextClaimNo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="EmpNum" Type="nvarchar" Mode="In" />
           <Parameter Name="EmpId" Type="int" Mode="In" />
         </Function>
         <EntityContainer Name="ubietydbModelStoreContainer">
@@ -1023,7 +1022,6 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
             <End Role="claimJSON" EntitySet="claimJSONs" />
           </AssociationSet>
           <FunctionImport Name="getNextClaimNo" ReturnType="Collection(String)">
-            <Parameter Name="EmpNum" Mode="In" Type="String" />
             <Parameter Name="EmpId" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>

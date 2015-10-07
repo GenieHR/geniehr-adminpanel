@@ -84,17 +84,13 @@ namespace adminpanel.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getAttendanceByClientsDays_Result1>("getAttendanceByClientsDays", clientIdParameter, numDaysParameter);
         }
     
-        public virtual ObjectResult<string> getNextClaimNo(string empNum, Nullable<int> empId)
+        public virtual ObjectResult<string> getNextClaimNo(Nullable<int> empId)
         {
-            var empNumParameter = empNum != null ?
-                new ObjectParameter("EmpNum", empNum) :
-                new ObjectParameter("EmpNum", typeof(string));
-    
             var empIdParameter = empId.HasValue ?
                 new ObjectParameter("EmpId", empId) :
                 new ObjectParameter("EmpId", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("getNextClaimNo", empNumParameter, empIdParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("getNextClaimNo", empIdParameter);
         }
     }
 }

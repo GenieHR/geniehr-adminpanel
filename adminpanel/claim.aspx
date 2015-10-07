@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Claims" Language="C#" MasterPageFile="~/UbietyMenu.Master" AutoEventWireup="true" CodeBehind="claim.aspx.cs" Inherits="adminpanel.claim" %>
+<%@ Page Title="Claims" Language="C#" MasterPageFile="~/UbietyMenu.Master" AutoEventWireup="true" CodeBehind="claim.aspx.cs" Inherits="adminpanel.claim" %>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="body" runat="server">
     <style>
@@ -23,7 +23,6 @@
     pointer-events: all;
 }
  
-
     </style>
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
@@ -468,17 +467,12 @@
 
    
     <script>
-
         $('#myModal').on('hidden.bs.modal', function () {
             window.location = 'claim.aspx';
         })
-
         var newId = 0;
         var claimJSON = $.parseJSON('{"empid":"","travelExpense":0, "foodExpense":0, "hotelExpense":0,"otherExpense":0, "totalExpense":0, "claimpurpose":"","claimdate":"","totalamount":"","managername":"","status":"","Travels":[],"Hotels":[],"Food":[],"Others":[]}');
-
         $("#claimDate").datepicker({ dateFormat: 'dd-mm-yy' }).datepicker("setDate", new Date());
-
-
         function addExpense(expenseType) {
             newId++;
             switch (expenseType) {
@@ -486,7 +480,6 @@
                     claimJSON.Travels.push({ "travelid": newId, "purpose": $('#travelpurpose').val(), "traveldate": $("#traveldate").val(), "modeoftravel": $('input[name=modeoftravel]:checked').val(), "from": $("#travelfrom").val(), "to": $("#travelto").val(), "distance": $("#traveldistance").val(), "rate": $("#travelrate").val(), "remarks": $("#travelremarks").val(), "totalamount": $("#travelamount").val() });
                     calculateSummTravelAmt();
                     $('#expensesTable  tbody').append('<tr id="' + newId + '"><td>Travel</td><td>' + $("#traveldate").val() + '</td><td>' + $('#travelpurpose').val() + '</td><td class="curr">' + $("#travelamount").val() + '</td><td class="text-center text-info"><i class="fa fa-pencil"></i>&nbsp;&nbsp;  <i class="fa fa-trash"></i></tr>');
-
                     break;
                 case 'Hotel':
                     claimJSON.Hotels.push({ "hotelsid": newId, "hotelname": $("#hotelname").val(), "stayfromdate": $("#stayfromdate").val(), "staytodate": $("#staytodate").val(), "noofnights": $("#").val(), "rate": $("#hotelrate").val(), "remarks": $("#hotelremarks").val(), "totalamount": $("#hotelamount").val() });
@@ -497,22 +490,16 @@
                     claimJSON.Food.push({ "foodid": newId, "restaurantname": $("#restaurantname").val(), "expensedate": $("#foodexpensedate").val(), "noofpersons": $("#foodnoofpersons").val(), "remarks": $("#foodremarks").val(), "totalamount": $("#foodtotalamount").val() });
                     calculateSummFoodAmt();
                     $('#expensesTable  tbody').append('<tr id="' + newId + '"><td>Food</td><td>' + $("#foodexpensedate").val() + '</td><td>' + $('#restaurantname').val() + '</td><td class="curr">' + $("#foodtotalamount").val() + '</td><td class="text-center text-info"><i class="fa fa-pencil"></i>&nbsp;&nbsp;  <i class="fa fa-trash"></i></tr>');
-
                     break;
                 case 'Others':
                     claimJSON.Others.push({ "othersid": newId, "otherdesc": $("#otherdesc").val(), "otherexpensedate": $("#otherexpensedate").val(), "otherexpenseremarks": $("#otherexpenseremarks").val(), "otherexpenseamt": $("#otherexpenseamt").val() });
                     calculateSummOthersAmt();
                     $('#expensesTable  tbody').append('<tr id="' + newId + '"><td>Others</td><td>' + $("#otherexpensedate").val() + '</td><td>' + $('#otherdesc').val() + '</td><td class="curr">' + $("#otherexpenseamt").val() + '</td><td class="text-center text-info"><i class="fa fa-pencil"></i>&nbsp;&nbsp;  <i class="fa fa-trash"></i></tr>');
-
                     break;
-
                 default:
             }
-
             calculateTotalAmt();
-
             Command: toastr["success"](" ", "Expense Added Succesfully")
-
             toastr.options = {
                 "closeButton": false,
                 "debug": false,
@@ -531,155 +518,112 @@
                 "hideMethod": "fadeOut"
             }
         }
-
         function activateTab(tab) {
             $('.nav-tabs a[href="#' + tab + '"]').tab('show');
         }
-
         function submitClaim() {
-
             $('#myModal').modal({
                 backdrop: 'static',
                 keyboard: false
             })
-
             $('#myModal').modal();
             
             claimJSON.travelExpense = parseInt($("#sumTravelAmt").html());
             claimJSON.claimpurpose = $("#claimPurpose").val();
-
             claimJSON.foodExpense = parseInt($("#sumFoodAmt").html());
             claimJSON.hotelExpense = parseInt($("#sumHotelAmt").html());
             claimJSON.otherExpense = parseInt($("#summOthAmt").html());
             claimJSON.totalExpense = parseInt($("#summTotAmt").html());
-
             
             var uploadVal = {
-                "EmpId": 1,
-                "EmpNum": "Rel-123",
+                "EmpId": <%= Session["EmpId"] %>,
                 "claimDate": $("#claimDate").val(),
                 "claimPurpose": claimJSON.claimpurpose,
                 "claimText": JSON.stringify(claimJSON),
                 "totalAmount": parseInt($("#summTotAmt").html())
             };
-
-
-
             $.ajax({
                 url: 'api/claimJSONs',
                 type: 'post',
                 dataType: 'json',
                 success: function (data) {
-                    $("#loadingContent").html('<h3>Claim Submitted Succesfully</h3><a data-dismiss="modal">Close</a>');
+                    $("#loadingContent").html('<h3>Claim no. <span class="text-success">' + data.claimNo + ' </span> submitted succesfully</h3><a data-dismiss="modal">Close</a>');
                 },
                 data: uploadVal
             });
         }
-
         $("#foodForm").submit(function (event) {
             event.preventDefault();
             addExpense('Food');
             $('#foodForm').trigger("reset");
             activateTab('tabSummary');
-
         });
-
         $("#travelForm").submit(function (event) {
             event.preventDefault();
             addExpense('Travel');
             $('#travelForm').trigger("reset");
             activateTab('tabSummary');
-
-
         });
-
         $("#hotelForm").submit(function (event) {
             event.preventDefault();
             addExpense('Hotel');
             $('#hotelForm').trigger("reset");
             activateTab('tabSummary');
-
-
         });
-
         $("#othersForm").submit(function (event) {
             event.preventDefault();
             addExpense('Others');
             $('#othersForm').trigger("reset");
             activateTab('tabSummary');
-
         });
-
-
         var claimJSON = $.parseJSON('{"empid":"","travelExpense":0, "foodExpense":0, "hotelExpense":0,"otherExpense":0, "totalExpense":0, "claimpurpose":"","claimdate":"","totalamount":"","managername":"","status":"","Travels":[],"Hotels":[],"Food":[],"Others":[]}');
-
-
         function populateSummary() {
-
             claimJSON.travelExpense = parseInt($("#sumTravelAmt").html());
             claimJSON.foodExpense = parseInt($("#sumFoodAmt").html());
             claimJSON.hotelExpense = parseInt($("#sumHotelAmt").html());
             claimJSON.otherExpense = parseInt($("#summOthAmt").html());
             claimJSON.totalExpense = $("#summTotAmt").html();
-
             prompt("", JSON.stringify(claimJSON));
-
         }
-
         function calculateTotalAmt() {
             var totamt = parseInt($("#sumTravelAmt").html()) + parseInt($("#sumHotelAmt").html()) + parseInt($("#sumFoodAmt").html()) + parseInt($("#summOthAmt").html());
-
             $("#summTotAmt").html(totamt);
         }
-
         function calculateSummTravelAmt() {
             var i = claimJSON.Travels.length;
             var p;
             var totAmt = 0;
-
             for (p = 0; p < i; p++) {
                 totAmt += parseInt(claimJSON.Travels[p].totalamount);
             }
             $("#sumTravelAmt").html(totAmt);
         }
-
-
         function calculateSummHotelAmt() {
             var i = claimJSON.Hotels.length;
             var p;
             var totAmt = 0;
-
             for (p = 0; p < i; p++) {
                 totAmt += parseInt(claimJSON.Hotels[p].totalamount);
             }
-
             $("#sumHotelAmt").html(totAmt);
         }
-
         function calculateSummFoodAmt() {
             var i = claimJSON.Food.length;
             var p;
             var totAmt = 0;
-
             for (p = 0; p < i; p++) {
                 totAmt += parseInt(claimJSON.Food[p].totalamount);
             }
-
             $("#sumFoodAmt").html(totAmt);
         }
-
         function calculateSummOthersAmt() {
             var i = claimJSON.Others.length;
             var p;
             var totAmt = 0;
-
             for (p = 0; p < i; p++) {
                 totAmt += parseInt(claimJSON.Others[p].otherexpenseamt);
             }
-
             $("#summOthAmt").html(totAmt);
-
         }
-
     </script>
 </asp:Content>
