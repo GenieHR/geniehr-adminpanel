@@ -65,7 +65,7 @@ namespace adminpanel.Controllers
                 var userStore = new UserStore<IdentityUser>();
                 var UserManager = new UserManager<IdentityUser>(userStore);
                 var user = UserManager.FindById(db.Employees.Find(EmpId).AuthUserId);
-               return UserManager.AddToRole(user.Id, "ClientAdmin");
+               return UserManager.AddToRole(user.Id, "ClientManager");
             }
 
             return 0;
@@ -86,7 +86,7 @@ namespace adminpanel.Controllers
                 var userStore = new UserStore<IdentityUser>();
                 var UserManager = new UserManager<IdentityUser>(userStore);
                 var user = UserManager.FindById(db.Employees.Find(EmpId).AuthUserId);
-                 UserManager.RemoveFromRole(user.Id, "ClientAdmin");
+                UserManager.RemoveFromRole(user.Id, "ClientManager");
             }
 
             return 1;

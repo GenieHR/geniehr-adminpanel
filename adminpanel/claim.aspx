@@ -554,7 +554,8 @@
                 "claimDate": $("#claimDate").val(),
                 "claimPurpose": claimJSON.claimpurpose,
                 "claimText": JSON.stringify(claimJSON),
-                "totalAmount": parseInt($("#summTotAmt").html())
+                "totalAmount": parseInt($("#summTotAmt").html()),
+                "claimstatus": 0
             };
             $.ajax({
                 url: 'api/claimJSONs',

@@ -10,19 +10,14 @@
 namespace adminpanel.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class claimJSON
+    public partial class getAttendanceByManagerId_Result
     {
-        public int id { get; set; }
         public int EmpId { get; set; }
-        public string claimNo { get; set; }
-        public System.DateTime claimDate { get; set; }
-        public string claimPurpose { get; set; }
-        public string claimText { get; set; }
-        public decimal totalAmount { get; set; }
-        public Nullable<int> claimstatus { get; set; }
-    
-        public virtual Employee Employee { get; set; }
+        public string Emp_Name { get; set; }
+        public Nullable<System.DateTime> MarkDate { get; set; }
+        public Nullable<System.TimeSpan> MarkingTime { get; set; }
+        public string Coordinates { get; set; }
+        public Nullable<int> MarkCount { get; set; }
     }
 }

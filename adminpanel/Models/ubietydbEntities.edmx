@@ -67,6 +67,7 @@
           <Property Name="claimPurpose" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="claimText" Type="nvarchar(max)" Nullable="false" />
           <Property Name="totalAmount" Type="money" Nullable="false" />
+          <Property Name="claimstatus" Type="int" />
         </EntityType>
         <EntityType Name="ClaimLine">
           <Key>
@@ -514,13 +515,23 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <Parameter Name="clientId" Type="int" Mode="In" />
           <Parameter Name="numDays" Type="int" Mode="In" />
         </Function>
+        <Function Name="getAttendanceByManagerId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="managerId" Type="int" Mode="In" />
+          <Parameter Name="numDays" Type="int" Mode="In" />
+        </Function>
         <Function Name="getEmpOfGroups" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="clientId" Type="int" Mode="In" />
           <Parameter Name="groupId" Type="int" Mode="In" />
         </Function>
+        <Function Name="getEmpsofManager" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ManagerId" Type="int" Mode="In" />
+        </Function>
         <Function Name="getIST" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="datetime" />
         <Function Name="getNextClaimNo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EmpId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="getOpenCliamsByManagerId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="managerId" Type="int" Mode="In" />
         </Function>
         <EntityContainer Name="ubietydbModelStoreContainer">
           <EntitySet Name="Address" EntityType="Self.Address" Schema="dbo" store:Type="Tables" />
@@ -1022,7 +1033,17 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
             <End Role="claimJSON" EntitySet="claimJSONs" />
           </AssociationSet>
           <FunctionImport Name="getNextClaimNo" ReturnType="Collection(String)">
-            <Parameter Name="EmpId" Mode="In" Type="Int32" />
+          <Parameter Name="EmpId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="getEmpsofManager" ReturnType="Collection(Int32)">
+          <Parameter Name="ManagerId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="getAttendanceByManagerId" ReturnType="Collection(ubietydbModel.getAttendanceByManagerId_Result)">
+            <Parameter Name="managerId" Mode="In" Type="Int32" />
+            <Parameter Name="numDays" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="getOpenCliamsByManagerId" ReturnType="Collection(ubietydbModel.getOpenCliamsByManagerId_Result)">
+            <Parameter Name="managerId" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="Group">
@@ -1334,6 +1355,7 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <Property Name="claimText" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="totalAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <NavigationProperty Name="Employee" Relationship="ubietydbModel.FK_claimJSON_Employee" FromRole="claimJSON" ToRole="Employee" />
+          <Property Name="claimstatus" Type="Int32" />
         </EntityType>
         <Association Name="FK_claimJSON_Employee">
           <End Type="ubietydbModel.Employee" Role="Employee" Multiplicity="1" />
@@ -1347,6 +1369,21 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="getAttendanceByManagerId_Result">
+          <Property Type="Int32" Name="EmpId" Nullable="false" />
+          <Property Type="String" Name="Emp_Name" Nullable="false" MaxLength="100" />
+          <Property Type="DateTime" Name="MarkDate" Nullable="true" />
+          <Property Type="Time" Name="MarkingTime" Nullable="true" />
+          <Property Type="String" Name="Coordinates" Nullable="true" MaxLength="61" />
+          <Property Type="Int32" Name="MarkCount" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="getOpenCliamsByManagerId_Result">
+          <Property Type="Int32" Name="claimId" Nullable="false" />
+          <Property Type="String" Name="EmpName" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="ClaimDate" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="claimPurpose" Nullable="false" MaxLength="255" />
+          <Property Type="Decimal" Name="totalAmount" Nullable="false" Precision="19" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1640,6 +1677,7 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <EntitySetMapping Name="claimJSONs">
             <EntityTypeMapping TypeName="ubietydbModel.claimJSON">
               <MappingFragment StoreEntitySet="claimJSON">
+                <ScalarProperty Name="claimstatus" ColumnName="claimstatus" />
                 <ScalarProperty Name="totalAmount" ColumnName="totalAmount" />
                 <ScalarProperty Name="claimText" ColumnName="claimText" />
                 <ScalarProperty Name="claimPurpose" ColumnName="claimPurpose" />
@@ -1651,6 +1689,30 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="getNextClaimNo" FunctionName="ubietydbModel.Store.getNextClaimNo" />
+          <FunctionImportMapping FunctionImportName="getEmpsofManager" FunctionName="ubietydbModel.Store.getEmpsofManager" />
+          <FunctionImportMapping FunctionImportName="getAttendanceByManagerId" FunctionName="ubietydbModel.Store.getAttendanceByManagerId">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ubietydbModel.getAttendanceByManagerId_Result">
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+                <ScalarProperty Name="Emp_Name" ColumnName="Emp Name" />
+                <ScalarProperty Name="MarkDate" ColumnName="MarkDate" />
+                <ScalarProperty Name="MarkingTime" ColumnName="MarkingTime" />
+                <ScalarProperty Name="Coordinates" ColumnName="Coordinates" />
+                <ScalarProperty Name="MarkCount" ColumnName="MarkCount" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getOpenCliamsByManagerId" FunctionName="ubietydbModel.Store.getOpenCliamsByManagerId">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ubietydbModel.getOpenCliamsByManagerId_Result">
+                <ScalarProperty Name="claimId" ColumnName="claimId" />
+                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
+                <ScalarProperty Name="ClaimDate" ColumnName="ClaimDate" />
+                <ScalarProperty Name="claimPurpose" ColumnName="claimPurpose" />
+                <ScalarProperty Name="totalAmount" ColumnName="totalAmount" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

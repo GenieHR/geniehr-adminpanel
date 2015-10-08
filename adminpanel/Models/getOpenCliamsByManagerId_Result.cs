@@ -10,19 +10,13 @@
 namespace adminpanel.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class claimJSON
+    public partial class getOpenCliamsByManagerId_Result
     {
-        public int id { get; set; }
-        public int EmpId { get; set; }
-        public string claimNo { get; set; }
-        public System.DateTime claimDate { get; set; }
+        public int claimId { get; set; }
+        public string EmpName { get; set; }
+        public string ClaimDate { get; set; }
         public string claimPurpose { get; set; }
-        public string claimText { get; set; }
         public decimal totalAmount { get; set; }
-        public Nullable<int> claimstatus { get; set; }
-    
-        public virtual Employee Employee { get; set; }
     }
 }

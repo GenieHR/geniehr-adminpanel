@@ -23,5 +23,17 @@ namespace adminpanel.Controllers
             return context.getAttendanceByClientsDays(clientId, numDaysBack);
 
         }
+
+        [Route("api/attByManager/{managerId}/{numDaysBack}")]
+        [HttpGet]
+
+        public dynamic getAttendancesByManagerofClientsByDays(int managerId, int numDaysBack)
+        {
+
+            context.Configuration.ProxyCreationEnabled = false;
+            return context.getAttendanceByManagerId(managerId, numDaysBack);
+
+        }
+
     }
 }

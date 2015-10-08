@@ -88,7 +88,6 @@ namespace adminpanel.Controllers
             }
 
 
-
             claimJSON.claimNo = db.getNextClaimNo(claimJSON.EmpId).FirstOrDefault(); 
 
 
@@ -141,6 +140,16 @@ namespace adminpanel.Controllers
         private bool claimJSONExists(int id)
         {
             return db.claimJSONs.Count(e => e.id == id) > 0;
+        }
+
+
+        [Route("api/getopenclaimsbyman/{ManagerId}")]
+        [HttpGet] 
+
+        public dynamic getOpenClaimsManager(int ManagerId) 
+        {
+            db.Configuration.ProxyCreationEnabled = false;
+            return db.getOpenCliamsByManagerId(ManagerId);
         }
     }
 }

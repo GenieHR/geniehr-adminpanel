@@ -92,5 +92,36 @@ namespace adminpanel.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("getNextClaimNo", empIdParameter);
         }
+    
+        public virtual ObjectResult<Nullable<int>> getEmpsofManager(Nullable<int> managerId)
+        {
+            var managerIdParameter = managerId.HasValue ?
+                new ObjectParameter("ManagerId", managerId) :
+                new ObjectParameter("ManagerId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("getEmpsofManager", managerIdParameter);
+        }
+    
+        public virtual ObjectResult<getAttendanceByManagerId_Result> getAttendanceByManagerId(Nullable<int> managerId, Nullable<int> numDays)
+        {
+            var managerIdParameter = managerId.HasValue ?
+                new ObjectParameter("managerId", managerId) :
+                new ObjectParameter("managerId", typeof(int));
+    
+            var numDaysParameter = numDays.HasValue ?
+                new ObjectParameter("numDays", numDays) :
+                new ObjectParameter("numDays", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getAttendanceByManagerId_Result>("getAttendanceByManagerId", managerIdParameter, numDaysParameter);
+        }
+    
+        public virtual ObjectResult<getOpenCliamsByManagerId_Result> getOpenCliamsByManagerId(Nullable<int> managerId)
+        {
+            var managerIdParameter = managerId.HasValue ?
+                new ObjectParameter("managerId", managerId) :
+                new ObjectParameter("managerId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getOpenCliamsByManagerId_Result>("getOpenCliamsByManagerId", managerIdParameter);
+        }
     }
 }

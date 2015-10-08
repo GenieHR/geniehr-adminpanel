@@ -35,6 +35,8 @@ namespace Admin
                 }
                 else if (System.Web.HttpContext.Current.User.IsInRole("ClientAdmin"))
                 {
+                    Session["EmpId"] = employee.EmpId;
+
                     Session["ClientId"] = employee.CompanyId;
                     Session["SelectClientId"] = employee.CompanyId;
 
@@ -50,6 +52,8 @@ namespace Admin
 
                     Client client = context.Clients.Find(employee.CompanyId);
                     Session["ClientName"] = client.ClientName;
+
+                    //var emp = context.getEmpsofManager(employee.EmpId);
 
                     Response.Redirect("~/main.aspx");
                 }
