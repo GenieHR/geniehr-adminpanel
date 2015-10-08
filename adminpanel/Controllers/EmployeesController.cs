@@ -205,7 +205,16 @@ namespace Admin.Controllers
             return empclients;
         }
 
-        
+        [Route("api/getMyEmps/{ManagerId}")]
+        [HttpGet]
+        public dynamic getMyEmps(int ManagerId)
+        {
+            db.Configuration.ProxyCreationEnabled = false;
+
+            return db.getEmpDetofManager(ManagerId);
+        }
+
+
         //public dynamic addEmployeeToRole(int EmpId, string RoleId)
         //{
         //    var userStore = new UserStore<IdentityUser>();

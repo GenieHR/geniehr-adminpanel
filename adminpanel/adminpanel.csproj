@@ -739,6 +739,9 @@
     <Compile Include="Models\getAttendanceByManagerId_Result.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\getEmpDetofManager_Result.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\getEmpOfGroups1_Result.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>

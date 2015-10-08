@@ -436,7 +436,7 @@
         $(document).ready(function () {
 
             $.ajax({
-                url: "api/claimJSONs/16",
+                url: "api/claimJSONs/" + window.localStorage.getItem("cliamId"),
             }).done(function (result) {
 
                 claimJSON = JSON.parse(result.claimText);

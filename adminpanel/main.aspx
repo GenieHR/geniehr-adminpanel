@@ -42,7 +42,6 @@
         <div class="col-lg-2 pull-right">
             <br />
             <br />
-        <a href="ShowEmployees.aspx?Client=<%= Session["ClientId"] %>" class="btn btn-xs btn-outline btn-primary">Show all Employees</a>
 
             </div>
             
@@ -99,6 +98,31 @@
                                                         <th>Claim Purpose</th>
                                                         <th>Amount</th>
                                                         <th>View</th>
+                                                    </tr>
+
+                                                </table>
+                                </div></div>
+                            </div>
+        </div>
+        </div>
+
+        <div class="col-lg-2">
+            <div class="ibox">
+                        <div class="ibox-title">
+                            <div class="row">
+                            <div class="col-lg-8">
+                            <h3>Employees</h3>
+                                </div>
+                            
+                        </div>
+                            </div>
+                        <div class="ibox-content ">
+                            <div class="row">
+                            <div class="col-lg-12">
+                            <table id="empTable" class="table table-bordered table-hover  table-condensed">
+                                                    <tr>
+                                                        <th>Employee</th>
+                                                        
                                                     </tr>
 
                                                 </table>
@@ -197,6 +221,7 @@
 
         populateTableData(0);
         populateClaimData();
+        poplulateMyEmployees();
         
     });
 
@@ -213,9 +238,8 @@
                 rowStr += '<td>' + result[i].EmpName + '</td>';
                 rowStr += '<td>' + result[i].claimPurpose + '</td>';
                 rowStr += '<td>' + result[i].totalAmount + '</td>';
-                rowStr += '<td><i class="fa fa-arrow"></i></td>';
+                rowStr += '<td><a onclick="javascript:showclaim(' + result[i].claimId + ')"><i class="fa fa-arrow-right"></i></a></td>';
                 rowStr += '</tr>';
-               // alert(rowStr);
                 $("#claimsTable > tbody").append(rowStr);
 
             }
@@ -223,6 +247,28 @@
     }
 
     var addArray = [];
+
+    function showclaim(claimId) {
+        window.localStorage.setItem("cliamId", claimId);
+        window.location = "viewClaim.aspx"
+    }
+
+    function poplulateMyEmployees() {
+        var todayAttURL = 'api/getMyEmps/<%= Session["EmpId"] %>/';
+
+        $.getJSON(todayAttURL, function (result) {
+            for (i = 0; i < result.length; i++) {
+
+                rowStr = '<tr>';
+                rowStr += '<td><a href="profile.aspx?EmpId=' + result[i].EmpId + '" >' + result[i].EmpName + '</a></td>';
+                rowStr += '</tr>';
+                $("#empTable > tbody").append(rowStr);
+
+
+            }
+
+        });
+    }
 
     function populateTableData(numDays) {
 
