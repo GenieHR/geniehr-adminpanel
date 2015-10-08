@@ -35,20 +35,17 @@
     <br />
 
     <div class="col-lg-10 col-sm-12 col-md-12 col-lg-offset-1">
-        <div class="ibox">
-            <div class="ibox-content">
-                <div class="tabs-container">
-                    <div class="tabs-top">
-                        <ul class="nav nav-tabs">
-                            <li><a data-toggle="tab" href="#tabSummary">Summary</a></li>
-                            <li class="active"><a data-toggle="tab" href="#tabTravel">Travel</a></li>
+        <div class="tabs-container">
+                    <ul class="nav nav-tabs">
+                            <li class="active"><a data-toggle="tab" href="#tabSummary">Summary</a></li>
+                            <li><a data-toggle="tab" href="#tabTravel">Travel</a></li>
                             <li><a data-toggle="tab" href="#tabHotel">Hotel</a></li>
                             <li><a data-toggle="tab" href="#tabFood">Food</a></li>
                             <li><a data-toggle="tab" href="#tabOthers">Others</a></li>
                         </ul>
                         <div class="tab-content ">
 
-                            <div id="tabSummary" class="tab-pane">
+                            <div id="tabSummary" class="tab-pane active">
                                 <div class="panel-body">
                                     <div class="row">
 
@@ -442,11 +439,9 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
                 </div>
-            </div>
         </div>
-    </div>
+   
 
 
 

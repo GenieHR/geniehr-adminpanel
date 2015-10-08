@@ -79,7 +79,7 @@
         
     </div>
 
-        <div class="col-lg-6">
+        <div class="col-lg-5">
             <div class="ibox">
                         <div class="ibox-title">
                             <div class="row">
@@ -97,7 +97,6 @@
                                                         <th>Employee</th>
                                                         <th>Claim Purpose</th>
                                                         <th>Amount</th>
-                                                        <th>View</th>
                                                     </tr>
 
                                                 </table>
@@ -106,28 +105,15 @@
         </div>
         </div>
 
-        <div class="col-lg-2">
-            <div class="ibox">
-                        <div class="ibox-title">
-                            <div class="row">
-                            <div class="col-lg-8">
-                            <h3>Employees</h3>
-                                </div>
+
+                   
+        <div class="col-lg-3">
+        <div class="  border-bottom white-bg dashboard-header">
+            <h4>My Employees</h4>
+            <ul id="empTable" class="list-group clear-list m-t">
                             
-                        </div>
-                            </div>
-                        <div class="ibox-content ">
-                            <div class="row">
-                            <div class="col-lg-12">
-                            <table id="empTable" class="table table-bordered table-hover  table-condensed">
-                                                    <tr>
-                                                        <th>Employee</th>
-                                                        
-                                                    </tr>
-
-                                                </table>
-                                </div></div>
-                            </div>
+                        </ul>
+            
         </div>
         </div>
     </div>
@@ -237,8 +223,7 @@
                 rowStr = '<tr>';
                 rowStr += '<td>' + result[i].EmpName + '</td>';
                 rowStr += '<td>' + result[i].claimPurpose + '</td>';
-                rowStr += '<td>' + result[i].totalAmount + '</td>';
-                rowStr += '<td><a onclick="javascript:showclaim(' + result[i].claimId + ')"><i class="fa fa-arrow-right"></i></a></td>';
+                rowStr += '<td>' + result[i].totalAmount + ' ' + '<a onclick="javascript:showclaim(' + result[i].claimId + ')"><i class="fa fa-arrow-right"></i></a></td>';
                 rowStr += '</tr>';
                 $("#claimsTable > tbody").append(rowStr);
 
@@ -259,14 +244,18 @@
         $.getJSON(todayAttURL, function (result) {
             for (i = 0; i < result.length; i++) {
 
-                rowStr = '<tr>';
-                rowStr += '<td><a href="profile.aspx?EmpId=' + result[i].EmpId + '" >' + result[i].EmpName + '</a></td>';
-                rowStr += '</tr>';
-                $("#empTable > tbody").append(rowStr);
+                if (i == 0) {
+                    rowStr = '<li class= "list-group-item fist-item">';
+                } else {
+                    rowStr = '<li class= "list-group-item">';
+                }
 
+                rowStr += '<span class="text-success">' + result[i].EmpName + '</span><a class="pull-right" href="profile.aspx?EmpId=' + result[i].EmpId + '" >' + result[i].PrimaryMobile + '</a>';
+                 
+                rowStr += '</li>';
+                $("#empTable").append(rowStr);
 
             }
-
         });
     }
 

@@ -25,7 +25,7 @@
                         </ul>
                         <div class="tab-content ">
 
-                            <div id="tabSummary" class="tab-pane">
+                            <div id="tabSummary" class="tab-pane active">
                                 <div class="panel-body">
                                     <div class="row">
 
