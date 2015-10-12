@@ -1,0 +1,49 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="template.master.cs" Inherits="adminpanel.template" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head runat="server">
+    <title></title>
+
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css"/>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/style.css" rel="stylesheet"/>
+
+    <link href="css/plugins/toastr/toastr.min.css" rel="stylesheet" />
+    <link href="fonts/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="css/animate.css" rel="stylesheet"/>
+    
+    <asp:ContentPlaceHolder ID="head" runat="server">
+
+    </asp:ContentPlaceHolder>
+
+</head>
+
+<body>
+     
+        <div class="container">
+
+ <asp:ContentPlaceHolder   ID="body" runat="server" >
+
+ </asp:ContentPlaceHolder>
+            
+        </div>
+            
+    <script src="js/jquery-2.1.1.js"></script>
+    <script src="js/jquery-ui-1.10.4.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="js/inspinia.js"></script>
+    <script src="js/plugins/toastr/toastr.min.js"></script>
+    <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+ <asp:ContentPlaceHolder   ID="javascriptPart" runat="server" >
+
+ </asp:ContentPlaceHolder>
+
+
+</body>
+</html>

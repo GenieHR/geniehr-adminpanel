@@ -530,6 +530,9 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <Parameter Name="ManagerId" Type="int" Mode="In" />
         </Function>
         <Function Name="getIST" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="datetime" />
+        <Function Name="getManagerDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EmpId" Type="int" Mode="In" />
+        </Function>
         <Function Name="getNextClaimNo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EmpId" Type="int" Mode="In" />
         </Function>
@@ -1049,7 +1052,10 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <Parameter Name="managerId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="getEmpDetofManager" ReturnType="Collection(ubietydbModel.getEmpDetofManager_Result)">
-            <Parameter Name="ManagerId" Mode="In" Type="Int32" />
+          <Parameter Name="ManagerId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="getManagerDetail" ReturnType="Collection(ubietydbModel.getManagerDetail_Result)">
+            <Parameter Name="EmpId" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="Group">
@@ -1397,6 +1403,12 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <Property Type="String" Name="Email" Nullable="true" MaxLength="50" />
           <Property Type="Int64" Name="PrimaryMobile" Nullable="true" />
         </ComplexType>
+        <ComplexType Name="getManagerDetail_Result">
+          <Property Type="String" Name="Manager_Name" Nullable="false" MaxLength="100" />
+          <Property Type="Int64" Name="Manager_Mobile" Nullable="true" />
+          <Property Type="String" Name="Manager_Email" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="ManagerId" Nullable="false" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1734,6 +1746,16 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
                 <ScalarProperty Name="EmpNum" ColumnName="EmpNum" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="PrimaryMobile" ColumnName="PrimaryMobile" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getManagerDetail" FunctionName="ubietydbModel.Store.getManagerDetail">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ubietydbModel.getManagerDetail_Result">
+                <ScalarProperty Name="Manager_Name" ColumnName="Manager Name" />
+                <ScalarProperty Name="Manager_Mobile" ColumnName="Manager Mobile" />
+                <ScalarProperty Name="Manager_Email" ColumnName="Manager Email" />
+                <ScalarProperty Name="ManagerId" ColumnName="ManagerId" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

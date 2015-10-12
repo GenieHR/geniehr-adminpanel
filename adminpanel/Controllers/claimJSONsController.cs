@@ -151,5 +151,15 @@ namespace adminpanel.Controllers
             db.Configuration.ProxyCreationEnabled = false;
             return db.getOpenCliamsByManagerId(ManagerId);
         }
+
+        [Route("api/getEmployeeManagers/{EmpId}")]
+        [HttpGet]
+
+        public dynamic getEmployeeManagers(int EmpId)
+        {
+            db.Configuration.ProxyCreationEnabled = false;
+            return db.getManagerDetail(EmpId);
+        }
+
     }
 }

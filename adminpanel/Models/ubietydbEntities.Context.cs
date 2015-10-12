@@ -132,5 +132,14 @@ namespace adminpanel.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getEmpDetofManager_Result>("getEmpDetofManager", managerIdParameter);
         }
+    
+        public virtual ObjectResult<getManagerDetail_Result> getManagerDetail(Nullable<int> empId)
+        {
+            var empIdParameter = empId.HasValue ?
+                new ObjectParameter("EmpId", empId) :
+                new ObjectParameter("EmpId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getManagerDetail_Result>("getManagerDetail", empIdParameter);
+        }
     }
 }
