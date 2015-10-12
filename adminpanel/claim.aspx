@@ -28,7 +28,6 @@
             <h2>Add A New Claim</h2>
         </div>
         <div class="col-lg-2">
-
         </div>
     </div>
 
@@ -143,7 +142,6 @@
 
                         <div class="row">
                             <div class="col-lg-12" id="expensesTableDiv">
-                                
                             </div>
                         </div>
                         <div class="row text-center">
@@ -245,7 +243,11 @@
                                 </div>
                                 <div class="col-sm-6">
 
-                                    <input type="submit" class="pull-right btn btn-success" value="Add Expense" /><%--onclick="addExpense('Travel')"--%>
+                                    <input type="button" class="pull-right btn btn-primary" value="Clear" />
+                                    <input type="submit" class="pull-right btn btn-success" value="Update" />
+                                    <input type="submit" class="pull-right btn btn-success" value="Add Expense" />
+
+
                                 </div>
                             </div>
                         </form>
@@ -323,7 +325,11 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
-                                    <input type="submit" class="pull-right btn btn-success" value="Add Expense" /><%--onclick="addExpense('Hotel')"--%>
+                                      <input type="button" class="pull-right btn btn-primary" value="Clear" />
+                                    <input type="submit" class="pull-right btn btn-success" value="Update" />
+                                    <input type="submit" class="pull-right btn btn-success" value="Add Expense" />
+
+
                                 </div>
                             </div>
                         </form>
@@ -377,8 +383,10 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
+                                      <input type="button" class="pull-right btn btn-primary" value="Clear" />
+                                    <input type="submit" class="pull-right btn btn-success" value="Update" />
                                     <input type="submit" class="pull-right btn btn-success" value="Add Expense" />
-                                    <%--onclick="addExpense('Food')"--%>
+
                                 </div>
                             </div>
                         </form>
@@ -422,7 +430,11 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
-                                    <input type="submit" class="pull-right btn btn-success" value="Add Expense" /><%--onclick="addExpense('Others')"--%>
+                                    
+                                    <input type="button" class="pull-right btn btn-primary" value="Clear" />
+                                    <input type="submit" class="pull-right btn btn-success" value="Update" />
+                                    <input type="submit" class="pull-right btn btn-success" value="Add Expense" />
+
                                 </div>
                             </div>
                         </form>
@@ -451,73 +463,72 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="javascriptPart" runat="server">
 
-
     <script>
 
-        $('#myModal').on('hidden.bs.modal', function () {
-            window.location = 'claim.aspx';
-        })
+    $('#myModal').on('hidden.bs.modal', function () {
+        window.location = 'claim.aspx';
+    })
 
-        var newId = 0;
-        var claimJSON = $.parseJSON('{"travelExpense":0, "foodExpense":0, "hotelExpense":0,"otherExpense":0, "totalExpense":0,"claimpurpose":"","Travels":[],"Hotels":[],"Food":[],"Others":[]}');
+    var newId = 0;
+    var claimJSON = $.parseJSON('{"travelExpense":0, "foodExpense":0, "hotelExpense":0,"otherExpense":0, "totalExpense":0,"claimpurpose":"","Travels":[],"Hotels":[],"Food":[],"Others":[]}');
 
-        $("#claimDate").datepicker({ dateFormat: 'dd-mm-yy' }).datepicker("setDate", new Date());
+    $("#claimDate").datepicker({ dateFormat: 'dd-mm-yy' }).datepicker("setDate", new Date());
 
-        $( document ).ready(function() {
-            $.ajax({
-                url: 'api/getEmployeeManagers/' + '<%= Session["EmpId"] %>',
-                success: function (data) {
-                    var manNames;
-                    manNames = data[0].Manager_Name
+    $( document ).ready(function() {
+        $.ajax({
+            url: 'api/getEmployeeManagers/' + '<%= Session["EmpId"] %>',
+            success: function (data) {
+                var manNames;
+                manNames = data[0].Manager_Name
 
-                    if (data.length > 1) {
-                        var i = 1;
-                        for (i=1;i< data.length;i++) {
-                            manNames += ' / ' + data[i].Manager_Name;   
-                        }
+                if (data.length > 1) {
+                    var i = 1;
+                    for (i=1;i< data.length;i++) {
+                        manNames += ' / ' + data[i].Manager_Name;   
                     }
-                    $("#managerName").val(manNames);
                 }
-            });
+                $("#managerName").val(manNames);
+            }
         });
+    });
        
-        function activateTab(tab) {
-            $('.nav-tabs a[href="#' + tab + '"]').tab('show');
-        }
+    function activateTab(tab) {
+        $('.nav-tabs a[href="#' + tab + '"]').tab('show');
+    }
 
-        function saveDraftClaim() {
+    function saveDraftClaim() {
+        alert('coming soon');
+    }
 
-        }
-
-        function submitClaim() {
+    function submitClaim() {
             
-            if(parseInt($("#summTotAmt").html()) == 0) {
-                alert("Add atleast one expense");
-                return false;
-            }
+        if(parseInt($("#summTotAmt").html()) == 0) {
+            alert("Add atleast one expense");
+            return false;
+        }
 
-            if( $.trim($("#claimPurpose").val()) == "") {
-                alert("Claim pupose cannot be blank");
-                $("#claimPurpose").focus();
-                return false;
-            }
+        if( $.trim($("#claimPurpose").val()) == "") {
+            alert("Claim pupose cannot be blank");
+            $("#claimPurpose").focus();
+            return false;
+        }
 
-            $('#myModal').modal({
-                backdrop: 'static',
-                keyboard: false
-            });
+        $('#myModal').modal({
+            backdrop: 'static',
+            keyboard: false
+        });
 
-            $('#myModal').modal();
+        $('#myModal').modal();
            
-            claimJSON.travelExpense = parseInt($("#sumTravelAmt").html());
-            claimJSON.claimpurpose = $("#claimPurpose").val();
-            claimJSON.foodExpense = parseInt($("#sumFoodAmt").html());
-            claimJSON.hotelExpense = parseInt($("#sumHotelAmt").html());
-            claimJSON.otherExpense = parseInt($("#summOthAmt").html());
-            claimJSON.totalExpense = parseInt($("#summTotAmt").html());
+        claimJSON.travelExpense = parseInt($("#sumTravelAmt").html());
+        claimJSON.claimpurpose = $("#claimPurpose").val();
+        claimJSON.foodExpense = parseInt($("#sumFoodAmt").html());
+        claimJSON.hotelExpense = parseInt($("#sumHotelAmt").html());
+        claimJSON.otherExpense = parseInt($("#summOthAmt").html());
+        claimJSON.totalExpense = parseInt($("#summTotAmt").html());
             
-            var uploadVal = {
-                "EmpId": <%= Session["EmpId"] %>,
+        var uploadVal = {
+            "EmpId": <%= Session["EmpId"] %>,
                 "claimDate": $("#claimDate").val(),
                 "claimPurpose": claimJSON.claimpurpose,
                 "claimText": JSON.stringify(claimJSON),
@@ -534,8 +545,6 @@
                 data: uploadVal
             });
         }
-
-
 
         $("#foodForm").submit(function (event) {
             event.preventDefault();
@@ -626,7 +635,6 @@
         }
 
         function addExpense(expenseType) {
-
             
             if($("#expensesTable").length == 0) {
                 $('#expensesTableDiv').html('<table id="expensesTable" class=" table table-stripped table-bordered table-hover table-condensed"><thead><tr><th style="width: 10%;">Type </th><th style="width: 10%;">Date </th><th style="width: 60%">Notes</th><th style="width: 10%" class="curr">Amount</th><th style="width: 10%">Manage</th></tr></thead><tbody></tbody></table>');
@@ -640,22 +648,22 @@
                 case 'Travel':
                     claimJSON.Travels.push({ "id": newId, "purpose": $('#travelpurpose').val(), "traveldate": $("#traveldate").val(), "modeoftravel": $('input[name=modeoftravel]:checked').val(), "from": $("#travelfrom").val(), "to": $("#travelto").val(), "distance": $("#traveldistance").val(), "rate": $("#travelrate").val(), "remarks": $("#travelremarks").val(), "totalamount": $("#travelamount").val() });
                     calculateSummTravelAmt();
-                    $('#expensesTable  tbody').append('<tr id="' + lineId + '"><td>Travel</td><td>' + $("#traveldate").val() + '</td><td>' + $('#travelpurpose').val() + '</td><td class="curr">' + $("#travelamount").val() + '</td><td class="text-center text-info"><a href="#" onclick="javascript:editvalues(\'' + lineId + '\')"><i class="fa fa-pencil"></i></a>&nbsp;&nbsp;  <i class="fa fa-trash"></i></tr>');
+                    $('#expensesTable  tbody').append('<tr id="' + lineId + '"><td>Travel</td><td>' + $("#traveldate").val() + '</td><td>' + $('#travelpurpose').val() + '</td><td class="curr">' + $("#travelamount").val() + '</td><td class="text-center text-info"><a href="#" onclick="javascript:editvalues(\'' + lineId + '\')"><i class="fa fa-pencil-square-o"></i></a>&nbsp;&nbsp;  <i class="fa fa-trash"></i></tr>');
                     break;
                 case 'Hotel':
-                    claimJSON.Hotels.push({ "id": newId, "hotelname": $("#hotelname").val(), "stayfromdate": $("#stayfromdate").val(), "staytodate": $("#staytodate").val(), "noofnights": $("#").val(), "rate": $("#hotelrate").val(), "remarks": $("#hotelremarks").val(), "totalamount": $("#hotelamount").val() });
+                    claimJSON.Hotels.push({ "id": newId, "hotelname": $("#hotelname").val(), "stayfromdate": $("#stayfromdate").val(), "staytodate": $("#staytodate").val(), "noofnights": $("#noofnights").val(), "rate": $("#hotelrate").val(), "remarks": $("#hotelremarks").val(), "totalamount": $("#hotelamount").val() });
                     calculateSummHotelAmt();
-                    $('#expensesTable  tbody').append('<tr id="' + lineId + '"><td>Hotel</td><td>' + $("#staytodate").val() + '</td><td>' + $('#hotelname').val() + '</td><td class="curr">' + $("#hotelamount").val() + '</td><td class="text-center text-info"><a href="#" onclick="javascript:editvalues(\'' + lineId + '\')"><i class="fa fa-pencil"></i></a>&nbsp;&nbsp;  <i class="fa fa-trash"></i></tr>');
+                    $('#expensesTable  tbody').append('<tr id="' + lineId + '"><td>Hotel</td><td>' + $("#staytodate").val() + '</td><td>' + $('#hotelname').val() + '</td><td class="curr">' + $("#hotelamount").val() + '</td><td class="text-center text-info"><a href="#" onclick="javascript:editvalues(\'' + lineId + '\')"><i class="fa fa-pencil-square-o"></i></a>&nbsp;&nbsp;  <i class="fa fa-trash"></i></tr>');
                     break;
                 case 'Food':
                     claimJSON.Food.push({ "id": newId, "restaurantname": $("#restaurantname").val(), "expensedate": $("#foodexpensedate").val(), "noofpersons": $("#foodnoofpersons").val(), "remarks": $("#foodremarks").val(), "totalamount": $("#foodtotalamount").val() });
                     calculateSummFoodAmt();
-                    $('#expensesTable  tbody').append('<tr id="' + lineId + '"><td>Food</td><td>' + $("#foodexpensedate").val() + '</td><td>' + $('#restaurantname').val() + '</td><td class="curr">' + $("#foodtotalamount").val() + '</td><td class="text-center text-info"><a href="#" onclick="javascript:editvalues(\'' + lineId + '\')"><i class="fa fa-pencil"></i></a>&nbsp;&nbsp;  <i class="fa fa-trash"></i></tr>');
+                    $('#expensesTable  tbody').append('<tr id="' + lineId + '"><td>Food</td><td>' + $("#foodexpensedate").val() + '</td><td>' + $('#restaurantname').val() + '</td><td class="curr">' + $("#foodtotalamount").val() + '</td><td class="text-center text-info"><a href="#" onclick="javascript:editvalues(\'' + lineId + '\')"><i class="fa fa-pencil-square-o"></i></a>&nbsp;&nbsp;  <i class="fa fa-trash"></i></tr>');
                     break;
                 case 'Others':
                     claimJSON.Others.push({ "id": newId, "otherdesc": $("#otherdesc").val(), "otherexpensedate": $("#otherexpensedate").val(), "otherexpenseremarks": $("#otherexpenseremarks").val(), "otherexpenseamt": $("#otherexpenseamt").val() });
                     calculateSummOthersAmt();
-                    $('#expensesTable  tbody').append('<tr id="' + lineId + '"><td>Others</td><td>' + $("#otherexpensedate").val() + '</td><td>' + $('#otherdesc').val() + '</td><td class="curr">' + $("#otherexpenseamt").val() + '</td><td class="text-center text-info"><a href="#" onclick="javascript:editvalues(\'' + lineId + '\')"><i class="fa fa-pencil"></i></a>&nbsp;&nbsp;  <i class="fa fa-trash"></i></tr>');
+                    $('#expensesTable  tbody').append('<tr id="' + lineId + '"><td>Others</td><td>' + $("#otherexpensedate").val() + '</td><td>' + $('#otherdesc').val() + '</td><td class="curr">' + $("#otherexpenseamt").val() + '</td><td class="text-center text-info"><a href="#" onclick="javascript:editvalues(\'' + lineId + '\')"><i class="fa fa-pencil-square-o"></i></a>&nbsp;&nbsp;  <i class="fa fa-trash"></i></tr>');
                     break;
             }
 
@@ -686,12 +694,9 @@
             var expenseType = valId.split('_')[0];
             var editId = valId.split('_')[1];
             var len,i,foundId;
-            
 
             switch (expenseType) {
-
                 case 'Travel':
-            
                     len =  claimJSON.Travels.length;
                     for (i=0;i<len;i++) {
                         if(claimJSON.Travels[i].id == editId) {
@@ -753,4 +758,4 @@
         }
 
     </script>
-    </asp:Content>
+</asp:Content>
