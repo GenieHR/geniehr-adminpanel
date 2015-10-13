@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/UbietyMenu.Master" CodeBehind="viewClaim.aspx.cs" Inherits="adminpanel.viewClaim" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/template.Master" CodeBehind="changeClaim.aspx.cs" Inherits="adminpanel.viewClaim" %>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="body" runat="server">
     <div class="row wrapper border-bottom white-bg page-heading">
@@ -11,10 +11,8 @@
 
     <br />
 
-    <div class="col-lg-10 col-sm-12 col-md-12 col-lg-offset-1">
-        <div class="ibox">
-            <div class="ibox-content">
-                <div class="tabs-container">
+    <div class="col-lg-12 col-sm-12 col-md-12">
+        <div class="tabs-container">
                     <div class="tabs-top">
                         <ul class="nav nav-tabs">
                             <li class="active"><a data-toggle="tab" href="#tabSummary">Summary</a></li>
@@ -22,6 +20,8 @@
                             <li><a data-toggle="tab" href="#tabHotel">Hotel</a></li>
                             <li><a data-toggle="tab" href="#tabFood">Food</a></li>
                             <li><a data-toggle="tab" href="#tabOthers">Others</a></li>
+                            <li><a data-toggle="tab" href="#tabLog">Claim Log</a></li>
+
                         </ul>
                         <div class="tab-content ">
 
@@ -88,8 +88,8 @@
                                                 <thead>
                                                     <tr>
                                                         <th style="width: 50%">Expense</th>
-                                                        <th style="width: 23%">Claimed ( &#x20B9 )</th>
-                                                        <th style="width: 27%">Approved ( &#x20B9 )</th>
+                                                        <th style="width: 25%">Claimed ( &#x20B9 )</th>
+                                                        <th style="width: 25%">Approved ( &#x20B9 )</th>
 
                                                     </tr>
                                                 </thead>
@@ -97,32 +97,32 @@
                                                     <tr>
                                                         <td>Travel</td>
                                                         <td class="curr" id="sumTravelAmt">0.00</td>
-                                                        <td  ><input style="width:60px" id="sumTravelAmtA" onclick="this.select();" type="number" /></td>
+                                                        <td  ><input style="width:60px" id="sumTravelAmtA" readonly onchange="uploadSummVal()" onclick="this.select();" type="number" /></td>
 
                                                     </tr>
                                                     <tr>
                                                         <td>Hotel</td>
                                                         <td class="curr" id="sumHotelAmt">0.00</td>
-                                                        <td  ><input style="width:60px" id="sumHotelAmtA" onclick="this.select();" type="number" /></td>
+                                                        <td  ><input style="width:60px" id="sumHotelAmtA"  readonly  onchange="uploadSummVal()"  onclick="this.select();" type="number" /></td>
 
 
                                                     </tr>
                                                     <tr>
                                                         <td>Food</td>
                                                         <td class="curr" id="sumFoodAmt">0.00</td>
-                                                        <td  ><input style="width:60px" id="sumFoodAmtA" onclick="this.select();" type="number" /></td>
+                                                        <td  ><input style="width:60px" id="sumFoodAmtA"  readonly  onchange="uploadSummVal()"  onclick="this.select();" type="number" /></td>
                                                     </tr>
 
                                                     <tr>
                                                         <td>Others</td>
                                                         <td class="curr" id="summOthAmt">0.00</td>
-                                                        <td  ><input style="width:60px" id="summOthAmtA" onclick="this.select();" type="number" /></td>
+                                                        <td  ><input style="width:60px" id="summOthAmtA"  readonly  onchange="uploadSummVal()" onclick="this.select();" type="number" /></td>
 
                                                     </tr>
                                                 </tbody>
                                                 <tfoot>
                                                     <tr style="background-color: lightgray">
-                                                        <td><b>Approved Amount</b></td>
+                                                        <td><b>Total Approved ( &#x20B9 )</b></td>
                                                         <td colspan="2" class="curr"><b id="summTotAmt">0.00</b></td>
 
                                                     </tr>
@@ -141,11 +141,11 @@
                                                 <thead>
                                                     <tr>
                                                         <th style="width: 10%;">Type </th>
-                                                        <th style="width: 10%;">Date </th>
-                                                        <th style="width: 40%">Notes</th>
-                                                        <th style="width: 15%" class="curr">Amount</th>
-                                                        <th style="width: 15%" class="curr">Approved</th>
-                                                        <th style="width: 10%">View</th>
+                                                        <th style="width: 15%;">Date </th>
+                                                        <th style="width: 50%">Notes</th>
+                                                        <th style="width: 10%" class="curr">Claimed ( &#x20B9 )</th>
+                                                        <th style="width: 10%" class="curr">Approved ( &#x20B9 )</th>
+                                                        <th style="width: 5%">View</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -154,8 +154,10 @@
                                         </div>
                                     </div>
                                     <div class="row text-center">
-                                    <input type="button" value="Save Changes" class="btn btn-info" />
-                                    </div>
+                                    <input type="button" onclick="saveClaimChanges()" value="Save Changes" class="btn btn-info" />
+                                    <input type="button" onclick="rejectClaim()" value="Reject Claim" class="btn btn-danger" />
+            
+                                                                </div>
                                 </div>
                             </div>
 
@@ -423,16 +425,35 @@
                                     </form>
                                 </div>
                             </div>
+
+                            <div id="tabLog" class="tab-pane">
+                                <div class="panel-body">
+                                   <table class="table table-bordered table-condensed table-hover">
+                                       <thead>
+                                           <tr>
+                                               <th style="width:5%">#</th>
+                                               <th style="width:20%">Date & Time</th>
+                                               <th style="width:55%">Action Taken</th>
+                                               <th style="width:20%">Action By</th>
+                                           </tr>
+                                       </thead>
+                                   </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
     </div>
     
+</asp:Content>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="javascriptPart" runat="server">
+
     <script>
 
         var claimJSON;
+        var fullJSONText;
+
         $(document).ready(function () {
 
             $.ajax({
@@ -457,7 +478,7 @@
 
                 $("#claimPurpose").val(result.claimPurpose);
 
-                $("#claimDate").val(result.claimDate.substring(0,10));
+                $("#claimDate").val(result.claimDate.substring(0, 10));
                 $("#claimNo").val(result.claimNo);
 
                 $.ajax({
@@ -471,22 +492,107 @@
                 var i = 0;
 
                 for (i = 0; i < claimJSON.Travels.length; i++) {
-                    $('#expensesTable  tbody').append('<tr><td>Travel</td><td>' + claimJSON.Travels[i].traveldate + '</td><td>' + claimJSON.Travels[i].purpose + '</td><td class="curr">' + claimJSON.Travels[i].totalamount + '</td><td><input type="number" value="' + claimJSON.Travels[i].totalamount + '" /></td><td class="text-center text-info"><i class="fa fa-eye"></i></tr>');
+                    $('#expensesTable  tbody').append('<tr><td>Travel</td><td>' + claimJSON.Travels[i].traveldate + '</td><td>' + claimJSON.Travels[i].purpose + '</td><td class="curr">' + claimJSON.Travels[i].totalamount + '</td><td><input style="width:100px"  onchange="updateTotals(\'Travel\')"  type="number" id="travel' + i + '" value="' + claimJSON.Travels[i].totalamount + '" /></td><td class="text-center text-info"><i class="fa fa-eye"></i></tr>');
                 }
 
                 for (i = 0; i < claimJSON.Hotels.length; i++) {
-                    $('#expensesTable  tbody').append('<tr><td>Hotel</td><td>' + claimJSON.Hotels[i].staytodate + '</td><td>' + claimJSON.Hotels[i].hotelname + '</td><td class="curr">' + claimJSON.Hotels[i].totalamount + '</td><td><input type="number" value="' + claimJSON.Hotels[i].totalamount + '" /></td><td class="text-center text-info"><i class="fa fa-eye"></i></tr>');
+                    $('#expensesTable  tbody').append('<tr><td>Hotel</td><td>' + claimJSON.Hotels[i].staytodate + '</td><td>' + claimJSON.Hotels[i].hotelname + '</td><td class="curr">' + claimJSON.Hotels[i].totalamount + '</td><td><input style="width:100px" type="number"  onchange="updateTotals(\'Hotel\')"  id="hotel' + i + '"  value="' + claimJSON.Hotels[i].totalamount + '" /></td><td class="text-center text-info"><i class="fa fa-eye"></i></tr>');
                 }
-                
+
                 for (i = 0; i < claimJSON.Food.length; i++) {
-                    $('#expensesTable  tbody').append('<tr><td>Food</td><td>' + claimJSON.Food[i].expensedate + '</td><td>' + claimJSON.Food[i].restaurantname + '</td><td class="curr">' + claimJSON.Food[i].totalamount + '</td><td><input type="number" value="' + claimJSON.Food[i].totalamount + '" /></td><td class="text-center text-info"><i class="fa fa-eye"></i></tr>');
+                    $('#expensesTable  tbody').append('<tr><td>Food</td><td>' + claimJSON.Food[i].expensedate + '</td><td>' + claimJSON.Food[i].restaurantname + '</td><td class="curr">' + claimJSON.Food[i].totalamount + '</td><td><input style="width:100px"  onchange="updateTotals(\'Food\')"  type="number" id="food' + i + '"  value="' + claimJSON.Food[i].totalamount + '" /></td><td class="text-center text-info"><i class="fa fa-eye"></i></tr>');
                 }
 
                 for (i = 0; i < claimJSON.Others.length; i++) {
-                    $('#expensesTable  tbody').append('<tr><td>Others</td><td>' + claimJSON.Others[i].otherexpensedate + '</td><td>' + claimJSON.Others[i].otherdesc + '</td><td class="curr">' + claimJSON.Others[i].otherexpenseamt + '</td><td><input type="number" value="' + claimJSON.Others[i].otherexpenseamt + '" /></td><td class="text-center text-info"><i class="fa fa-eye"></i></tr>');
+                    $('#expensesTable  tbody').append('<tr><td>Others</td><td>' + claimJSON.Others[i].otherexpensedate + '</td><td>' + claimJSON.Others[i].otherdesc + '</td><td class="curr">' + claimJSON.Others[i].otherexpenseamt + '</td><td><input style="width:100px" onchange="updateTotals(\'Others\')"  type="number" id="other' + i + '"  value="' + claimJSON.Others[i].otherexpenseamt + '" /></td><td class="text-center text-info"><i class="fa fa-eye"></i></tr>');
                 }
+
+                addApprovalItems();
+
             });
         });
+
+        function rejectClaim() {
+
+        }
+
+        function saveClaimChanges() {
+            addApprovalItems();
+        }
+
+        function uploadSummVal() {
+            $("#summTotAmt").html(parseInt($("#sumTravelAmtA").val()) + parseInt($("#sumFoodAmtA").val()) + parseInt($("#sumHotelAmtA").val()) + parseInt($("#summOthAmtA").val()));
+        }
+
+
+        function addApprovalItems() {
+
+            claimJSON.travelExpenseA = $("#sumTravelAmtA").val();
+            claimJSON.foodExpenseA = $("#sumFoodAmtA").val();
+            claimJSON.otherExpenseA = $("#summOthAmtA").val();
+            claimJSON.hotelExpenseA = $("#sumHotelAmtA").val();
+            claimJSON.totalExpenseA = $("#summTotAmt").html();
+
+            for (i = 0; i < claimJSON.Travels.length; i++) {
+                claimJSON.Travels[i].approvedAmt = $("#travel" + i).val();
+            }
+
+            for (i = 0; i < claimJSON.Hotels.length; i++) {
+                claimJSON.Hotels[i].approvedAmt = $("#hotel" + i).val();
+            }
+
+            for (i = 0; i < claimJSON.Food.length; i++) {
+                claimJSON.Food[i].approvedAmt = $("#food" + i).val();
+            }
+
+            for (i = 0; i < claimJSON.Others.length; i++) {
+                claimJSON.Others[i].approvedAmt = $("#other" + i).val();
+            }
+
+        }
+
+        function updateTotals(expenseType)
+        {
+            var approvedAmt = 0;
+
+            switch (expenseType) {
+
+                case 'Travel':
+                    for (i = 0; i < claimJSON.Travels.length; i++) {
+                        approvedAmt += parseInt($("#travel" + i).val());
+                    }
+
+                    $("#sumTravelAmtA").val(approvedAmt);
+                    break;
+
+                case 'Hotel':
+                    for (i = 0; i < claimJSON.Hotels.length; i++) {
+                        approvedAmt += parseInt($("#hotel" + i).val());
+                    }
+
+                    $("#sumHotelAmtA").val(approvedAmt);
+                    break;
+
+                case 'Food':
+                    for (i = 0; i < claimJSON.Food.length; i++) {
+                        approvedAmt += parseInt($("#food" + i).val());
+                    }
+
+                    $("#sumFoodAmtA").val(approvedAmt);
+                    break;
+
+                case 'Others':
+                    for (i = 0; i < claimJSON.Others.length; i++) {
+                        approvedAmt += parseInt($("#other" + i).val());
+                    }
+
+                    $("#summOthAmtA").val(approvedAmt);
+                    break;
+            }
+
+            //$("#summTotAmt").html(parseInt($("#sumTravelAmtA").val()) + parseInt($("#sumFoodAmtA").val()) + parseInt($("#sumHotelAmtA").val()) + parseInt($("#summOthAmtA").val()));
+            uploadSummVal();
+        }
 
     </script>
 

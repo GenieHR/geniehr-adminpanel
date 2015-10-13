@@ -468,6 +468,7 @@
 
 <script>
         
+    var empId = <%= Session["EmpId"] %>;
     var intTravelNo = -1; 
     var intHotelNo = -1;
     var intFoodNo = -1;
@@ -486,7 +487,7 @@
 
     $( document ).ready(function() {
         $.ajax({
-            url: 'api/getEmployeeManagers/' + '<%= Session["EmpId"] %>',
+            url: 'api/getEmployeeManagers/' + empId,
             success: function (data) {
                 var manNames;
                 manNames = data[0].Manager_Name
@@ -538,7 +539,7 @@ function submitClaim() {
     claimJSON.totalExpense = parseInt($("#summTotAmt").html());
             
     var uploadVal = {
-        "EmpId": <%= Session["EmpId"] %>,
+        "EmpId": empId,
         "claimDate": $("#claimDate").val(),
         "claimPurpose": claimJSON.claimpurpose,
         "claimText": JSON.stringify(claimJSON),

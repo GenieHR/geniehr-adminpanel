@@ -235,7 +235,7 @@
 
     function showclaim(claimId) {
         window.localStorage.setItem("cliamId", claimId);
-        window.location = "viewClaim.aspx"
+        window.location = "changeClaim.aspx"
     }
 
     function poplulateMyEmployees() {
