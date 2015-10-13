@@ -492,19 +492,23 @@
                 var i = 0;
 
                 for (i = 0; i < claimJSON.Travels.length; i++) {
-                    $('#expensesTable  tbody').append('<tr><td>Travel</td><td>' + claimJSON.Travels[i].traveldate + '</td><td>' + claimJSON.Travels[i].purpose + '</td><td class="curr">' + claimJSON.Travels[i].totalamount + '</td><td><input style="width:100px"  onchange="updateTotals(\'Travel\')"  type="number" id="travel' + i + '" value="' + claimJSON.Travels[i].totalamount + '" /></td><td class="text-center text-info"><i class="fa fa-eye"></i></tr>');
+                    var lineId = 'Travel_' + i;
+                    $('#expensesTable  tbody').append('<tr><td>Travel</td><td>' + claimJSON.Travels[i].traveldate + '</td><td>' + claimJSON.Travels[i].purpose + '</td><td class="curr">' + claimJSON.Travels[i].totalamount + '</td><td><input style="width:100px"  onchange="updateTotals(\'Travel\')"  type="number" id="travel' + i + '" value="' + claimJSON.Travels[i].totalamount + '" /></td><td class="text-center text-info"><a href="#" onclick="viewvalues(\'' + lineId + '\')"><i class="fa fa-eye"></i></a></tr>');
                 }
 
                 for (i = 0; i < claimJSON.Hotels.length; i++) {
-                    $('#expensesTable  tbody').append('<tr><td>Hotel</td><td>' + claimJSON.Hotels[i].staytodate + '</td><td>' + claimJSON.Hotels[i].hotelname + '</td><td class="curr">' + claimJSON.Hotels[i].totalamount + '</td><td><input style="width:100px" type="number"  onchange="updateTotals(\'Hotel\')"  id="hotel' + i + '"  value="' + claimJSON.Hotels[i].totalamount + '" /></td><td class="text-center text-info"><i class="fa fa-eye"></i></tr>');
+                    var lineId = 'Hotel_' + i;
+                    $('#expensesTable  tbody').append('<tr><td>Hotel</td><td>' + claimJSON.Hotels[i].staytodate + '</td><td>' + claimJSON.Hotels[i].hotelname + '</td><td class="curr">' + claimJSON.Hotels[i].totalamount + '</td><td><input style="width:100px" type="number"  onchange="updateTotals(\'Hotel\')"  id="hotel' + i + '"  value="' + claimJSON.Hotels[i].totalamount + '" /></td><td class="text-center text-info"><a href="#" onclick="viewvalues(\'' + lineId + '\')"><i class="fa fa-eye"></i></a></tr>');
                 }
 
                 for (i = 0; i < claimJSON.Food.length; i++) {
-                    $('#expensesTable  tbody').append('<tr><td>Food</td><td>' + claimJSON.Food[i].expensedate + '</td><td>' + claimJSON.Food[i].restaurantname + '</td><td class="curr">' + claimJSON.Food[i].totalamount + '</td><td><input style="width:100px"  onchange="updateTotals(\'Food\')"  type="number" id="food' + i + '"  value="' + claimJSON.Food[i].totalamount + '" /></td><td class="text-center text-info"><i class="fa fa-eye"></i></tr>');
+                    var lineId = 'Food_' + i;
+                    $('#expensesTable  tbody').append('<tr><td>Food</td><td>' + claimJSON.Food[i].expensedate + '</td><td>' + claimJSON.Food[i].restaurantname + '</td><td class="curr">' + claimJSON.Food[i].totalamount + '</td><td><input style="width:100px"  onchange="updateTotals(\'Food\')"  type="number" id="food' + i + '"  value="' + claimJSON.Food[i].totalamount + '" /></td><td class="text-center text-info"><a href="#" onclick="viewvalues(\'' + lineId + '\')"><i class="fa fa-eye"></i></a></tr>');
                 }
 
                 for (i = 0; i < claimJSON.Others.length; i++) {
-                    $('#expensesTable  tbody').append('<tr><td>Others</td><td>' + claimJSON.Others[i].otherexpensedate + '</td><td>' + claimJSON.Others[i].otherdesc + '</td><td class="curr">' + claimJSON.Others[i].otherexpenseamt + '</td><td><input style="width:100px" onchange="updateTotals(\'Others\')"  type="number" id="other' + i + '"  value="' + claimJSON.Others[i].otherexpenseamt + '" /></td><td class="text-center text-info"><i class="fa fa-eye"></i></tr>');
+                    var lineId = 'Others_' + i;
+                    $('#expensesTable  tbody').append('<tr><td>Others</td><td>' + claimJSON.Others[i].otherexpensedate + '</td><td>' + claimJSON.Others[i].otherdesc + '</td><td class="curr">' + claimJSON.Others[i].otherexpenseamt + '</td><td><input style="width:100px" onchange="updateTotals(\'Others\')"  type="number" id="other' + i + '"  value="' + claimJSON.Others[i].otherexpenseamt + '" /></td><td class="text-center text-info"><a href="#" onclick="viewvalues(\'' + lineId + '\')"><i class="fa fa-eye"></i></a></tr>');
                 }
 
                 addApprovalItems();
@@ -523,7 +527,6 @@
         function uploadSummVal() {
             $("#summTotAmt").html(parseInt($("#sumTravelAmtA").val()) + parseInt($("#sumFoodAmtA").val()) + parseInt($("#sumHotelAmtA").val()) + parseInt($("#summOthAmtA").val()));
         }
-
 
         function addApprovalItems() {
 
@@ -590,8 +593,61 @@
                     break;
             }
 
-            //$("#summTotAmt").html(parseInt($("#sumTravelAmtA").val()) + parseInt($("#sumFoodAmtA").val()) + parseInt($("#sumHotelAmtA").val()) + parseInt($("#summOthAmtA").val()));
             uploadSummVal();
+        }
+
+        function viewvalues(valId) {
+
+            var expenseType = valId.split('_')[0];
+            var editId = valId.split('_')[1];
+
+            switch (expenseType) {
+                case 'Travel':
+                    $('#travelpurpose').val(claimJSON.Travels[editId].purpose);
+                    $("#traveldate").val(claimJSON.Travels[editId].traveldate);
+                    $('input[name="modeoftravel"][value="' + claimJSON.Travels[editId].modeoftravel + '"]').prop('checked', true);
+                    $("#travelfrom").val(claimJSON.Travels[editId].from);
+                    $("#travelto").val(claimJSON.Travels[editId].to);
+                    $("#traveldistance").val(claimJSON.Travels[editId].distance);
+                    $("#travelrate").val(claimJSON.Travels[editId].rate);
+                    $("#travelremarks").val(claimJSON.Travels[editId].remarks);
+                    $("#travelamount").val(claimJSON.Travels[editId].totalamount);
+                    activateTab('tabTravel');
+                    break;
+
+                case 'Hotel':
+                    $("#hotelname").val(claimJSON.Hotels[editId].hotelname);
+                    $("#stayfromdate").val(claimJSON.Hotels[editId].stayfromdate);
+                    $("#staytodate").val(claimJSON.Hotels[editId].staytodate);
+                    $("#noofnights").val(claimJSON.Hotels[editId].noofnights);
+                    $("#hotelrate").val(claimJSON.Hotels[editId].rate);
+                    $("#hotelremarks").val(claimJSON.Hotels[editId].remarks);
+                    $("#hotelamount").val(claimJSON.Hotels[editId].totalamount);
+                    activateTab('tabHotel');
+                    break;
+
+                case 'Food':
+                    $("#restaurantname").val(claimJSON.Food[editId].restaurantname);
+                    $("#foodexpensedate").val(claimJSON.Food[editId].expensedate);
+                    $("#foodnoofpersons").val(claimJSON.Food[editId].noofpersons);
+                    $("#foodremarks").val(claimJSON.Food[editId].remarks);
+                    $("#foodtotalamount").val(claimJSON.Food[editId].totalamount);
+                    activateTab('tabFood');
+                    break;
+
+                case 'Others':
+
+                    $("#otherdesc").val(claimJSON.Others[editId].otherdesc);
+                    $("#otherexpensedate").val(claimJSON.Others[editId].otherexpensedate);
+                    $("#otherexpenseremarks").val(claimJSON.Others[editId].otherexpenseremarks);
+                    $("#otherexpenseamt").val(claimJSON.Others[editId].otherexpenseamt);
+                    activateTab('tabOthers');
+                    break;
+            }
+        }
+
+        function activateTab(tab) {
+            $('.nav-tabs a[href="#' + tab + '"]').tab('show');
         }
 
     </script>
