@@ -21,6 +21,10 @@
             margin: 0 auto;
             pointer-events: all;
         }
+
+        .button-hide {
+            display: none;
+        }
     </style>
 
     <div class="row wrapper border-bottom white-bg page-heading">
@@ -81,7 +85,6 @@
                                         <div class="col-sm-10">
                                             <input type="text" readonly id="managerName" class="form-control" />
                                         </div>
-
                                     </div>
                                 </form>
                             </div>
@@ -243,9 +246,9 @@
                                 </div>
                                 <div class="col-sm-6">
 
-                                    <input type="button" class="pull-right btn btn-primary" value="Clear" />
-                                    <input type="submit" class="pull-right btn btn-success" value="Update" />
-                                    <input type="submit" class="pull-right btn btn-success" value="Add Expense" />
+                                    <input type="button" class="pull-right btn btn-info" value="Clear" />
+                                    <input type="submit" class="pull-right btn btn-success button-hide" value="Update" />
+                                    <input type="submit" class="pull-right btn btn-info" value="Add Expenses" style="margin-right: 4px" />
 
 
                                 </div>
@@ -325,9 +328,9 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
-                                      <input type="button" class="pull-right btn btn-primary" value="Clear" />
-                                    <input type="submit" class="pull-right btn btn-success" value="Update" />
-                                    <input type="submit" class="pull-right btn btn-success" value="Add Expense" />
+                                    <input type="button" class="pull-right btn btn-info" value="Clear" />
+                                    <input type="submit" class="pull-right btn btn-success button-hide" value="Update" />
+                                    <input type="submit" class="pull-right btn btn-info" value="Add Expense" style="margin-right: 4px" />
 
 
                                 </div>
@@ -383,9 +386,9 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
-                                      <input type="button" class="pull-right btn btn-primary" value="Clear" />
-                                    <input type="submit" class="pull-right btn btn-success" value="Update" />
-                                    <input type="submit" class="pull-right btn btn-success" value="Add Expense" />
+                                    <input type="button" class="pull-right btn btn-info" value="Clear" />
+                                    <input type="submit" class="pull-right btn btn-success button-hide" value="Update" />
+                                    <input type="submit" class="pull-right btn btn-info" value="Add Expense" style="margin-right: 4px" />
 
                                 </div>
                             </div>
@@ -430,10 +433,10 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
-                                    
-                                    <input type="button" class="pull-right btn btn-primary" value="Clear" />
-                                    <input type="submit" class="pull-right btn btn-success" value="Update" />
-                                    <input type="submit" class="pull-right btn btn-success" value="Add Expense" />
+
+                                    <input type="button" class="pull-right btn btn-info" value="Clear" />
+                                    <input type="submit" class="pull-right btn btn-success button-hide" value="Update" />
+                                    <input type="submit" class="pull-right btn btn-info" value="Add Expense" style="margin-right: 4px" />
 
                                 </div>
                             </div>
@@ -463,7 +466,14 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="javascriptPart" runat="server">
 
-    <script>
+<script>
+        
+    var intTravelNo = -1; 
+    var intHotelNo = -1;
+    var intFoodNo = -1;
+    var intOthersNo = -1;
+
+    var travelLineId,hotelLineId,foodLineId,othersLineId;
 
     $('#myModal').on('hidden.bs.modal', function () {
         window.location = 'claim.aspx';
@@ -472,7 +482,7 @@
     var newId = 0;
     var claimJSON = $.parseJSON('{"travelExpense":0, "foodExpense":0, "hotelExpense":0,"otherExpense":0, "totalExpense":0,"claimpurpose":"","Travels":[],"Hotels":[],"Food":[],"Others":[]}');
 
-    $("#claimDate").datepicker({ dateFormat: 'dd-mm-yy' }).datepicker("setDate", new Date());
+    $("#claimDate").datepicker({ dateFormat: 'MM dd, yy' }).datepicker("setDate", new Date());
 
     $( document ).ready(function() {
         $.ajax({
@@ -492,270 +502,318 @@
         });
     });
        
-    function activateTab(tab) {
-        $('.nav-tabs a[href="#' + tab + '"]').tab('show');
-    }
+function activateTab(tab) {
+    $('.nav-tabs a[href="#' + tab + '"]').tab('show');
+}
 
-    function saveDraftClaim() {
-        alert('coming soon');
-    }
+function saveDraftClaim() {
+    alert('coming soon');
+}
 
-    function submitClaim() {
+function submitClaim() {
             
-        if(parseInt($("#summTotAmt").html()) == 0) {
-            alert("Add atleast one expense");
-            return false;
-        }
+    if(parseInt($("#summTotAmt").html()) == 0) {
+        alert("Add atleast one expense");
+        return false;
+    }
 
-        if( $.trim($("#claimPurpose").val()) == "") {
-            alert("Claim pupose cannot be blank");
-            $("#claimPurpose").focus();
-            return false;
-        }
+    if( $.trim($("#claimPurpose").val()) == "") {
+        alert("Claim pupose cannot be blank");
+        $("#claimPurpose").focus();
+        return false;
+    }
 
-        $('#myModal').modal({
-            backdrop: 'static',
-            keyboard: false
-        });
+    $('#myModal').modal({
+        backdrop: 'static',
+        keyboard: false
+    });
 
-        $('#myModal').modal();
+    $('#myModal').modal();
            
-        claimJSON.travelExpense = parseInt($("#sumTravelAmt").html());
-        claimJSON.claimpurpose = $("#claimPurpose").val();
-        claimJSON.foodExpense = parseInt($("#sumFoodAmt").html());
-        claimJSON.hotelExpense = parseInt($("#sumHotelAmt").html());
-        claimJSON.otherExpense = parseInt($("#summOthAmt").html());
-        claimJSON.totalExpense = parseInt($("#summTotAmt").html());
+    claimJSON.travelExpense = parseInt($("#sumTravelAmt").html());
+    claimJSON.claimpurpose = $("#claimPurpose").val();
+    claimJSON.foodExpense = parseInt($("#sumFoodAmt").html());
+    claimJSON.hotelExpense = parseInt($("#sumHotelAmt").html());
+    claimJSON.otherExpense = parseInt($("#summOthAmt").html());
+    claimJSON.totalExpense = parseInt($("#summTotAmt").html());
             
-        var uploadVal = {
-            "EmpId": <%= Session["EmpId"] %>,
-                "claimDate": $("#claimDate").val(),
-                "claimPurpose": claimJSON.claimpurpose,
-                "claimText": JSON.stringify(claimJSON),
-                "totalAmount": parseInt($("#summTotAmt").html()),
-                "claimstatus": 0
-            };
-            $.ajax({
-                url: 'api/claimJSONs',
-                type: 'post',
-                dataType: 'json',
-                success: function (data) {
-                    $("#loadingContent").html('<h3>Claim no. <span class="text-success">' + data.claimNo + ' </span> submitted succesfully</h3><a data-dismiss="modal">Close</a>');
-                },
-                data: uploadVal
-            });
+    var uploadVal = {
+        "EmpId": <%= Session["EmpId"] %>,
+        "claimDate": $("#claimDate").val(),
+        "claimPurpose": claimJSON.claimpurpose,
+        "claimText": JSON.stringify(claimJSON),
+        "totalAmount": parseInt($("#summTotAmt").html()),
+        "claimstatus": 0
+    };
+
+
+    $.ajax({
+        url: 'api/claimJSONs',
+        type: 'post',
+        dataType: 'json',
+        data: uploadVal,
+        success: function (data) {
+            $("#loadingContent").html('<h3>Claim no. <span class="text-success">' + data.claimNo + ' </span> submitted succesfully</h3><a data-dismiss="modal">Close</a>');
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            $("#loadingContent").html('<h3 class="text-danger">Error submitting claim. ' + errorThrown + '  </h3><a data-dismiss="modal">Close</a>');
         }
+    });
+}
 
-        $("#foodForm").submit(function (event) {
-            event.preventDefault();
-            addExpense('Food');
-            $('#foodForm').trigger("reset");
-            activateTab('tabSummary');
-        });
+$("#foodForm").submit(function (event) {
 
-        $("#travelForm").submit(function (event) {
-            event.preventDefault();
+    event.preventDefault();
 
-            if($("#travelamount").val() <= 0) {
-                alert("Claimed amount should be positive value");
-                return false;
-            }
+    if (intFoodNo > -1) {
+        claimJSON.Food.splice(intFoodNo,1);
+        $('#' + foodLineId).remove();
+        intFoodNo = -1;
+    }
+
+    addExpense('Food');
+    $('#foodForm').trigger("reset");
+    activateTab('tabSummary');
+});
+
+
+$("#travelForm").submit(function (event) {
+    event.preventDefault();
+
+    if($("#travelamount").val() <= 0) {
+        alert("Claimed amount should be positive value");
+        return false;
+    }
+    
+    if (intTravelNo > -1) {
+        claimJSON.Travels.splice(intTravelNo,1);
+        $('#' + travelLineId).remove();
+        intTravelNo = -1;
+    }
+
+    addExpense('Travel');
+    $('#travelForm').trigger("reset");
+    activateTab('tabSummary');
+});
+
+
+$("#hotelForm").submit(function (event) {
+    event.preventDefault();
+
+    if (intHotelNo > -1) {
+        claimJSON.Hotels.splice(intHotelNo,1);
+        $('#' + hotelLineId).remove();
+        intHotelNo = -1;
+    }
+
+    addExpense('Hotel');
+    $('#hotelForm').trigger("reset");
+    activateTab('tabSummary');
+});
+
+
+$("#othersForm").submit(function (event) {
+    event.preventDefault();
+
+    if (intOthersNo > -1) {
+        claimJSON.Others.splice(intOthersNo,1);
+        $('#' + othersLineId).remove();
+        intOthersNo = -1;
+    }
+    
+    addExpense('Others');
+    $('#othersForm').trigger("reset");
+    activateTab('tabSummary');
+});
+
+
+function calculateTotalAmt() {
+    var totamt = parseInt($("#sumTravelAmt").html()) + parseInt($("#sumHotelAmt").html()) + parseInt($("#sumFoodAmt").html()) + parseInt($("#summOthAmt").html());
+    $("#summTotAmt").html(totamt);
+}
+
+
+function calculateSummTravelAmt() {
+    var i = claimJSON.Travels.length;
+    var p;
+    var totAmt = 0;
+    for (p = 0; p < i; p++) {
+        totAmt += parseInt(claimJSON.Travels[p].totalamount);
+    }
+    $("#sumTravelAmt").html(totAmt);
+}
+
+
+function calculateSummHotelAmt() {
+    var i = claimJSON.Hotels.length;
+    var p;
+    var totAmt = 0;
+    for (p = 0; p < i; p++) {
+        totAmt += parseInt(claimJSON.Hotels[p].totalamount);
+    }
+    $("#sumHotelAmt").html(totAmt);
+}
+
+
+function calculateSummFoodAmt() {
+    var i = claimJSON.Food.length;
+    var p;
+    var totAmt = 0;
+    for (p = 0; p < i; p++) {
+        totAmt += parseInt(claimJSON.Food[p].totalamount);
+    }
+    $("#sumFoodAmt").html(totAmt);
+}
+
+
+function calculateSummOthersAmt() {
+    var i = claimJSON.Others.length;
+    var p;
+    var totAmt = 0;
+    for (p = 0; p < i; p++) {
+        totAmt += parseInt(claimJSON.Others[p].otherexpenseamt);
+    }
+    $("#summOthAmt").html(totAmt);
+}
+
+
+function addExpense(expenseType) {
             
-            addExpense('Travel');
-            $('#travelForm').trigger("reset");
-            activateTab('tabSummary');
-        });
+    if($("#expensesTable").length == 0) {
+        $('#expensesTableDiv').html('<table id="expensesTable" class=" table table-stripped table-bordered table-hover table-condensed"><thead><tr><th style="width: 10%;">Type </th><th style="width: 10%;">Date </th><th style="width: 60%">Notes</th><th style="width: 10%" class="curr">Amount</th><th style="width: 10%">Manage</th></tr></thead><tbody></tbody></table>');
+    }
 
-        $("#hotelForm").submit(function (event) {
-            event.preventDefault();
-            addExpense('Hotel');
-            $('#hotelForm').trigger("reset");
-            activateTab('tabSummary');
-        });
+    newId++;
 
-        $("#othersForm").submit(function (event) {
-            event.preventDefault();
-            addExpense('Others');
-            $('#othersForm').trigger("reset");
-            activateTab('tabSummary');
-        });
+    var lineId = expenseType + '_' + newId;
 
+    switch (expenseType) {
+        case 'Travel':
+            claimJSON.Travels.push({ "id": newId, "purpose": $('#travelpurpose').val(), "traveldate": $("#traveldate").val(), "modeoftravel": $('input[name=modeoftravel]:checked').val(), "from": $("#travelfrom").val(), "to": $("#travelto").val(), "distance": $("#traveldistance").val(), "rate": $("#travelrate").val(), "remarks": $("#travelremarks").val(), "totalamount": $("#travelamount").val() });
+            calculateSummTravelAmt();
+            $('#expensesTable  tbody').append('<tr id="' + lineId + '"><td>Travel</td><td>' + $("#traveldate").val() + '</td><td>' + $('#travelpurpose').val() + '</td><td class="curr">' + $("#travelamount").val() + '</td><td class="text-center text-info"><a href="#" onclick="javascript:editvalues(\'' + lineId + '\')"><i class="fa fa-pencil-square-o"></i></a>&nbsp;&nbsp;  </tr>');
+            break;
+        case 'Hotel':
+            claimJSON.Hotels.push({ "id": newId, "hotelname": $("#hotelname").val(), "stayfromdate": $("#stayfromdate").val(), "staytodate": $("#staytodate").val(), "noofnights": $("#noofnights").val(), "rate": $("#hotelrate").val(), "remarks": $("#hotelremarks").val(), "totalamount": $("#hotelamount").val() });
+            calculateSummHotelAmt();
+            $('#expensesTable  tbody').append('<tr id="' + lineId + '"><td>Hotel</td><td>' + $("#staytodate").val() + '</td><td>' + $('#hotelname').val() + '</td><td class="curr">' + $("#hotelamount").val() + '</td><td class="text-center text-info"><a href="#" onclick="javascript:editvalues(\'' + lineId + '\')"><i class="fa fa-pencil-square-o"></i></a>&nbsp;&nbsp;  </tr>');
+            break;
+        case 'Food':
+            claimJSON.Food.push({ "id": newId, "restaurantname": $("#restaurantname").val(), "expensedate": $("#foodexpensedate").val(), "noofpersons": $("#foodnoofpersons").val(), "remarks": $("#foodremarks").val(), "totalamount": $("#foodtotalamount").val() });
+            calculateSummFoodAmt();
+            $('#expensesTable  tbody').append('<tr id="' + lineId + '"><td>Food</td><td>' + $("#foodexpensedate").val() + '</td><td>' + $('#restaurantname').val() + '</td><td class="curr">' + $("#foodtotalamount").val() + '</td><td class="text-center text-info"><a href="#" onclick="javascript:editvalues(\'' + lineId + '\')"><i class="fa fa-pencil-square-o"></i></a>&nbsp;&nbsp;  </tr>');
+            break;
+        case 'Others':
+            claimJSON.Others.push({ "id": newId, "otherdesc": $("#otherdesc").val(), "otherexpensedate": $("#otherexpensedate").val(), "otherexpenseremarks": $("#otherexpenseremarks").val(), "otherexpenseamt": $("#otherexpenseamt").val() });
+            calculateSummOthersAmt();
+            $('#expensesTable  tbody').append('<tr id="' + lineId + '"><td>Others</td><td>' + $("#otherexpensedate").val() + '</td><td>' + $('#otherdesc').val() + '</td><td class="curr">' + $("#otherexpenseamt").val() + '</td><td class="text-center text-info"><a href="#" onclick="javascript:editvalues(\'' + lineId + '\')"><i class="fa fa-pencil-square-o"></i></a>&nbsp;&nbsp;  </tr>');
+            break;
+    }
 
-        function populateSummary() {
-            claimJSON.travelExpense = parseInt($("#sumTravelAmt").html());
-            claimJSON.foodExpense = parseInt($("#sumFoodAmt").html());
-            claimJSON.hotelExpense = parseInt($("#sumHotelAmt").html());
-            claimJSON.otherExpense = parseInt($("#summOthAmt").html());
-            claimJSON.totalExpense = $("#summTotAmt").html();
-        }
-
-        function calculateTotalAmt() {
-            var totamt = parseInt($("#sumTravelAmt").html()) + parseInt($("#sumHotelAmt").html()) + parseInt($("#sumFoodAmt").html()) + parseInt($("#summOthAmt").html());
-            $("#summTotAmt").html(totamt);
-        }
-
-        function calculateSummTravelAmt() {
-            var i = claimJSON.Travels.length;
-            var p;
-            var totAmt = 0;
-            for (p = 0; p < i; p++) {
-                totAmt += parseInt(claimJSON.Travels[p].totalamount);
-            }
-            $("#sumTravelAmt").html(totAmt);
-        }
-
-        function calculateSummHotelAmt() {
-            var i = claimJSON.Hotels.length;
-            var p;
-            var totAmt = 0;
-            for (p = 0; p < i; p++) {
-                totAmt += parseInt(claimJSON.Hotels[p].totalamount);
-            }
-            $("#sumHotelAmt").html(totAmt);
-        }
-
-        function calculateSummFoodAmt() {
-            var i = claimJSON.Food.length;
-            var p;
-            var totAmt = 0;
-            for (p = 0; p < i; p++) {
-                totAmt += parseInt(claimJSON.Food[p].totalamount);
-            }
-            $("#sumFoodAmt").html(totAmt);
-        }
-
-        function calculateSummOthersAmt() {
-            var i = claimJSON.Others.length;
-            var p;
-            var totAmt = 0;
-            for (p = 0; p < i; p++) {
-                totAmt += parseInt(claimJSON.Others[p].otherexpenseamt);
-            }
-            $("#summOthAmt").html(totAmt);
-        }
-
-        function addExpense(expenseType) {
+    calculateTotalAmt();
             
-            if($("#expensesTable").length == 0) {
-                $('#expensesTableDiv').html('<table id="expensesTable" class=" table table-stripped table-bordered table-hover table-condensed"><thead><tr><th style="width: 10%;">Type </th><th style="width: 10%;">Date </th><th style="width: 60%">Notes</th><th style="width: 10%" class="curr">Amount</th><th style="width: 10%">Manage</th></tr></thead><tbody></tbody></table>');
-            }
+    Command: toastr["success"](" ", "Expense Added Succesfully")
+    toastr.options = {
+        "closeButton": false,
+        "debug": false,
+        "newestOnTop": false,
+        "progressBar": false,
+        "positionClass": "toast-bottom-center",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    }
+}
 
-            newId++;
 
-            var lineId = expenseType + '_' + newId;
-
-            switch (expenseType) {
-                case 'Travel':
-                    claimJSON.Travels.push({ "id": newId, "purpose": $('#travelpurpose').val(), "traveldate": $("#traveldate").val(), "modeoftravel": $('input[name=modeoftravel]:checked').val(), "from": $("#travelfrom").val(), "to": $("#travelto").val(), "distance": $("#traveldistance").val(), "rate": $("#travelrate").val(), "remarks": $("#travelremarks").val(), "totalamount": $("#travelamount").val() });
-                    calculateSummTravelAmt();
-                    $('#expensesTable  tbody').append('<tr id="' + lineId + '"><td>Travel</td><td>' + $("#traveldate").val() + '</td><td>' + $('#travelpurpose').val() + '</td><td class="curr">' + $("#travelamount").val() + '</td><td class="text-center text-info"><a href="#" onclick="javascript:editvalues(\'' + lineId + '\')"><i class="fa fa-pencil-square-o"></i></a>&nbsp;&nbsp;  <i class="fa fa-trash"></i></tr>');
-                    break;
-                case 'Hotel':
-                    claimJSON.Hotels.push({ "id": newId, "hotelname": $("#hotelname").val(), "stayfromdate": $("#stayfromdate").val(), "staytodate": $("#staytodate").val(), "noofnights": $("#noofnights").val(), "rate": $("#hotelrate").val(), "remarks": $("#hotelremarks").val(), "totalamount": $("#hotelamount").val() });
-                    calculateSummHotelAmt();
-                    $('#expensesTable  tbody').append('<tr id="' + lineId + '"><td>Hotel</td><td>' + $("#staytodate").val() + '</td><td>' + $('#hotelname').val() + '</td><td class="curr">' + $("#hotelamount").val() + '</td><td class="text-center text-info"><a href="#" onclick="javascript:editvalues(\'' + lineId + '\')"><i class="fa fa-pencil-square-o"></i></a>&nbsp;&nbsp;  <i class="fa fa-trash"></i></tr>');
-                    break;
-                case 'Food':
-                    claimJSON.Food.push({ "id": newId, "restaurantname": $("#restaurantname").val(), "expensedate": $("#foodexpensedate").val(), "noofpersons": $("#foodnoofpersons").val(), "remarks": $("#foodremarks").val(), "totalamount": $("#foodtotalamount").val() });
-                    calculateSummFoodAmt();
-                    $('#expensesTable  tbody').append('<tr id="' + lineId + '"><td>Food</td><td>' + $("#foodexpensedate").val() + '</td><td>' + $('#restaurantname').val() + '</td><td class="curr">' + $("#foodtotalamount").val() + '</td><td class="text-center text-info"><a href="#" onclick="javascript:editvalues(\'' + lineId + '\')"><i class="fa fa-pencil-square-o"></i></a>&nbsp;&nbsp;  <i class="fa fa-trash"></i></tr>');
-                    break;
-                case 'Others':
-                    claimJSON.Others.push({ "id": newId, "otherdesc": $("#otherdesc").val(), "otherexpensedate": $("#otherexpensedate").val(), "otherexpenseremarks": $("#otherexpenseremarks").val(), "otherexpenseamt": $("#otherexpenseamt").val() });
-                    calculateSummOthersAmt();
-                    $('#expensesTable  tbody').append('<tr id="' + lineId + '"><td>Others</td><td>' + $("#otherexpensedate").val() + '</td><td>' + $('#otherdesc').val() + '</td><td class="curr">' + $("#otherexpenseamt").val() + '</td><td class="text-center text-info"><a href="#" onclick="javascript:editvalues(\'' + lineId + '\')"><i class="fa fa-pencil-square-o"></i></a>&nbsp;&nbsp;  <i class="fa fa-trash"></i></tr>');
-                    break;
-            }
-
-            calculateTotalAmt();
+function editvalues(valId) {
             
-            Command: toastr["success"](" ", "Expense Added Succesfully")
-            toastr.options = {
-                "closeButton": false,
-                "debug": false,
-                "newestOnTop": false,
-                "progressBar": false,
-                "positionClass": "toast-bottom-center",
-                "preventDuplicates": false,
-                "onclick": null,
-                "showDuration": "300",
-                "hideDuration": "1000",
-                "timeOut": "5000",
-                "extendedTimeOut": "1000",
-                "showEasing": "swing",
-                "hideEasing": "linear",
-                "showMethod": "fadeIn",
-                "hideMethod": "fadeOut"
-            }
-        }
+    var expenseType = valId.split('_')[0];
+    var editId = valId.split('_')[1];
+    var len,i,foundId;
+    
+    switch (expenseType) {
+        case 'Travel':
+            len =  claimJSON.Travels.length;
+            for (i=0;i<len;i++) {
+                if(claimJSON.Travels[i].id == editId) {
+                    
+                    intTravelNo = i;
+                    travelLineId = valId;
 
-        function editvalues(valId) {
+                    $('#travelpurpose').val(claimJSON.Travels[i].purpose); 
+                    $("#traveldate").val(claimJSON.Travels[i].traveldate); 
+                    $('input[name="modeoftravel"][value="' + claimJSON.Travels[i].modeoftravel + '"]').prop('checked', true);
+                    $("#travelfrom").val(claimJSON.Travels[i].from); 
+                    $("#travelto").val(claimJSON.Travels[i].to); 
+                    $("#traveldistance").val(claimJSON.Travels[i].distance); 
+                    $("#travelrate").val(claimJSON.Travels[i].rate); 
+                    $("#travelremarks").val(claimJSON.Travels[i].remarks); 
+                    $("#travelamount").val(claimJSON.Travels[i].totalamount);
+                }
+            }
+            activateTab('tabTravel');
+            break;
+        case 'Hotel':
+            len =  claimJSON.Hotels.length;
+            for (i=0;i<len;i++) {
+                if(claimJSON.Hotels[i].id == editId) {
+                    intHotelNo = i;
+                    hotelLineId = valId;
+                    
+                    $("#hotelname").val(claimJSON.Hotels[i].hotelname); 
+                    $("#stayfromdate").val(claimJSON.Hotels[i].stayfromdate); 
+                    $("#staytodate").val(claimJSON.Hotels[i].staytodate);
+                    $("#noofnights").val(claimJSON.Hotels[i].noofnights); 
+                    $("#hotelrate").val(claimJSON.Hotels[i].rate);
+                    $("#hotelremarks").val(claimJSON.Hotels[i].remarks);
+                    $("#hotelamount").val(claimJSON.Hotels[i].totalamount); 
+                }
+            }
+            activateTab('tabHotel');
+            break;
+        case 'Food':
+            len =  claimJSON.Food.length;
+            for (i=0;i<len;i++) {
+                if(claimJSON.Food[i].id == editId) {
+                    intFoodNo = i;
+                    foodLineId = valId;
+
+                    $("#restaurantname").val(claimJSON.Food[i].restaurantname); 
+                    $("#foodexpensedate").val(claimJSON.Food[i].expensedate); 
+                    $("#foodnoofpersons").val(claimJSON.Food[i].noofpersons);
+                    $("#foodremarks").val(claimJSON.Food[i].remarks);
+                    $("#foodtotalamount").val(claimJSON.Food[i].totalamount); 
+                }
+            }
+            activateTab('tabFood');
+            break;
+        case 'Others':
             
-            var expenseType = valId.split('_')[0];
-            var editId = valId.split('_')[1];
-            var len,i,foundId;
+            len =  claimJSON.Others.length;
+            for (i=0;i<len;i++) {
+                if(claimJSON.Others[i].id == editId) {
+                    intOthersNo = i;
+                    othersLineId = valId;
 
-            switch (expenseType) {
-                case 'Travel':
-                    len =  claimJSON.Travels.length;
-                    for (i=0;i<len;i++) {
-                        if(claimJSON.Travels[i].id == editId) {
-
-                            $('#travelpurpose').val(claimJSON.Travels[i].purpose); 
-                            $("#traveldate").val(claimJSON.Travels[i].traveldate); 
-                            $('input[name="modeoftravel"][value="' + claimJSON.Travels[i].modeoftravel + '"]').prop('checked', true);
-                            $("#travelfrom").val(claimJSON.Travels[i].from); 
-                            $("#travelto").val(claimJSON.Travels[i].to); 
-                            $("#traveldistance").val(claimJSON.Travels[i].distance); 
-                            $("#travelrate").val(claimJSON.Travels[i].rate); 
-                            $("#travelremarks").val(claimJSON.Travels[i].remarks); 
-                            $("#travelamount").val(claimJSON.Travels[i].totalamount);
-                        }
-                    }
-                    activateTab('tabTravel');
-                    break;
-                case 'Hotel':
-                    len =  claimJSON.Hotels.length;
-                    for (i=0;i<len;i++) {
-                        if(claimJSON.Hotels[i].id == editId) {
-                            $("#hotelname").val(claimJSON.Hotels[i].hotelname); 
-                            $("#stayfromdate").val(claimJSON.Hotels[i].stayfromdate); 
-                            $("#staytodate").val(claimJSON.Hotels[i].staytodate);
-                            $("#noofnights").val(claimJSON.Hotels[i].noofnights); 
-                            $("#hotelrate").val(claimJSON.Hotels[i].rate);
-                            $("#hotelremarks").val(claimJSON.Hotels[i].remarks);
-                            $("#hotelamount").val(claimJSON.Hotels[i].totalamount); 
-                        }
-                    }
-                    activateTab('tabHotel');
-                    break;
-                case 'Food':
-                    len =  claimJSON.Food.length;
-                    for (i=0;i<len;i++) {
-                        if(claimJSON.Food[i].id == editId) {
-                            $("#restaurantname").val(claimJSON.Food[i].restaurantname); 
-                            $("#foodexpensedate").val(claimJSON.Food[i].expensedate); 
-                            $("#foodnoofpersons").val(claimJSON.Food[i].noofpersons);
-                            $("#foodremarks").val(claimJSON.Food[i].remarks);
-                            $("#foodtotalamount").val(claimJSON.Food[i].totalamount); 
-                        }
-                    }
-                    activateTab('tabFood');
-                    break;
-                case 'Others':
-                    len =  claimJSON.Others.length;
-                    for (i=0;i<len;i++) {
-                        if(claimJSON.Others[i].id == editId) {
-                            $("#otherdesc").val(claimJSON.Others[i].otherdesc);
-                            $("#otherexpensedate").val(claimJSON.Others[i].otherexpensedate);
-                            $("#otherexpenseremarks").val(claimJSON.Others[i].otherexpenseremarks);
-                            $("#otherexpenseamt").val(claimJSON.Others[i].otherexpenseamt);
-                        }
-                    }
-                    activateTab('tabOthers');
-                    break;
+                    $("#otherdesc").val(claimJSON.Others[i].otherdesc);
+                    $("#otherexpensedate").val(claimJSON.Others[i].otherexpensedate);
+                    $("#otherexpenseremarks").val(claimJSON.Others[i].otherexpenseremarks);
+                    $("#otherexpenseamt").val(claimJSON.Others[i].otherexpenseamt);
+                }
             }
-        }
+            activateTab('tabOthers');
+            break;
+    }
+}
 
-    </script>
+</script>
+
 </asp:Content>
