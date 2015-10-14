@@ -10,15 +10,12 @@
 namespace adminpanel.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class ClaimStatusHistory
+    public partial class claimLog_Result
     {
-        public int Id { get; set; }
-        public int ClaimId { get; set; }
-        public int StatusId { get; set; }
-        public System.DateTime StatusDateTime { get; set; }
-    
-        public virtual ClaimStatu ClaimStatu { get; set; }
+        public string Claim_Status { get; set; }
+        public string Date { get; set; }
+        public string Remarks { get; set; }
+        public string Action_By { get; set; }
     }
 }

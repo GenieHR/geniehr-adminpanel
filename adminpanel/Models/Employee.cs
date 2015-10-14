@@ -19,8 +19,9 @@ namespace adminpanel.Models
             this.Attendances = new HashSet<Attendance>();
             this.GroupEmployees = new HashSet<GroupEmployee>();
             this.GroupIncharges = new HashSet<GroupIncharge>();
-            this.ClaimHeads = new HashSet<ClaimHead>();
             this.claimJSONs = new HashSet<claimJSON>();
+            this.claimHistories = new HashSet<claimHistory>();
+            this.ClaimRevisions = new HashSet<ClaimRevision>();
         }
     
         public int EmpId { get; set; }
@@ -39,7 +40,8 @@ namespace adminpanel.Models
         public virtual Login Login { get; set; }
         public virtual ICollection<GroupEmployee> GroupEmployees { get; set; }
         public virtual ICollection<GroupIncharge> GroupIncharges { get; set; }
-        public virtual ICollection<ClaimHead> ClaimHeads { get; set; }
         public virtual ICollection<claimJSON> claimJSONs { get; set; }
+        public virtual ICollection<claimHistory> claimHistories { get; set; }
+        public virtual ICollection<ClaimRevision> ClaimRevisions { get; set; }
     }
 }

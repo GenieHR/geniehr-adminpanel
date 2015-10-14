@@ -14,6 +14,12 @@ namespace adminpanel.Models
     
     public partial class claimJSON
     {
+        public claimJSON()
+        {
+            this.claimHistories = new HashSet<claimHistory>();
+            this.ClaimRevisions = new HashSet<ClaimRevision>();
+        }
+    
         public int id { get; set; }
         public int EmpId { get; set; }
         public string claimNo { get; set; }
@@ -24,5 +30,8 @@ namespace adminpanel.Models
         public Nullable<int> claimstatus { get; set; }
     
         public virtual Employee Employee { get; set; }
+        public virtual ICollection<claimHistory> claimHistories { get; set; }
+        public virtual ClaimStatu ClaimStatu { get; set; }
+        public virtual ICollection<ClaimRevision> ClaimRevisions { get; set; }
     }
 }

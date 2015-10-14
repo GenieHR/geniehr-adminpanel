@@ -12,23 +12,17 @@ namespace adminpanel.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class ClaimHead
+    public partial class claimHistory
     {
-        public ClaimHead()
-        {
-            this.ClaimLines = new HashSet<ClaimLine>();
-            this.ClaimStatusHistories = new HashSet<ClaimStatusHistory>();
-        }
+        public int Id { get; set; }
+        public int claimId { get; set; }
+        public int statusId { get; set; }
+        public string remarks { get; set; }
+        public System.DateTime statusTime { get; set; }
+        public int actionBy { get; set; }
     
-        public int id { get; set; }
-        public int EmpId { get; set; }
-        public string ClaimNumber { get; set; }
-        public string ClaimTitle { get; set; }
-        public int Status { get; set; }
-    
+        public virtual claimJSON claimJSON { get; set; }
         public virtual ClaimStatu ClaimStatu { get; set; }
         public virtual Employee Employee { get; set; }
-        public virtual ICollection<ClaimLine> ClaimLines { get; set; }
-        public virtual ICollection<ClaimStatusHistory> ClaimStatusHistories { get; set; }
     }
 }

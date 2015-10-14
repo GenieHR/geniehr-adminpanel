@@ -87,15 +87,14 @@ namespace adminpanel.Controllers
                 return BadRequest(ModelState);
             }
 
-
             claimJSON.claimNo = db.getNextClaimNo(claimJSON.EmpId).FirstOrDefault(); 
-
-
             db.claimJSONs.Add(claimJSON);
 
             try
             {
-                db.SaveChanges();
+                if (db.SaveChanges() == 1) {
+                    createClaimLog(claimJSON.id,0,claimJSON.EmpId,"Claim Created");
+                };
             }
             catch (DbUpdateException)
             {
@@ -110,6 +109,21 @@ namespace adminpanel.Controllers
             }
 
             return CreatedAtRoute("DefaultApi", new { id = claimJSON.id }, claimJSON);
+        }
+
+        private int createClaimLog(int claimId, int statusId, int empId, string remarks)
+        {
+            claimHistory claimHistory = new claimHistory();
+
+            claimHistory.claimId = claimId;
+            claimHistory.statusId = statusId;
+            claimHistory.actionBy = empId;
+            claimHistory.remarks = remarks;
+            TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
+            claimHistory.statusTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+
+            db.claimHistories.Add(claimHistory);
+            return db.SaveChanges();
         }
 
         // DELETE: api/claimJSONs/5
@@ -136,7 +150,15 @@ namespace adminpanel.Controllers
             }
             base.Dispose(disposing);
         }
+        [Route("api/getClaimLog/{claimId}")]
+        [HttpGet] 
 
+        public dynamic getClaimLog(int claimId)
+        {
+
+            db.Configuration.ProxyCreationEnabled = false;
+            return db.claimLog(claimId);
+        }
         private bool claimJSONExists(int id)
         {
             return db.claimJSONs.Count(e => e.id == id) > 0;

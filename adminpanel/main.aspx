@@ -223,7 +223,7 @@
                 rowStr = '<tr>';
                 rowStr += '<td>' + result[i].EmpName + '</td>';
                 rowStr += '<td>' + result[i].claimPurpose + '</td>';
-                rowStr += '<td>' + result[i].totalAmount + ' ' + '<a onclick="javascript:showclaim(' + result[i].claimId + ')"><i class="fa fa-arrow-right"></i></a></td>';
+                rowStr += '<td>' + result[i].totalAmount + ' ' + '<a onclick="javascript:showclaim(' + result[i].claimId + ')"><i class="fa fa-arrow-right pull-right"></i></a></td>';
                 rowStr += '</tr>';
                 $("#claimsTable > tbody").append(rowStr);
 

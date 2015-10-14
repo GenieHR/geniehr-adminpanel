@@ -12,13 +12,16 @@ namespace adminpanel.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class ClaimStatusHistory
+    public partial class ClaimRevision
     {
         public int Id { get; set; }
         public int ClaimId { get; set; }
-        public int StatusId { get; set; }
-        public System.DateTime StatusDateTime { get; set; }
+        public string claimtext { get; set; }
+        public System.DateTime revisionDate { get; set; }
+        public int revisionBy { get; set; }
+        public string revisionRemarks { get; set; }
     
-        public virtual ClaimStatu ClaimStatu { get; set; }
+        public virtual claimJSON claimJSON { get; set; }
+        public virtual Employee Employee { get; set; }
     }
 }

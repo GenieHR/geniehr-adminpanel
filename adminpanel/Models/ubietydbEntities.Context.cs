@@ -45,13 +45,13 @@ namespace adminpanel.Models
         public virtual DbSet<GroupEmployee> GroupEmployees { get; set; }
         public virtual DbSet<GroupIncharge> GroupIncharges { get; set; }
         public virtual DbSet<GroupType> GroupTypes { get; set; }
-        public virtual DbSet<ClaimHead> ClaimHeads { get; set; }
-        public virtual DbSet<ClaimLine> ClaimLines { get; set; }
         public virtual DbSet<ClaimStatu> ClaimStatus { get; set; }
         public virtual DbSet<ClaimStatusHistory> ClaimStatusHistories { get; set; }
         public virtual DbSet<attByClient> attByClients { get; set; }
         public virtual DbSet<clientEmployee> clientEmployees { get; set; }
         public virtual DbSet<claimJSON> claimJSONs { get; set; }
+        public virtual DbSet<claimHistory> claimHistories { get; set; }
+        public virtual DbSet<ClaimRevision> ClaimRevisions { get; set; }
     
         public virtual ObjectResult<getEmpOfGroups_Result> getEmpOfGroups()
         {
@@ -140,6 +140,15 @@ namespace adminpanel.Models
                 new ObjectParameter("EmpId", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getManagerDetail_Result>("getManagerDetail", empIdParameter);
+        }
+    
+        public virtual ObjectResult<claimLog_Result> claimLog(Nullable<int> claimId)
+        {
+            var claimIdParameter = claimId.HasValue ?
+                new ObjectParameter("ClaimId", claimId) :
+                new ObjectParameter("ClaimId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<claimLog_Result>("claimLog", claimIdParameter);
         }
     }
 }

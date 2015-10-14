@@ -20,7 +20,7 @@
                             <li><a data-toggle="tab" href="#tabHotel">Hotel</a></li>
                             <li><a data-toggle="tab" href="#tabFood">Food</a></li>
                             <li><a data-toggle="tab" href="#tabOthers">Others</a></li>
-                            <li><a data-toggle="tab" href="#tabLog">Claim Log</a></li>
+                            <li><a data-toggle="tab" onclick="populateClaimLog()" href="#tabLog">Claim Log</a></li>
 
                         </ul>
                         <div class="tab-content ">
@@ -428,15 +428,17 @@
 
                             <div id="tabLog" class="tab-pane">
                                 <div class="panel-body">
-                                   <table class="table table-bordered table-condensed table-hover">
+                                   <table id="claimLogTable" class="table table-bordered table-condensed table-hover">
                                        <thead>
                                            <tr>
                                                <th style="width:5%">#</th>
-                                               <th style="width:20%">Date & Time</th>
-                                               <th style="width:55%">Action Taken</th>
+                                               <th style="width:10%">Claim Status</th>
+                                               <th style="width:20%">Date</th>
+                                               <th style="width:50%">Remarks</th>
                                                <th style="width:20%">Action By</th>
                                            </tr>
                                        </thead>
+                                       <tbody></tbody>
                                    </table>
                                 </div>
                             </div>
@@ -453,12 +455,43 @@
 
         var claimJSON;
         var fullJSONText;
+        var logPopulated = false;
 
+        function populateClaimLog()
+        {
+
+            if (!logPopulated) {
+            $.ajax({
+                url: "api/getClaimLog/" + window.localStorage.getItem("cliamId"),
+            }).done(function (claimLog) {
+                logPopulated = true;
+                var i;
+                for (i = 0; i < claimLog.length; i++) {
+
+                    var rowString = '<tr>';
+                    rowString += '<td align="center">' + (i + 1) + '</td>';
+                    rowString += '<td>' + claimLog[i].Claim_Status + '</td>';
+                    rowString += '<td>' + claimLog[i].Date + '</td>';
+                    rowString += '<td>' + claimLog[i].Remarks + '</td>';
+                    rowString += '<td>' + claimLog[i].Action_By + '</td>';
+                    rowString += '</tr>';
+
+                    $('#claimLogTable tbody').append(rowString);
+                }
+
+                });
+            }
+        }
+
+        var originalClaimText;
+        
         $(document).ready(function () {
 
             $.ajax({
                 url: "api/claimJSONs/" + window.localStorage.getItem("cliamId"),
             }).done(function (result) {
+
+                originalClaimText = result;
 
                 claimJSON = JSON.parse(result.claimText);
 

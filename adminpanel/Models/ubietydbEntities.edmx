@@ -46,15 +46,16 @@
           <Property Name="AttendanceFlagId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FlagName" Type="nvarchar" MaxLength="10" Nullable="false" />
         </EntityType>
-        <EntityType Name="ClaimHead">
+        <EntityType Name="claimHistory">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="EmpId" Type="int" Nullable="false" />
-          <Property Name="ClaimNumber" Type="nvarchar" MaxLength="255" Nullable="false" />
-          <Property Name="ClaimTitle" Type="nvarchar" MaxLength="255" Nullable="false" />
-          <Property Name="Status" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="claimId" Type="int" Nullable="false" />
+          <Property Name="statusId" Type="int" Nullable="false" />
+          <Property Name="remarks" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="statusTime" Type="datetime" Nullable="false" />
+          <Property Name="actionBy" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="claimJSON">
           <Key>
@@ -69,35 +70,16 @@
           <Property Name="totalAmount" Type="money" Nullable="false" />
           <Property Name="claimstatus" Type="int" />
         </EntityType>
-        <EntityType Name="ClaimLine">
+        <EntityType Name="ClaimRevision">
           <Key>
             <PropertyRef Name="Id" />
-            <PropertyRef Name="ClaimId" />
-            <PropertyRef Name="ClaimLineId" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ClaimId" Type="int" Nullable="false" />
-          <Property Name="ClaimLineId" Type="int" Nullable="false" />
-          <Property Name="ClaimType" Type="int" Nullable="false" />
-          <Property Name="Purpose" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="LocOut" Type="tinyint" Nullable="false" />
-          <Property Name="HotelName" Type="nvarchar" MaxLength="100" />
-          <Property Name="ExpenseDate" Type="datetime" Nullable="false" />
-          <Property Name="FromDate" Type="datetime" />
-          <Property Name="ToDate" Type="datetime" />
-          <Property Name="AccNoOfNights" Type="int" />
-          <Property Name="TravelFromPlace" Type="nvarchar" MaxLength="255" />
-          <Property Name="TravelToPlace" Type="nvarchar" MaxLength="255" />
-          <Property Name="TravelMode" Type="char" MaxLength="1" />
-          <Property Name="Distance" Type="float" />
-          <Property Name="Rate" Type="money" />
-          <Property Name="OtherClaimTypeDesc" Type="nvarchar(max)" />
-          <Property Name="TotalAmount" Type="money" Nullable="false" />
-          <Property Name="BillType" Type="tinyint" />
-          <Property Name="LineStatus" Type="int" Nullable="false" />
-          <Property Name="EmpRemarks" Type="nvarchar(max)" />
-          <Property Name="ManagerRemarks" Type="nvarchar(max)" />
-          <Property Name="OrgRemarks" Type="nvarchar(max)" />
+          <Property Name="claimtext" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="revisionDate" Type="datetime" Nullable="false" />
+          <Property Name="revisionBy" Type="int" Nullable="false" />
+          <Property Name="revisionRemarks" Type="nvarchar" MaxLength="255" Nullable="false" />
         </EntityType>
         <EntityType Name="ClaimStatus">
           <Key>
@@ -271,6 +253,18 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <Property Name="companyId" Type="int" />
           <Property Name="empname" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
+        <Association Name="FK__claimJSON__claim__025D5595">
+          <End Role="ClaimStatus" Type="Self.ClaimStatus" Multiplicity="0..1" />
+          <End Role="claimJSON" Type="Self.claimJSON" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClaimStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="claimJSON">
+              <PropertyRef Name="claimstatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Address_AddressType">
           <End Role="AddressType" Type="Self.AddressType" Multiplicity="1" />
           <End Role="Address" Type="Self.Address" Multiplicity="*" />
@@ -307,27 +301,39 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ClaimHead_ClaimStatus">
+        <Association Name="FK_claimHistory_claimJSON">
+          <End Role="claimJSON" Type="Self.claimJSON" Multiplicity="1" />
+          <End Role="claimHistory" Type="Self.claimHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="claimJSON">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="claimHistory">
+              <PropertyRef Name="claimId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_claimHistory_ClaimStatus">
           <End Role="ClaimStatus" Type="Self.ClaimStatus" Multiplicity="1" />
-          <End Role="ClaimHead" Type="Self.ClaimHead" Multiplicity="*" />
+          <End Role="claimHistory" Type="Self.claimHistory" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ClaimStatus">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="ClaimHead">
-              <PropertyRef Name="Status" />
+            <Dependent Role="claimHistory">
+              <PropertyRef Name="statusId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ClaimHead_Employee">
+        <Association Name="FK_claimHistory_Employee">
           <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
-          <End Role="ClaimHead" Type="Self.ClaimHead" Multiplicity="*" />
+          <End Role="claimHistory" Type="Self.claimHistory" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Employee">
               <PropertyRef Name="EmpId" />
             </Principal>
-            <Dependent Role="ClaimHead">
-              <PropertyRef Name="EmpId" />
+            <Dependent Role="claimHistory">
+              <PropertyRef Name="actionBy" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -343,39 +349,27 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ClaimLine_ClaimHead">
-          <End Role="ClaimHead" Type="Self.ClaimHead" Multiplicity="1" />
-          <End Role="ClaimLine" Type="Self.ClaimLine" Multiplicity="*" />
+        <Association Name="FK_ClaimRevision_claimJSON">
+          <End Role="claimJSON" Type="Self.claimJSON" Multiplicity="1" />
+          <End Role="ClaimRevision" Type="Self.ClaimRevision" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="ClaimHead">
+            <Principal Role="claimJSON">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="ClaimLine">
+            <Dependent Role="ClaimRevision">
               <PropertyRef Name="ClaimId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ClaimLine_ClaimStatus">
-          <End Role="ClaimStatus" Type="Self.ClaimStatus" Multiplicity="1" />
-          <End Role="ClaimLine" Type="Self.ClaimLine" Multiplicity="*" />
+        <Association Name="FK_ClaimRevision_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="ClaimRevision" Type="Self.ClaimRevision" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="ClaimStatus">
-              <PropertyRef Name="Id" />
+            <Principal Role="Employee">
+              <PropertyRef Name="EmpId" />
             </Principal>
-            <Dependent Role="ClaimLine">
-              <PropertyRef Name="LineStatus" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ClaimStatusHistory_ClaimHead">
-          <End Role="ClaimHead" Type="Self.ClaimHead" Multiplicity="1" />
-          <End Role="ClaimStatusHistory" Type="Self.ClaimStatusHistory" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ClaimHead">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="ClaimStatusHistory">
-              <PropertyRef Name="ClaimId" />
+            <Dependent Role="ClaimRevision">
+              <PropertyRef Name="revisionBy" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -511,6 +505,9 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="claimLog" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ClaimId" Type="int" Mode="In" />
+        </Function>
         <Function Name="getAttendanceByClientsDays" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="clientId" Type="int" Mode="In" />
           <Parameter Name="numDays" Type="int" Mode="In" />
@@ -544,9 +541,9 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <EntitySet Name="AddressType" EntityType="Self.AddressType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Attendance" EntityType="Self.Attendance" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AttendanceFlag" EntityType="Self.AttendanceFlag" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ClaimHead" EntityType="Self.ClaimHead" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="claimHistory" EntityType="Self.claimHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="claimJSON" EntityType="Self.claimJSON" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ClaimLine" EntityType="Self.ClaimLine" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ClaimRevision" EntityType="Self.ClaimRevision" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ClaimStatus" EntityType="Self.ClaimStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ClaimStatusHistory" EntityType="Self.ClaimStatusHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
@@ -599,6 +596,10 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
     [clientEmployee].[empname] AS [empname]
     FROM [dbo].[clientEmployee] AS [clientEmployee]</DefiningQuery>
           </EntitySet>
+          <AssociationSet Name="FK__claimJSON__claim__025D5595" Association="Self.FK__claimJSON__claim__025D5595">
+            <End Role="ClaimStatus" EntitySet="ClaimStatus" />
+            <End Role="claimJSON" EntitySet="claimJSON" />
+          </AssociationSet>
           <AssociationSet Name="FK_Address_AddressType" Association="Self.FK_Address_AddressType">
             <End Role="AddressType" EntitySet="AddressType" />
             <End Role="Address" EntitySet="Address" />
@@ -611,29 +612,29 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
             <End Role="Employee" EntitySet="Employee" />
             <End Role="Attendance" EntitySet="Attendance" />
           </AssociationSet>
-          <AssociationSet Name="FK_ClaimHead_ClaimStatus" Association="Self.FK_ClaimHead_ClaimStatus">
-            <End Role="ClaimStatus" EntitySet="ClaimStatus" />
-            <End Role="ClaimHead" EntitySet="ClaimHead" />
+          <AssociationSet Name="FK_claimHistory_claimJSON" Association="Self.FK_claimHistory_claimJSON">
+            <End Role="claimJSON" EntitySet="claimJSON" />
+            <End Role="claimHistory" EntitySet="claimHistory" />
           </AssociationSet>
-          <AssociationSet Name="FK_ClaimHead_Employee" Association="Self.FK_ClaimHead_Employee">
+          <AssociationSet Name="FK_claimHistory_ClaimStatus" Association="Self.FK_claimHistory_ClaimStatus">
+            <End Role="ClaimStatus" EntitySet="ClaimStatus" />
+            <End Role="claimHistory" EntitySet="claimHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_claimHistory_Employee" Association="Self.FK_claimHistory_Employee">
             <End Role="Employee" EntitySet="Employee" />
-            <End Role="ClaimHead" EntitySet="ClaimHead" />
+            <End Role="claimHistory" EntitySet="claimHistory" />
           </AssociationSet>
           <AssociationSet Name="FK_claimJSON_Employee" Association="Self.FK_claimJSON_Employee">
             <End Role="Employee" EntitySet="Employee" />
             <End Role="claimJSON" EntitySet="claimJSON" />
           </AssociationSet>
-          <AssociationSet Name="FK_ClaimLine_ClaimHead" Association="Self.FK_ClaimLine_ClaimHead">
-            <End Role="ClaimHead" EntitySet="ClaimHead" />
-            <End Role="ClaimLine" EntitySet="ClaimLine" />
+          <AssociationSet Name="FK_ClaimRevision_claimJSON" Association="Self.FK_ClaimRevision_claimJSON">
+            <End Role="claimJSON" EntitySet="claimJSON" />
+            <End Role="ClaimRevision" EntitySet="ClaimRevision" />
           </AssociationSet>
-          <AssociationSet Name="FK_ClaimLine_ClaimStatus" Association="Self.FK_ClaimLine_ClaimStatus">
-            <End Role="ClaimStatus" EntitySet="ClaimStatus" />
-            <End Role="ClaimLine" EntitySet="ClaimLine" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ClaimStatusHistory_ClaimHead" Association="Self.FK_ClaimStatusHistory_ClaimHead">
-            <End Role="ClaimHead" EntitySet="ClaimHead" />
-            <End Role="ClaimStatusHistory" EntitySet="ClaimStatusHistory" />
+          <AssociationSet Name="FK_ClaimRevision_Employee" Association="Self.FK_ClaimRevision_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="ClaimRevision" EntitySet="ClaimRevision" />
           </AssociationSet>
           <AssociationSet Name="FK_ClaimStatusHistory_ClaimStatus" Association="Self.FK_ClaimStatusHistory_ClaimStatus">
             <End Role="ClaimStatus" EntitySet="ClaimStatus" />
@@ -768,8 +769,9 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <NavigationProperty Name="Login" Relationship="Self.FK_Login_Employee" FromRole="Employee" ToRole="Login" />
           <NavigationProperty Name="GroupEmployees" Relationship="ubietydbModel.FK_GroupEmployee_Employee" FromRole="Employee" ToRole="GroupEmployee" />
           <NavigationProperty Name="GroupIncharges" Relationship="ubietydbModel.FK_GroupIncharge_Employee" FromRole="Employee" ToRole="GroupIncharge" />
-          <NavigationProperty Name="ClaimHeads" Relationship="ubietydbModel.FK_ClaimHead_Employee" FromRole="Employee" ToRole="ClaimHead" />
           <NavigationProperty Name="claimJSONs" Relationship="ubietydbModel.FK_claimJSON_Employee" FromRole="Employee" ToRole="claimJSON" />
+          <NavigationProperty Name="claimHistories" Relationship="ubietydbModel.FK_claimHistory_Employee" FromRole="Employee" ToRole="claimHistory" />
+          <NavigationProperty Name="ClaimRevisions" Relationship="ubietydbModel.FK_ClaimRevision_Employee" FromRole="Employee" ToRole="ClaimRevision" />
         </EntityType>
         <EntityType Name="EmpStatu">
           <Key>
@@ -999,30 +1001,8 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
             <Parameter Name="clientId" Mode="In" Type="Int32" />
             <Parameter Name="groupId" Mode="In" Type="Int32" />
           </FunctionImport>
-          <EntitySet Name="ClaimHeads" EntityType="ubietydbModel.ClaimHead" />
-          <EntitySet Name="ClaimLines" EntityType="ubietydbModel.ClaimLine" />
           <EntitySet Name="ClaimStatus" EntityType="ubietydbModel.ClaimStatu" />
           <EntitySet Name="ClaimStatusHistories" EntityType="ubietydbModel.ClaimStatusHistory" />
-          <AssociationSet Name="FK_ClaimHead_ClaimStatus" Association="ubietydbModel.FK_ClaimHead_ClaimStatus">
-            <End Role="ClaimStatu" EntitySet="ClaimStatus" />
-            <End Role="ClaimHead" EntitySet="ClaimHeads" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ClaimHead_Employee" Association="ubietydbModel.FK_ClaimHead_Employee">
-            <End Role="Employee" EntitySet="Employees" />
-            <End Role="ClaimHead" EntitySet="ClaimHeads" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ClaimLine_ClaimHead" Association="ubietydbModel.FK_ClaimLine_ClaimHead">
-            <End Role="ClaimHead" EntitySet="ClaimHeads" />
-            <End Role="ClaimLine" EntitySet="ClaimLines" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ClaimStatusHistory_ClaimHead" Association="ubietydbModel.FK_ClaimStatusHistory_ClaimHead">
-            <End Role="ClaimHead" EntitySet="ClaimHeads" />
-            <End Role="ClaimStatusHistory" EntitySet="ClaimStatusHistories" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ClaimLine_ClaimStatus" Association="ubietydbModel.FK_ClaimLine_ClaimStatus">
-            <End Role="ClaimStatu" EntitySet="ClaimStatus" />
-            <End Role="ClaimLine" EntitySet="ClaimLines" />
-          </AssociationSet>
           <AssociationSet Name="FK_ClaimStatusHistory_ClaimStatus" Association="ubietydbModel.FK_ClaimStatusHistory_ClaimStatus">
             <End Role="ClaimStatu" EntitySet="ClaimStatus" />
             <End Role="ClaimStatusHistory" EntitySet="ClaimStatusHistories" />
@@ -1055,7 +1035,36 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <Parameter Name="ManagerId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="getManagerDetail" ReturnType="Collection(ubietydbModel.getManagerDetail_Result)">
-            <Parameter Name="EmpId" Mode="In" Type="Int32" />
+          <Parameter Name="EmpId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="claimHistories" EntityType="ubietydbModel.claimHistory" />
+          <EntitySet Name="ClaimRevisions" EntityType="ubietydbModel.ClaimRevision" />
+          <AssociationSet Name="FK_claimHistory_claimJSON" Association="ubietydbModel.FK_claimHistory_claimJSON">
+            <End Role="claimJSON" EntitySet="claimJSONs" />
+            <End Role="claimHistory" EntitySet="claimHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_claimHistory_ClaimStatus" Association="ubietydbModel.FK_claimHistory_ClaimStatus">
+            <End Role="ClaimStatu" EntitySet="ClaimStatus" />
+            <End Role="claimHistory" EntitySet="claimHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_claimHistory_Employee" Association="ubietydbModel.FK_claimHistory_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="claimHistory" EntitySet="claimHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK__claimJSON__claim__025D5595" Association="ubietydbModel.FK__claimJSON__claim__025D5595">
+            <End Role="ClaimStatu" EntitySet="ClaimStatus" />
+            <End Role="claimJSON" EntitySet="claimJSONs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClaimRevision_claimJSON" Association="ubietydbModel.FK_ClaimRevision_claimJSON">
+            <End Role="claimJSON" EntitySet="claimJSONs" />
+            <End Role="ClaimRevision" EntitySet="ClaimRevisions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClaimRevision_Employee" Association="ubietydbModel.FK_ClaimRevision_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="ClaimRevision" EntitySet="ClaimRevisions" />
+          </AssociationSet>
+          <FunctionImport Name="claimLog" ReturnType="Collection(ubietydbModel.claimLog_Result)">
+            <Parameter Name="ClaimId" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="Group">
@@ -1181,61 +1190,15 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <Property Type="String" Name="EmpNum" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="EmpName" Nullable="false" MaxLength="100" />
         </ComplexType>
-        <EntityType Name="ClaimHead">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="EmpId" Type="Int32" Nullable="false" />
-          <Property Name="ClaimNumber" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="ClaimTitle" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="Status" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="ClaimStatu" Relationship="ubietydbModel.FK_ClaimHead_ClaimStatus" FromRole="ClaimHead" ToRole="ClaimStatu" />
-          <NavigationProperty Name="Employee" Relationship="ubietydbModel.FK_ClaimHead_Employee" FromRole="ClaimHead" ToRole="Employee" />
-          <NavigationProperty Name="ClaimLines" Relationship="ubietydbModel.FK_ClaimLine_ClaimHead" FromRole="ClaimHead" ToRole="ClaimLine" />
-          <NavigationProperty Name="ClaimStatusHistories" Relationship="ubietydbModel.FK_ClaimStatusHistory_ClaimHead" FromRole="ClaimHead" ToRole="ClaimStatusHistory" />
-        </EntityType>
-        <EntityType Name="ClaimLine">
-          <Key>
-            <PropertyRef Name="Id" />
-            <PropertyRef Name="ClaimId" />
-            <PropertyRef Name="ClaimLineId" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ClaimId" Type="Int32" Nullable="false" />
-          <Property Name="ClaimLineId" Type="Int32" Nullable="false" />
-          <Property Name="ClaimType" Type="Int32" Nullable="false" />
-          <Property Name="Purpose" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="LocOut" Type="Byte" Nullable="false" />
-          <Property Name="HotelName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="ExpenseDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="FromDate" Type="DateTime" Precision="3" />
-          <Property Name="ToDate" Type="DateTime" Precision="3" />
-          <Property Name="AccNoOfNights" Type="Int32" />
-          <Property Name="TravelFromPlace" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="TravelToPlace" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="TravelMode" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="Distance" Type="Double" />
-          <Property Name="Rate" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="OtherClaimTypeDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="TotalAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="BillType" Type="Byte" />
-          <Property Name="LineStatus" Type="Int32" Nullable="false" />
-          <Property Name="EmpRemarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ManagerRemarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="OrgRemarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="ClaimHead" Relationship="ubietydbModel.FK_ClaimLine_ClaimHead" FromRole="ClaimLine" ToRole="ClaimHead" />
-          <NavigationProperty Name="ClaimStatu" Relationship="ubietydbModel.FK_ClaimLine_ClaimStatus" FromRole="ClaimLine" ToRole="ClaimStatu" />
-        </EntityType>
         <EntityType Name="ClaimStatu">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Status" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="ClaimHeads" Relationship="ubietydbModel.FK_ClaimHead_ClaimStatus" FromRole="ClaimStatu" ToRole="ClaimHead" />
-          <NavigationProperty Name="ClaimLines" Relationship="ubietydbModel.FK_ClaimLine_ClaimStatus" FromRole="ClaimStatu" ToRole="ClaimLine" />
           <NavigationProperty Name="ClaimStatusHistories" Relationship="ubietydbModel.FK_ClaimStatusHistory_ClaimStatus" FromRole="ClaimStatu" ToRole="ClaimStatusHistory" />
+          <NavigationProperty Name="claimHistories" Relationship="ubietydbModel.FK_claimHistory_ClaimStatus" FromRole="ClaimStatu" ToRole="claimHistory" />
+          <NavigationProperty Name="claimJSONs" Relationship="ubietydbModel.FK__claimJSON__claim__025D5595" FromRole="ClaimStatu" ToRole="claimJSON" />
         </EntityType>
         <EntityType Name="ClaimStatusHistory">
           <Key>
@@ -1245,69 +1208,8 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <Property Name="ClaimId" Type="Int32" Nullable="false" />
           <Property Name="StatusId" Type="Int32" Nullable="false" />
           <Property Name="StatusDateTime" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="ClaimHead" Relationship="ubietydbModel.FK_ClaimStatusHistory_ClaimHead" FromRole="ClaimStatusHistory" ToRole="ClaimHead" />
           <NavigationProperty Name="ClaimStatu" Relationship="ubietydbModel.FK_ClaimStatusHistory_ClaimStatus" FromRole="ClaimStatusHistory" ToRole="ClaimStatu" />
         </EntityType>
-        <Association Name="FK_ClaimHead_ClaimStatus">
-          <End Type="ubietydbModel.ClaimStatu" Role="ClaimStatu" Multiplicity="1" />
-          <End Type="ubietydbModel.ClaimHead" Role="ClaimHead" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ClaimStatu">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ClaimHead">
-              <PropertyRef Name="Status" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ClaimHead_Employee">
-          <End Type="ubietydbModel.Employee" Role="Employee" Multiplicity="1" />
-          <End Type="ubietydbModel.ClaimHead" Role="ClaimHead" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="EmpId" />
-            </Principal>
-            <Dependent Role="ClaimHead">
-              <PropertyRef Name="EmpId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ClaimLine_ClaimHead">
-          <End Type="ubietydbModel.ClaimHead" Role="ClaimHead" Multiplicity="1" />
-          <End Type="ubietydbModel.ClaimLine" Role="ClaimLine" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ClaimHead">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="ClaimLine">
-              <PropertyRef Name="ClaimId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ClaimStatusHistory_ClaimHead">
-          <End Type="ubietydbModel.ClaimHead" Role="ClaimHead" Multiplicity="1" />
-          <End Type="ubietydbModel.ClaimStatusHistory" Role="ClaimStatusHistory" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ClaimHead">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="ClaimStatusHistory">
-              <PropertyRef Name="ClaimId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ClaimLine_ClaimStatus">
-          <End Type="ubietydbModel.ClaimStatu" Role="ClaimStatu" Multiplicity="1" />
-          <End Type="ubietydbModel.ClaimLine" Role="ClaimLine" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ClaimStatu">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ClaimLine">
-              <PropertyRef Name="LineStatus" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_ClaimStatusHistory_ClaimStatus">
           <End Type="ubietydbModel.ClaimStatu" Role="ClaimStatu" Multiplicity="1" />
           <End Type="ubietydbModel.ClaimStatusHistory" Role="ClaimStatusHistory" Multiplicity="*" />
@@ -1368,6 +1270,9 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <Property Name="totalAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <NavigationProperty Name="Employee" Relationship="ubietydbModel.FK_claimJSON_Employee" FromRole="claimJSON" ToRole="Employee" />
           <Property Name="claimstatus" Type="Int32" />
+          <NavigationProperty Name="claimHistories" Relationship="ubietydbModel.FK_claimHistory_claimJSON" FromRole="claimJSON" ToRole="claimHistory" />
+          <NavigationProperty Name="ClaimStatu" Relationship="ubietydbModel.FK__claimJSON__claim__025D5595" FromRole="claimJSON" ToRole="ClaimStatu" />
+          <NavigationProperty Name="ClaimRevisions" Relationship="ubietydbModel.FK_ClaimRevision_claimJSON" FromRole="claimJSON" ToRole="ClaimRevision" />
         </EntityType>
         <Association Name="FK_claimJSON_Employee">
           <End Type="ubietydbModel.Employee" Role="Employee" Multiplicity="1" />
@@ -1408,6 +1313,111 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <Property Type="Int64" Name="Manager_Mobile" Nullable="true" />
           <Property Type="String" Name="Manager_Email" Nullable="true" MaxLength="50" />
           <Property Type="Int32" Name="ManagerId" Nullable="false" />
+        </ComplexType>
+        <EntityType Name="claimHistory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="claimId" Type="Int32" Nullable="false" />
+          <Property Name="statusId" Type="Int32" Nullable="false" />
+          <Property Name="remarks" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="statusTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="actionBy" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="claimJSON" Relationship="ubietydbModel.FK_claimHistory_claimJSON" FromRole="claimHistory" ToRole="claimJSON" />
+          <NavigationProperty Name="ClaimStatu" Relationship="ubietydbModel.FK_claimHistory_ClaimStatus" FromRole="claimHistory" ToRole="ClaimStatu" />
+          <NavigationProperty Name="Employee" Relationship="ubietydbModel.FK_claimHistory_Employee" FromRole="claimHistory" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="ClaimRevision">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClaimId" Type="Int32" Nullable="false" />
+          <Property Name="claimtext" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="revisionDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="revisionBy" Type="Int32" Nullable="false" />
+          <Property Name="revisionRemarks" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="claimJSON" Relationship="ubietydbModel.FK_ClaimRevision_claimJSON" FromRole="ClaimRevision" ToRole="claimJSON" />
+          <NavigationProperty Name="Employee" Relationship="ubietydbModel.FK_ClaimRevision_Employee" FromRole="ClaimRevision" ToRole="Employee" />
+        </EntityType>
+        <Association Name="FK_claimHistory_claimJSON">
+          <End Type="ubietydbModel.claimJSON" Role="claimJSON" Multiplicity="1" />
+          <End Type="ubietydbModel.claimHistory" Role="claimHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="claimJSON">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="claimHistory">
+              <PropertyRef Name="claimId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_claimHistory_ClaimStatus">
+          <End Type="ubietydbModel.ClaimStatu" Role="ClaimStatu" Multiplicity="1" />
+          <End Type="ubietydbModel.claimHistory" Role="claimHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClaimStatu">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="claimHistory">
+              <PropertyRef Name="statusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_claimHistory_Employee">
+          <End Type="ubietydbModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="ubietydbModel.claimHistory" Role="claimHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="claimHistory">
+              <PropertyRef Name="actionBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__claimJSON__claim__025D5595">
+          <End Type="ubietydbModel.ClaimStatu" Role="ClaimStatu" Multiplicity="0..1" />
+          <End Type="ubietydbModel.claimJSON" Role="claimJSON" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClaimStatu">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="claimJSON">
+              <PropertyRef Name="claimstatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClaimRevision_claimJSON">
+          <End Type="ubietydbModel.claimJSON" Role="claimJSON" Multiplicity="1" />
+          <End Type="ubietydbModel.ClaimRevision" Role="ClaimRevision" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="claimJSON">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ClaimRevision">
+              <PropertyRef Name="ClaimId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClaimRevision_Employee">
+          <End Type="ubietydbModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="ubietydbModel.ClaimRevision" Role="ClaimRevision" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="ClaimRevision">
+              <PropertyRef Name="revisionBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="claimLog_Result">
+          <Property Type="String" Name="Claim_Status" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Date" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="Remarks" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="Action_By" Nullable="false" MaxLength="100" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1609,46 +1619,6 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <EntitySetMapping Name="ClaimHeads">
-            <EntityTypeMapping TypeName="ubietydbModel.ClaimHead">
-              <MappingFragment StoreEntitySet="ClaimHead">
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="ClaimTitle" ColumnName="ClaimTitle" />
-                <ScalarProperty Name="ClaimNumber" ColumnName="ClaimNumber" />
-                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ClaimLines">
-            <EntityTypeMapping TypeName="ubietydbModel.ClaimLine">
-              <MappingFragment StoreEntitySet="ClaimLine">
-                <ScalarProperty Name="OrgRemarks" ColumnName="OrgRemarks" />
-                <ScalarProperty Name="ManagerRemarks" ColumnName="ManagerRemarks" />
-                <ScalarProperty Name="EmpRemarks" ColumnName="EmpRemarks" />
-                <ScalarProperty Name="LineStatus" ColumnName="LineStatus" />
-                <ScalarProperty Name="BillType" ColumnName="BillType" />
-                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
-                <ScalarProperty Name="OtherClaimTypeDesc" ColumnName="OtherClaimTypeDesc" />
-                <ScalarProperty Name="Rate" ColumnName="Rate" />
-                <ScalarProperty Name="Distance" ColumnName="Distance" />
-                <ScalarProperty Name="TravelMode" ColumnName="TravelMode" />
-                <ScalarProperty Name="TravelToPlace" ColumnName="TravelToPlace" />
-                <ScalarProperty Name="TravelFromPlace" ColumnName="TravelFromPlace" />
-                <ScalarProperty Name="AccNoOfNights" ColumnName="AccNoOfNights" />
-                <ScalarProperty Name="ToDate" ColumnName="ToDate" />
-                <ScalarProperty Name="FromDate" ColumnName="FromDate" />
-                <ScalarProperty Name="ExpenseDate" ColumnName="ExpenseDate" />
-                <ScalarProperty Name="HotelName" ColumnName="HotelName" />
-                <ScalarProperty Name="LocOut" ColumnName="LocOut" />
-                <ScalarProperty Name="Purpose" ColumnName="Purpose" />
-                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
-                <ScalarProperty Name="ClaimLineId" ColumnName="ClaimLineId" />
-                <ScalarProperty Name="ClaimId" ColumnName="ClaimId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ClaimStatus">
             <EntityTypeMapping TypeName="ubietydbModel.ClaimStatu">
               <MappingFragment StoreEntitySet="ClaimStatus">
@@ -1756,6 +1726,40 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
                 <ScalarProperty Name="Manager_Mobile" ColumnName="Manager Mobile" />
                 <ScalarProperty Name="Manager_Email" ColumnName="Manager Email" />
                 <ScalarProperty Name="ManagerId" ColumnName="ManagerId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="claimHistories">
+            <EntityTypeMapping TypeName="ubietydbModel.claimHistory">
+              <MappingFragment StoreEntitySet="claimHistory">
+                <ScalarProperty Name="actionBy" ColumnName="actionBy" />
+                <ScalarProperty Name="statusTime" ColumnName="statusTime" />
+                <ScalarProperty Name="remarks" ColumnName="remarks" />
+                <ScalarProperty Name="statusId" ColumnName="statusId" />
+                <ScalarProperty Name="claimId" ColumnName="claimId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClaimRevisions">
+            <EntityTypeMapping TypeName="ubietydbModel.ClaimRevision">
+              <MappingFragment StoreEntitySet="ClaimRevision">
+                <ScalarProperty Name="revisionRemarks" ColumnName="revisionRemarks" />
+                <ScalarProperty Name="revisionBy" ColumnName="revisionBy" />
+                <ScalarProperty Name="revisionDate" ColumnName="revisionDate" />
+                <ScalarProperty Name="claimtext" ColumnName="claimtext" />
+                <ScalarProperty Name="ClaimId" ColumnName="ClaimId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="claimLog" FunctionName="ubietydbModel.Store.claimLog">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ubietydbModel.claimLog_Result">
+                <ScalarProperty Name="Claim_Status" ColumnName="Claim Status" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="Action_By" ColumnName="Action By" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

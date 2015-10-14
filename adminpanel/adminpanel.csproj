@@ -602,9 +602,7 @@
       <DependentUpon>Contact.aspx</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AttendanceController.cs" />
-    <Compile Include="Controllers\ClaimHeadsController.cs" />
     <Compile Include="Controllers\claimJSONsController.cs" />
-    <Compile Include="Controllers\ClaimLinesController.cs" />
     <Compile Include="Controllers\ClientsController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
@@ -695,13 +693,16 @@
     <Compile Include="Models\attRepTemp.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ClaimHead.cs">
+    <Compile Include="Models\claimHistory.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\claimJSON.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ClaimLine.cs">
+    <Compile Include="Models\claimLog_Result.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ClaimRevision.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ClaimStatu.cs">

@@ -16,16 +16,16 @@ namespace adminpanel.Models
     {
         public ClaimStatu()
         {
-            this.ClaimHeads = new HashSet<ClaimHead>();
-            this.ClaimLines = new HashSet<ClaimLine>();
             this.ClaimStatusHistories = new HashSet<ClaimStatusHistory>();
+            this.claimHistories = new HashSet<claimHistory>();
+            this.claimJSONs = new HashSet<claimJSON>();
         }
     
         public int Id { get; set; }
         public string Status { get; set; }
     
-        public virtual ICollection<ClaimHead> ClaimHeads { get; set; }
-        public virtual ICollection<ClaimLine> ClaimLines { get; set; }
         public virtual ICollection<ClaimStatusHistory> ClaimStatusHistories { get; set; }
+        public virtual ICollection<claimHistory> claimHistories { get; set; }
+        public virtual ICollection<claimJSON> claimJSONs { get; set; }
     }
 }
