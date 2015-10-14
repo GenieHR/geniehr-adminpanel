@@ -1,6 +1,28 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/template.Master" CodeBehind="changeClaim.aspx.cs" Inherits="adminpanel.viewClaim" %>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="body" runat="server">
+    <style>
+        .vertical-alignment-helper {
+            display: table;
+            height: 100%;
+            width: 100%;
+            pointer-events: none;
+        }
+
+        .vertical-align-center {
+            display: table-cell;
+            vertical-align: middle;
+            pointer-events: none;
+        }
+
+        .modal-content {
+            width: inherit;
+            height: inherit;
+            margin: 0 auto;
+            pointer-events: all;
+        }
+</style>
+
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
             <h2>View Claim</h2>
@@ -20,7 +42,7 @@
                             <li><a data-toggle="tab" href="#tabHotel">Hotel</a></li>
                             <li><a data-toggle="tab" href="#tabFood">Food</a></li>
                             <li><a data-toggle="tab" href="#tabOthers">Others</a></li>
-                            <li><a data-toggle="tab" onclick="populateClaimLog()" href="#tabLog">Claim Log</a></li>
+                            <li><a data-toggle="tab" onclick="populateClaimLog()" href="#tabLog">Action Log</a></li>
 
                         </ul>
                         <div class="tab-content ">
@@ -97,26 +119,26 @@
                                                     <tr>
                                                         <td>Travel</td>
                                                         <td class="curr" id="sumTravelAmt">0.00</td>
-                                                        <td  ><input style="width:60px" id="sumTravelAmtA" readonly onchange="uploadSummVal()" onclick="this.select();" type="number" /></td>
+                                                        <td  ><input style="width:60px" id="sumTravelAmtA" readonly onchange="updateSummVal()" onclick="this.select();" type="number" /></td>
 
                                                     </tr>
                                                     <tr>
                                                         <td>Hotel</td>
                                                         <td class="curr" id="sumHotelAmt">0.00</td>
-                                                        <td  ><input style="width:60px" id="sumHotelAmtA"  readonly  onchange="uploadSummVal()"  onclick="this.select();" type="number" /></td>
+                                                        <td  ><input style="width:60px" id="sumHotelAmtA"  readonly  onchange="updateSummVal()"  onclick="this.select();" type="number" /></td>
 
 
                                                     </tr>
                                                     <tr>
                                                         <td>Food</td>
                                                         <td class="curr" id="sumFoodAmt">0.00</td>
-                                                        <td  ><input style="width:60px" id="sumFoodAmtA"  readonly  onchange="uploadSummVal()"  onclick="this.select();" type="number" /></td>
+                                                        <td  ><input style="width:60px" id="sumFoodAmtA"  readonly  onchange="updateSummVal()"  onclick="this.select();" type="number" /></td>
                                                     </tr>
 
                                                     <tr>
                                                         <td>Others</td>
                                                         <td class="curr" id="summOthAmt">0.00</td>
-                                                        <td  ><input style="width:60px" id="summOthAmtA"  readonly  onchange="uploadSummVal()" onclick="this.select();" type="number" /></td>
+                                                        <td  ><input style="width:60px" id="summOthAmtA"  readonly  onchange="updateSummVal()" onclick="this.select();" type="number" /></td>
 
                                                     </tr>
                                                 </tbody>
@@ -154,8 +176,8 @@
                                         </div>
                                     </div>
                                     <div class="row text-center">
-                                    <input type="button" onclick="saveClaimChanges()" value="Save Changes" class="btn btn-info" />
-                                    <input type="button" onclick="rejectClaim()" value="Reject Claim" class="btn btn-danger" />
+                                    <input type="button" onclick="saveClaimChanges('A')" value="Approve" class="btn btn-info" />
+                                    <input type="button" onclick="saveClaimChanges('R')" value="Reject" class="btn btn-danger" />
             
                                                                 </div>
                                 </div>
@@ -447,6 +469,64 @@
                 </div>
     </div>
     
+
+     <div class="modal fade" id="myModal">
+        <div class="vertical-alignment-helper">
+            <div class="modal-dialog vertical-align-center">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row">
+              
+
+
+
+                            <div class="form-group" id="appAmountDiv">
+                                <label class="col-sm-4 control-label">Total Approved Amount</label>
+
+                                <div class="col-sm-8">
+                                    <div class="input-group m-b">
+                                        <span class="input-group-addon">&#x20B9</span>
+                                        <input type="number" readonly id="totalApprovedAmt" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Remarks</label>
+
+                                <div class="col-sm-8">
+                                        <textarea rows="5" id="claimRemarks" class="form-control" ></textarea>
+                                </div>
+                            </div>
+
+                        </div>
+                        <br />
+                        <div class="row">
+
+                            <div class="form-group" style="margin-top: 4px">
+                                <label class="col-sm-4 control-label"></label>
+                                                       
+                                <div class="col-sm-8">
+                                    <input type="submit" class="btn btn-success" value="Save" style="margin-right: 4px"  />
+                                    <input type="button" data-dismiss="modal" class="btn btn-danger" value="Cancel" />
+
+                                </div>
+                                </div>
+                                </div>
+
+
+
+
+
+
+                        
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
 </asp:Content>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="javascriptPart" runat="server">
@@ -486,14 +566,14 @@
         var originalClaimText;
         
         $(document).ready(function () {
+            alert(window.localStorage.getItem("cliamId"));
 
             $.ajax({
                 url: "api/claimJSONs/" + window.localStorage.getItem("cliamId"),
             }).done(function (result) {
+                originalClaimText = result.claimText;
 
-                originalClaimText = result;
-
-                claimJSON = JSON.parse(result.claimText);
+                claimJSON = JSON.parse(originalClaimText);
 
                 $("#sumTravelAmt").html(claimJSON.travelExpense);
                 $("#sumTravelAmtA").val(claimJSON.travelExpense);
@@ -549,15 +629,41 @@
             });
         });
 
-        function rejectClaim() {
 
+        function saveClaimChanges(actionTaken) {
+
+
+            if (actionTaken == 'A') {
+                $("#appAmountDiv").show();
+
+                addApprovalItems();
+
+                var submittedClaim = JSON.parse(originalClaimText);
+                $("#totalApprovedAmt").val(claimJSON.totalExpenseA);
+
+                if (claimJSON.totalExpenseA != submittedClaim.totalExpense) {
+                    $("#claimRemarks").val('');
+                }
+                else {
+                    $("#claimRemarks").val('Approved');
+                }
+            }
+
+            else {
+                $("#appAmountDiv").hide();
+                $("#claimRemarks").val('');
+
+            }
+
+            $('#myModal').modal({
+                backdrop: 'static',
+                keyboard: false
+            });
+
+            $('#myModal').modal();
         }
 
-        function saveClaimChanges() {
-            addApprovalItems();
-        }
-
-        function uploadSummVal() {
+        function updateSummVal() {
             $("#summTotAmt").html(parseInt($("#sumTravelAmtA").val()) + parseInt($("#sumFoodAmtA").val()) + parseInt($("#sumHotelAmtA").val()) + parseInt($("#summOthAmtA").val()));
         }
 
@@ -626,7 +732,7 @@
                     break;
             }
 
-            uploadSummVal();
+            updateSummVal();
         }
 
         function viewvalues(valId) {
