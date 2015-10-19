@@ -36,38 +36,19 @@ namespace Admin
 
 			//DefaultConnection1 context = new DefaultConnection1();
 
-            //var userStore = new UserStore<IdentityUser>();
-            //var UserManager = new UserManager<IdentityUser>(userStore);
+            var userStore = new UserStore<IdentityUser>();
+            var UserManager = new UserManager<IdentityUser>(userStore);
 
         //try
         //{
             //var user = UserManager.FindByName("laks@geniehr.com");
             //UserManager.AddToRole(user.Id, "ClientAdmin");
+            
             //UserManager.RemoveFromRole(user.Id, "ClientManager");
-            
-        //    user = UserManager.FindByName("Aamir.Red.devil@gmail.com");
-        //    UserManager.AddToRole(user.Id, "ClientEmployee");
 
-        //    user = UserManager.FindByName("ramankchaudhary@gmail.com");
-        //    UserManager.AddToRole(user.Id, "ClientEmployee");
+            //var user = UserManager.FindByName("yogi.tomer@gmail.com");
+            //UserManager.AddToRole(user.Id, "ClientEmployee");
 
-        //    user = UserManager.FindByName("akbar.zeeshan734@gmail.com");
-        //    UserManager.AddToRole(user.Id, "ClientEmployee");
-
-        //    user = UserManager.FindByName("durai.civil2005@gmail.com");
-        //    UserManager.AddToRole(user.Id, "ClientEmployee");
-
-        //    user = UserManager.FindByName("lahriimran@gmail.com");
-        //    UserManager.AddToRole(user.Id, "ClientEmployee");
-            
-        //    user = UserManager.FindByName("santhosh.enggcivil@gmail.com");
-        //    UserManager.AddToRole(user.Id, "ClientEmployee");
-            
-        //    user = UserManager.FindByName("civilengineer8118@gmail.com");
-        //    UserManager.AddToRole(user.Id, "ClientEmployee");
-
-        //    user = UserManager.FindById("d3681832-98cd-48ca-bdd3-2f7e30321ad4");
-        //    UserManager.AddToRole(user.Id, "ClientEmployee");
 
         //    user = UserManager.FindByName("preeti.negi@geniehr.com");
         //    UserManager.AddToRole(user.Id, "OrgEmployee");
@@ -79,6 +60,7 @@ namespace Admin
         //{
         //    throw;
         //}
+
         }
 
         protected override void OnInit(EventArgs e)

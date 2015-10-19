@@ -111,6 +111,8 @@ namespace adminpanel.Controllers
             return CreatedAtRoute("DefaultApi", new { id = claimJSON.id }, claimJSON);
         }
 
+        
+        
         private int createClaimLog(int claimId, int statusId, int empId, string remarks)
         {
             claimHistory claimHistory = new claimHistory();

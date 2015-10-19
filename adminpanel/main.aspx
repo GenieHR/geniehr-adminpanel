@@ -83,8 +83,13 @@
             <div class="ibox">
                         <div class="ibox-title">
                             <div class="row">
-                            <div class="col-lg-8">
-                            <h3>Open Claims</h3>
+                            <div class="col-lg-12 ">
+                            <span class="text-capitalize text-color">Open Claims</span>
+
+                                <span class="pull-right text-muted "><a href="#">Show All Claims</a></span>
+
+
+                            
                                 </div>
                             
                         </div>

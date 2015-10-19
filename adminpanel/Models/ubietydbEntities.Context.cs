@@ -150,5 +150,14 @@ namespace adminpanel.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<claimLog_Result>("claimLog", claimIdParameter);
         }
+    
+        public virtual ObjectResult<Nullable<int>> getNextClaimRevisionNo(Nullable<int> claimId)
+        {
+            var claimIdParameter = claimId.HasValue ?
+                new ObjectParameter("ClaimId", claimId) :
+                new ObjectParameter("ClaimId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("getNextClaimRevisionNo", claimIdParameter);
+        }
     }
 }

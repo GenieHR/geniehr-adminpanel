@@ -20,6 +20,7 @@ namespace adminpanel.Models
         public System.DateTime revisionDate { get; set; }
         public int revisionBy { get; set; }
         public string revisionRemarks { get; set; }
+        public int revisionName { get; set; }
     
         public virtual claimJSON claimJSON { get; set; }
         public virtual Employee Employee { get; set; }

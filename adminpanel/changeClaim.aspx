@@ -507,19 +507,14 @@
                                 <label class="col-sm-4 control-label"></label>
                                                        
                                 <div class="col-sm-8">
-                                    <input type="submit" class="btn btn-success" value="Save" style="margin-right: 4px"  />
+                                    <input type="submit" class="btn btn-success" onclick="saveClaim()" value="Save" style="margin-right: 4px"  />
                                     <input type="button" data-dismiss="modal" class="btn btn-danger" value="Cancel" />
 
                                 </div>
                                 </div>
                                 </div>
 
-
-
-
-
-
-                        
+                       
                     </div>
 
                 </div>
@@ -564,9 +559,9 @@
         }
 
         var originalClaimText;
-        
+        var claimResponse;
+
         $(document).ready(function () {
-            alert(window.localStorage.getItem("cliamId"));
 
             $.ajax({
                 url: "api/claimJSONs/" + window.localStorage.getItem("cliamId"),
@@ -629,30 +624,66 @@
             });
         });
 
+        function saveClaim() {
+
+            if($("#claimRemarks").val() === "") {
+                alert("Please enter remarks");
+                return false;
+            }
+
+            var claimUploadJson = {
+                "claimId": window.localStorage.getItem("cliamId"),
+                "actionBy": <%= Session["EmpId"] %>,
+                "claimStatus": -1,
+                "revisionText": "",
+                "revisionRemarks": $("#claimRemarks").val(),
+                "claimText": ""
+            };
+
+            if (claimResponse == 'A') {
+
+                var submittedClaim = JSON.parse(originalClaimText);
+                claimUploadJson.claimStatus = 1;
+
+
+                if (claimJSON.totalExpenseA != submittedClaim.totalExpense) {
+
+                    claimUploadJson.revisionText = originalClaimText;
+                    claimUploadJson.claimText = JSON.stringify(claimJSON);
+                }
+            }
+            else if (claimResponse == 'R') {
+                claimUploadJson.claimStatus = 2;
+
+            }
+
+            $.ajax({
+                url: 'api/ClaimUpdate',
+                type: 'post',
+                dataType: 'json',
+                data: claimUploadJson,
+                success: function (data) {
+                    alert('success');
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
+        }
 
         function saveClaimChanges(actionTaken) {
-
+            claimResponse = actionTaken;
 
             if (actionTaken == 'A') {
                 $("#appAmountDiv").show();
-
                 addApprovalItems();
-
-                var submittedClaim = JSON.parse(originalClaimText);
                 $("#totalApprovedAmt").val(claimJSON.totalExpenseA);
-
-                if (claimJSON.totalExpenseA != submittedClaim.totalExpense) {
-                    $("#claimRemarks").val('');
-                }
-                else {
-                    $("#claimRemarks").val('Approved');
-                }
+            
             }
 
-            else {
+            else if(actionTaken == 'R') {
                 $("#appAmountDiv").hide();
                 $("#claimRemarks").val('');
-
             }
 
             $('#myModal').modal({

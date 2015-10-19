@@ -249,6 +249,7 @@
     <Content Include="css\bootstrap.min.css" />
     <Content Include="css\component.css" />
     <Content Include="css\imageModal.css" />
+    <Content Include="css\menu_cornermorph.css" />
     <Content Include="css\normalize.css" />
     <Content Include="css\plugins\autocomplete\jquery.auto-complete.css" />
     <Content Include="css\plugins\datapicker\datepicker3.css" />
@@ -264,6 +265,10 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="GroupManagement.aspx" />
     <Content Include="HtmlPage1.html" />
+    <Content Include="img\fb.png" />
+    <Content Include="img\gp.png" />
+    <Content Include="img\in.png" />
+    <Content Include="img\logo-static.png" />
     <Content Include="img\logos\1.png" />
     <Content Include="img\logos\2.png" />
     <Content Include="img\logos\3.png" />
@@ -276,8 +281,10 @@
     <Content Include="img\pp\26.png" />
     <Content Include="img\pp\add_user.png" />
     <Content Include="img\logo.png" />
+    <Content Include="img\tw.png" />
     <Content Include="js\bootstrap.js" />
     <Content Include="js\bootstrap.min.js" />
+    <Content Include="js\classie.js" />
     <Content Include="js\demo\chartjs-demo.js" />
     <Content Include="js\demo\flot-demo.js" />
     <Content Include="js\demo\morris-demo.js" />
@@ -289,6 +296,7 @@
     <Content Include="js\jquery-2.1.1.js" />
     <Content Include="js\jquery-ui-1.10.4.min.js" />
     <Content Include="js\jquery-ui.custom.min.js" />
+    <Content Include="js\main.js" />
     <Content Include="js\plugins\autocomplete\jquery.auto-complete.min.js" />
     <Content Include="js\plugins\blueimp\jquery.blueimp-gallery.min.js" />
     <Content Include="js\plugins\chartist\chartist.min.js" />
@@ -444,11 +452,14 @@
     <Content Include="ShowClients.aspx" />
     <Content Include="ShowEmployees.aspx" />
     <Content Include="Site.Master" />
+    <Content Include="staticMail.html" />
     <Content Include="testpage.html" />
     <Content Include="userProfile.aspx" />
     <Content Include="changeClaim.aspx" />
     <Content Include="ViewSwitcher.ascx" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Bundle.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
@@ -603,6 +614,7 @@
     </Compile>
     <Compile Include="Controllers\AttendanceController.cs" />
     <Compile Include="Controllers\claimJSONsController.cs" />
+    <Compile Include="Controllers\ClaimUpdateController.cs" />
     <Compile Include="Controllers\ClientsController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
@@ -610,6 +622,7 @@
     <Compile Include="Controllers\GroupInchargesController.cs" />
     <Compile Include="Controllers\GroupsController.cs" />
     <Compile Include="Controllers\GroupTypesController.cs" />
+    <Compile Include="Controllers\sendMailController.cs" />
     <Compile Include="Controllers\UploadController.cs" />
     <Compile Include="CreateEmployee.aspx.cs">
       <DependentUpon>CreateEmployee.aspx</DependentUpon>
@@ -705,6 +718,7 @@
     <Compile Include="Models\ClaimRevision.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\claimUpdateDTO.cs" />
     <Compile Include="Models\ClaimStatu.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>

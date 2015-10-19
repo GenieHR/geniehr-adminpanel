@@ -80,6 +80,7 @@
           <Property Name="revisionDate" Type="datetime" Nullable="false" />
           <Property Name="revisionBy" Type="int" Nullable="false" />
           <Property Name="revisionRemarks" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="revisionName" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="ClaimStatus">
           <Key>
@@ -532,6 +533,9 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
         </Function>
         <Function Name="getNextClaimNo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EmpId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="getNextClaimRevisionNo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ClaimId" Type="int" Mode="In" />
         </Function>
         <Function Name="getOpenCliamsByManagerId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="managerId" Type="int" Mode="In" />
@@ -1064,6 +1068,9 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
             <End Role="ClaimRevision" EntitySet="ClaimRevisions" />
           </AssociationSet>
           <FunctionImport Name="claimLog" ReturnType="Collection(ubietydbModel.claimLog_Result)">
+          <Parameter Name="ClaimId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="getNextClaimRevisionNo" ReturnType="Collection(Int32)">
             <Parameter Name="ClaimId" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
@@ -1340,6 +1347,7 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <Property Name="revisionRemarks" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="claimJSON" Relationship="ubietydbModel.FK_ClaimRevision_claimJSON" FromRole="ClaimRevision" ToRole="claimJSON" />
           <NavigationProperty Name="Employee" Relationship="ubietydbModel.FK_ClaimRevision_Employee" FromRole="ClaimRevision" ToRole="Employee" />
+          <Property Name="revisionName" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="FK_claimHistory_claimJSON">
           <End Type="ubietydbModel.claimJSON" Role="claimJSON" Multiplicity="1" />
@@ -1744,6 +1752,7 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <EntitySetMapping Name="ClaimRevisions">
             <EntityTypeMapping TypeName="ubietydbModel.ClaimRevision">
               <MappingFragment StoreEntitySet="ClaimRevision">
+                <ScalarProperty Name="revisionName" ColumnName="revisionName" />
                 <ScalarProperty Name="revisionRemarks" ColumnName="revisionRemarks" />
                 <ScalarProperty Name="revisionBy" ColumnName="revisionBy" />
                 <ScalarProperty Name="revisionDate" ColumnName="revisionDate" />
@@ -1763,6 +1772,7 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getNextClaimRevisionNo" FunctionName="ubietydbModel.Store.getNextClaimRevisionNo" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

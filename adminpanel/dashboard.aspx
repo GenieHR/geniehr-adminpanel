@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Quick Reports" Language="C#" MasterPageFile="~/UbietyMenu.Master" AutoEventWireup="true" CodeBehind="dashboard.aspx.cs" Inherits="adminpanel.dashboard" %>
+﻿<%@ Page Title="Quick Reports" Language="C#" MasterPageFile="~/template.Master" AutoEventWireup="true" CodeBehind="dashboard.aspx.cs" Inherits="adminpanel.dashboard" %>
 
 
 <asp:Content ID="Content2" ContentPlaceHolderID="body" runat="server">
@@ -23,14 +23,27 @@
   font-weight: bold;
 }
 </style>
-    <script src="js/plugins/date/date.js"></script>
-    <script src="js/plugins/date/extras.js"></script>
-    <script src="js/plugins/date/parser.js"></script>
-    <script src="js/plugins/date/sugarpak.js"></script>
-    <script src="js/plugins/date/time.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
     <link href="css/plugins/datapicker/datepicker3.css" rel="stylesheet" />
-    <script src="js/plugins/datapicker/bootstrap-datepicker.js"></script>
+    
+    <%--<div class="container">
+    <div class="menu-wrap">
+				<nav class="menu">
+					<div class="profile"><img src="img/user1.png" alt="Matthew Greenberg"/><span>Matthew Greenberg</span></div>
+					<div class="link-list">
+						<a href="#"><span>Latest stories</span></a>
+						<a href="#"><span>Your friends</span></a>
+						<a href="#"><span>Personal Settings</span></a>
+						<a href="#"><span>Security &amp; Privacy</span></a>
+					</div>
+					<div class="icon-list">
+						<a href="#"><i class="fa fa-fw fa-home"></i></a>
+						<a href="#"><i class="fa fa-fw fa-question-circle"></i></a>
+						<a href="#"><i class="fa fa-fw fa-power-off"></i></a>
+					</div>
+				</nav>
+			</div>
+			<button class="menu-button" id="open-button"><i class="fa fa-fw fa-cog"></i><span>Open Menu</span></button>
+    </div>--%>
 
     <div class="row wrapper border-bottom white-bg page-heading">
  
@@ -48,7 +61,9 @@
             </div>
             
         </div>
-    <div class="col-lg-6">
+    <br />
+
+    <div class="col-lg-5">
     <div class="ibox">
                         <div class="ibox-title">
                             <div class="row">
@@ -58,7 +73,7 @@
                             <div class="col-lg-6">
                                 <div  id="data_1">
                                 <div  class="input-group input-xs date">
-                                    <span class="input-group-addon">Select Date</span><input type="text" id="selDate" class="form-control" />
+                                    <span class="input-group-addon"> <i class="fa fa-calendar"></i></span><input type="text" id="selDate" class="form-control" />
                                 </div>
                             </div>                                </div>
                         </div>
@@ -70,7 +85,7 @@
                                                     <tr>
                                                         <th>Name</th>
                                                         <th>Time</th>
-                                                        <th>Place</th>
+                                                        <%--<th>Place</th>--%>
                                                         <th>Details</th>
                                                     </tr>
 
@@ -78,7 +93,7 @@
                                 </div></div>
                             </div>
         </div>
-
+        </div>
     
     <div class="modal inmodal fadeIn" id="myMapModal">
             <div class="modal-dialog">
@@ -92,6 +107,7 @@
             min-width: 100%;
         }
          </style>
+                        <div class="pull-right"><a class="text-danger" data-dismiss="modal"><i class="fa fa-close fa-2x"></i></a></div>
 
                             <div id="map-canvas" class=""></div>
                         </div>
@@ -104,6 +120,8 @@
             <div class="modal-dialog">
                 <div class="modal-content animated fadeIn">
                     <div class="modal-body">
+                        <div class="pull-right"><a class="text-danger" data-dismiss="modal"><i class="fa fa-close fa-2x"></i></a></div>
+
                         <div class="row">
                             <br />
                             <br />
@@ -123,8 +141,27 @@
             
             <link href="css/imageModal.css" rel="stylesheet" />
 
-            <script>
-                $('input').click(function () {
+            
+        </div>
+
+        </asp:Content>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="javascriptPart" runat="server">
+
+    <script src="js/plugins/date/date.js"></script>
+    <script src="js/plugins/date/extras.js"></script>
+    <script src="js/plugins/date/parser.js"></script>
+    <script src="js/plugins/date/sugarpak.js"></script>
+    <script src="js/plugins/date/time.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+    <script src="js/plugins/datapicker/bootstrap-datepicker.js"></script>
+
+
+<script>
+    
+    var url = '<%= ConfigurationManager.AppSettings["StorageURL"] %>';
+
+ $('input').click(function () {
                     var img = $('#imageId');
                     if (img.hasClass('north')) {
                         img.attr('class', 'west');
@@ -136,14 +173,6 @@
                         img.attr('class', 'north');
                     }
                 });
-
-            </script>
-        </div>
-
-<script>
-
-    var url = '<%= ConfigurationManager.AppSettings["StorageURL"] %>';
-
     $(document).ready(function () {
         $('#data_1 .input-group.date').datepicker({
             todayBtn: "linked",
@@ -159,13 +188,8 @@
 
                 populateTableData((new TimeSpan(Date.today() - Date.parse($('#selDate').val()))).days);
         });        $('#data_1 .input-group.date').datepicker('update', new Date());
-        $('#jsonTable').paging({
-            limit: 5,
-            rowDisplayStyle: 'block',
-            activePage: 0,
-            rows: []
-        });
 
+        
         populateTableData(0);
         
     });
@@ -218,7 +242,7 @@
 
                 imgId = empId + '/' + mdYear + '/' + mdMonth + '/' + mdDate + '/' + orgJSON[i].MarkCount;
 
-                rowStr += '<td>' + a + '</td>';
+                //rowStr += '<td>' + a + '</td>';
 
                 a = maptd + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + '<a data-toggle="modal" data-id="' + imgId + '" class="open-viewImageDialog" data-target="#viewImageDialog" href="#viewImageDialog"  ><i class="fa fa-2x fa-file-image-o" /></a>';
 
@@ -230,21 +254,21 @@
 
             }
 
-            runLoop(addArray);
+           // runLoop(addArray);
         });
 
-        myLoop();
+       // myLoop();
     }
 
-    function runLoop(varArray) {
-        var i = varArray.length;
+    //function runLoop(varArray) {
+    //    var i = varArray.length;
 
-        (function myLoop(i) {
-            setTimeout(function () {
-                if (--i) myLoop(i);
-            }, 1000)
-        })(varArray.length);
-    }
+    //    (function myLoop(i) {
+    //        setTimeout(function () {
+    //            if (--i) myLoop(i);
+    //        }, 1000)
+    //    })(varArray.length);
+    //}
 
 
     function getLocation(info) {
@@ -307,15 +331,15 @@
 
     var i = 0;
 
-    function myLoop() {
-        setTimeout(function () {
-            getLocation(addArray[i]);
-            i++;
-            if (i < addArray.length) {
-                myLoop();
-            }
-        }, 2500)
-    }
+    //function myLoop() {
+    //    setTimeout(function () {
+    //        getLocation(addArray[i]);
+    //        i++;
+    //        if (i < addArray.length) {
+    //            myLoop();
+    //        }
+    //    }, 2500)
+    //}
 
 
     $('#myMapModal').on('shown.bs.modal', function (e) {

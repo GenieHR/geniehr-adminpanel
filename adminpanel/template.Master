@@ -11,10 +11,13 @@
 
     <link href="css/bootstrap.min.css" rel="stylesheet" />
     <link href="css/style.css" rel="stylesheet"/>
-
+    
+    <link href="css/menu_cornermorph.css" rel="stylesheet" />
+    
     <link href="css/plugins/toastr/toastr.min.css" rel="stylesheet" />
     <link href="fonts/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
     <link href="css/animate.css" rel="stylesheet"/>
+    <link href="css/normalize.css" rel="stylesheet" />
     
     <asp:ContentPlaceHolder ID="head" runat="server">
 
@@ -39,6 +42,8 @@
     <script src="js/inspinia.js"></script>
     <script src="js/plugins/toastr/toastr.min.js"></script>
     <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="js/classie.js"></script>
+    <script src="js/main.js"></script>
 
  <asp:ContentPlaceHolder   ID="javascriptPart" runat="server" >
 

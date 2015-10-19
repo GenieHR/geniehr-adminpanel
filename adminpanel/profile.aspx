@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="profile.aspx.cs" MasterPageFile="~/UbietyMenu.Master" Inherits="UbietyAdmin.profile" Title="Profile" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="profile.aspx.cs" MasterPageFile="~/template.Master" Inherits="UbietyAdmin.profile" Title="Profile" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="body" Runat="Server">
     <script src="js/plugins/table2Excel/ExportHTML.js"></script>
@@ -190,21 +190,7 @@
             
             <link href="css/imageModal.css" rel="stylesheet" />
 
-            <script>
-                $('input').click(function () {
-                    var img = $('#imageId');
-                    if (img.hasClass('north')) {
-                        img.attr('class', 'west');
-                    } else if (img.hasClass('west')) {
-                        img.attr('class', 'south');
-                    } else if (img.hasClass('south')) {
-                        img.attr('class', 'east');
-                    } else if (img.hasClass('east')) {
-                        img.attr('class', 'north');
-                    }
-                });
-
-            </script>
+            
         </div>
 
 
@@ -227,12 +213,32 @@
 
         </div>
 
+    
+</asp:Content>
+
+<asp:Content ID="Content2" ContentPlaceHolderID="javascriptPart" runat="server">
+
+
     <script>
+
+        $('input').click(function () {
+            var img = $('#imageId');
+            if (img.hasClass('north')) {
+                img.attr('class', 'west');
+            } else if (img.hasClass('west')) {
+                img.attr('class', 'south');
+            } else if (img.hasClass('south')) {
+                img.attr('class', 'east');
+            } else if (img.hasClass('east')) {
+                img.attr('class', 'north');
+            }
+        });
+
         var attendanceURL = "api/attendance/of/temp/" + getParameterByName('EmpId');
         var profileURL = "api/getempdetail/of/" + getParameterByName('EmpId') + '?jsoncallback=?';
          <% // TODO: Environment Varialbe %>
 
-       var url = '<%= ConfigurationManager.AppSettings["StorageURL"] %>';
+        var url = '<%= ConfigurationManager.AppSettings["StorageURL"] %>';
 
         // var url = '<%//= Environment.GetEnvironmentVariable("StorageURL") %>';
 
