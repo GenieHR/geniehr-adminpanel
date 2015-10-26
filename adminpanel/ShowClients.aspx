@@ -1,7 +1,7 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ShowClients.aspx.cs" MasterPageFile="~/UbietyMenu.Master" Inherits="Admin.ShowClients" Title="Clients"%>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ShowClients.aspx.cs" MasterPageFile="~/template.Master" Inherits="Admin.ShowClients" Title="Clients"%>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="body" Runat="Server">
-    <div class="row wrapper border-bottom white-bg page-heading">
+   <%-- <div class="row wrapper border-bottom white-bg page-heading">
             <div class="col-lg-10">
                 <h1>Clients</h1>
                 <ol class="breadcrumb">
@@ -13,7 +13,7 @@
             <div class="col-lg-2">
 
             </div>
-        </div>
+        </div>--%>
     <br />
     <link href="css/spinners.css" rel="stylesheet" />
     <div id="loadingSpinner" class="text-center">
@@ -23,6 +23,8 @@
     <div id="clientBoxes">
 
     </div>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="javascriptPart" Runat="Server">
 
     <script>
         $(document).ready(function () {

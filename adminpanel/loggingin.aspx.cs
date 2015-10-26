@@ -65,7 +65,7 @@ namespace Admin
                     Client client = context.Clients.Find(employee.CompanyId);
                     Session["ClientName"] = client.ClientName;
 
-                    Response.Redirect("~/Claim.aspx");
+                    Response.Redirect("~/Employees/home.aspx");
                 }
                 else if (System.Web.HttpContext.Current.User.IsInRole("SuperAdmin"))
                 {

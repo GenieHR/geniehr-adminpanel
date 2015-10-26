@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ShowEmployees.aspx.cs" MasterPageFile="~/UbietyMenu.Master" Title="Employees" Inherits="Admin.showEmployees" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ShowEmployees.aspx.cs" MasterPageFile="~/template.Master" Title="Employees" Inherits="Admin.showEmployees" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="body" Runat="Server">
     <div class="row wrapper border-bottom white-bg page-heading">
@@ -28,10 +28,9 @@
 
            
             </div>
+</asp:Content>
     
-
-    
-
+<asp:Content ID="Content2" ContentPlaceHolderID="javascriptPart" Runat="Server">
 
     <script>
         

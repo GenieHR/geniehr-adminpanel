@@ -1,37 +1,11 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="main.aspx.cs" Inherits="adminpanel.main" MasterPageFile="~/UbietyMenu.Master" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="main.aspx.cs" Inherits="adminpanel.main" MasterPageFile="~/template.Master" %>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="body" runat="server">
-            <style type="text/css">
-.paging-nav {
-  text-align: right;
-  padding-top: 2px;
-}
-
-.paging-nav a {
-  margin: auto 1px;
-  text-decoration: none;
-  display: inline-block;
-  padding: 1px 7px;
-  background: #91b9e6;
-  color: white;
-  border-radius: 3px;
-}
-
-.paging-nav .selected-page {
-  background: #187ed5;
-  font-weight: bold;
-}
-
-</style>
-    <script src="js/plugins/date/date.js"></script>
-    <script src="js/plugins/date/extras.js"></script>
-    <script src="js/plugins/date/parser.js"></script>
-    <script src="js/plugins/date/sugarpak.js"></script>
-    <script src="js/plugins/date/time.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
-    <link href="css/plugins/datapicker/datepicker3.css" rel="stylesheet" />
-    <script src="js/plugins/datapicker/bootstrap-datepicker.js"></script>
-
+            
+            <link href="css/imageModal.css" rel="stylesheet" />
+    
+    
+    
     <div class="row wrapper border-bottom white-bg page-heading">
  
         <div class="col-lg-10">
@@ -164,31 +138,44 @@
                 </div>
             </div>
             
-            <link href="css/imageModal.css" rel="stylesheet" />
 
-            <script>
-                $('input').click(function () {
-                    var img = $('#imageId');
-                    if (img.hasClass('north')) {
-                        img.attr('class', 'west');
-                    } else if (img.hasClass('west')) {
-                        img.attr('class', 'south');
-                    } else if (img.hasClass('south')) {
-                        img.attr('class', 'east');
-                    } else if (img.hasClass('east')) {
-                        img.attr('class', 'north');
-                    }
-                });
-
-            </script>
         </div>
+    
+</asp:Content>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="javascriptPart" runat="server">
+
+
+    <script src="js/plugins/date/date.js"></script>
+    <script src="js/plugins/date/extras.js"></script>
+    <script src="js/plugins/date/parser.js"></script>
+    <script src="js/plugins/date/sugarpak.js"></script>
+    <script src="js/plugins/date/time.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+    <link href="css/plugins/datapicker/datepicker3.css" rel="stylesheet" />
+    <script src="js/plugins/datapicker/bootstrap-datepicker.js"></script>
 
 <script>
-
 
     var url = '<%= ConfigurationManager.AppSettings["StorageURL"] %>';
 
     $(document).ready(function () {
+
+        $('input').click(function () {
+            var img = $('#imageId');
+            if (img.hasClass('north')) {
+                img.attr('class', 'west');
+            } else if (img.hasClass('west')) {
+                img.attr('class', 'south');
+            } else if (img.hasClass('south')) {
+                img.attr('class', 'east');
+            } else if (img.hasClass('east')) {
+                img.attr('class', 'north');
+            }
+        });
+
+
+
         $('#data_1 .input-group.date').datepicker({
             todayBtn: "linked",
             keyboardNavigation: true,

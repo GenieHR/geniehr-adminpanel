@@ -1,4 +1,4 @@
-<%@ Page Title="Claims" Language="C#" MasterPageFile="~/template.Master" AutoEventWireup="true" CodeBehind="claim.aspx.cs" Inherits="adminpanel.claim" %>
+<%@ Page Title="Claims" Language="C#" MasterPageFile="~/Employees/EmployeeTemplate.Master" AutoEventWireup="true" CodeBehind="claim.aspx.cs" Inherits="adminpanel.Employees.claim" %>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="body" runat="server">
     <style>

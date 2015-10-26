@@ -239,7 +239,7 @@
     <Content Include="Account\TwoFactorAuthenticationSignIn.aspx" />
     <Content Include="Account\VerifyPhoneNumber.aspx" />
     <Content Include="AddClaim.aspx" />
-    <Content Include="claim.aspx" />
+    <Content Include="Employees\claim.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -259,6 +259,7 @@
     <Content Include="css\spinners.css" />
     <Content Include="css\style.css" />
     <Content Include="dashboard.aspx" />
+    <Content Include="Employees\home.aspx" />
     <Content Include="fonts\font-awesome\css\font-awesome.css" />
     <Content Include="fonts\font-awesome\css\font-awesome.min.css" />
     <Content Include="fonts\font-awesome\fonts\fontawesome-webfonte0a5.svg" />
@@ -281,6 +282,7 @@
     <Content Include="img\pp\26.png" />
     <Content Include="img\pp\add_user.png" />
     <Content Include="img\logo.png" />
+    <Content Include="img\pp\blank.jpg" />
     <Content Include="img\tw.png" />
     <Content Include="js\bootstrap.js" />
     <Content Include="js\bootstrap.min.js" />
@@ -412,6 +414,8 @@
     <Content Include="css\plugins\footable\fonts\footable.ttf" />
     <Content Include="css\plugins\footable\fonts\footable.woff" />
     <Content Include="css\plugins\footable\fonts\footabled41d.eot" />
+    <Content Include="combineddata.json" />
+    <Content Include="Employees\EmployeeTemplate.Master" />
     <None Include="Properties\PublishProfiles\admintp.pubxml" />
     <None Include="Properties\PublishProfiles\ubietyadmin %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\ubietyadmin.pubxml" />
@@ -598,11 +602,11 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="claim.aspx.cs">
+    <Compile Include="Employees\claim.aspx.cs">
       <DependentUpon>claim.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="claim.aspx.designer.cs">
+    <Compile Include="Employees\claim.aspx.designer.cs">
       <DependentUpon>claim.aspx</DependentUpon>
     </Compile>
     <Compile Include="Contact.aspx.cs">
@@ -644,6 +648,20 @@
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Employees\EmployeeTemplate.Master.cs">
+      <DependentUpon>EmployeeTemplate.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Employees\EmployeeTemplate.Master.designer.cs">
+      <DependentUpon>EmployeeTemplate.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Employees\home.aspx.cs">
+      <DependentUpon>home.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Employees\home.aspx.designer.cs">
+      <DependentUpon>home.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
