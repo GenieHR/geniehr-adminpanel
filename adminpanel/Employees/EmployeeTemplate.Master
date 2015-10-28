@@ -45,7 +45,7 @@
                             <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold"><%= Session["loggedinuserName"] %></strong>
                              </span> <span class="text-muted text-xs block"><%= Session["Designation"] %><b class="caret"></b></span> </span> </a>
                         <ul class="dropdown-menu m-t-xs">
-                            <li><a href="#">Profile</a></li>
+                            <li><a href="profile.aspx">Profile</a></li>
                             <li><a href="#">Change Password</a></li>
                             <li class="divider"></li>
                             <li><a href="../logout.aspx">Logout</a></li>
@@ -68,7 +68,7 @@
                 </li>
                 
                 <li>
-                    <a href="#"><i class="fa  fa-user"></i> <span class="nav-label">Profile</span> </a>
+                    <a href="profile.aspx"><i class="fa  fa-user"></i> <span class="nav-label">Profile</span> </a>
                     
                 </li>
 
@@ -113,17 +113,17 @@
 
         </nav>
         
-        </div>
            
+        </div>
 
 
  <asp:ContentPlaceHolder   ID="body" runat="server" >
 
 
  </asp:ContentPlaceHolder>
+        </div>
             
 
-        </div>
 </div>
             
     <script src="../js/jquery-2.1.1.js"></script>
