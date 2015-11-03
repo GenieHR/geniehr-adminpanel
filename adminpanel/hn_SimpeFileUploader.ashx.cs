@@ -17,14 +17,7 @@ namespace adminpanel
         public void ProcessRequest(HttpContext context)
         {
             context.Response.ContentType = "text/plain";
-
-            string dirFullPath = HttpContext.Current.Server.MapPath("~/App_Data/");
-            string[] files;
-            int numFiles;
-            files = System.IO.Directory.GetFiles(dirFullPath);
-            numFiles = files.Length;
-            numFiles = numFiles + 1;
-
+            
             string str_image = "";
 
             foreach (string s in context.Request.Files)
@@ -35,11 +28,6 @@ namespace adminpanel
 
                 if (!string.IsNullOrEmpty(fileName))
                 {
-                    //fileExtension = Path.GetExtension(fileName);
-                    //str_image = "MyPHOTO_" + numFiles.ToString() + fileExtension;
-                    //string pathToSave = HttpContext.Current.Server.MapPath("~/App_Data/") + str_image;
-                    //file.SaveAs(pathToSave);
-
                     CloudStorageAccount storageAccount = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("StorageConnectionString"));
                     CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
 

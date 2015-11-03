@@ -43,5 +43,7 @@ namespace adminpanel.Models
         public virtual ICollection<claimJSON> claimJSONs { get; set; }
         public virtual ICollection<claimHistory> claimHistories { get; set; }
         public virtual ICollection<ClaimRevision> ClaimRevisions { get; set; }
+        public virtual EmpFinDetail EmpFinDetail { get; set; }
+        public virtual EmpIdentity EmpIdentity { get; set; }
     }
 }

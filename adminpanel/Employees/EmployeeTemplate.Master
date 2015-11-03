@@ -24,19 +24,23 @@
     <link href="../css/animate.css" rel="stylesheet"/>
     <link href="../css/normalize.css" rel="stylesheet" />
     
+    <style>
+        body {
+        overflow-y: scroll;
+        }
+    </style>
     <asp:ContentPlaceHolder ID="head" runat="server">
 
     </asp:ContentPlaceHolder>
 
 </head>
 
-<body>
+<body class="">
      
-    <div id="wrapper">
+    <div id="wrapper" >
 
     <nav class="navbar-default navbar-static-side" role="navigation">
-        <div class="sidebar-collapse">
-            <ul class="nav metismenu" id="side-menu">
+        <ul class="nav metismenu" id="side-menu">
                 <li class="nav-header">
                     <div class="dropdown profile-element"> <span>
                             <img alt="image" class="img-circle" src="../img/pp/blank.png" />
@@ -85,8 +89,6 @@
                 </li>
 
             </ul>
-
-        </div>
     </nav>
 
 	

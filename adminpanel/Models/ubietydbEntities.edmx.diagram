@@ -51,6 +51,15 @@
         <AssociationConnector Association="ubietydbModel.FK__claimJSON__claim__025D5595" />
         <AssociationConnector Association="ubietydbModel.FK_ClaimRevision_claimJSON" />
         <AssociationConnector Association="ubietydbModel.FK_ClaimRevision_Employee" />
+        <EntityTypeShape EntityType="ubietydbModel.BloodGroup" Width="1.5" PointX="14.375" PointY="16.25" />
+        <EntityTypeShape EntityType="ubietydbModel.EmployeeDetail" Width="1.5" PointX="16.625" PointY="12" />
+        <EntityTypeShape EntityType="ubietydbModel.MaritalStatu" Width="1.5" PointX="14.375" PointY="13.25" />
+        <AssociationConnector Association="ubietydbModel.FK_EmployeeDetail_BloodGroup" />
+        <AssociationConnector Association="ubietydbModel.FK_EmployeeDetail_MaritalStatus" />
+        <EntityTypeShape EntityType="ubietydbModel.EmpFinDetail" Width="1.5" PointX="5.25" PointY="7.125" />
+        <AssociationConnector Association="ubietydbModel.FK_EmpFinDetail_Employee" />
+        <EntityTypeShape EntityType="ubietydbModel.EmpIdentity" Width="1.5" PointX="5.25" PointY="22.25" />
+        <AssociationConnector Association="ubietydbModel.FK_EmpIdentity_Employee" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

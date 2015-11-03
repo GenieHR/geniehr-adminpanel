@@ -19,6 +19,11 @@
     <link href="css/bootstrap.min.css" rel="stylesheet" />
     <link href="css/animate.css" rel="stylesheet"/>
     <link href="css/style.css" rel="stylesheet"/>
+    <style>
+        body {
+        overflow-y: scroll;
+        }
+    </style>
     <asp:ContentPlaceHolder ID="head" runat="server">
     
 

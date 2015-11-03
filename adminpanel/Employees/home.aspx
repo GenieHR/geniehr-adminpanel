@@ -6,10 +6,10 @@
              
                     <div class="row">
                         <h2>Welcome <%= Session["loggedinuserName"] %></h2>
-                        <small>Your profile is 60% complete (<a href="profile.aspx">Update Now</a>)</small>
+                        <small> <a href="profile.aspx">View Profile</a></small>
                     </div>
              <div class="row col-sm-4">
-             <ul class="list-group clear-list m-t">
+             <%--<ul class="list-group clear-list m-t">
                             <li class="list-group-item fist-item">
                                 <span class="pull-right">
                                     09:00 pm
@@ -40,7 +40,7 @@
                                 </span>
                                 <span class="label label-primary">5</span> Write a letter to Sandra
                             </li>
-                        </ul>             </div>
+                        </ul>           --%>  </div>
             </div>
 
 

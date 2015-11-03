@@ -52,6 +52,11 @@ namespace adminpanel.Models
         public virtual DbSet<claimJSON> claimJSONs { get; set; }
         public virtual DbSet<claimHistory> claimHistories { get; set; }
         public virtual DbSet<ClaimRevision> ClaimRevisions { get; set; }
+        public virtual DbSet<BloodGroup> BloodGroups { get; set; }
+        public virtual DbSet<EmployeeDetail> EmployeeDetails { get; set; }
+        public virtual DbSet<MaritalStatu> MaritalStatus { get; set; }
+        public virtual DbSet<EmpFinDetail> EmpFinDetails { get; set; }
+        public virtual DbSet<EmpIdentity> EmpIdentities { get; set; }
     
         public virtual ObjectResult<getEmpOfGroups_Result> getEmpOfGroups()
         {
@@ -158,6 +163,15 @@ namespace adminpanel.Models
                 new ObjectParameter("ClaimId", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("getNextClaimRevisionNo", claimIdParameter);
+        }
+    
+        public virtual ObjectResult<empProfBasicDetails_Result> empProfBasicDetails(Nullable<int> empId)
+        {
+            var empIdParameter = empId.HasValue ?
+                new ObjectParameter("EmpId", empId) :
+                new ObjectParameter("EmpId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<empProfBasicDetails_Result>("empProfBasicDetails", empIdParameter);
         }
     }
 }

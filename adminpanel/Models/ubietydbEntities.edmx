@@ -46,6 +46,13 @@
           <Property Name="AttendanceFlagId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FlagName" Type="nvarchar" MaxLength="10" Nullable="false" />
         </EntityType>
+        <EntityType Name="BloodGroup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BloodGroupName" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
         <EntityType Name="claimHistory">
           <Key>
             <PropertyRef Name="Id" />
@@ -115,6 +122,32 @@
           <Property Name="EmpId" Type="int" Nullable="false" />
           <Property Name="ClientId" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="EmpFinDetail">
+          <Key>
+            <PropertyRef Name="EmpId" />
+          </Key>
+          <Property Name="EmpId" Type="int" Nullable="false" />
+          <Property Name="BankName" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="BranchName" Type="nvarchar" MaxLength="255" />
+          <Property Name="AccountNum" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="IFSCCode" Type="nvarchar" MaxLength="11" Nullable="false" />
+          <Property Name="SwiftCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="modified" Type="datetime" />
+          <Property Name="created" Type="datetime" />
+        </EntityType>
+        <EntityType Name="EmpIdentity">
+          <Key>
+            <PropertyRef Name="EmpID" />
+          </Key>
+          <Property Name="EmpID" Type="int" Nullable="false" />
+          <Property Name="DL" Type="nvarchar" MaxLength="20" />
+          <Property Name="Adhaar" Type="nvarchar" MaxLength="20" />
+          <Property Name="Voter" Type="nvarchar" MaxLength="20" />
+          <Property Name="Passport" Type="nvarchar" MaxLength="10" />
+          <Property Name="Pan" Type="nvarchar" MaxLength="10" />
+          <Property Name="modified" Type="datetime" />
+          <Property Name="created" Type="datetime" />
+        </EntityType>
         <EntityType Name="Employee">
           <Key>
             <PropertyRef Name="EmpId" />
@@ -129,6 +162,27 @@
           <Property Name="Designation" Type="varchar" MaxLength="50" />
           <Property Name="AuthUserId" Type="varchar" MaxLength="255" />
           <Property Name="CompanyId" Type="int" />
+        </EntityType>
+        <EntityType Name="EmployeeDetail">
+          <Key>
+            <PropertyRef Name="EmpId" />
+          </Key>
+          <Property Name="EmpId" Type="int" Nullable="false" />
+          <Property Name="DOJ" Type="date" />
+          <Property Name="WorkLocation" Type="nvarchar" MaxLength="50" />
+          <Property Name="Salary" Type="money" />
+          <Property Name="FirstName" Type="nchar" MaxLength="100" />
+          <Property Name="MiddleName" Type="nchar" MaxLength="100" />
+          <Property Name="LastName" Type="nchar" MaxLength="100" />
+          <Property Name="DOB" Type="date" />
+          <Property Name="Gender" Type="char" MaxLength="1" />
+          <Property Name="MaritalStatus" Type="int" />
+          <Property Name="FatherName" Type="nchar" MaxLength="100" />
+          <Property Name="MotherName" Type="nchar" MaxLength="100" />
+          <Property Name="SpouseName" Type="nchar" MaxLength="100" />
+          <Property Name="BloodGroup" Type="int" />
+          <Property Name="modified" Type="datetime" />
+          <Property Name="created" Type="datetime" />
         </EntityType>
         <EntityType Name="EmpStatus">
           <Key>
@@ -193,6 +247,13 @@
           <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="EmpId" Type="int" Nullable="false" />
           <Property Name="Password" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MaritalStatus">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MaritalStatusName" Type="nchar" MaxLength="20" Nullable="false" />
         </EntityType>
         <EntityType Name="Organization">
           <Key>
@@ -386,6 +447,30 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_EmpFinDetail_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="EmpFinDetail" Type="Self.EmpFinDetail" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="EmpFinDetail">
+              <PropertyRef Name="EmpId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpIdentity_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="EmpIdentity" Type="Self.EmpIdentity" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="EmpIdentity">
+              <PropertyRef Name="EmpID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Employee_EmpStatus">
           <End Role="EmpStatus" Type="Self.EmpStatus" Multiplicity="1" />
           <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
@@ -395,6 +480,30 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
             </Principal>
             <Dependent Role="Employee">
               <PropertyRef Name="EmpStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeDetail_BloodGroup">
+          <End Role="BloodGroup" Type="Self.BloodGroup" Multiplicity="0..1" />
+          <End Role="EmployeeDetail" Type="Self.EmployeeDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BloodGroup">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmployeeDetail">
+              <PropertyRef Name="BloodGroup" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeDetail_MaritalStatus">
+          <End Role="MaritalStatus" Type="Self.MaritalStatus" Multiplicity="0..1" />
+          <End Role="EmployeeDetail" Type="Self.EmployeeDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MaritalStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmployeeDetail">
+              <PropertyRef Name="MaritalStatus" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -509,6 +618,9 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
         <Function Name="claimLog" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ClaimId" Type="int" Mode="In" />
         </Function>
+        <Function Name="empProfBasicDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EmpId" Type="int" Mode="In" />
+        </Function>
         <Function Name="getAttendanceByClientsDays" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="clientId" Type="int" Mode="In" />
           <Parameter Name="numDays" Type="int" Mode="In" />
@@ -545,6 +657,7 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <EntitySet Name="AddressType" EntityType="Self.AddressType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Attendance" EntityType="Self.Attendance" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AttendanceFlag" EntityType="Self.AttendanceFlag" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BloodGroup" EntityType="Self.BloodGroup" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="claimHistory" EntityType="Self.claimHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="claimJSON" EntityType="Self.claimJSON" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ClaimRevision" EntityType="Self.ClaimRevision" Schema="dbo" store:Type="Tables" />
@@ -552,7 +665,10 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <EntitySet Name="ClaimStatusHistory" EntityType="Self.ClaimStatusHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmpClient" EntityType="Self.EmpClient" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmpFinDetail" EntityType="Self.EmpFinDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmpIdentity" EntityType="Self.EmpIdentity" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmployeeDetail" EntityType="Self.EmployeeDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmpStatus" EntityType="Self.EmpStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EntityAddresses" EntityType="Self.EntityAddresses" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EntityType" EntityType="Self.EntityType" Schema="dbo" store:Type="Tables" />
@@ -561,6 +677,7 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <EntitySet Name="GroupIncharge" EntityType="Self.GroupIncharge" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GroupType" EntityType="Self.GroupType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Login" EntityType="Self.Login" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MaritalStatus" EntityType="Self.MaritalStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Organization" EntityType="Self.Organization" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="attByClient" EntityType="Self.attByClient" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -644,9 +761,25 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
             <End Role="ClaimStatus" EntitySet="ClaimStatus" />
             <End Role="ClaimStatusHistory" EntitySet="ClaimStatusHistory" />
           </AssociationSet>
+          <AssociationSet Name="FK_EmpFinDetail_Employee" Association="Self.FK_EmpFinDetail_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="EmpFinDetail" EntitySet="EmpFinDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpIdentity_Employee" Association="Self.FK_EmpIdentity_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="EmpIdentity" EntitySet="EmpIdentity" />
+          </AssociationSet>
           <AssociationSet Name="FK_Employee_EmpStatus" Association="Self.FK_Employee_EmpStatus">
             <End Role="EmpStatus" EntitySet="EmpStatus" />
             <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeDetail_BloodGroup" Association="Self.FK_EmployeeDetail_BloodGroup">
+            <End Role="BloodGroup" EntitySet="BloodGroup" />
+            <End Role="EmployeeDetail" EntitySet="EmployeeDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeDetail_MaritalStatus" Association="Self.FK_EmployeeDetail_MaritalStatus">
+            <End Role="MaritalStatus" EntitySet="MaritalStatus" />
+            <End Role="EmployeeDetail" EntitySet="EmployeeDetail" />
           </AssociationSet>
           <AssociationSet Name="FK_EntityAddresses_Address" Association="Self.FK_EntityAddresses_Address">
             <End Role="Address" EntitySet="Address" />
@@ -776,6 +909,8 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <NavigationProperty Name="claimJSONs" Relationship="ubietydbModel.FK_claimJSON_Employee" FromRole="Employee" ToRole="claimJSON" />
           <NavigationProperty Name="claimHistories" Relationship="ubietydbModel.FK_claimHistory_Employee" FromRole="Employee" ToRole="claimHistory" />
           <NavigationProperty Name="ClaimRevisions" Relationship="ubietydbModel.FK_ClaimRevision_Employee" FromRole="Employee" ToRole="ClaimRevision" />
+          <NavigationProperty Name="EmpFinDetail" Relationship="ubietydbModel.FK_EmpFinDetail_Employee" FromRole="Employee" ToRole="EmpFinDetail" />
+          <NavigationProperty Name="EmpIdentity" Relationship="ubietydbModel.FK_EmpIdentity_Employee" FromRole="Employee" ToRole="EmpIdentity" />
         </EntityType>
         <EntityType Name="EmpStatu">
           <Key>
@@ -1071,8 +1206,32 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <Parameter Name="ClaimId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="getNextClaimRevisionNo" ReturnType="Collection(Int32)">
-            <Parameter Name="ClaimId" Mode="In" Type="Int32" />
+          <Parameter Name="ClaimId" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="BloodGroups" EntityType="ubietydbModel.BloodGroup" />
+          <EntitySet Name="EmployeeDetails" EntityType="ubietydbModel.EmployeeDetail" />
+          <EntitySet Name="MaritalStatus" EntityType="ubietydbModel.MaritalStatu" />
+          <AssociationSet Name="FK_EmployeeDetail_BloodGroup" Association="ubietydbModel.FK_EmployeeDetail_BloodGroup">
+            <End Role="BloodGroup" EntitySet="BloodGroups" />
+            <End Role="EmployeeDetail" EntitySet="EmployeeDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeDetail_MaritalStatus" Association="ubietydbModel.FK_EmployeeDetail_MaritalStatus">
+            <End Role="MaritalStatu" EntitySet="MaritalStatus" />
+            <End Role="EmployeeDetail" EntitySet="EmployeeDetails" />
+          </AssociationSet>
+          <FunctionImport Name="empProfBasicDetails" ReturnType="Collection(ubietydbModel.empProfBasicDetails_Result)">
+          <Parameter Name="EmpId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="EmpFinDetails" EntityType="ubietydbModel.EmpFinDetail" />
+          <AssociationSet Name="FK_EmpFinDetail_Employee" Association="ubietydbModel.FK_EmpFinDetail_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="EmpFinDetail" EntitySet="EmpFinDetails" />
+          </AssociationSet>
+          <EntitySet Name="EmpIdentities" EntityType="ubietydbModel.EmpIdentity" />
+          <AssociationSet Name="FK_EmpIdentity_Employee" Association="ubietydbModel.FK_EmpIdentity_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="EmpIdentity" EntitySet="EmpIdentities" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Group">
           <Key>
@@ -1427,6 +1586,145 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <Property Type="String" Name="Remarks" Nullable="false" MaxLength="255" />
           <Property Type="String" Name="Action_By" Nullable="false" MaxLength="100" />
         </ComplexType>
+        <EntityType Name="BloodGroup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BloodGroupName" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="EmployeeDetails" Relationship="ubietydbModel.FK_EmployeeDetail_BloodGroup" FromRole="BloodGroup" ToRole="EmployeeDetail" />
+        </EntityType>
+        <EntityType Name="EmployeeDetail">
+          <Key>
+            <PropertyRef Name="EmpId" />
+          </Key>
+          <Property Name="EmpId" Type="Int32" Nullable="false" />
+          <Property Name="DOJ" Type="DateTime" Precision="0" />
+          <Property Name="WorkLocation" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Salary" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="FirstName" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="MiddleName" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="DOB" Type="DateTime" Precision="0" />
+          <Property Name="Gender" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="MaritalStatus" Type="Int32" />
+          <Property Name="FatherName" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="MotherName" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="SpouseName" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="BloodGroup" Type="Int32" />
+          <NavigationProperty Name="BloodGroup1" Relationship="ubietydbModel.FK_EmployeeDetail_BloodGroup" FromRole="EmployeeDetail" ToRole="BloodGroup" />
+          <NavigationProperty Name="MaritalStatu" Relationship="ubietydbModel.FK_EmployeeDetail_MaritalStatus" FromRole="EmployeeDetail" ToRole="MaritalStatu" />
+          <Property Name="modified" Type="DateTime" Precision="3" />
+          <Property Name="created" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="MaritalStatu">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MaritalStatusName" Type="String" Nullable="false" MaxLength="20" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="EmployeeDetails" Relationship="ubietydbModel.FK_EmployeeDetail_MaritalStatus" FromRole="MaritalStatu" ToRole="EmployeeDetail" />
+        </EntityType>
+        <Association Name="FK_EmployeeDetail_BloodGroup">
+          <End Type="ubietydbModel.BloodGroup" Role="BloodGroup" Multiplicity="0..1" />
+          <End Type="ubietydbModel.EmployeeDetail" Role="EmployeeDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BloodGroup">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmployeeDetail">
+              <PropertyRef Name="BloodGroup" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeDetail_MaritalStatus">
+          <End Type="ubietydbModel.MaritalStatu" Role="MaritalStatu" Multiplicity="0..1" />
+          <End Type="ubietydbModel.EmployeeDetail" Role="EmployeeDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MaritalStatu">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmployeeDetail">
+              <PropertyRef Name="MaritalStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="empProfBasicDetails_Result">
+          <Property Type="Int32" Name="EmpId" Nullable="false" />
+          <Property Type="String" Name="EmpName" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="EmpNum" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="FirstName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="MiddleName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="LastName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="50" />
+          <Property Type="Int64" Name="PrimaryMobile" Nullable="true" />
+          <Property Type="String" Name="Designation" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="Salary" Nullable="true" Precision="19" />
+          <Property Type="String" Name="WorkLocation" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="DOJ" Nullable="true" MaxLength="11" />
+          <Property Type="String" Name="DOB" Nullable="true" MaxLength="11" />
+          <Property Type="String" Name="Gender" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="MaritalStatusName" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="FatherName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="MotherName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="SpouseName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="ClientName" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="BloodGroupName" Nullable="false" MaxLength="10" />
+          <Property Type="Int32" Name="BloodGroup" Nullable="true" />
+          <Property Type="Int32" Name="MaritalStatus" Nullable="true" />
+        </ComplexType>
+        <EntityType Name="EmpFinDetail">
+          <Key>
+            <PropertyRef Name="EmpId" />
+          </Key>
+          <Property Name="EmpId" Type="Int32" Nullable="false" />
+          <Property Name="BankName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="BranchName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="AccountNum" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="IFSCCode" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="true" />
+          <Property Name="SwiftCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Employee" Relationship="ubietydbModel.FK_EmpFinDetail_Employee" FromRole="EmpFinDetail" ToRole="Employee" />
+          <Property Name="modified" Type="DateTime" Precision="3" />
+          <Property Name="created" Type="DateTime" Precision="3" />
+        </EntityType>
+        <Association Name="FK_EmpFinDetail_Employee">
+          <End Type="ubietydbModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="ubietydbModel.EmpFinDetail" Role="EmpFinDetail" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="EmpFinDetail">
+              <PropertyRef Name="EmpId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="EmpIdentity">
+          <Key>
+            <PropertyRef Name="EmpID" />
+          </Key>
+          <Property Name="EmpID" Type="Int32" Nullable="false" />
+          <Property Name="DL" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Adhaar" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Voter" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Passport" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Pan" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Employee" Relationship="ubietydbModel.FK_EmpIdentity_Employee" FromRole="EmpIdentity" ToRole="Employee" />
+          <Property Name="modified" Type="DateTime" Precision="3" />
+          <Property Name="created" Type="DateTime" Precision="3" />
+        </EntityType>
+        <Association Name="FK_EmpIdentity_Employee">
+          <End Type="ubietydbModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="ubietydbModel.EmpIdentity" Role="EmpIdentity" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="EmpIdentity">
+              <PropertyRef Name="EmpID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1773,6 +2071,100 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="getNextClaimRevisionNo" FunctionName="ubietydbModel.Store.getNextClaimRevisionNo" />
+          <EntitySetMapping Name="BloodGroups">
+            <EntityTypeMapping TypeName="ubietydbModel.BloodGroup">
+              <MappingFragment StoreEntitySet="BloodGroup">
+                <ScalarProperty Name="BloodGroupName" ColumnName="BloodGroupName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmployeeDetails">
+            <EntityTypeMapping TypeName="ubietydbModel.EmployeeDetail">
+              <MappingFragment StoreEntitySet="EmployeeDetail">
+                <ScalarProperty Name="created" ColumnName="created" />
+                <ScalarProperty Name="modified" ColumnName="modified" />
+                <ScalarProperty Name="BloodGroup" ColumnName="BloodGroup" />
+                <ScalarProperty Name="SpouseName" ColumnName="SpouseName" />
+                <ScalarProperty Name="MotherName" ColumnName="MotherName" />
+                <ScalarProperty Name="FatherName" ColumnName="FatherName" />
+                <ScalarProperty Name="MaritalStatus" ColumnName="MaritalStatus" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+                <ScalarProperty Name="WorkLocation" ColumnName="WorkLocation" />
+                <ScalarProperty Name="DOJ" ColumnName="DOJ" />
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MaritalStatus">
+            <EntityTypeMapping TypeName="ubietydbModel.MaritalStatu">
+              <MappingFragment StoreEntitySet="MaritalStatus">
+                <ScalarProperty Name="MaritalStatusName" ColumnName="MaritalStatusName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="empProfBasicDetails" FunctionName="ubietydbModel.Store.empProfBasicDetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ubietydbModel.empProfBasicDetails_Result">
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
+                <ScalarProperty Name="EmpNum" ColumnName="EmpNum" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PrimaryMobile" ColumnName="PrimaryMobile" />
+                <ScalarProperty Name="Designation" ColumnName="Designation" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+                <ScalarProperty Name="WorkLocation" ColumnName="WorkLocation" />
+                <ScalarProperty Name="DOJ" ColumnName="DOJ" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="MaritalStatusName" ColumnName="MaritalStatusName" />
+                <ScalarProperty Name="FatherName" ColumnName="FatherName" />
+                <ScalarProperty Name="MotherName" ColumnName="MotherName" />
+                <ScalarProperty Name="SpouseName" ColumnName="SpouseName" />
+                <ScalarProperty Name="ClientName" ColumnName="ClientName" />
+                <ScalarProperty Name="BloodGroupName" ColumnName="BloodGroupName" />
+                <ScalarProperty Name="BloodGroup" ColumnName="BloodGroup" />
+                <ScalarProperty Name="MaritalStatus" ColumnName="MaritalStatus" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="EmpFinDetails">
+            <EntityTypeMapping TypeName="ubietydbModel.EmpFinDetail">
+              <MappingFragment StoreEntitySet="EmpFinDetail">
+                <ScalarProperty Name="created" ColumnName="created" />
+                <ScalarProperty Name="modified" ColumnName="modified" />
+                <ScalarProperty Name="SwiftCode" ColumnName="SwiftCode" />
+                <ScalarProperty Name="IFSCCode" ColumnName="IFSCCode" />
+                <ScalarProperty Name="AccountNum" ColumnName="AccountNum" />
+                <ScalarProperty Name="BranchName" ColumnName="BranchName" />
+                <ScalarProperty Name="BankName" ColumnName="BankName" />
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmpIdentities">
+            <EntityTypeMapping TypeName="ubietydbModel.EmpIdentity">
+              <MappingFragment StoreEntitySet="EmpIdentity">
+                <ScalarProperty Name="created" ColumnName="created" />
+                <ScalarProperty Name="modified" ColumnName="modified" />
+                <ScalarProperty Name="Pan" ColumnName="Pan" />
+                <ScalarProperty Name="Passport" ColumnName="Passport" />
+                <ScalarProperty Name="Voter" ColumnName="Voter" />
+                <ScalarProperty Name="Adhaar" ColumnName="Adhaar" />
+                <ScalarProperty Name="DL" ColumnName="DL" />
+                <ScalarProperty Name="EmpID" ColumnName="EmpID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

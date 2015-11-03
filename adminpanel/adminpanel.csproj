@@ -242,6 +242,8 @@
     <Content Include="css\imgEffects.css" />
     <Content Include="css\plugins\dropzone\dropzone.css" />
     <Content Include="css\plugins\jcrop\jquery.Jcrop.min.css" />
+    <Content Include="css\plugins\select2\select2.min.css" />
+    <Content Include="css\plugins\sweetalert\sweetalert.css" />
     <Content Include="Employees\claim.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap.css" />
@@ -371,6 +373,7 @@
     <Content Include="js\plugins\preetyTextDiff\jquery.pretty-text-diff.min.js" />
     <Content Include="js\plugins\rickshaw\rickshaw.min.js" />
     <Content Include="js\plugins\rickshaw\vendor\d3.v3.js" />
+    <Content Include="js\plugins\select2\select2.min.js" />
     <Content Include="js\plugins\sidebar\classie.js" />
     <Content Include="js\plugins\sidebar\sidebarEffects.js" />
     <Content Include="js\plugins\slimscroll\jquery.slimscroll.min.js" />
@@ -426,6 +429,7 @@
     <Content Include="combineddata.json" />
     <Content Include="Employees\EmployeeTemplate.Master" />
     <Content Include="hn_SimpeFileUploader.ashx" />
+    <Content Include="js\plugins\masonry\masonry.pkgd.min.js" />
     <None Include="Properties\PublishProfiles\admintp.pubxml" />
     <None Include="Properties\PublishProfiles\ubietyadmin %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\ubietyadmin.pubxml" />
@@ -612,6 +616,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Employees\claim.aspx.cs">
       <DependentUpon>claim.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -744,6 +749,9 @@
     <Compile Include="Models\attRepTemp.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\BloodGroup.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\claimHistory.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
@@ -772,10 +780,22 @@
     <Compile Include="Models\EmpClient.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EmpFinDetail.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EmpIdentity.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Employee.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EmployeeDetail.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\EmployeeDTO.cs" />
+    <Compile Include="Models\empProfBasicDetails_Result.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\EmpStatu.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
@@ -824,6 +844,9 @@
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Login.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MaritalStatu.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Organization.cs">
@@ -919,6 +942,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="masterJSON\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
