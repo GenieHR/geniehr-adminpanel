@@ -61,6 +61,48 @@ namespace adminpanel.Controllers
             return db.SaveChanges();
         }
 
+        [Route("PostIDDetail/")]
+        [HttpPost]
+        public int putIDNumber(IDDoc idDoc)
+        {
+            db.Configuration.ProxyCreationEnabled = false;
+
+            TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
+            DateTime currentTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+
+            EmpIdentity empIdentity = db.EmpIdentities.Find(idDoc.EmpId);
+
+            if (!(empIdentity == null)) {
+
+                if (idDoc.doctype.Equals("pan")) empIdentity.Pan = idDoc.DocNum;
+                if (idDoc.doctype.Equals("dl")) empIdentity.DL = idDoc.DocNum;
+                if (idDoc.doctype.Equals("voter")) empIdentity.Voter = idDoc.DocNum;
+                if (idDoc.doctype.Equals("passport")) empIdentity.Passport = idDoc.DocNum;
+                if (idDoc.doctype.Equals("adhaar")) empIdentity.Adhaar = idDoc.DocNum;
+    
+                empIdentity.modified = currentTime;
+                db.Entry(empIdentity).State = EntityState.Modified;
+            
+            }
+            else
+            {
+                empIdentity = new EmpIdentity();
+
+                empIdentity.EmpID = idDoc.EmpId;
+
+                if (idDoc.doctype.Equals("pan")) empIdentity.Pan = idDoc.DocNum;
+                if (idDoc.doctype.Equals("dl")) empIdentity.DL = idDoc.DocNum;
+                if (idDoc.doctype.Equals("voter")) empIdentity.Voter = idDoc.DocNum;
+                if (idDoc.doctype.Equals("passport")) empIdentity.Passport = idDoc.DocNum;
+                if (idDoc.doctype.Equals("adhaar")) empIdentity.Adhaar = idDoc.DocNum;
+                
+                empIdentity.created = currentTime;
+                db.EmpIdentities.Add(empIdentity);
+            }
+
+            return db.SaveChanges();
+        }
+
         [Route("PostBasicDetail/")]
         [HttpPost]
         public int putBasicDetail(EmployeeDetail employeeDetail)
@@ -68,7 +110,6 @@ namespace adminpanel.Controllers
             db.Configuration.ProxyCreationEnabled = false;
 
             EmployeeDetail lEmployeeDetail = new EmployeeDetail();
-
             lEmployeeDetail = db.EmployeeDetails.Find(employeeDetail.EmpId);
 
             TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
@@ -99,6 +140,14 @@ namespace adminpanel.Controllers
             }
 
             return db.SaveChanges();
+        }
+
+        [Route("putEmpContact")]
+        [HttpPost]
+        public int postContactDetail(EmpContacts empContact)
+        {
+
+            return 1;
         }
 
         [Route("GetFinDetail/{EmpId}")]

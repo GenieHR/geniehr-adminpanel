@@ -114,6 +114,13 @@
           <Property Name="OrgId" Type="int" />
           <Property Name="ClientLogoURL" Type="nvarchar" MaxLength="255" />
         </EntityType>
+        <EntityType Name="contactType">
+          <Key>
+            <PropertyRef Name="contactTypeId" />
+          </Key>
+          <Property Name="contactTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="contactTypeName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="EmpClient">
           <Key>
             <PropertyRef Name="Id" />
@@ -121,6 +128,17 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EmpId" Type="int" Nullable="false" />
           <Property Name="ClientId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EmpContactDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="EmpId" Type="int" Nullable="false" />
+          <Property Name="contactLineId" Type="int" Nullable="false" />
+          <Property Name="contactTypeId" Type="int" Nullable="false" />
+          <Property Name="contactLable" Type="nvarchar" MaxLength="50" />
+          <Property Name="contactData" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="EmpFinDetail">
           <Key>
@@ -447,6 +465,30 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_EmpContactDetail_contactType">
+          <End Role="contactType" Type="Self.contactType" Multiplicity="1" />
+          <End Role="EmpContactDetail" Type="Self.EmpContactDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="contactType">
+              <PropertyRef Name="contactTypeId" />
+            </Principal>
+            <Dependent Role="EmpContactDetail">
+              <PropertyRef Name="contactTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpContactDetail_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="EmpContactDetail" Type="Self.EmpContactDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="EmpContactDetail">
+              <PropertyRef Name="EmpId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_EmpFinDetail_Employee">
           <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
           <End Role="EmpFinDetail" Type="Self.EmpFinDetail" Multiplicity="0..1" />
@@ -664,7 +706,9 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <EntitySet Name="ClaimStatus" EntityType="Self.ClaimStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ClaimStatusHistory" EntityType="Self.ClaimStatusHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="contactType" EntityType="Self.contactType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmpClient" EntityType="Self.EmpClient" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmpContactDetail" EntityType="Self.EmpContactDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmpFinDetail" EntityType="Self.EmpFinDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmpIdentity" EntityType="Self.EmpIdentity" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
@@ -760,6 +804,14 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <AssociationSet Name="FK_ClaimStatusHistory_ClaimStatus" Association="Self.FK_ClaimStatusHistory_ClaimStatus">
             <End Role="ClaimStatus" EntitySet="ClaimStatus" />
             <End Role="ClaimStatusHistory" EntitySet="ClaimStatusHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpContactDetail_contactType" Association="Self.FK_EmpContactDetail_contactType">
+            <End Role="contactType" EntitySet="contactType" />
+            <End Role="EmpContactDetail" EntitySet="EmpContactDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpContactDetail_Employee" Association="Self.FK_EmpContactDetail_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="EmpContactDetail" EntitySet="EmpContactDetail" />
           </AssociationSet>
           <AssociationSet Name="FK_EmpFinDetail_Employee" Association="Self.FK_EmpFinDetail_Employee">
             <End Role="Employee" EntitySet="Employee" />
@@ -911,6 +963,7 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <NavigationProperty Name="ClaimRevisions" Relationship="ubietydbModel.FK_ClaimRevision_Employee" FromRole="Employee" ToRole="ClaimRevision" />
           <NavigationProperty Name="EmpFinDetail" Relationship="ubietydbModel.FK_EmpFinDetail_Employee" FromRole="Employee" ToRole="EmpFinDetail" />
           <NavigationProperty Name="EmpIdentity" Relationship="ubietydbModel.FK_EmpIdentity_Employee" FromRole="Employee" ToRole="EmpIdentity" />
+          <NavigationProperty Name="EmpContactDetails" Relationship="ubietydbModel.FK_EmpContactDetail_Employee" FromRole="Employee" ToRole="EmpContactDetail" />
         </EntityType>
         <EntityType Name="EmpStatu">
           <Key>
@@ -1231,6 +1284,16 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <AssociationSet Name="FK_EmpIdentity_Employee" Association="ubietydbModel.FK_EmpIdentity_Employee">
             <End Role="Employee" EntitySet="Employees" />
             <End Role="EmpIdentity" EntitySet="EmpIdentities" />
+          </AssociationSet>
+          <EntitySet Name="contactTypes" EntityType="ubietydbModel.contactType" />
+          <EntitySet Name="EmpContactDetails" EntityType="ubietydbModel.EmpContactDetail" />
+          <AssociationSet Name="FK_EmpContactDetail_contactType" Association="ubietydbModel.FK_EmpContactDetail_contactType">
+            <End Role="contactType" EntitySet="contactTypes" />
+            <End Role="EmpContactDetail" EntitySet="EmpContactDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpContactDetail_Employee" Association="ubietydbModel.FK_EmpContactDetail_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="EmpContactDetail" EntitySet="EmpContactDetails" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Group">
@@ -1725,6 +1788,51 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="contactType">
+          <Key>
+            <PropertyRef Name="contactTypeId" />
+          </Key>
+          <Property Name="contactTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="contactTypeName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="EmpContactDetails" Relationship="ubietydbModel.FK_EmpContactDetail_contactType" FromRole="contactType" ToRole="EmpContactDetail" />
+        </EntityType>
+        <EntityType Name="EmpContactDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="EmpId" Type="Int32" Nullable="false" />
+          <Property Name="contactLineId" Type="Int32" Nullable="false" />
+          <Property Name="contactTypeId" Type="Int32" Nullable="false" />
+          <Property Name="contactLable" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="contactData" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="contactType" Relationship="ubietydbModel.FK_EmpContactDetail_contactType" FromRole="EmpContactDetail" ToRole="contactType" />
+          <NavigationProperty Name="Employee" Relationship="ubietydbModel.FK_EmpContactDetail_Employee" FromRole="EmpContactDetail" ToRole="Employee" />
+        </EntityType>
+        <Association Name="FK_EmpContactDetail_contactType">
+          <End Type="ubietydbModel.contactType" Role="contactType" Multiplicity="1" />
+          <End Type="ubietydbModel.EmpContactDetail" Role="EmpContactDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="contactType">
+              <PropertyRef Name="contactTypeId" />
+            </Principal>
+            <Dependent Role="EmpContactDetail">
+              <PropertyRef Name="contactTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpContactDetail_Employee">
+          <End Type="ubietydbModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="ubietydbModel.EmpContactDetail" Role="EmpContactDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="EmpContactDetail">
+              <PropertyRef Name="EmpId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2162,6 +2270,26 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
                 <ScalarProperty Name="Adhaar" ColumnName="Adhaar" />
                 <ScalarProperty Name="DL" ColumnName="DL" />
                 <ScalarProperty Name="EmpID" ColumnName="EmpID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="contactTypes">
+            <EntityTypeMapping TypeName="ubietydbModel.contactType">
+              <MappingFragment StoreEntitySet="contactType">
+                <ScalarProperty Name="contactTypeName" ColumnName="contactTypeName" />
+                <ScalarProperty Name="contactTypeId" ColumnName="contactTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmpContactDetails">
+            <EntityTypeMapping TypeName="ubietydbModel.EmpContactDetail">
+              <MappingFragment StoreEntitySet="EmpContactDetail">
+                <ScalarProperty Name="contactData" ColumnName="contactData" />
+                <ScalarProperty Name="contactLable" ColumnName="contactLable" />
+                <ScalarProperty Name="contactTypeId" ColumnName="contactTypeId" />
+                <ScalarProperty Name="contactLineId" ColumnName="contactLineId" />
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

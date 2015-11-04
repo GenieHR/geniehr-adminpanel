@@ -19,18 +19,20 @@ namespace adminpanel
             context.Response.ContentType = "text/plain";
             
             string str_image = "";
+            string empId = HttpContext.Current.Session["EmpId"].ToString();
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("StorageConnectionString"));
+            CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
 
-            foreach (string s in context.Request.Files)
-            {
-                HttpPostedFile file = context.Request.Files[s];
+            string doctype = context.Request.Params["doctype"];
+
+            if (string.Compare(doctype, "profile", true) == 0)
+            { 
+                HttpPostedFile file = context.Request.Files[0];
                 string fileName = file.FileName;
                 string fileExtension = file.ContentType;
 
                 if (!string.IsNullOrEmpty(fileName))
                 {
-                    CloudStorageAccount storageAccount = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("StorageConnectionString"));
-                    CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
-
                     CloudBlobContainer container = blobClient.GetContainerReference("profile");
                     container.CreateIfNotExists();
 
@@ -38,14 +40,37 @@ namespace adminpanel
                     {
                         PublicAccess = BlobContainerPublicAccessType.Blob
                     });
-                    string empId = HttpContext.Current.Session["EmpId"].ToString();
 
                     CloudBlockBlob blockBlob = container.GetBlockBlobReference(empId);
 
-                    blockBlob.UploadFromStream(context.Request.Files[s].InputStream);
+                    blockBlob.UploadFromStream(context.Request.Files[0].InputStream);
+                    }
                 }
-            }
-            context.Response.Write(str_image);
+
+                else
+                {
+                    foreach (string s in context.Request.Files)
+                    {
+                        HttpPostedFile file = context.Request.Files[s];
+                        string fileName = file.FileName;
+                        string fileExtension = file.ContentType;
+
+                        if (!string.IsNullOrEmpty(fileName))
+                        {
+                            CloudBlobContainer container = blobClient.GetContainerReference("identity");
+                            container.CreateIfNotExists();
+
+                            container.SetPermissions(new BlobContainerPermissions
+                            {
+                                PublicAccess = BlobContainerPublicAccessType.Blob
+                            });
+
+                            CloudBlockBlob blockBlob = container.GetBlockBlobReference(empId.ToString() + "/" + doctype + "/" + DateTime.Now.ToString("yyyyMMddhhmmss"));
+                            blockBlob.UploadFromStream(context.Request.Files[s].InputStream);
+                        }
+                    }
+                }
+                context.Response.Write(str_image);
         }
 
         public bool IsReusable
@@ -56,5 +81,4 @@ namespace adminpanel
             }
         }
     }
-
 }

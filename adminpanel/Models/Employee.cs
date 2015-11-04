@@ -22,6 +22,7 @@ namespace adminpanel.Models
             this.claimJSONs = new HashSet<claimJSON>();
             this.claimHistories = new HashSet<claimHistory>();
             this.ClaimRevisions = new HashSet<ClaimRevision>();
+            this.EmpContactDetails = new HashSet<EmpContactDetail>();
         }
     
         public int EmpId { get; set; }
@@ -45,5 +46,6 @@ namespace adminpanel.Models
         public virtual ICollection<ClaimRevision> ClaimRevisions { get; set; }
         public virtual EmpFinDetail EmpFinDetail { get; set; }
         public virtual EmpIdentity EmpIdentity { get; set; }
+        public virtual ICollection<EmpContactDetail> EmpContactDetails { get; set; }
     }
 }

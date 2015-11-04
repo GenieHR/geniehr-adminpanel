@@ -5,7 +5,7 @@
     <link href="../css/plugins/dropzone/dropzone.css" rel="stylesheet" />
     <link href="../css/plugins/datapicker/datepicker3.css" rel="stylesheet" />
     <link href="../css/plugins/sweetalert/sweetalert.css" rel="stylesheet" />
-
+    
     <style>
         .EmpId {}
  
@@ -40,9 +40,50 @@
         </div>
     </div>
 
+    <div class="modal inmodal fade" id="identityModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <form method="post" class="form-horizontal" id="identityForm" action="../PostIDDetail">
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Upload Document</h4>
+                    <small class="font-bold">Select  from your device </small>
+                </div>
+                <div class="modal-body ">
+
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label" id="docName"></label>
+
+                            <div class="col-lg-8">
+                                <input type="hidden" class="EmpId"  />                                <input type="hidden" id="doctype"/>                                <input type="text"   class="form-control" id="DocNum" required="required"/>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div id="docUpload" class="dropzone">
+                        <div class="dz-default dz-message">
+                            Click to select document to upload 
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-success" id="identitySubmit" value="Save Details" />
+                    <button type="button" class="btn btn-white"  data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </form>
+        </div>
+    </div>
     
     <div class="modal inmodal fade" id="finDetailsModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
+                    <form method="get" class="form-horizontal" id="finDetailForm" >
+
             <div class="modal-content">
                 
                 <div class="modal-header">
@@ -52,7 +93,6 @@
                 </div>
                 <div class="modal-body ">
                     <div class="row">
-                    <form method="get" class="form-horizontal" id="finDetailForm" >
                         <div class="form-group">
                             <label class="col-lg-3 control-label">Bank Name</label>
 
@@ -109,22 +149,20 @@
                                 
                             </div>
                         </div>
-                        <input type="submit" class="btn btn-success" />
-                    </form>
                     
                     </div>
                 </div>
                 <div class="modal-footer">
+                        <input type="submit" class="btn btn-success" />
+
                     <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
                 </div>
             
+
             </div>
+                         </form>
         </div>
     </div>
-
-    
-    
-
 
     <div class="row wrapper border-bottom white-bg page-heading">
 
@@ -174,10 +212,11 @@
                         <div class="col-sm-4">
                             <ul class="list-group clear-list m-t">
                                 <li class="list-group-item fist-item">
-                                    <span class="pull-right text-success" id="EmpNum">
+                                    <span class="pull-right text-success" id="EmpName">
                                     </span>
-                                    Employee No
+                                    Full Name
                                 </li>
+
                                 <li class="list-group-item">
                                     <span class="pull-right text-success" id="Designation">
                                     </span>
@@ -209,12 +248,12 @@
 
                         <div class="col-sm-4">
                             <ul class="list-group clear-list m-t">
+                                
                                 <li class="list-group-item fist-item">
-                                    <span class="pull-right text-success" id="EmpName">
+                                    <span class="pull-right text-success" id="EmpNum">
                                     </span>
-                                    Full Name
+                                    Employee No
                                 </li>
-
                                 <li class="list-group-item">
                                     <span class="pull-right text-success" id="Email">
                                     </span>
@@ -516,7 +555,7 @@
                             <ul class="list-group">
 
                                 <li class="list-group-item">
-                                    <span class="text-left"><span class="fa fa-paperclip"></span>&nbsp; Driving License
+                                    <span class="text-left"><a data-target="#identityModal" data-toggle="modal" data-doctype="dl" class="fa fa-paperclip docLink"></a></span>&nbsp; Driving License
 
                                     </span>
 
@@ -527,7 +566,7 @@
                                 </li>
                                 
                                 <li class="list-group-item">
-                                    <span class="text-left"><span class="fa fa-paperclip"></span>&nbsp; Adhaar Card
+                                    <span class="text-left"><a data-target="#identityModal" data-toggle="modal" data-doctype="adhaar" class="fa fa-paperclip docLink"></a>&nbsp; Adhaar Card
 
                                     </span>
 
@@ -538,7 +577,7 @@
                                 </li>
 
                                 <li class="list-group-item">
-                                    <span class="text-left"><span class="fa fa-paperclip"></span>&nbsp; Voter Id
+                                    <span class="text-left"><a data-target="#identityModal" data-toggle="modal" data-doctype="voter" class="fa fa-paperclip docLink"></a>&nbsp; Voter Id
 
                                     </span>
 
@@ -547,7 +586,7 @@
 
                                     </span>
                                 </li><li class="list-group-item">
-                                    <span class="text-left"><span class="fa fa-paperclip"></span>&nbsp; Passport No
+                                    <span class="text-left"><a data-target="#identityModal" data-toggle="modal" data-doctype="passport" class="fa fa-paperclip docLink"></a>&nbsp; Passport No
 
                                     </span>
 
@@ -558,11 +597,11 @@
                                 </li>
                                 
                                 <li class="list-group-item">
-                                    <span class="text-left"><span class="fa fa-paperclip"></span>&nbsp; PAN No.
+                                    <span class="text-left"><a data-target="#identityModal" data-toggle="modal" data-doctype="pan" class="fa fa-paperclip docLink"></a>&nbsp; PAN No.
 
                                     </span>
 
-                                    <span class="pull-right text-success" id="Pan">BLHPK2341D </span>
+                                    <span class="pull-right text-success" id="Pan"> </span>
                                 </li>
                             </ul>
                         </div>
@@ -839,7 +878,6 @@
                                 <a class="collapse-link">
                                     <i class="fa fa-chevron-up"></i>
                                 </a>
-
                             </div>
                         </div>
                         <div class="ibox-content">
@@ -847,13 +885,8 @@
                         </div>
                     </div>
                 </div>
-
-                 
-            
-
-</div>
             </div>
-
+        </div>
     </div>
 
 </asp:Content>
@@ -866,13 +899,34 @@
     <script src="../js/plugins/sweetalert/sweetalert.min.js"></script>
     <script>
 
-
+        var myDropzone;
 
         function closeModal() {
             $('#profileImageModal').modal('hide');
             $('#mainProfilePic').attr("src", '<%= System.Web.Configuration.WebConfigurationManager.AppSettings["ProfileURL"] + Session["EmpId"] %>');
 
         }
+
+        $(document).on("click", ".docLink", function () {
+
+            Dropzone.autoDiscover = false;
+
+
+            if ($(this).data('doctype') == 'pan') $("#docName").html("PAN No");
+            if ($(this).data('doctype') == 'voter') $("#docName").html("Voter Id");
+            if ($(this).data('doctype') == 'passport') $("#docName").html("Passport No.");
+            if ($(this).data('doctype') == 'adhaar') $("#docName").html("Adhaar No.");
+            if ($(this).data('doctype') == 'dl') $("#docName").html("Driving License.");
+
+            myDropzone.removeAllFiles();
+            myDropzone.options.url = "../hn_SimpeFileUploader.ashx?doctype=" + $(this).data('doctype');
+
+            $('#DocNum').val('');
+
+            $('#doctype').val($(this).data('doctype'));
+            $(".EmpId").val(<%= Session["EmpId"] %>);
+            
+        });
 
 
         $(window).load(function () {
@@ -892,7 +946,6 @@
             //    {
             //        alert ('collapsed');
             //    }
-                
             //});
 
             var empId = <%= Session["EmpId"] %>;
@@ -900,9 +953,30 @@
             loadBasicProfile(empId);
             loadFinancialDetails(empId);
             loadEmpIdentity(empId);     
-
-       
-          
+         
+            myDropzone = new Dropzone("#docUpload", {
+                url: "../hn_SimpeFileUploader.ashx",
+                maxFiles: 2,
+                addRemoveLinks: false,
+                success: function (file, response) {
+                    var imgName = response;
+                    file.previewElement.classList.add("dz-success");
+                },
+                error: function (file, response) {
+                    if($.type(response) === "string")
+                        var message = response; 
+                    else
+                        var message = response.message;
+                    file.previewElement.classList.add("dz-error");
+                    _ref = file.previewElement.querySelectorAll("[data-dz-errormessage]");
+                    _results = [];
+                    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+                        node = _ref[_i];
+                        _results.push(node.textContent = message);
+                    }
+                    return _results;
+                }
+            });
         });
 
         
@@ -921,16 +995,21 @@
                     $("#ClientName").html(userDetails[0].ClientName);
                     $("#DOJ").html(userDetails[0].DOJ);
                     $("#WorkLocation").html(userDetails[0].WorkLocation);
-                    $("#Salary").html('&#8377; ' + userDetails[0].Salary);
+                    
+                    if (!(userDetails[0].Salary === null)) {
+                        $("#Salary").html('&#8377; ' + userDetails[0].Salary);
+                    }
+
                     $("#Designation").html(userDetails[0].Designation);
 
                     $("#FirstName").val($.trim(userDetails[0].FirstName));
                     $("#MiddleName").val($.trim(userDetails[0].MiddleName));
                     $("#LastName").val($.trim(userDetails[0].LastName));
 
-                    var lDOB = userDetails[0].DOB.split("/");
-                    $('#dob .input-group.date').datepicker('update', new Date(lDOB[2],lDOB[1]-1,lDOB[0]));
-                        
+                    if (!(userDetails[0].DOB === null)) {
+                        var lDOB = userDetails[0].DOB.split("/");
+                        $('#dob .input-group.date').datepicker('update', new Date(lDOB[2],lDOB[1]-1,lDOB[0]));
+                    }
 
                     $("#FatherName").val($.trim(userDetails[0].FatherName));
                     $("#MotherName").val($.trim(userDetails[0].MotherName));
@@ -975,7 +1054,33 @@
             }
         }
 
+        $( "#identityForm" ).submit(function( event ) {
+            
+            $("#identitySubmit").prop("disabled", true);
+            event.preventDefault();
 
+            var IDDetailJSON = {
+                "EmpId"  : <%= Session["EmpId"] %>,
+                "doctype": $("#doctype").val(),
+                "DocNum" : $("#DocNum").val()
+            };
+        
+            $.ajax({
+                type: "POST",
+                url: "../PostIDDetail",
+                data: IDDetailJSON,
+                success: function(result) { 
+
+                    $("#identitySubmit").prop("disabled", false);
+                    
+                    if(result == 1) {
+                        $('#identityModal').modal('toggle');
+                        loadEmpIdentity(IDDetailJSON.EmpId);
+                    }
+                },
+                datatype: "json"
+            });
+        });
 
         $( "#basicDetailForm" ).submit(function( event ) {
             
@@ -984,14 +1089,14 @@
 
             var basicDetailJSON = {
 
-            "EmpId"       : $(".EmpId").val(),
-            "FirstName"   : $("#FirstName").val(),
-            "MiddleName"  : $("#MiddleName").val(),
-            "LastName"    : $("#LastName").val(),
-            "DOB"         : $("#DOB").val(),
-            "FatherName"  : $("#FatherName").val(),
-            "MotherName"  : $("#MotherName").val(),
-            "Gender"      : $('#Gender input:radio:checked').val(),
+            "EmpId"        : <%= Session["EmpId"] %>,
+            "FirstName"    : $("#FirstName").val(),
+            "MiddleName"   : $("#MiddleName").val(),
+            "LastName"     : $("#LastName").val(),
+            "DOB"          : $("#DOB").val(),
+            "FatherName"   : $("#FatherName").val(),
+            "MotherName"   : $("#MotherName").val(),
+            "Gender"       : $('#Gender input:radio:checked').val(),
             "BloodGroup"   : $('#BloodGroup input:radio:checked').val(),
             "MaritalStatus": $('#MaritalStatus input:radio:checked').val(),
             "SpouseName"   : $("#SpouseName").val()
@@ -1004,10 +1109,10 @@
                 data: basicDetailJSON,
                 success: function(result) { 
 
-                    $("#basicDetSubmit").prop("disabled", false);
+                $("#basicDetSubmit").prop("disabled", false);
                 if(result == 1) {
                     sweetAlert("Success", "Details uploaded Succesfully!", "success");
-                }
+                    }
                 },
                 datatype: "json"
             });
@@ -1077,7 +1182,7 @@
         Dropzone.autoDiscover = false;
 
         $("#dZUpload").dropzone({
-            url: "../hn_SimpeFileUploader.ashx",
+            url: "../hn_SimpeFileUploader.ashx?doctype=profile",
             maxFiles: 1,
             addRemoveLinks: true,
             success: function (file, response) {
@@ -1096,6 +1201,9 @@
                 file.previewElement.classList.add("dz-error");
             }
         });
+
+      
+
 
         $('#dob .input-group.date').datepicker({
             startView: 2,

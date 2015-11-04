@@ -60,6 +60,10 @@
         <AssociationConnector Association="ubietydbModel.FK_EmpFinDetail_Employee" />
         <EntityTypeShape EntityType="ubietydbModel.EmpIdentity" Width="1.5" PointX="5.25" PointY="22.25" />
         <AssociationConnector Association="ubietydbModel.FK_EmpIdentity_Employee" />
+        <EntityTypeShape EntityType="ubietydbModel.contactType" Width="1.5" PointX="11" PointY="21.75" />
+        <EntityTypeShape EntityType="ubietydbModel.EmpContactDetail" Width="1.5" PointX="13.25" PointY="19.25" />
+        <AssociationConnector Association="ubietydbModel.FK_EmpContactDetail_contactType" />
+        <AssociationConnector Association="ubietydbModel.FK_EmpContactDetail_Employee" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

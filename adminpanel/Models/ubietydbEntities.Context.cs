@@ -57,6 +57,8 @@ namespace adminpanel.Models
         public virtual DbSet<MaritalStatu> MaritalStatus { get; set; }
         public virtual DbSet<EmpFinDetail> EmpFinDetails { get; set; }
         public virtual DbSet<EmpIdentity> EmpIdentities { get; set; }
+        public virtual DbSet<contactType> contactTypes { get; set; }
+        public virtual DbSet<EmpContactDetail> EmpContactDetails { get; set; }
     
         public virtual ObjectResult<getEmpOfGroups_Result> getEmpOfGroups()
         {
