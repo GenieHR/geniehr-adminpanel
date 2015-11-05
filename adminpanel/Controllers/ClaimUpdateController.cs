@@ -47,7 +47,6 @@ namespace adminpanel.Controllers
             {
                 ClaimRevision claimRevision = new ClaimRevision();
 
-
                 claimRevision.ClaimId = claimUpdateDTO.claimId;
                 claimRevision.claimtext = claimUpdateDTO.revisionText;
                 claimRevision.revisionDate = claimUpdateDTO.actionDateTime;

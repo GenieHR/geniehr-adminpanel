@@ -2,10 +2,12 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link href="../css/plugins/jcrop/jquery.Jcrop.min.css" rel="stylesheet" />
+    <link href="../css/plugins/dropzone/basic.css" rel="stylesheet" />
     <link href="../css/plugins/dropzone/dropzone.css" rel="stylesheet" />
     <link href="../css/plugins/datapicker/datepicker3.css" rel="stylesheet" />
     <link href="../css/plugins/sweetalert/sweetalert.css" rel="stylesheet" />
-    
+
+
     <style>
         .EmpId {}
  
@@ -154,6 +156,50 @@
                 </div>
                 <div class="modal-footer">
                         <input type="submit" class="btn btn-success" />
+
+                    <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                </div>
+            
+
+            </div>
+                         </form>
+        </div>
+    </div>
+
+    <div class="modal inmodal fade" id="contactDetailsModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+                    <form method="get" class="form-horizontal" id="contactDetailForm" >
+
+            <div class="modal-content">
+                
+                <div class="modal-header">
+                    <button type="button" data-dismiss="modal" class="close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Enter your Contact Details</h4>
+                    <%--<small class="font-bold">Your salary, advance & claim reimbursements are credited in this account </small>--%>
+                </div>
+                <div class="modal-body ">
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label" id="contactLableText"></label>
+
+                            <div class="col-lg-8">
+
+                                <input type="text" class="form-control"  id="contactData"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Lable</label>
+
+                            <div class="col-lg-8">
+
+                                <input type="text" class="form-control"  id="contactLable"/>                                <span class="help-block m-b-none">Enter a short name to describe the contact detail (official, personal etc) </span>
+                            </div>
+                        </div>
+                                <input type="hidden" class="EmpId"/>                                <input type="hidden" id="contactType"/>                    
+                    </div>
+                </div>
+                <div class="modal-footer">
+                        <input type="submit" class="btn btn-success" id="contactDetailFormSubmit"/>
 
                     <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
                 </div>
@@ -623,59 +669,29 @@
                                     <i class="fa fa-plus"></i>
                                 </a>
                                 <ul class="dropdown-menu dropdown-user">
-                                    <li><a href="#">New Mobile Number</a>
+
+                                    <li><a class="contactTypeLink" data-contacttype="1" data-toggle="modal" data-target="#contactDetailsModal" href="#">New Mobile Number</a>
                                     </li>
-                                    <li><a href="#">New Email Address</a>
+                                    
+                                    <li><a class="contactTypeLink" data-contacttype="2" data-toggle="modal" data-target="#contactDetailsModal" href="#">New Email Address</a>
                                     </li>
+
                                 </ul>
-                                <a class="collapse-link">
+
+                                <a class="collapse-link contactDetailBox">
                                     <i class="fa fa-chevron-up"></i>
                                 </a>
 
                             </div>
                         </div>
-                        <div class="ibox-content">
-                            <%--<ul class="list-group">
+                        <div class="ibox-content" id="contactDetailsContent">
+                            <ul class="list-group" id="contactDetailsList">
 
+                                
+                                
+                            </ul>
 
-
-                                <li class="list-group-item">
-                                    <span class="text-left">Mobile 1 
-
-                                    </span>
-
-                                    <span class="pull-right text-success">+91 7032906292
-                                &nbsp;
-                                <span class="pull-right"><span class="fa fa-pencil"></span></span>
-                                    </span>
-                                </li>
-
-
-
-                                <li class="list-group-item">
-                                    <span class="text-left">Mobile 2 
-
-                                    </span>
-
-                                    <span class="pull-right text-success">+91 8121441562
-                                &nbsp;
-                                <span class="pull-right"><span class="fa fa-pencil"></span></span>
-                                    </span>
-                                </li>
-
-                                <li class="list-group-item">
-                                    <span class="text-left">Email
-                                    </span>
-
-                                    <span class="pull-right text-success">lakshman.pilaka@gmail.com
-                                &nbsp;
-                                <span class="pull-right"><span class="fa fa-pencil"></span></span>
-                                    </span>
-                                </li>
-
-                            </ul>--%>
-
-                            <h4 class="text-center">No Data Available</h4>
+                            <h4 class="text-center" id="contactDetailNoData">No Data Available</h4>
 
                         </div>
                     </div>
@@ -892,42 +908,17 @@
 </asp:Content>
 
 <asp:Content ID="Content3" ContentPlaceHolderID="javascriptPart" runat="server">
+
     <script src="../js/plugins/jcrop/jquery.Jcrop.min.js"></script>
     <script src="../js/plugins/jcrop/jquery.color.js"></script>
     <script src="../js/plugins/dropzone/dropzone.js"></script>
     <script src="../js/plugins/datapicker/bootstrap-datepicker.js"></script>
     <script src="../js/plugins/sweetalert/sweetalert.min.js"></script>
+
     <script>
 
-        var myDropzone;
-
-        function closeModal() {
-            $('#profileImageModal').modal('hide');
-            $('#mainProfilePic').attr("src", '<%= System.Web.Configuration.WebConfigurationManager.AppSettings["ProfileURL"] + Session["EmpId"] %>');
-
-        }
-
-        $(document).on("click", ".docLink", function () {
-
-            Dropzone.autoDiscover = false;
-
-
-            if ($(this).data('doctype') == 'pan') $("#docName").html("PAN No");
-            if ($(this).data('doctype') == 'voter') $("#docName").html("Voter Id");
-            if ($(this).data('doctype') == 'passport') $("#docName").html("Passport No.");
-            if ($(this).data('doctype') == 'adhaar') $("#docName").html("Adhaar No.");
-            if ($(this).data('doctype') == 'dl') $("#docName").html("Driving License.");
-
-            myDropzone.removeAllFiles();
-            myDropzone.options.url = "../hn_SimpeFileUploader.ashx?doctype=" + $(this).data('doctype');
-
-            $('#DocNum').val('');
-
-            $('#doctype').val($(this).data('doctype'));
-            $(".EmpId").val(<%= Session["EmpId"] %>);
-            
-        });
-
+        var myDropzone, contactDetailLoaded = false;
+        var gEmpId = <%= Session["EmpId"] %>;
 
         $(window).load(function () {
 
@@ -935,19 +926,6 @@
             //    placeholder: "Select a state",
             //    allowClear: true
             //});
-            //$('.collapse-link').click(function () {
-            //    var ibox = $(this).closest('div.ibox');
-            //    var button = $(this).find('i');
-
-            //    if (button.hasClass('fa-chevron-up')) {
-            //        alert ('expanded');
-            //    }
-            //    else
-            //    {
-            //        alert ('collapsed');
-            //    }
-            //});
-
             var empId = <%= Session["EmpId"] %>;
             
             loadBasicProfile(empId);
@@ -980,50 +958,58 @@
         });
 
         
-        function loadBasicProfile(empId) {
 
-            var basicProfileURL = '../GetFullProfileDetail/'+ empId;
-
-            $.getJSON(basicProfileURL, function (userDetails) {
+        $('.collapse-link.contactDetailBox').click(function () {
+            var ibox = $(this).closest('div.ibox');
+            var button = $(this).find('i');
+            if(!contactDetailLoaded){
+            if (button.hasClass('fa-chevron-up')) {
                 
-                if(!(userDetails === null)) {
-
-                    $("#EmpName").html(userDetails[0].EmpName);
-                    $("#EmpNum").html(userDetails[0].EmpNum);
-                    $("#Email").html(userDetails[0].Email);
-                    $("#PrimaryMobile").html(userDetails[0].PrimaryMobile);
-                    $("#ClientName").html(userDetails[0].ClientName);
-                    $("#DOJ").html(userDetails[0].DOJ);
-                    $("#WorkLocation").html(userDetails[0].WorkLocation);
-                    
-                    if (!(userDetails[0].Salary === null)) {
-                        $("#Salary").html('&#8377; ' + userDetails[0].Salary);
-                    }
-
-                    $("#Designation").html(userDetails[0].Designation);
-
-                    $("#FirstName").val($.trim(userDetails[0].FirstName));
-                    $("#MiddleName").val($.trim(userDetails[0].MiddleName));
-                    $("#LastName").val($.trim(userDetails[0].LastName));
-
-                    if (!(userDetails[0].DOB === null)) {
-                        var lDOB = userDetails[0].DOB.split("/");
-                        $('#dob .input-group.date').datepicker('update', new Date(lDOB[2],lDOB[1]-1,lDOB[0]));
-                    }
-
-                    $("#FatherName").val($.trim(userDetails[0].FatherName));
-                    $("#MotherName").val($.trim(userDetails[0].MotherName));
-                    $("#SpouseName").val($.trim(userDetails[0].SpouseName));
-                    $(".EmpId").val(<%= Session["EmpId"] %>);
-
-                    $("input[name=Gender][value=" + userDetails[0].Gender + "]").prop('checked', true);
-                    $("input[name=BloodGroup][value=" + userDetails[0].BloodGroup + "]").prop('checked', true);
-                    $("input[name=MaritalStatus][value=" + userDetails[0].MaritalStatus + "]").prop('checked', true);
-                }                
-            });
-        }
+                contactDetailLoaded = true;    
+                loadContactDetails(gEmpId);
+                
+                }
+            }
+        });
 
 
+        $(document).on("click", ".docLink", function () {
+
+            Dropzone.autoDiscover = false;
+
+            if ($(this).data('doctype') == 'pan') $("#docName").html("PAN No");
+            if ($(this).data('doctype') == 'voter') $("#docName").html("Voter Id");
+            if ($(this).data('doctype') == 'passport') $("#docName").html("Passport No.");
+            if ($(this).data('doctype') == 'adhaar') $("#docName").html("Adhaar No.");
+            if ($(this).data('doctype') == 'dl') $("#docName").html("Driving License.");
+
+            myDropzone.removeAllFiles();
+            myDropzone.options.url = "../hn_SimpeFileUploader.ashx?doctype=" + $(this).data('doctype');
+
+            $('#DocNum').val('');
+
+            $('#doctype').val($(this).data('doctype'));
+            $(".EmpId").val(<%= Session["EmpId"] %>);
+            
+        });
+
+        $(document).on("click", ".contactTypeLink", function () {
+
+            $("#contactType").val($(this).data('contacttype'));
+            $(".EmpId").val(<%= Session["EmpId"] %>);
+
+            if ($(this).data('contacttype') == 1) {
+                $("#contactLableText").html("Mobile No");
+            }
+
+            else {
+                $("#contactLableText").html("Email Address");
+                $("#contactData").attr("type", "email");
+                $("#contactData").attr("title", "Please enter a valid email address");
+            }
+        });
+
+        
         $( "#finDetailForm" ).submit(function( event ) {
             
             event.preventDefault();
@@ -1047,12 +1033,53 @@
             });
         });
 
-        function finDetSubmitSuccess(result) {
-            if(result == 1) {
-                loadFinancialDetails($(".EmpId").val());
-                $('#finDetailsModal').modal('toggle');
-            }
-        }
+        $( "#contactDetailForm" ).submit(function( event ) {
+            
+            event.preventDefault();
+
+            $("#contactDetailFormSubmit").prop('disabled', true);
+
+        sweetAlert({   
+                title: $("#contactData").val(),   
+                text: "Please check if your detail is correct. You cannot change this later!",   
+                type: "warning",   
+                showCancelButton: true,   
+                confirmButtonColor: "green",   
+                confirmButtonText: "Save",   
+                closeOnConfirm: false 
+            }, 
+            function(isConfirm){   
+                if(isConfirm)
+                {
+                    var contactDetailJSON = {
+
+                        "EmpId"        :   $(".EmpId").val(),
+                        "contactData"  :   $("#contactData").val(),
+                        "contactType"  :   $("#contactType").val(),
+                        "contactLable" :   $("#contactLable").val()
+                    };
+        
+                    $.ajax({
+                        type: "POST",
+                        url: "../putEmpContact",
+                        data: contactDetailJSON,
+                        success: function(result) { 
+                            $('#contactDetailsModal').modal('toggle'); 
+                            $("#contactData").val('');
+                            $("#contactDetailFormSubmit").prop('disabled', false);
+                            sweetAlert("Data Saved!", "Your contact details are succesfully updated.", "success");
+                            loadContactDetails(contactDetailJSON.EmpId)
+                        },
+                        datatype: "json"
+                    });
+                }
+                else 
+                {
+                    $("#contactDetailFormSubmit").prop('disabled', false);
+                }
+            });
+        });
+
 
         $( "#identityForm" ).submit(function( event ) {
             
@@ -1119,23 +1146,6 @@
         });
 
 
-        function loadFinancialDetails(empId) {
-            var finDetailsURL = '../GetFinDetail/'+ empId;
-
-            $.getJSON(finDetailsURL, function (finDetails) {
-
-                if(!(finDetails === null)) {
-
-                    $("#BankName").html(finDetails.BankName);
-                    $("#BranchName").html(finDetails.BranchName);
-                    $("#AccountNum").html(finDetails.AccountNum);
-                    $("#IFSCCode").html(finDetails.IFSCCode);
-                    $("#SwiftCode").html(finDetails.SwiftCode);
-                }
-                });
-        }
-
-
         $('#finDetailsModal').on('shown.bs.modal', function () {
 
             $(".EmpId").val(<%= Session["EmpId"] %>);
@@ -1146,25 +1156,6 @@
             $("#iSwiftCode").val($("#SwiftCode").html());
 
         });
-
-
-        
-        function loadEmpIdentity(empId) {
-            var empIdentityURL = '../GetIdentity/'+ empId;
-
-            $.getJSON(empIdentityURL, function (identityDet) {
-
-                if(!(identityDet === null)) {
-
-                $("#DL").html(identityDet.DL);
-                $("#Adhaar").html(identityDet.Adhaar);
-                $("#Voter").html(identityDet.Voter);
-                $("#Passport").html(identityDet.Passport);
-                $("#Pan").html(identityDet.Pan);
-                }
-            });
-
-        }
 
 
         jQuery(function ($) {
@@ -1202,9 +1193,6 @@
             }
         });
 
-      
-
-
         $('#dob .input-group.date').datepicker({
             startView: 2,
             inline: true,
@@ -1214,6 +1202,122 @@
             autoclose: true,
             format: "MM dd, yyyy"
         });
+        function loadContactDetails(empId) {
+            var contactDetailURL = '../getEmpContact/'+ empId;
+
+            $.getJSON(contactDetailURL, function (contactDetails) {
+            
+                var totItems = contactDetails.length;
+
+                if(totItems > 0) {
+                $("#contactDetailsContent").addClass('no-padding');
+                $("#contactDetailNoData").hide('fade');
+                var i = 0;
+                var iconText;
+                $("#contactDetailsList").html('');
+                for (i=0;i<totItems;i++) {
+
+                    if (contactDetails[i].contactTypeId == 1) {iconText = '<span class="fa fa-phone"></span>&nbsp;';} else {iconText = '<span class="fa fa-envelope"></span>&nbsp;';}
+                    
+
+                    $("#contactDetailsList").append('<li class="list-group-item"><span class="text-left">' + iconText + contactDetails[i].contactLable +'</span><span class="pull-right text-success">'+ contactDetails[i].contactData + '</span></li>');
+                }
+                }
+            });
+        }
+
+        function loadBasicProfile(empId) {
+
+            var basicProfileURL = '../GetFullProfileDetail/'+ empId;
+
+            $.getJSON(basicProfileURL, function (userDetails) {
+                
+                if(!(userDetails === null)) {
+
+                    $("#EmpName").html(userDetails[0].EmpName);
+                    $("#EmpNum").html(userDetails[0].EmpNum);
+                    $("#Email").html(userDetails[0].Email);
+                    $("#PrimaryMobile").html(userDetails[0].PrimaryMobile);
+                    $("#ClientName").html(userDetails[0].ClientName);
+                    $("#DOJ").html(userDetails[0].DOJ);
+                    $("#WorkLocation").html(userDetails[0].WorkLocation);
+                    
+                    if (!(userDetails[0].Salary === null)) {
+                        $("#Salary").html('&#8377; ' + userDetails[0].Salary);
+                    }
+
+                    $("#Designation").html(userDetails[0].Designation);
+
+                    $("#FirstName").val($.trim(userDetails[0].FirstName));
+                    $("#MiddleName").val($.trim(userDetails[0].MiddleName));
+                    $("#LastName").val($.trim(userDetails[0].LastName));
+
+                    if (!(userDetails[0].DOB === null)) {
+                        var lDOB = userDetails[0].DOB.split("/");
+                        $('#dob .input-group.date').datepicker('update', new Date(lDOB[2],lDOB[1]-1,lDOB[0]));
+                    }
+
+                    $("#FatherName").val($.trim(userDetails[0].FatherName));
+                    $("#MotherName").val($.trim(userDetails[0].MotherName));
+                    $("#SpouseName").val($.trim(userDetails[0].SpouseName));
+                    $(".EmpId").val(<%= Session["EmpId"] %>);
+
+                    $("input[name=Gender][value=" + userDetails[0].Gender + "]").prop('checked', true);
+                    $("input[name=BloodGroup][value=" + userDetails[0].BloodGroup + "]").prop('checked', true);
+                    $("input[name=MaritalStatus][value=" + userDetails[0].MaritalStatus + "]").prop('checked', true);
+                }                
+            });
+        }
+
+
+
+        function closeModal() {
+            $('#profileImageModal').modal('hide');
+            $('#mainProfilePic').attr("src", '<%= System.Web.Configuration.WebConfigurationManager.AppSettings["ProfileURL"] + Session["EmpId"] %>');
+
+        }
+
+        function finDetSubmitSuccess(result) {
+            if(result == 1) {
+                loadFinancialDetails($(".EmpId").val());
+                $('#finDetailsModal').modal('toggle');
+            }
+        }
+
+        function loadFinancialDetails(empId) {
+            var finDetailsURL = '../GetFinDetail/'+ empId;
+
+            $.getJSON(finDetailsURL, function (finDetails) {
+
+                if(!(finDetails === null)) {
+
+                    $("#BankName").html(finDetails.BankName);
+                    $("#BranchName").html(finDetails.BranchName);
+                    $("#AccountNum").html(finDetails.AccountNum);
+                    $("#IFSCCode").html(finDetails.IFSCCode);
+                    $("#SwiftCode").html(finDetails.SwiftCode);
+                }
+            });
+        }
+
+        function loadEmpIdentity(empId) {
+            var empIdentityURL = '../GetIdentity/'+ empId;
+
+            $.getJSON(empIdentityURL, function (identityDet) {
+
+                if(!(identityDet === null)) {
+
+                    $("#DL").html(identityDet.DL);
+                    $("#Adhaar").html(identityDet.Adhaar);
+                    $("#Voter").html(identityDet.Voter);
+                    $("#Passport").html(identityDet.Passport);
+                    $("#Pan").html(identityDet.Pan);
+                }
+            });
+
+        }
+
+
     </script>
 
 </asp:Content>

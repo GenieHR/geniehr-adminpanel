@@ -175,5 +175,23 @@ namespace adminpanel.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<empProfBasicDetails_Result>("empProfBasicDetails", empIdParameter);
         }
+    
+        public virtual ObjectResult<Nullable<int>> getNextContactLineId(Nullable<int> empId)
+        {
+            var empIdParameter = empId.HasValue ?
+                new ObjectParameter("EmpId", empId) :
+                new ObjectParameter("EmpId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("getNextContactLineId", empIdParameter);
+        }
+    
+        public virtual ObjectResult<getEmpContactDetail_Result> getEmpContactDetail(Nullable<int> empId)
+        {
+            var empIdParameter = empId.HasValue ?
+                new ObjectParameter("EmpId", empId) :
+                new ObjectParameter("EmpId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getEmpContactDetail_Result>("getEmpContactDetail", empIdParameter);
+        }
     }
 }

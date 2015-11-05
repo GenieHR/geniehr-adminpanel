@@ -142,12 +142,23 @@ namespace adminpanel.Controllers
             return db.SaveChanges();
         }
 
-        [Route("putEmpContact")]
+        [Route("putEmpContact/")]
         [HttpPost]
         public int postContactDetail(EmpContacts empContact)
         {
+            db.Configuration.ProxyCreationEnabled = false;
 
-            return 1;
+            EmpContactDetail empContactDetail = new EmpContactDetail();
+
+            empContactDetail.EmpId = empContact.EmpId;
+            empContactDetail.contactTypeId = empContact.contactType;
+            empContactDetail.contactLable = empContact.contactLable;
+            empContactDetail.contactData = empContact.contactData;
+            empContactDetail.contactLineId = db.getNextContactLineId(empContact.EmpId).First() ?? 0;
+
+            db.EmpContactDetails.Add(empContactDetail);
+
+            return db.SaveChanges();
         }
 
         [Route("GetFinDetail/{EmpId}")]
@@ -166,6 +177,17 @@ namespace adminpanel.Controllers
             db.Configuration.ProxyCreationEnabled = false;
 
             return (from recordset in db.EmpIdentities where recordset.EmpID == EmpId select recordset).FirstOrDefault();
+        }
+
+
+        [Route("getEmpContact/{EmpId}")]
+        [HttpGet]
+        public dynamic getContactDetail(int EmpId)
+        {
+            db.Configuration.ProxyCreationEnabled = false;
+
+            return db.getEmpContactDetail(EmpId);
+
         }
     }
 }

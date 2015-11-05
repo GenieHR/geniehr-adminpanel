@@ -133,7 +133,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EmpId" Type="int" Nullable="false" />
           <Property Name="contactLineId" Type="int" Nullable="false" />
           <Property Name="contactTypeId" Type="int" Nullable="false" />
@@ -671,6 +671,9 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <Parameter Name="managerId" Type="int" Mode="In" />
           <Parameter Name="numDays" Type="int" Mode="In" />
         </Function>
+        <Function Name="getEmpContactDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EmpId" Type="int" Mode="In" />
+        </Function>
         <Function Name="getEmpDetofManager" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ManagerId" Type="int" Mode="In" />
         </Function>
@@ -690,6 +693,9 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
         </Function>
         <Function Name="getNextClaimRevisionNo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ClaimId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="getNextContactLineId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EmpId" Type="int" Mode="In" />
         </Function>
         <Function Name="getOpenCliamsByManagerId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="managerId" Type="int" Mode="In" />
@@ -1295,6 +1301,12 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
             <End Role="Employee" EntitySet="Employees" />
             <End Role="EmpContactDetail" EntitySet="EmpContactDetails" />
           </AssociationSet>
+          <FunctionImport Name="getNextContactLineId" ReturnType="Collection(Int32)">
+          <Parameter Name="EmpId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="getEmpContactDetail" ReturnType="Collection(ubietydbModel.getEmpContactDetail_Result)">
+            <Parameter Name="EmpId" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="Group">
           <Key>
@@ -1833,6 +1845,11 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="getEmpContactDetail_Result">
+          <Property Type="Int32" Name="contactTypeId" Nullable="false" />
+          <Property Type="String" Name="contactLable" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="contactData" Nullable="false" MaxLength="100" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2293,6 +2310,16 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="getNextContactLineId" FunctionName="ubietydbModel.Store.getNextContactLineId" />
+          <FunctionImportMapping FunctionImportName="getEmpContactDetail" FunctionName="ubietydbModel.Store.getEmpContactDetail">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ubietydbModel.getEmpContactDetail_Result">
+                <ScalarProperty Name="contactTypeId" ColumnName="contactTypeId" />
+                <ScalarProperty Name="contactLable" ColumnName="contactLable" />
+                <ScalarProperty Name="contactData" ColumnName="contactData" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

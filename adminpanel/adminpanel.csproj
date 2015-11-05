@@ -240,6 +240,7 @@
     <Content Include="Account\VerifyPhoneNumber.aspx" />
     <Content Include="AddClaim.aspx" />
     <Content Include="css\imgEffects.css" />
+    <Content Include="css\plugins\dropzone\basic.css" />
     <Content Include="css\plugins\dropzone\dropzone.css" />
     <Content Include="css\plugins\jcrop\jquery.Jcrop.min.css" />
     <Content Include="css\plugins\select2\select2.min.css" />
@@ -819,6 +820,9 @@
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\getAttendanceByManagerId_Result.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\getEmpContactDetail_Result.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\getEmpDetofManager_Result.cs">
