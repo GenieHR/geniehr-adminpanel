@@ -193,5 +193,18 @@ namespace adminpanel.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getEmpContactDetail_Result>("getEmpContactDetail", empIdParameter);
         }
+    
+        public virtual ObjectResult<getShortAddress_Result> getShortAddress(Nullable<int> entityType, Nullable<int> empId)
+        {
+            var entityTypeParameter = entityType.HasValue ?
+                new ObjectParameter("EntityType", entityType) :
+                new ObjectParameter("EntityType", typeof(int));
+    
+            var empIdParameter = empId.HasValue ?
+                new ObjectParameter("EmpId", empId) :
+                new ObjectParameter("EmpId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getShortAddress_Result>("getShortAddress", entityTypeParameter, empIdParameter);
+        }
     }
 }

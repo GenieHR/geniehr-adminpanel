@@ -10,7 +10,6 @@ namespace adminpanel.Models
         public int EmpId { get; set; }
         public string contactData { get; set; }
         public int contactType { get; set; }
-
         public string contactLable { get; set; }
 
     }

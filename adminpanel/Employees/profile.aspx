@@ -59,7 +59,7 @@
                             <label class="col-lg-3 control-label" id="docName"></label>
 
                             <div class="col-lg-8">
-                                <input type="hidden" class="EmpId"  />                                <input type="hidden" id="doctype"/>                                <input type="text"   class="form-control" id="DocNum" required="required"/>
+                                <%--<input type="hidden" class="EmpId"  />--%>                                <input type="hidden" id="doctype"/>                                <input type="text"   class="form-control" id="DocNum" required="required"/>
                             </div>
                         </div>
                     </div>
@@ -111,7 +111,7 @@
 
                             </div>
                         </div>
-                                <input type="hidden" class="EmpId"/>
+                                <%--<input type="hidden" class="EmpId"/>--%>
                         <div class="form-group">
                             <label class="col-lg-3 control-label">Branch</label>
 
@@ -180,7 +180,7 @@
                 <div class="modal-body ">
                     <div class="row">
                         <div class="form-group">
-                            <label class="col-lg-3 control-label" id="contactLableText"></label>
+                            <label class="col-lg-3 control-label" id="contactLabelText"></label>
 
                             <div class="col-lg-8">
 
@@ -188,18 +188,116 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-lg-3 control-label">Lable</label>
+                            <label class="col-lg-3 control-label">Label</label>
 
                             <div class="col-lg-8">
 
-                                <input type="text" class="form-control"  id="contactLable"/>                                <span class="help-block m-b-none">Enter a short name to describe the contact detail (official, personal etc) </span>
+                                <input type="text" class="form-control"  id="contactLabel"/>                                <span class="help-block m-b-none">Enter a short name to describe the contact detail (official, personal etc) </span>
                             </div>
                         </div>
-                                <input type="hidden" class="EmpId"/>                                <input type="hidden" id="contactType"/>                    
+                                <%--<input type="hidden" class="EmpId"/>--%>                                <input type="hidden" id="contactType"/>                    
                     </div>
                 </div>
                 <div class="modal-footer">
                         <input type="submit" class="btn btn-success" id="contactDetailFormSubmit"/>
+
+                    <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                </div>
+            
+
+            </div>
+                         </form>
+        </div>
+    </div>
+
+    <div class="modal inmodal fade" id="addressModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+                    <form method="get" class="form-horizontal" id="addressForm" >
+                        <input type="hidden" id="AddressType" />
+
+            <div class="modal-content">
+                
+                <div class="modal-header">
+                    <button type="button" data-dismiss="modal" class="close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Address</h4>
+                </div>
+                <div class="modal-body ">
+                    <div class="row">
+
+                        
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Address Name</label>
+
+                            <div class="col-lg-8">
+
+                                <input type="text" class="form-control"  required="required" id="AddressName"/>
+                                <span class="help-block m-b-none">Enter a short name to describe the address (like home, guest house etc) </span>
+                                
+
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Address Line 1<sup>*</sup></label>
+
+                            <div class="col-lg-8">
+
+                                <input type="text" class="form-control"  required="required" id="Address1"/>
+                                <%--<select id="select2_bankName" class="form-control">
+                                    <option></option>
+                                    <option value="Bahamas">Bahamas</option>
+                                    <option value="Bahrain">Bahrain</option>
+                                   
+                                </select>--%>
+
+
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Address Line 2</label>
+
+                            <div class="col-lg-8">
+
+                                <input type="text" class="form-control"   id="Address2"/>
+                                
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">City<sup>*</sup></label>
+
+                            <div class="col-lg-8">
+
+                                <input type="text" class="form-control" required="required"  id="City"/>
+                                
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">State<sup>*</sup></label>
+
+                            <div class="col-lg-8">
+
+                                <input type="text" maxlength="11" class="form-control" required="required"  id="State"/>
+                                
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Pincode<sup>*</sup></label>
+
+                            <div class="col-lg-8">
+
+                                <input type="text" class="form-control" maxlength="6"  id="Pincode"/>
+                                
+                            </div>
+                        </div>
+                    
+                    </div>
+                </div>
+                <div class="modal-footer">
+                        <input type="submit" id="addressFormSubmit" class="btn btn-success" />
 
                     <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
                 </div>
@@ -335,7 +433,7 @@
         </div>
 
         <div  class="col-lg-12">
-            <div class="ibox float-e-margins">
+            <div class="ibox float-e-margins collapsed">
                 <div class="ibox-title">
                     <h5>Personal Details</h5>
                     <div class="ibox-tools">
@@ -346,7 +444,7 @@
                     </div>
                 </div>
                     <form method="get" class="form-horizontal" id="basicDetailForm" >
-                                <input type="hidden" class="EmpId"/>
+                                <%--<input type="hidden" class="EmpId"/>--%>
                 <div class="ibox-content">
                     <div class="form-horizontal">
                         <h4 class="text-info">Full Name</h4>
@@ -424,6 +522,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Blood Group</label>
 
@@ -586,7 +685,7 @@
                 
 
             <div class="col-sm-6">
-                    <div class="ibox float-e-margins ">
+                    <div class="ibox float-e-margins">
                         <div class="ibox-title">
                             <h5>Identity Details</h5>
                             <div class="ibox-tools">
@@ -707,48 +806,26 @@
                                     <i class="fa fa-plus"></i>
                                 </a>
                                 <ul class="dropdown-menu dropdown-user">
-                                    <li><a href="#">New Address</a>
-                                    </li>
 
+                                    <li id="permAddLink"><a href="#"  class="addressType" data-toggle="modal" data-target="#addressModal" data-addresstype="1">Add Permanent Address</a></li>
+                                    <li id="currAddLink" ><a href="#" class="addressType" data-toggle="modal" data-target="#addressModal"  data-addresstype="2">Add Current Address</a></li>
+                                    <%--<li ><a href="#" data-toggle="modal" data-target="#addressModal"  data-addresstype="3">Add Office Address</a></li>--%>
+                                    <%--<li ><a href="#" data-toggle="modal" data-target="#addressModal"  data-addresstype="4">Add Other Address</a></li>--%>
+                                    
                                 </ul>
-                                <a class="collapse-link">
+                                <a class="collapse-link addressBox">
                                     <i class="fa fa-chevron-up"></i>
                                 </a>
 
                             </div>
                         </div>
-                        <div class="ibox-content">
-                            <%--<ul class="list-group">
+                        <div class="ibox-content" id="addressContent">
+                            <ul class="list-group" id="addressList">
 
 
+                            </ul>
 
-                                <li class="list-group-item">
-                                    <span class="text-left">Current 
-
-                                    </span>
-
-                                    <span class="pull-right text-success">Mohali
-                                &nbsp;
-                                <span class="pull-right"><span class="fa fa-pencil"></span></span>
-                                    </span>
-                                </li>
-
-                                <li class="list-group-item">
-                                    <span class="text-left">Permanent 
-
-                                    </span>
-
-
-
-                                    <span class="pull-right text-success">Bhatinda
-                                &nbsp;
-                                <span class="pull-right"><span class="fa fa-pencil"></span></span>
-                                    </span>
-                                </li>
-
-                            </ul>--%>
-
-                            <h4 class="text-center">No Data Available</h4>
+                            <h4 class="text-center" id="addressNoData">No Data Available</h4>
                         </div>
                     </div>
                 </div>
@@ -917,20 +994,20 @@
 
     <script>
 
-        var myDropzone, contactDetailLoaded = false;
+        var myDropzone, contactDetailLoaded = false, addressLoaded = false;
         var gEmpId = <%= Session["EmpId"] %>;
 
         $(window).load(function () {
 
             //$("#select2_bankName").select2({
             //    placeholder: "Select a state",
-            //    allowClear: true
+            //    allowClear: true, 
             //});
-            var empId = <%= Session["EmpId"] %>;
+           // var empId = <%//= Session["EmpId"] %>;
             
-            loadBasicProfile(empId);
-            loadFinancialDetails(empId);
-            loadEmpIdentity(empId);     
+            loadBasicProfile(gEmpId);
+            loadFinancialDetails(gEmpId);
+            loadEmpIdentity(gEmpId);     
          
             myDropzone = new Dropzone("#docUpload", {
                 url: "../hn_SimpeFileUploader.ashx",
@@ -966,11 +1043,29 @@
             if (button.hasClass('fa-chevron-up')) {
                 
                 contactDetailLoaded = true;    
+                $("#contactDetailNoData").html('Fething Data...');
+
                 loadContactDetails(gEmpId);
                 
                 }
             }
         });
+
+
+        $('.collapse-link.addressBox').click(function () {
+            var ibox = $(this).closest('div.ibox');
+            var button = $(this).find('i');
+            if(!addressLoaded){
+                if (button.hasClass('fa-chevron-up')) {
+                
+                    addressLoaded = true;    
+                    $("#addressNoData").html('Fething Data...');
+
+                    loadAddress(gEmpId);
+                }
+            }
+        });
+
 
 
         $(document).on("click", ".docLink", function () {
@@ -989,21 +1084,19 @@
             $('#DocNum').val('');
 
             $('#doctype').val($(this).data('doctype'));
-            $(".EmpId").val(<%= Session["EmpId"] %>);
             
         });
 
         $(document).on("click", ".contactTypeLink", function () {
 
             $("#contactType").val($(this).data('contacttype'));
-            $(".EmpId").val(<%= Session["EmpId"] %>);
 
             if ($(this).data('contacttype') == 1) {
-                $("#contactLableText").html("Mobile No");
+                $("#contactLabelText").html("Mobile No");
             }
 
             else {
-                $("#contactLableText").html("Email Address");
+                $("#contactLabelText").html("Email Address");
                 $("#contactData").attr("type", "email");
                 $("#contactData").attr("title", "Please enter a valid email address");
             }
@@ -1016,7 +1109,7 @@
 
             var finDetailJSON = {
 
-                "EmpId"     :   $(".EmpId").val(),
+                "EmpId"     :   gEmpId,
                 "BankName"  :   $("#iBankName").val(),
                 "BranchName":   $("#iBranchName").val(),
                 "AccountNum":   $("#iAccountNum").val(),
@@ -1053,10 +1146,10 @@
                 {
                     var contactDetailJSON = {
 
-                        "EmpId"        :   $(".EmpId").val(),
+                        "EmpId"        :   gEmpId,
                         "contactData"  :   $("#contactData").val(),
                         "contactType"  :   $("#contactType").val(),
-                        "contactLable" :   $("#contactLable").val()
+                        "contactLable" :   $("#contactLabel").val()
                     };
         
                     $.ajax({
@@ -1087,7 +1180,7 @@
             event.preventDefault();
 
             var IDDetailJSON = {
-                "EmpId"  : <%= Session["EmpId"] %>,
+                "EmpId"  : gEmpId,
                 "doctype": $("#doctype").val(),
                 "DocNum" : $("#DocNum").val()
             };
@@ -1116,7 +1209,7 @@
 
             var basicDetailJSON = {
 
-            "EmpId"        : <%= Session["EmpId"] %>,
+            "EmpId"        : gEmpId, 
             "FirstName"    : $("#FirstName").val(),
             "MiddleName"   : $("#MiddleName").val(),
             "LastName"     : $("#LastName").val(),
@@ -1148,13 +1241,66 @@
 
         $('#finDetailsModal').on('shown.bs.modal', function () {
 
-            $(".EmpId").val(<%= Session["EmpId"] %>);
             $("#iBankName").val($("#BankName").html());
             $("#iBranchName").val($("#BranchName").html());
             $("#iAccountNum").val($("#AccountNum").html());
             $("#iIFSCCode").val($("#IFSCCode").html());
             $("#iSwiftCode").val($("#SwiftCode").html());
 
+        });
+
+        $(document).on("click", ".addressType", function () {
+        
+            $("#AddressType").val($(this).data('addresstype'));
+
+        });
+            
+
+        $( "#addressForm" ).submit(function( event ) {
+            
+            $("#addressFormSubmit").prop("disabled", true);
+            event.preventDefault();
+
+            var addressJSON = {
+
+                "EmpId"           : gEmpId, 
+                "Address1"        : $("#Address1").val(),
+                "Address2"        : $("#Address2").val(),
+                "City"            : $("#City").val(),
+                "State"           : $("#State").val(),
+                "Pincode"         : $("#Pincode").val(),
+                "AddressType"     : $("#AddressType").val(),
+                "AddressName"     : $("#AddressName").val()
+            };
+        
+            $.ajax({
+                type: "POST",
+                url: "../putEmpAddress",
+                data: addressJSON,
+                success: function(result) { 
+
+                    $("#addressFormSubmit").prop("disabled", false);
+
+                    if(result == 1) {
+                        
+                        $("#Address1").val('');
+                        $("#Address2").val('');
+                        $("#City").val('');
+                        $("#State").val('');
+                        $("#Pincode").val('');
+                        $("#AddressType").val('');
+                        $("#AddressName").val('');
+
+                        $("#addressModal").modal('toggle');
+                        
+                        sweetAlert("Success", "Address Added Succesfully!", "success");
+
+                        loadAddress(gEmpId);
+
+                    }
+                },
+                datatype: "json"
+            });
         });
 
 
@@ -1202,6 +1348,35 @@
             autoclose: true,
             format: "MM dd, yyyy"
         });
+        
+        function loadAddress(empId) {
+            var addressURL = '../getEmpShortAddressList/'+ empId;
+
+            $.getJSON(addressURL, function (addressDetails) {
+            
+                var totItems = addressDetails.length;
+
+                if(totItems > 0) {
+                    $("#addressContent").addClass('no-padding');
+                    $("#addressNoData").hide('fade');
+                    var i = 0;
+                    var iconText;
+                    $("#addressList").html('');
+                    for (i=0;i<totItems;i++) {
+
+                        if (addressDetails[i].AddressTypeId == 1) {iconText = '<span class="fa fa-home"></span>&nbsp;';} else {iconText = '<span class="fa fa-building"></span>&nbsp;';}
+                
+                        $("#addressList").append('<li class="list-group-item"><span class="text-left">' + iconText + addressDetails[i].AddressName +'</span><span class="pull-right text-success">'+ addressDetails[i].City + '</span></li>');
+                    }
+                }
+                else
+                {
+                    $("#addressNoData").html('No Data Available');
+                }
+            });
+        }
+        
+         
         function loadContactDetails(empId) {
             var contactDetailURL = '../getEmpContact/'+ empId;
 
@@ -1218,10 +1393,12 @@
                 for (i=0;i<totItems;i++) {
 
                     if (contactDetails[i].contactTypeId == 1) {iconText = '<span class="fa fa-phone"></span>&nbsp;';} else {iconText = '<span class="fa fa-envelope"></span>&nbsp;';}
-                    
-
                     $("#contactDetailsList").append('<li class="list-group-item"><span class="text-left">' + iconText + contactDetails[i].contactLable +'</span><span class="pull-right text-success">'+ contactDetails[i].contactData + '</span></li>');
+                    }
                 }
+                else
+                {
+                    $("#contactDetailNoData").html('No Data Available');
                 }
             });
         }
@@ -1260,7 +1437,6 @@
                     $("#FatherName").val($.trim(userDetails[0].FatherName));
                     $("#MotherName").val($.trim(userDetails[0].MotherName));
                     $("#SpouseName").val($.trim(userDetails[0].SpouseName));
-                    $(".EmpId").val(<%= Session["EmpId"] %>);
 
                     $("input[name=Gender][value=" + userDetails[0].Gender + "]").prop('checked', true);
                     $("input[name=BloodGroup][value=" + userDetails[0].BloodGroup + "]").prop('checked', true);
@@ -1279,7 +1455,7 @@
 
         function finDetSubmitSuccess(result) {
             if(result == 1) {
-                loadFinancialDetails($(".EmpId").val());
+                loadFinancialDetails(gEmpId);
                 $('#finDetailsModal').modal('toggle');
             }
         }

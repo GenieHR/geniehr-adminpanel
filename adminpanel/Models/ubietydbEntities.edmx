@@ -700,6 +700,10 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
         <Function Name="getOpenCliamsByManagerId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="managerId" Type="int" Mode="In" />
         </Function>
+        <Function Name="getShortAddress" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EntityType" Type="int" Mode="In" />
+          <Parameter Name="EmpId" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="ubietydbModelStoreContainer">
           <EntitySet Name="Address" EntityType="Self.Address" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AddressType" EntityType="Self.AddressType" Schema="dbo" store:Type="Tables" />
@@ -1305,6 +1309,10 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <Parameter Name="EmpId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="getEmpContactDetail" ReturnType="Collection(ubietydbModel.getEmpContactDetail_Result)">
+          <Parameter Name="EmpId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="getShortAddress" ReturnType="Collection(ubietydbModel.getShortAddress_Result)">
+            <Parameter Name="EntityType" Mode="In" Type="Int32" />
             <Parameter Name="EmpId" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
@@ -1850,6 +1858,12 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <Property Type="String" Name="contactLable" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="contactData" Nullable="false" MaxLength="100" />
         </ComplexType>
+        <ComplexType Name="getShortAddress_Result">
+          <Property Type="Int32" Name="AddressId" Nullable="false" />
+          <Property Type="String" Name="AddressName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="City" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="AddressTypeId" Nullable="false" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2317,6 +2331,16 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
                 <ScalarProperty Name="contactTypeId" ColumnName="contactTypeId" />
                 <ScalarProperty Name="contactLable" ColumnName="contactLable" />
                 <ScalarProperty Name="contactData" ColumnName="contactData" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getShortAddress" FunctionName="ubietydbModel.Store.getShortAddress">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ubietydbModel.getShortAddress_Result">
+                <ScalarProperty Name="AddressId" ColumnName="AddressId" />
+                <ScalarProperty Name="AddressName" ColumnName="AddressName" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="AddressTypeId" ColumnName="AddressTypeId" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

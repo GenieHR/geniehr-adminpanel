@@ -189,5 +189,43 @@ namespace adminpanel.Controllers
             return db.getEmpContactDetail(EmpId);
 
         }
+
+        [Route("putEmpAddress/")]
+        [HttpPost]
+        public int postContactDetail(EmpAddressDetail empAddressDetail)
+        {
+            db.Configuration.ProxyCreationEnabled = false;
+
+            Address address = new Address();
+
+            address.AddressName = empAddressDetail.AddressName;
+            address.Address1 = empAddressDetail.Address1;
+            address.Address2 = empAddressDetail.Address2;
+            address.City = empAddressDetail.City;
+            address.State = empAddressDetail.State;
+            address.Pincode = empAddressDetail.PinCode;
+            address.AddressTypId = empAddressDetail.AddressType;
+
+            db.Addresses.Add(address);
+
+            if (db.SaveChanges() == 1)
+            {
+                EntityAddress entityAddress = new EntityAddress();
+                entityAddress.AddressId = address.AddressId;
+                entityAddress.EntityTypId = 1;
+                entityAddress.EntityId = empAddressDetail.EmpId;
+                db.EntityAddresses.Add(entityAddress);
+            }
+
+            return db.SaveChanges();
+        }
+
+        [Route("getEmpShortAddressList/{EmpId}")]
+        [HttpGet]
+        public dynamic postContactDetail(int EmpId)
+        {
+            return db.getShortAddress(1, EmpId);
+        }
     }
+
 }
