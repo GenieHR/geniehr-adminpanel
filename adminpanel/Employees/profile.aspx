@@ -1225,7 +1225,7 @@
                 }
             });
         }
-
+         
         function loadBasicProfile(empId) {
 
             var basicProfileURL = '../GetFullProfileDetail/'+ empId;
