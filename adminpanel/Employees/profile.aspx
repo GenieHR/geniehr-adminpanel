@@ -49,8 +49,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title">Upload Document</h4>
-                    <small class="font-bold">Select  from your device </small>
+                    <h4 class="modal-title">Enter Document Number</h4>
                 </div>
                 <div class="modal-body ">
 
@@ -59,20 +58,11 @@
                             <label class="col-lg-3 control-label" id="docName"></label>
 
                             <div class="col-lg-8">
-                                <%--<input type="hidden" class="EmpId"  />--%>                                <input type="hidden" id="doctype"/>                                <input type="text"   class="form-control" id="DocNum" required="required"/>
-                            </div>
+                                <input type="hidden" id="doctype"/>                                <input type="text"   class="form-control" id="DocNum" required="required"/>                            </div>
                         </div>
                     </div>
-
-
-                    <div id="docUpload" class="dropzone">
-                        <div class="dz-default dz-message">
-                            Click to select document to upload 
-                        </div>
-                    </div>
-
-
                 </div>
+
                 <div class="modal-footer">
                     <input type="submit" class="btn btn-success" id="identitySubmit" value="Save Details" />
                     <button type="button" class="btn btn-white"  data-dismiss="modal">Close</button>
@@ -82,6 +72,63 @@
         </div>
     </div>
     
+
+    <div class="modal inmodal fade" id="idUploadModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Attachments</h4>
+                </div>
+                <div class="modal-body ">
+                    
+                    <div class="row text-center" id="pleaseWait"><i class="fa fa-spinner fa-pulse fa-4x"></i>
+                        <br />
+                        <span class="text-warning">Please Wait..!!</span>
+                    </div>
+
+                    <div class="row">
+                    <div class="col-sm-12">
+                    <div class="ibox float-e-margins" id="docIbox">
+                        <div class="ibox-title">
+                            <h5>Your Documents </h5>
+                            
+                        </div>
+                        <div class="ibox-content">
+
+                            <table class="table table-bordered" id="docTable">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Document</th>
+                                    <th>Uploaded Time</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>                    </div>
+                        <div id="docUpload" class="dropzone">
+                        <div class="dz-default dz-message">
+                            Click to select document to upload 
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white"  data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="modal inmodal fade" id="finDetailsModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
                     <form method="get" class="form-horizontal" id="finDetailForm" >
@@ -700,19 +747,31 @@
                             <ul class="list-group">
 
                                 <li class="list-group-item">
-                                    <span class="text-left"><a data-target="#identityModal" data-toggle="modal" data-doctype="dl" class="fa fa-paperclip docLink"></a></span>&nbsp; Driving License
+                                    <span class="text-left">
+                                        <a data-target="#idUploadModal" data-toggle="modal" data-doctype="dl" class="fa fa-paperclip docUploadLink"></a>
+                                        &nbsp; Driving License
+                                    </span>
+                                    
+                                    <span class="pull-right text-success">
 
+                                    &nbsp; <a data-target="#identityModal" data-toggle="modal" data-doctype="dl" class="docLink"><i class="fa fa-pencil"></i></a>
                                     </span>
 
                                     <span class="pull-right text-success" id="DL">
-                                    <i class="fa fa-pencil"></i>
+                                    
 
                                     </span>
+                                    
                                 </li>
                                 
                                 <li class="list-group-item">
-                                    <span class="text-left"><a data-target="#identityModal" data-toggle="modal" data-doctype="adhaar" class="fa fa-paperclip docLink"></a>&nbsp; Adhaar Card
+                                    <span class="text-left">
+                                        <a data-target="#idUploadModal" data-toggle="modal" data-doctype="adhaar" class="fa fa-paperclip docUploadLink"></a>&nbsp; Adhaar Card
 
+                                    </span>
+                                    <span class="pull-right text-success">
+
+                                    &nbsp; <a data-target="#identityModal" data-toggle="modal" data-doctype="adhaar" class="docLink"><i class="fa fa-pencil"></i></a>
                                     </span>
 
                                     <span class="pull-right text-success" id="Adhaar">
@@ -722,7 +781,12 @@
                                 </li>
 
                                 <li class="list-group-item">
-                                    <span class="text-left"><a data-target="#identityModal" data-toggle="modal" data-doctype="voter" class="fa fa-paperclip docLink"></a>&nbsp; Voter Id
+                                    <span class="text-left"><a data-target="#idUploadModal" data-toggle="modal" data-doctype="voter" class="fa fa-paperclip docUploadLink"></a>&nbsp; Voter Id
+
+                                    </span>
+                                    <span class="pull-right text-success">
+
+                                    &nbsp; <a data-target="#identityModal" data-toggle="modal" data-doctype="voter" class="docLink"><i class="fa fa-pencil"></i></a>
 
                                     </span>
 
@@ -731,18 +795,30 @@
 
                                     </span>
                                 </li><li class="list-group-item">
-                                    <span class="text-left"><a data-target="#identityModal" data-toggle="modal" data-doctype="passport" class="fa fa-paperclip docLink"></a>&nbsp; Passport No
+                                    <span class="text-left"><a data-target="#idUploadModal" data-toggle="modal" data-doctype="passport" class="fa fa-paperclip docUploadLink"></a>&nbsp; Passport No
+
+                                    </span>
+                                    
+                                    <span class="pull-right text-success">
+
+                                    &nbsp; <a data-target="#identityModal" data-toggle="modal" data-doctype="passport" class="docLink"><i class="fa fa-pencil"></i></a>
 
                                     </span>
 
                                     <span class="pull-right text-success" id="Passport">
-                                    <i class="fa fa-pencil"></i>
+                                    
 
                                     </span>
                                 </li>
                                 
                                 <li class="list-group-item">
-                                    <span class="text-left"><a data-target="#identityModal" data-toggle="modal" data-doctype="pan" class="fa fa-paperclip docLink"></a>&nbsp; PAN No.
+                                    <span class="text-left"><a data-target="#idUploadModal" data-toggle="modal" data-doctype="pan" class="fa fa-paperclip docUploadLink"></a>&nbsp; PAN No.
+
+                                    </span>
+                                    
+                                    <span class="pull-right text-success">
+
+                                    &nbsp; <a data-target="#identityModal" data-toggle="modal" data-doctype="pan" class="docLink"><i class="fa fa-pencil"></i></a>
 
                                     </span>
 
@@ -995,6 +1071,7 @@
     <script>
 
         var myDropzone, contactDetailLoaded = false, addressLoaded = false;
+        var iDocUploadJSON,gDocType,gDocName;
         var gEmpId = <%= Session["EmpId"] %>;
 
         $(window).load(function () {
@@ -1005,14 +1082,21 @@
             //});
            // var empId = <%//= Session["EmpId"] %>;
             
+            //alert(docName());
+
+            loadiDocUpload(gEmpId);
             loadBasicProfile(gEmpId);
             loadFinancialDetails(gEmpId);
-            loadEmpIdentity(gEmpId);     
+            loadEmpIdentity(gEmpId);
          
             myDropzone = new Dropzone("#docUpload", {
                 url: "../hn_SimpeFileUploader.ashx",
-                maxFiles: 2,
+                maxFiles: 1,
+                queuecomplete : function() { closeUploadModal(); },
+                maxFileSize: 2,
+                acceptedFiles: 'image/*',
                 addRemoveLinks: false,
+                
                 success: function (file, response) {
                     var imgName = response;
                     file.previewElement.classList.add("dz-success");
@@ -1067,7 +1151,6 @@
         });
 
 
-
         $(document).on("click", ".docLink", function () {
 
             Dropzone.autoDiscover = false;
@@ -1078,15 +1161,33 @@
             if ($(this).data('doctype') == 'adhaar') $("#docName").html("Adhaar No.");
             if ($(this).data('doctype') == 'dl') $("#docName").html("Driving License.");
 
-            myDropzone.removeAllFiles();
-            myDropzone.options.url = "../hn_SimpeFileUploader.ashx?doctype=" + $(this).data('doctype');
-
             $('#DocNum').val('');
-
             $('#doctype').val($(this).data('doctype'));
+
+            $("#docIbox").hide();
+            $("#docUpload").hide();
             
         });
 
+        $(document).on("click", ".docUploadLink", function () {
+
+            $("#pleaseWait").show();
+
+            myDropzone.removeAllFiles();
+            gDocName = docName();
+            myDropzone.options.url = "../hn_SimpeFileUploader.ashx?doctype=" + $(this).data('doctype') + "&docname=" + gDocName;
+
+            $('#doctype').val($(this).data('doctype'));
+
+            updateDocList($(this).data('doctype'), null);
+
+            $("#docIbox").hide();
+            $("#docUpload").hide();
+            
+        });
+
+
+        
         $(document).on("click", ".contactTypeLink", function () {
 
             $("#contactType").val($(this).data('contacttype'));
@@ -1159,6 +1260,7 @@
                         success: function(result) { 
                             $('#contactDetailsModal').modal('toggle'); 
                             $("#contactData").val('');
+                            $("#contactLabel").val('');
                             $("#contactDetailFormSubmit").prop('disabled', false);
                             sweetAlert("Data Saved!", "Your contact details are succesfully updated.", "success");
                             loadContactDetails(contactDetailJSON.EmpId)
@@ -1292,11 +1394,8 @@
                         $("#AddressName").val('');
 
                         $("#addressModal").modal('toggle');
-                        
                         sweetAlert("Success", "Address Added Succesfully!", "success");
-
                         loadAddress(gEmpId);
-
                     }
                 },
                 datatype: "json"
@@ -1314,7 +1413,6 @@
                     boxHeight: 400
                 });
         });
-
 
         Dropzone.autoDiscover = false;
 
@@ -1348,6 +1446,99 @@
             autoclose: true,
             format: "MM dd, yyyy"
         });
+        function updateDocList(doctype, docname)
+        {
+            var thisDocArray = new Array();
+            var iDocUploadURL = '../getIDocUploads/'+ gEmpId;
+           
+            $.getJSON(iDocUploadURL, function (iDocUploadResult) {
+                iDocUploadJSON = iDocUploadResult;
+
+                for(i=0; i<iDocUploadJSON.length; i++) {
+
+                    if(iDocUploadJSON[i].indexOf(doctype) == 0) {
+                        thisDocArray.push(iDocUploadJSON[i]);
+                    }
+                }
+
+                $("#pleaseWait").hide();
+
+
+                if(thisDocArray.length > 0) 
+                {
+                    $("#docTable tbody").html('');
+                    $("#docIbox").show();
+                
+                    var hrefLink = "https://ghrstorage.blob.core.windows.net/identity/" + gEmpId + "/";
+
+                    if(thisDocArray.length >= 2){
+                        $("#docUpload").hide();
+                    }
+                    else
+                    {
+                        $("#docUpload").show();
+                    }
+
+                    
+
+                    for(i=0;i<thisDocArray.length;i++) {
+
+                        var docType = thisDocArray[i].split('/')[0];
+                        var rawTime = thisDocArray[i].split('/')[1];
+
+                        var year = rawTime.substring(0,4);
+                        var month = rawTime.substring(4,6);
+                        var date = rawTime.substring(6,8);
+                        var hour = rawTime.substring(8,10);
+                        var minute = rawTime.substring(10,12);
+
+                        var uploadTime = date + "-" + month + "-" + year + " " + hour + ":" + minute;
+
+                        var attachmentRow =  '<tr><td>' + (i+1) + '</td><td>' + docType + '</td><td>' + uploadTime +'</td><td><a target="_blank" href="' + hrefLink + thisDocArray[i] + '"><i class="fa fa-download" title="Download"></i></a> &nbsp; <a href="#" onclick="deleteIDoc(\'' + (gEmpId +'-' + thisDocArray[i]).replace(/\//g, "-") + '\')"><i class="fa fa-remove" title="Delete"></i></a></td></tr>'
+
+                        //prompt("",attachmentRow);
+                        $("#docTable tbody").append(attachmentRow);
+                    }
+                }
+                else
+                {
+                    $("#docIbox").hide();
+                    $("#docUpload").show();
+
+                }
+            });
+        }
+
+        function deleteIDoc(docId) {
+            sweetAlert(
+                {   
+                title: "Are you sure?",   
+                text: "You will not be able to recover this file!",   
+                type: "warning",   
+                showCancelButton: true,   
+                confirmButtonColor: "#DD6B55",   
+                confirmButtonText: "Yes, delete it!",   
+                closeOnConfirm: false 
+                }, function(isConfirm){   
+                    if (isConfirm) {
+                        var deleteDocIdURL = '../deleteIDoc/'+ docId;
+
+                        $.getJSON(deleteDocIdURL, function (result) {
+                            if (result==1) {
+                                $('#idUploadModal').modal('toggle'); 
+                                sweetAlert("Deleted!", "Your file has been deleted.", "success");  
+
+                            }
+                            else {
+                                sweetAlert("Unable to delete the document!", "Please try again later.", "error");  
+                            }
+                        });
+
+                    } else {     
+                        sweetAlert("Cancelled", "Your is not deleted", "error");   
+                    }
+                });
+        }
         
         function loadAddress(empId) {
             var addressURL = '../getEmpShortAddressList/'+ empId;
@@ -1358,7 +1549,7 @@
 
                 if(totItems > 0) {
                     $("#addressContent").addClass('no-padding');
-                    $("#addressNoData").hide('fade');
+                    $("#addressNoData").hide();
                     var i = 0;
                     var iconText;
                     $("#addressList").html('');
@@ -1386,7 +1577,7 @@
 
                 if(totItems > 0) {
                 $("#contactDetailsContent").addClass('no-padding');
-                $("#contactDetailNoData").hide('fade');
+                $("#contactDetailNoData").hide();
                 var i = 0;
                 var iconText;
                 $("#contactDetailsList").html('');
@@ -1445,11 +1636,11 @@
             });
         }
 
-
-
         function closeModal() {
             $('#profileImageModal').modal('hide');
             $('#mainProfilePic').attr("src", '<%= System.Web.Configuration.WebConfigurationManager.AppSettings["ProfileURL"] + Session["EmpId"] %>');
+            $('#smallProfileImg').attr("src", '<%= System.Web.Configuration.WebConfigurationManager.AppSettings["ProfileURL"] + Session["EmpId"] + "?" + DateTime.Now.ToString("ddMMyyyyhhmmsstt") %>');
+
 
         }
 
@@ -1493,6 +1684,34 @@
 
         }
 
+        function loadiDocUpload(empId)
+        {
+            var iDocUploadURL = '../getIDocUploads/'+ empId;
+           
+            $.getJSON(iDocUploadURL, function (iDocUploadResult) {
+                iDocUploadJSON = iDocUploadResult;
+            });
+        
+        }
+
+        function zeroPad(num, places) {
+            var zero = places - num.toString().length + 1;
+            return Array(+(zero > 0 && zero)).join("0") + num;
+        }
+
+        function docName() {
+            
+            var d = new Date();
+            return (d.getFullYear() + zeroPad((d.getMonth()+1),2) + zeroPad(d.getDate(),2) + zeroPad(d.getHours(),2) +  zeroPad(d.getMinutes(),2) +  zeroPad(d.getSeconds(),2));
+        
+        }
+
+        function closeUploadModal() {
+            $('#idUploadModal').modal('toggle'); 
+
+            sweetAlert("Document Saved!", "Your document is succesfully uploaded.", "success");
+
+        }
 
     </script>
 

@@ -1,6 +1,10 @@
 ﻿using adminpanel.Models;
+using Microsoft.Azure;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Blob;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -226,6 +230,51 @@ namespace adminpanel.Controllers
         {
             return db.getShortAddress(1, EmpId);
         }
-    }
 
+        [Route("getIDocUploads/{EmpId}")]
+        [HttpGet]
+
+        public dynamic getIDocUploads(int EmpId)
+        {
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(System.Configuration.ConfigurationManager.AppSettings["StorageConnectionString"]);
+            CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
+            CloudBlobContainer container = blobClient.GetContainerReference("identity");
+
+            IEnumerable<IListBlobItem> listBlobs = container.ListBlobs(EmpId + "/", true);
+
+            List<string> iDocList = new List<string>();
+
+            string urlName =  System.Configuration.ConfigurationManager.AppSettings["GenericURL"] + "identity/" + EmpId + "/";
+
+            for (int i = 0; i < listBlobs.Count(); i++)
+            {
+                iDocList.Add(listBlobs.ElementAt(i).Uri.ToString().Replace(urlName, ""));
+            }
+
+            return iDocList;
+
+        }
+
+        [Route("deleteIDoc/{DocId}")]
+        [HttpGet]
+
+        public int deleteIDoc(string DocId)
+        {
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(System.Configuration.ConfigurationManager.AppSettings["StorageConnectionString"]);
+            CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
+            CloudBlobContainer container = blobClient.GetContainerReference("identity");
+
+            CloudBlob blob = container.GetBlobReference(DocId.Replace("-","/"));
+
+            try
+            {
+                blob.Delete();
+                return 1;
+            }
+            catch
+            {
+                return -1;
+            }
+        }
+    }
 }

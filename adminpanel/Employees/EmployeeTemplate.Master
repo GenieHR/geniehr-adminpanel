@@ -43,7 +43,7 @@
         <ul class="nav metismenu" id="side-menu">
                 <li class="nav-header">
                     <div class="dropdown profile-element"> <span>
-                            <img alt="image" class="img-circle" src="../img/pp/blank.png" />
+                            <img id="smallProfileImg" alt="image" class="img-circle" onerror="this.src='../img/pp/blank.png'" style="width:48px;height:48px" src="<%= System.Web.Configuration.WebConfigurationManager.AppSettings["ProfileURL"] + Session["EmpId"] %>" />
                              </span>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold"><%= Session["loggedinuserName"] %></strong>

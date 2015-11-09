@@ -24,6 +24,7 @@ namespace adminpanel
             CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
 
             string doctype = context.Request.Params["doctype"];
+            string docname = context.Request.Params["docname"];
 
             if (string.Compare(doctype, "profile", true) == 0)
             { 
@@ -54,7 +55,7 @@ namespace adminpanel
                         HttpPostedFile file = context.Request.Files[s];
                         string fileName = file.FileName;
                         string fileExtension = file.ContentType;
-
+                        
                         if (!string.IsNullOrEmpty(fileName))
                         {
                             CloudBlobContainer container = blobClient.GetContainerReference("identity");
@@ -65,7 +66,7 @@ namespace adminpanel
                                 PublicAccess = BlobContainerPublicAccessType.Blob
                             });
 
-                            CloudBlockBlob blockBlob = container.GetBlockBlobReference(empId.ToString() + "/" + doctype + "/" + DateTime.Now.ToString("yyyyMMddhhmmss"));
+                            CloudBlockBlob blockBlob = container.GetBlockBlobReference(empId.ToString() + "/" + doctype + "/" + docname + "." );//+ [fileName.Split(".").Length-1]);
                             blockBlob.UploadFromStream(context.Request.Files[s].InputStream);
                         }
                     }
