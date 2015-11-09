@@ -23,6 +23,7 @@ namespace adminpanel.Models
             this.claimHistories = new HashSet<claimHistory>();
             this.ClaimRevisions = new HashSet<ClaimRevision>();
             this.EmpContactDetails = new HashSet<EmpContactDetail>();
+            this.EmergencyContacts = new HashSet<EmergencyContact>();
         }
     
         public int EmpId { get; set; }
@@ -47,5 +48,6 @@ namespace adminpanel.Models
         public virtual EmpFinDetail EmpFinDetail { get; set; }
         public virtual EmpIdentity EmpIdentity { get; set; }
         public virtual ICollection<EmpContactDetail> EmpContactDetails { get; set; }
+        public virtual ICollection<EmergencyContact> EmergencyContacts { get; set; }
     }
 }

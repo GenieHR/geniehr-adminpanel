@@ -730,6 +730,10 @@
     <Compile Include="Models\Address.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EmerContactModal.cs" />
+    <Compile Include="Models\EmergencyContact.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\EmpAddressDetail.cs" />
     <Compile Include="Models\AddressType.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
@@ -866,6 +870,9 @@
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Organization.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Relation.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ubietydbEntities.Context.cs">

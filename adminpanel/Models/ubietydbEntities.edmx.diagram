@@ -64,6 +64,11 @@
         <EntityTypeShape EntityType="ubietydbModel.EmpContactDetail" Width="1.5" PointX="13.25" PointY="19.25" />
         <AssociationConnector Association="ubietydbModel.FK_EmpContactDetail_contactType" />
         <AssociationConnector Association="ubietydbModel.FK_EmpContactDetail_Employee" />
+        <EntityTypeShape EntityType="ubietydbModel.EmergencyContact" Width="1.5" PointX="18.625" PointY="5.875" />
+        <AssociationConnector Association="ubietydbModel.FK_EmergencyContact_Employee" />
+        <EntityTypeShape EntityType="ubietydbModel.Relation" Width="1.5" PointX="16.375" PointY="0.875" />
+        <AssociationConnector Association="ubietydbModel.FK_EmergencyContact_Relation" />
+        <AssociationConnector Association="ubietydbModel.FK_EmergencyContact_EntityAddress" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

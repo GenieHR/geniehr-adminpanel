@@ -14,6 +14,11 @@ namespace adminpanel.Models
     
     public partial class EntityAddress
     {
+        public EntityAddress()
+        {
+            this.EmergencyContacts = new HashSet<EmergencyContact>();
+        }
+    
         public int EntityAddressId { get; set; }
         public int EntityId { get; set; }
         public int EntityTypId { get; set; }
@@ -21,5 +26,6 @@ namespace adminpanel.Models
     
         public virtual Address Address { get; set; }
         public virtual EntityType EntityType { get; set; }
+        public virtual ICollection<EmergencyContact> EmergencyContacts { get; set; }
     }
 }

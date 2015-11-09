@@ -10,6 +10,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Description;
 
 namespace adminpanel.Controllers
 {
@@ -263,7 +264,6 @@ namespace adminpanel.Controllers
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse(System.Configuration.ConfigurationManager.AppSettings["StorageConnectionString"]);
             CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
             CloudBlobContainer container = blobClient.GetContainerReference("identity");
-
             CloudBlob blob = container.GetBlobReference(DocId.Replace("-","/"));
 
             try
@@ -275,6 +275,105 @@ namespace adminpanel.Controllers
             {
                 return -1;
             }
+        }
+
+        [Route("getRelations/")]
+        [HttpGet]
+
+        public IEnumerable<Relation> getRelations()
+        {
+            db.Configuration.ProxyCreationEnabled = false;
+
+            return db.Relations.ToList();
+        }
+
+        [Route("postEmergencyContact/")]
+        //[ResponseType(typeof(EmergencyContact))]
+
+        [HttpPost]
+        public int postEmergencyContact(EmerContactModal emerContactModal)
+        {
+            db.Configuration.ProxyCreationEnabled = false;
+
+            TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
+            DateTime currentTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+
+            EmpContactDetail ecd = new EmpContactDetail();
+            
+            if (emerContactModal.stdcode != null)
+            {
+                ecd.contactTypeId = 5;
+                ecd.contactLable = emerContactModal.contactName;
+                ecd.contactData = emerContactModal.stdcode + "-" + emerContactModal.phonenumber;
+                ecd.contactLineId = db.getNextContactLineId(emerContactModal.EmpId).First() ?? 0;
+                ecd.EmpId = emerContactModal.EmpId;
+                db.EmpContactDetails.Add(ecd);
+                db.SaveChanges();
+            }
+
+            if (emerContactModal.emailAddress != null)
+            {
+                ecd = new EmpContactDetail();
+                ecd.contactTypeId = 4;
+                ecd.contactLable = emerContactModal.contactName;
+                ecd.contactData = emerContactModal.emailAddress;
+                ecd.contactLineId = db.getNextContactLineId(emerContactModal.EmpId).First() ?? 0;
+                ecd.EmpId = emerContactModal.EmpId;
+                db.EmpContactDetails.Add(ecd);
+                db.SaveChanges();
+            }
+
+            if (emerContactModal.mobileNumber.ToString() != null)
+            {
+                ecd = new EmpContactDetail();
+                ecd.contactTypeId = 3;
+                ecd.contactLable = emerContactModal.contactName;
+                ecd.contactData = emerContactModal.mobileNumber.ToString();
+                ecd.contactLineId = db.getNextContactLineId(emerContactModal.EmpId).First() ?? 0;
+                ecd.EmpId = emerContactModal.EmpId;
+                db.EmpContactDetails.Add(ecd);
+                db.SaveChanges();
+            }
+
+            Address address = new Address();
+
+            address.AddressName = emerContactModal.contactName;
+            address.AddressTypId = 5;
+            address.Address1 = emerContactModal.address1;
+            address.Address2 = emerContactModal.address2;
+            address.City = emerContactModal.city;
+            address.State = emerContactModal.state;
+            address.Pincode = emerContactModal.pincode;
+
+            db.Addresses.Add(address);
+
+            if (db.SaveChanges() == 1)
+            {
+                EntityAddress ea = new EntityAddress();
+
+                ea.EntityId = emerContactModal.EmpId;
+                ea.EntityTypId = 3;
+                ea.AddressId = address.AddressId;
+
+                db.EntityAddresses.Add(ea);
+
+                if (db.SaveChanges() == 1) 
+                { 
+                    EmergencyContact ec = new EmergencyContact();
+
+                    ec.EmpId = emerContactModal.EmpId;
+                    ec.ContactName = emerContactModal.contactName;
+                    ec.Relation = emerContactModal.relation;
+
+                    ec.entityaddressid = ea.EntityAddressId;
+
+                    ec.createdate = currentTime;
+                    db.EmergencyContacts.Add(ec);
+
+                    return db.SaveChanges();
+                }
+            }
+            return -1;            
         }
     }
 }

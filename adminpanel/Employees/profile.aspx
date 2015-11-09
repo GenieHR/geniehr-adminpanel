@@ -129,6 +129,100 @@
         </div>
     </div>
 
+
+    <div class="modal inmodal fade" id="emergencyDetailModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+                    <form method="post" class="form-horizontal" id="emergencyDetailForm" >
+
+            <div class="modal-content">
+                
+                <div class="modal-header">
+                    <button type="button" data-dismiss="modal" class="close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Enter your emergency contact</h4>
+                    <small class="font-bold">Enter the detail of the person to be contacted in case of an emergency</small>
+                </div>
+                <div class="modal-body ">
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Contact Name</label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" required="required"  id="eContactName"/>                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Relation</label>
+                            <div class="col-lg-8">
+                                <select class="form-control" id="eContactRelation">
+                                        <option selected="selected" value="0">Loading...</option>
+                                    </select>                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Email</label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control"  id="eEmail"/>                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Mobile</label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control"  id="eMobile"/>                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Landline</label>
+                            <div class="col-lg-3">
+                                <input type="text" class="form-control" placeholder="STD Code" id="eStdCode"/>                            </div>
+                            <div class="col-lg-5">
+                                <input type="text" class="form-control" placeholder="Phone No" id="ePhoneNo"/>                            </div>
+                        </div>
+
+                        <div class="hr-line-dashed"></div>
+                        <h4 class="text-info">Postal Address</h4>
+                        <div class="hr-line-dashed"></div>
+                        
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Address 1</label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" required="required"  id="eAddress1"/>                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Address 2</label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control"  id="eAddress2"/>                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">City</label>
+                            <div class="col-lg-4">
+                                <input type="text" class="form-control" required="required"  id="eCity"/>                            </div>
+                            <label class="col-lg-1 control-label">State</label>
+                            <div class="col-lg-3">
+                                <input type="text" class="form-control"  id="eState"/>                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Pincode</label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control"  id="ePincode"/>                            </div>
+                        </div>
+                    
+                    </div>
+                </div>
+                <div class="modal-footer">
+                     <input type="submit" class="btn btn-success" />
+                    <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                </div>
+            
+
+            </div>
+                         </form>
+        </div>
+    </div>
+
     <div class="modal inmodal fade" id="finDetailsModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
                     <form method="get" class="form-horizontal" id="finDetailForm" >
@@ -916,7 +1010,7 @@
                                     <i class="fa fa-plus"></i>
                                 </a>
                                 <ul class="dropdown-menu dropdown-user">
-                                    <li><a href="#">New Emergency Contact</a>
+                                    <li><a href="#" data-target="#emergencyDetailModal" data-toggle="modal">Add New Emergency Contact</a>
                                     </li>
 
                                 </ul>
@@ -1118,7 +1212,28 @@
             });
         });
 
-        
+        $('#emergencyDetailModal').on('shown.bs.modal', function() {
+
+            var relationsURL = '../getRelations/';
+            //alert($('#eContactRelation option').length);
+            if ( $('#eContactRelation option').length == 1) {
+                $.getJSON(relationsURL, function (items) {
+                    alert(items.length);
+                    $.each(items, function (i, item) {
+                        $('#eContactRelation').append($('<option>', { 
+                            value: item.id,
+                            text : item.RelationName 
+                        }));
+                    });
+                    $('#eContactRelation option[value="0"]').text('Select Relation');
+                });
+            }
+            else
+            {
+                $("#eContactRelation").val('0');
+            }
+        });
+
 
         $('.collapse-link.contactDetailBox').click(function () {
             var ibox = $(this).closest('div.ibox');
@@ -1226,6 +1341,42 @@
                 datatype: "json"
             });
         });
+
+        $( "#emergencyDetailForm" ).submit(function( event ) {
+            
+            event.preventDefault();
+
+            var emergencyDetailJSON = {
+
+                "EmpId"     :   gEmpId,
+                "contactName"  :   $("#eContactName").val(),
+                "relation":   $("#eContactRelation").val(),
+                "emailAddress":   $("#eEmail").val(),
+                "mobileNumber"  :   $("#eMobile").val(),
+                "address1":   $("#eAddress1").val(),
+                "address2":   $("#eAddress2").val(),
+                "city":   $("#eCity").val(),
+                "state":   $("#eState").val(),
+                "pincode":   $("#ePincode").val(),
+                "stdcode":   $("#eStdCode").val(),
+                "phonenumber":   $("#ePhoneNo").val()
+
+            };
+        
+            prompt("",JSON.stringify(emergencyDetailJSON));
+
+            $.ajax({
+                type: "POST",
+                url: "../postEmergencyContact",
+                //url: "../api/profile",
+
+                data: emergencyDetailJSON,
+                success: function(result) { alert(result); },//emergencyDetailSubmitSuccess(result); },
+                datatype: "json"
+            });
+        });
+
+
 
         $( "#contactDetailForm" ).submit(function( event ) {
             
@@ -1535,11 +1686,39 @@
                         });
 
                     } else {     
-                        sweetAlert("Cancelled", "Your is not deleted", "error");   
+                        sweetAlert("Cancelled", "Your file is not deleted", "error");   
                     }
                 });
         }
-        
+      
+        function loadEmergencyContacts(empId) {
+            var addressURL = '../getEmpShortAddressList/'+ empId;
+
+            $.getJSON(addressURL, function (addressDetails) {
+            
+                var totItems = addressDetails.length;
+
+                if(totItems > 0) {
+                    $("#addressContent").addClass('no-padding');
+                    $("#addressNoData").hide();
+                    var i = 0;
+                    var iconText;
+                    $("#addressList").html('');
+                    for (i=0;i<totItems;i++) {
+
+                        if (addressDetails[i].AddressTypeId == 1) {iconText = '<span class="fa fa-home"></span>&nbsp;';} else {iconText = '<span class="fa fa-building"></span>&nbsp;';}
+                
+                        $("#addressList").append('<li class="list-group-item"><span class="text-left">' + iconText + addressDetails[i].AddressName +'</span><span class="pull-right text-success">'+ addressDetails[i].City + '</span></li>');
+                    }
+                }
+                else
+                {
+                    $("#addressNoData").html('No Data Available');
+                }
+            });
+        }
+      
+
         function loadAddress(empId) {
             var addressURL = '../getEmpShortAddressList/'+ empId;
 
@@ -1650,6 +1829,7 @@
                 $('#finDetailsModal').modal('toggle');
             }
         }
+
 
         function loadFinancialDetails(empId) {
             var finDetailsURL = '../GetFinDetail/'+ empId;
