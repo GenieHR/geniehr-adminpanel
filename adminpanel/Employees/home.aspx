@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="home.aspx.cs" Title="Employee Home" MasterPageFile="~/Employees/EmployeeTemplate.Master" Inherits="adminpanel.Employees.home" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="home.aspx.cs" Title="Employee Home" MasterPageFile="~/Employees/EmployeeTemplate.Master" Inherits="adminpanel.passwords.home" %>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="body" runat="server">
 
@@ -6,7 +6,7 @@
              
                     <div class="row">
                         <h2>Welcome <%= Session["loggedinuserName"] %></h2>
-                        <small> <a href="profile.aspx">View Profile</a></small>
+                        <small> <a href="profile.aspx">Continue to your profile</a></small>
                     </div>
              <div class="row col-sm-4">
              <%--<ul class="list-group clear-list m-t">
@@ -40,8 +40,41 @@
                                 </span>
                                 <span class="label label-primary">5</span> Write a letter to Sandra
                             </li>
-                        </ul>           --%>  </div>
-            </div>
+                        </ul>           --%>  
+
+             </div>
+            </div>    <blockquote>
+    Welcome to the Self Service Portal of <span class="text-info">GenieHR Solutions Pvt. Ltd.</span>
+<br />
+<br />
+    <span class="text-danger">An updated profile and contact information helps us in serving you better.</span>
+<br />
+<br />
+
+    This portal allows you to view all your information and change some of your information. 
+        You can view and change the following
+        <br />
+        <br />
+    <ol>
+        <li> Your historical pay statements. </li>
+        <li> Your profile and education details. </li>
+
+        <li> Addresses and contact information. </li>
+        <li> Education upgradation. </li>
+        <li> Your bank details. </li>
+        <li> Your pan number. </li>
+    </ol>
+
+    Hope you will find the portal useful and will keep your details updated. 
+
+<br />
+<br />
+Thanks and enjoy the experience
+
+        </blockquote>
+<%--In case of any technical difficulties, pls contact us on laks@geniehr.com
+Alternately you can also reach us at +91-8888888--%>
+
 
 
 </asp:Content>

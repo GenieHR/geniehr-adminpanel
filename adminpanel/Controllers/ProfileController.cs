@@ -1,4 +1,6 @@
 ﻿using adminpanel.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Azure;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
@@ -226,11 +228,28 @@ namespace adminpanel.Controllers
         }
 
         [Route("getEmpShortAddressList/{EmpId}")]
-        [HttpGet]
+        [HttpPost]
         public dynamic postContactDetail(int EmpId)
         {
             return db.getShortAddress(1, EmpId);
         }
+
+        [Route("change/")]
+        [HttpPost]
+
+        public IdentityResult changePassword(passwordModel pm)
+        {
+            Employee emp = db.Employees.Find(pm.EmpId);
+
+            var userStore = new UserStore<IdentityUser>();
+            var UserManager = new UserManager<IdentityUser>(userStore);
+
+            var user = UserManager.FindByName(emp.Email);
+
+            return UserManager.ChangePassword(user.Id, pm.oldPassword, pm.newPassword);
+
+        }
+
 
         [Route("getIDocUploads/{EmpId}")]
         [HttpGet]

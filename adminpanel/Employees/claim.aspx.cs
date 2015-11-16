@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace adminpanel.Employees
+namespace adminpanel.passwords
 {
     public partial class claim : System.Web.UI.Page
     {

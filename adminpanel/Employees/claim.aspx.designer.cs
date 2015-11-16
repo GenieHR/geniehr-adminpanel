@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace adminpanel.Employees {
+namespace adminpanel.passwords {
     
     
     public partial class claim {

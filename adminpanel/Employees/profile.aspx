@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Employee Profile" Language="C#" MasterPageFile="~/Employees/EmployeeTemplate.Master" AutoEventWireup="true" CodeBehind="profile.aspx.cs" Inherits="adminpanel.Employees.profile" %>
+﻿<%@ Page Title="Employee Profile" Language="C#" MasterPageFile="~/Employees/EmployeeTemplate.Master" AutoEventWireup="true" CodeBehind="profile.aspx.cs" Inherits="adminpanel.passwords.profile" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link href="../css/plugins/jcrop/jquery.Jcrop.min.css" rel="stylesheet" />
@@ -6,7 +6,6 @@
     <link href="../css/plugins/dropzone/dropzone.css" rel="stylesheet" />
     <link href="../css/plugins/datapicker/datepicker3.css" rel="stylesheet" />
     <link href="../css/plugins/sweetalert/sweetalert.css" rel="stylesheet" />
-
 
     <style>
         .EmpId {}
@@ -58,7 +57,9 @@
                             <label class="col-lg-3 control-label" id="docName"></label>
 
                             <div class="col-lg-8">
-                                <input type="hidden" id="doctype"/>                                <input type="text"   class="form-control" id="DocNum" required="required"/>                            </div>
+                                <input type="hidden" id="doctype"/>
+                                <input type="text"   class="form-control" id="DocNum" required="required"/>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -112,7 +113,8 @@
 
                         </div>
                     </div>
-                </div>                    </div>
+                </div>
+                    </div>
                         <div id="docUpload" class="dropzone">
                         <div class="dz-default dz-message">
                             Click to select document to upload 
@@ -146,7 +148,8 @@
                         <div class="form-group">
                             <label class="col-lg-3 control-label">Contact Name</label>
                             <div class="col-lg-8">
-                                <input type="text" class="form-control" required="required"  id="eContactName"/>                            </div>
+                                <input type="text" class="form-control" required="required"  id="eContactName"/>
+                            </div>
                         </div>
 
                         <div class="form-group">
@@ -154,28 +157,33 @@
                             <div class="col-lg-8">
                                 <select class="form-control" id="eContactRelation">
                                         <option selected="selected" value="0">Loading...</option>
-                                    </select>                            </div>
+                                    </select>
+                            </div>
                         </div>
 
 
                         <div class="form-group">
                             <label class="col-lg-3 control-label">Email</label>
                             <div class="col-lg-8">
-                                <input type="text" class="form-control"  id="eEmail"/>                            </div>
+                                <input type="text" class="form-control"  id="eEmail"/>
+                            </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-lg-3 control-label">Mobile</label>
                             <div class="col-lg-8">
-                                <input type="text" class="form-control"  id="eMobile"/>                            </div>
+                                <input type="text" class="form-control"  id="eMobile"/>
+                            </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-lg-3 control-label">Landline</label>
                             <div class="col-lg-3">
-                                <input type="text" class="form-control" placeholder="STD Code" id="eStdCode"/>                            </div>
+                                <input type="text" class="form-control" placeholder="STD Code" id="eStdCode"/>
+                            </div>
                             <div class="col-lg-5">
-                                <input type="text" class="form-control" placeholder="Phone No" id="ePhoneNo"/>                            </div>
+                                <input type="text" class="form-control" placeholder="Phone No" id="ePhoneNo"/>
+                            </div>
                         </div>
 
                         <div class="hr-line-dashed"></div>
@@ -185,29 +193,34 @@
                         <div class="form-group">
                             <label class="col-lg-3 control-label">Address 1</label>
                             <div class="col-lg-8">
-                                <input type="text" class="form-control" required="required"  id="eAddress1"/>                            </div>
+                                <input type="text" class="form-control" required="required"  id="eAddress1"/>
+                            </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-lg-3 control-label">Address 2</label>
                             <div class="col-lg-8">
-                                <input type="text" class="form-control"  id="eAddress2"/>                            </div>
+                                <input type="text" class="form-control"  id="eAddress2"/>
+                            </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-lg-3 control-label">City</label>
                             <div class="col-lg-4">
-                                <input type="text" class="form-control" required="required"  id="eCity"/>                            </div>
+                                <input type="text" class="form-control" required="required"  id="eCity"/>
+                            </div>
                             <label class="col-lg-1 control-label">State</label>
                             <div class="col-lg-3">
-                                <input type="text" class="form-control"  id="eState"/>                            </div>
+                                <input type="text" class="form-control"  id="eState"/>
+                            </div>
                         </div>
 
 
                         <div class="form-group">
                             <label class="col-lg-3 control-label">Pincode</label>
                             <div class="col-lg-8">
-                                <input type="text" class="form-control"  id="ePincode"/>                            </div>
+                                <input type="text" class="form-control"  id="ePincode"/>
+                            </div>
                         </div>
                     
                     </div>
@@ -241,7 +254,8 @@
 
                             <div class="col-lg-8">
 
-                                <input type="text" class="form-control"  id="iBankName"/>
+                                <input type="text" class="form-control"  id="iBankName"/>
+
                                 <%--<select id="select2_bankName" class="form-control">
                                     <option></option>
                                     <option value="Bahamas">Bahamas</option>
@@ -252,13 +266,15 @@
 
                             </div>
                         </div>
-                                <%--<input type="hidden" class="EmpId"/>--%>
+                                <%--<input type="hidden" class="EmpId"/>--%>
+
                         <div class="form-group">
                             <label class="col-lg-3 control-label">Branch</label>
 
                             <div class="col-lg-8">
 
-                                <input type="text" class="form-control" name="BranchName"  id="iBranchName"/>
+                                <input type="text" class="form-control" name="BranchName"  id="iBranchName"/>
+
                                 
                             </div>
                         </div>
@@ -268,7 +284,8 @@
 
                             <div class="col-lg-8">
 
-                                <input type="text" class="form-control"  id="iAccountNum"/>
+                                <input type="text" class="form-control"  id="iAccountNum"/>
+
                                 
                             </div>
                         </div>
@@ -278,7 +295,8 @@
 
                             <div class="col-lg-8">
 
-                                <input type="text" maxlength="11" class="form-control"  id="iIFSCCode"/>
+                                <input type="text" maxlength="11" class="form-control"  id="iIFSCCode"/>
+
                                 
                             </div>
                         </div>
@@ -288,7 +306,8 @@
 
                             <div class="col-lg-8">
 
-                                <input type="text" class="form-control"  id="iSwiftCode"/>
+                                <input type="text" class="form-control"  id="iSwiftCode"/>
+
                                 
                             </div>
                         </div>
@@ -325,7 +344,8 @@
 
                             <div class="col-lg-8">
 
-                                <input type="text" class="form-control"  id="contactData"/>
+                                <input type="text" class="form-control"  id="contactData"/>
+
                             </div>
                         </div>
                         <div class="form-group">
@@ -333,10 +353,16 @@
 
                             <div class="col-lg-8">
 
-                                <input type="text" class="form-control"  id="contactLabel"/>                                <span class="help-block m-b-none">Enter a short name to describe the contact detail (official, personal etc) </span>
+                                <input type="text" class="form-control"  id="contactLabel"/>
+                                <span class="help-block m-b-none">Enter a short name to describe the contact detail (official, personal etc) </span>
                             </div>
                         </div>
-                                <%--<input type="hidden" class="EmpId"/>--%>                                <input type="hidden" id="contactType"/>                    
+
+
+                                <%--<input type="hidden" class="EmpId"/>--%>
+                                <input type="hidden" id="contactType"/>
+
+                    
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -371,7 +397,8 @@
 
                             <div class="col-lg-8">
 
-                                <input type="text" class="form-control"  required="required" id="AddressName"/>
+                                <input type="text" class="form-control"  required="required" id="AddressName"/>
+
                                 <span class="help-block m-b-none">Enter a short name to describe the address (like home, guest house etc) </span>
                                 
 
@@ -383,7 +410,8 @@
 
                             <div class="col-lg-8">
 
-                                <input type="text" class="form-control"  required="required" id="Address1"/>
+                                <input type="text" class="form-control"  required="required" id="Address1"/>
+
                                 <%--<select id="select2_bankName" class="form-control">
                                     <option></option>
                                     <option value="Bahamas">Bahamas</option>
@@ -400,7 +428,8 @@
 
                             <div class="col-lg-8">
 
-                                <input type="text" class="form-control"   id="Address2"/>
+                                <input type="text" class="form-control"   id="Address2"/>
+
                                 
                             </div>
                         </div>
@@ -410,7 +439,8 @@
 
                             <div class="col-lg-8">
 
-                                <input type="text" class="form-control" required="required"  id="City"/>
+                                <input type="text" class="form-control" required="required"  id="City"/>
+
                                 
                             </div>
                         </div>
@@ -420,7 +450,8 @@
 
                             <div class="col-lg-8">
 
-                                <input type="text" maxlength="11" class="form-control" required="required"  id="State"/>
+                                <input type="text" maxlength="11" class="form-control" required="required"  id="State"/>
+
                                 
                             </div>
                         </div>
@@ -430,7 +461,8 @@
 
                             <div class="col-lg-8">
 
-                                <input type="text" class="form-control" maxlength="6"  id="Pincode"/>
+                                <input type="text" class="form-control" maxlength="6"  id="Pincode"/>
+
                                 
                             </div>
                         </div>
@@ -585,7 +617,8 @@
                     </div>
                 </div>
                     <form method="get" class="form-horizontal" id="basicDetailForm" >
-                                <%--<input type="hidden" class="EmpId"/>--%>
+                                <%--<input type="hidden" class="EmpId"/>--%>
+
                 <div class="ibox-content">
                     <div class="form-horizontal">
                         <h4 class="text-info">Full Name</h4>
@@ -1173,7 +1206,8 @@
             //$("#select2_bankName").select2({
             //    placeholder: "Select a state",
             //    allowClear: true, 
-            //});
+            //});
+
            // var empId = <%//= Session["EmpId"] %>;
             
             //alert(docName());
@@ -1215,10 +1249,8 @@
         $('#emergencyDetailModal').on('shown.bs.modal', function() {
 
             var relationsURL = '../getRelations/';
-            //alert($('#eContactRelation option').length);
             if ( $('#eContactRelation option').length == 1) {
                 $.getJSON(relationsURL, function (items) {
-                    alert(items.length);
                     $.each(items, function (i, item) {
                         $('#eContactRelation').append($('<option>', { 
                             value: item.id,
@@ -1363,7 +1395,7 @@
 
             };
         
-            prompt("",JSON.stringify(emergencyDetailJSON));
+            //prompt("",JSON.stringify(emergencyDetailJSON));
 
             $.ajax({
                 type: "POST",
@@ -1371,7 +1403,7 @@
                 //url: "../api/profile",
 
                 data: emergencyDetailJSON,
-                success: function(result) { alert(result); },//emergencyDetailSubmitSuccess(result); },
+                success: function(result) { sweetAlert("Succesfully Added","","success"); },//emergencyDetailSubmitSuccess(result); },
                 datatype: "json"
             });
         });
@@ -1596,7 +1628,8 @@
             calendarWeeks: true,
             autoclose: true,
             format: "MM dd, yyyy"
-        });
+        });
+
         function updateDocList(doctype, docname)
         {
             var thisDocArray = new Array();
@@ -1647,7 +1680,6 @@
 
                         var attachmentRow =  '<tr><td>' + (i+1) + '</td><td>' + docType + '</td><td>' + uploadTime +'</td><td><a target="_blank" href="' + hrefLink + thisDocArray[i] + '"><i class="fa fa-download" title="Download"></i></a> &nbsp; <a href="#" onclick="deleteIDoc(\'' + (gEmpId +'-' + thisDocArray[i]).replace(/\//g, "-") + '\')"><i class="fa fa-remove" title="Delete"></i></a></td></tr>'
 
-                        //prompt("",attachmentRow);
                         $("#docTable tbody").append(attachmentRow);
                     }
                 }

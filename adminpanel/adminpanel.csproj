@@ -245,6 +245,7 @@
     <Content Include="css\plugins\jcrop\jquery.Jcrop.min.css" />
     <Content Include="css\plugins\select2\select2.min.css" />
     <Content Include="css\plugins\sweetalert\sweetalert.css" />
+    <Content Include="Employees\changePassword.aspx" />
     <Content Include="Employees\claim.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap.css" />
@@ -618,6 +619,13 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
+    <Compile Include="Employees\changePassword.aspx.cs">
+      <DependentUpon>changePassword.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Employees\changePassword.aspx.designer.cs">
+      <DependentUpon>changePassword.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Employees\claim.aspx.cs">
       <DependentUpon>claim.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -872,6 +880,7 @@
     <Compile Include="Models\Organization.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\passwordModel.cs" />
     <Compile Include="Models\Relation.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
