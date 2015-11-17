@@ -228,7 +228,7 @@ namespace adminpanel.Controllers
         }
 
         [Route("getEmpShortAddressList/{EmpId}")]
-        [HttpPost]
+        [HttpGet]
         public dynamic postContactDetail(int EmpId)
         {
             return db.getShortAddress(1, EmpId);
@@ -283,7 +283,7 @@ namespace adminpanel.Controllers
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse(System.Configuration.ConfigurationManager.AppSettings["StorageConnectionString"]);
             CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
             CloudBlobContainer container = blobClient.GetContainerReference("identity");
-            CloudBlob blob = container.GetBlobReference(DocId.Replace("-","/"));
+            CloudBlob blob = container.GetBlobReference(DocId.Replace("-","/").Replace("_","."));
 
             try
             {

@@ -254,7 +254,7 @@
 
                             <div class="col-lg-8">
 
-                                <input type="text" class="form-control"  id="iBankName"/>
+                                <input type="text" class="form-control" required="required"  id="iBankName"/>
 
                                 <%--<select id="select2_bankName" class="form-control">
                                     <option></option>
@@ -273,7 +273,7 @@
 
                             <div class="col-lg-8">
 
-                                <input type="text" class="form-control" name="BranchName"  id="iBranchName"/>
+                                <input type="text" class="form-control" required="required" name="BranchName"  id="iBranchName"/>
 
                                 
                             </div>
@@ -284,7 +284,7 @@
 
                             <div class="col-lg-8">
 
-                                <input type="text" class="form-control"  id="iAccountNum"/>
+                                <input type="text" class="form-control" required="required"  id="iAccountNum"/>
 
                                 
                             </div>
@@ -295,7 +295,7 @@
 
                             <div class="col-lg-8">
 
-                                <input type="text" maxlength="11" class="form-control"  id="iIFSCCode"/>
+                                <input type="text" maxlength="11" required="required" class="form-control"  id="iIFSCCode"/>
 
                                 
                             </div>
@@ -1222,7 +1222,7 @@
                 maxFiles: 1,
                 queuecomplete : function() { closeUploadModal(); },
                 maxFileSize: 2,
-                acceptedFiles: 'image/*',
+                acceptedFiles: 'image/*,.pdf',
                 addRemoveLinks: false,
                 
                 success: function (file, response) {
@@ -1526,11 +1526,11 @@
 
         $('#finDetailsModal').on('shown.bs.modal', function () {
 
-            $("#iBankName").val($("#BankName").html());
-            $("#iBranchName").val($("#BranchName").html());
-            $("#iAccountNum").val($("#AccountNum").html());
-            $("#iIFSCCode").val($("#IFSCCode").html());
-            $("#iSwiftCode").val($("#SwiftCode").html());
+            $("#iBankName").val($.trim($("#BankName").html()));
+            $("#iBranchName").val($.trim($("#BranchName").html()));
+            $("#iAccountNum").val($.trim($("#AccountNum").html()));
+            $("#iIFSCCode").val($.trim($("#IFSCCode").html()));
+            $("#iSwiftCode").val($.trim($("#SwiftCode").html()));
 
         });
 
@@ -1663,8 +1663,6 @@
                         $("#docUpload").show();
                     }
 
-                    
-
                     for(i=0;i<thisDocArray.length;i++) {
 
                         var docType = thisDocArray[i].split('/')[0];
@@ -1678,7 +1676,7 @@
 
                         var uploadTime = date + "-" + month + "-" + year + " " + hour + ":" + minute;
 
-                        var attachmentRow =  '<tr><td>' + (i+1) + '</td><td>' + docType + '</td><td>' + uploadTime +'</td><td><a target="_blank" href="' + hrefLink + thisDocArray[i] + '"><i class="fa fa-download" title="Download"></i></a> &nbsp; <a href="#" onclick="deleteIDoc(\'' + (gEmpId +'-' + thisDocArray[i]).replace(/\//g, "-") + '\')"><i class="fa fa-remove" title="Delete"></i></a></td></tr>'
+                        var attachmentRow =  '<tr><td>' + (i+1) + '</td><td>' + docType + '</td><td>' + uploadTime +'</td><td><a target="_blank" href="' + hrefLink + thisDocArray[i] + '"><i class="fa fa-download" title="Download"></i></a> &nbsp; <a href="#" onclick="deleteIDoc(\'' + (gEmpId +'-' + thisDocArray[i]).replace(/\//g, "-").replace(".","_") + '\')"><i class="fa fa-trash" title="Delete"></i></a></td></tr>'
 
                         $("#docTable tbody").append(attachmentRow);
                     }
@@ -1693,6 +1691,9 @@
         }
 
         function deleteIDoc(docId) {
+
+            //alert(docId);
+            
             sweetAlert(
                 {   
                 title: "Are you sure?",   
@@ -1710,15 +1711,13 @@
                             if (result==1) {
                                 $('#idUploadModal').modal('toggle'); 
                                 sweetAlert("Deleted!", "Your file has been deleted.", "success");  
-
                             }
                             else {
                                 sweetAlert("Unable to delete the document!", "Please try again later.", "error");  
                             }
                         });
-
                     } else {     
-                        sweetAlert("Cancelled", "Your file is not deleted", "error");   
+                        sweetAlert("Cancelled", "Your file is not deleted", "warning");   
                     }
                 });
         }

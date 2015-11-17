@@ -54,7 +54,9 @@ namespace adminpanel
                     {
                         HttpPostedFile file = context.Request.Files[s];
                         string fileName = file.FileName;
-                        string fileExtension = file.ContentType;
+                        string fileExtension = file.FileName.Split('.')[file.FileName.Split('.').Length - 1];
+
+                        //string fileExtension = file.ContentType;
                         
                         if (!string.IsNullOrEmpty(fileName))
                         {
@@ -66,7 +68,8 @@ namespace adminpanel
                                 PublicAccess = BlobContainerPublicAccessType.Blob
                             });
 
-                            CloudBlockBlob blockBlob = container.GetBlockBlobReference(empId.ToString() + "/" + doctype + "/" + docname + "." );//+ [fileName.Split(".").Length-1]);
+                            CloudBlockBlob blockBlob = container.GetBlockBlobReference(empId.ToString() + "/" + doctype + "/" + docname + "." + fileExtension);
+
                             blockBlob.UploadFromStream(context.Request.Files[s].InputStream);
                         }
                     }
