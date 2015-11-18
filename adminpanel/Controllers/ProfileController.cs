@@ -394,5 +394,15 @@ namespace adminpanel.Controllers
             }
             return -1;            
         }
+
+        [Route("getEmergencySummary/{EmpId}")]
+        [HttpGet]
+        public dynamic getEmergencySummary(int EmpId)
+        {
+            return db.getEmergencyHeader(EmpId);
+        }
+
+
     }
 }
+

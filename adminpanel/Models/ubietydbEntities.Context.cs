@@ -208,5 +208,14 @@ namespace adminpanel.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getShortAddress_Result>("getShortAddress", entityTypeParameter, empIdParameter);
         }
+    
+        public virtual ObjectResult<getEmergencyHeader_Result> getEmergencyHeader(Nullable<int> empId)
+        {
+            var empIdParameter = empId.HasValue ?
+                new ObjectParameter("EmpId", empId) :
+                new ObjectParameter("EmpId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getEmergencyHeader_Result>("getEmergencyHeader", empIdParameter);
+        }
     }
 }

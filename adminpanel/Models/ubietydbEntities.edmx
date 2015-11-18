@@ -726,6 +726,9 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <Parameter Name="managerId" Type="int" Mode="In" />
           <Parameter Name="numDays" Type="int" Mode="In" />
         </Function>
+        <Function Name="getEmergencyHeader" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EmpId" Type="int" Mode="In" />
+        </Function>
         <Function Name="getEmpContactDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EmpId" Type="int" Mode="In" />
         </Function>
@@ -1400,6 +1403,9 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
             <End Role="EntityAddress" EntitySet="EntityAddresses" />
             <End Role="EmergencyContact" EntitySet="EmergencyContacts" />
           </AssociationSet>
+          <FunctionImport Name="getEmergencyHeader" ReturnType="Collection(ubietydbModel.getEmergencyHeader_Result)">
+            <Parameter Name="EmpId" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="Group">
           <Key>
@@ -2008,6 +2014,11 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="getEmergencyHeader_Result">
+          <Property Type="String" Name="ContactName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="RelationName" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="EntityAddressId" Nullable="false" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2509,6 +2520,15 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="getEmergencyHeader" FunctionName="ubietydbModel.Store.getEmergencyHeader">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ubietydbModel.getEmergencyHeader_Result">
+                <ScalarProperty Name="ContactName" ColumnName="ContactName" />
+                <ScalarProperty Name="RelationName" ColumnName="RelationName" />
+                <ScalarProperty Name="EntityAddressId" ColumnName="EntityAddressId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

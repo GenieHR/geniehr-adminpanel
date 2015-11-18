@@ -1047,17 +1047,17 @@
                                     </li>
 
                                 </ul>
-                                <a class="collapse-link">
+                                <a class="collapse-link emerBox">
                                     <i class="fa fa-chevron-up"></i>
                                 </a>
 
                             </div>
                         </div>
-                        <div class="ibox-content">
-                            <%--<ul class="list-group">
+                        <div class="ibox-content" id="emerContent">
+                            <ul class="list-group" id="emerList">
+                                </ul>
 
-
-
+<%--
                                 <li class="list-group-item">
                                     <span class="text-left">Father 
 
@@ -1094,7 +1094,7 @@
 
                             </ul>--%>
 
-                            <h4 class="text-center">No Data Available</h4>
+                            <h4 class="text-center" id="emerNoData">No Data Available</h4>
                         </div>
                     </div>
                 </div>
@@ -1197,7 +1197,7 @@
 
     <script>
 
-        var myDropzone, contactDetailLoaded = false, addressLoaded = false;
+        var myDropzone, contactDetailLoaded = false, addressLoaded = false, emerLoaded = false;
         var iDocUploadJSON,gDocType,gDocName;
         var gEmpId = <%= Session["EmpId"] %>;
 
@@ -1297,6 +1297,19 @@
             }
         });
 
+        $('.collapse-link.emerBox').click(function () {
+            var ibox = $(this).closest('div.ibox');
+            var button = $(this).find('i');
+            if(!emerLoaded){
+                if (button.hasClass('fa-chevron-up')) {
+                
+                    emerLoaded = true;    
+                    $("#emerNoData").html('Fething Data...');
+
+                    loadEmergencyContacts(gEmpId);
+                }
+            }
+        });
 
         $(document).on("click", ".docLink", function () {
 
@@ -1395,7 +1408,6 @@
 
             };
         
-            //prompt("",JSON.stringify(emergencyDetailJSON));
 
             $.ajax({
                 type: "POST",
@@ -1403,7 +1415,9 @@
                 //url: "../api/profile",
 
                 data: emergencyDetailJSON,
-                success: function(result) { sweetAlert("Succesfully Added","","success"); },//emergencyDetailSubmitSuccess(result); },
+                success: function(result) { 
+                    emerDetSubmitSuccess(result);
+                },
                 datatype: "json"
             });
         });
@@ -1723,28 +1737,28 @@
         }
       
         function loadEmergencyContacts(empId) {
-            var addressURL = '../getEmpShortAddressList/'+ empId;
+            var emerContactURL = '../getEmergencySummary/'+ empId;
 
-            $.getJSON(addressURL, function (addressDetails) {
+            $.getJSON(emerContactURL, function (emerDetails) {
             
-                var totItems = addressDetails.length;
+                var totItems = emerDetails.length;
 
                 if(totItems > 0) {
-                    $("#addressContent").addClass('no-padding');
-                    $("#addressNoData").hide();
+                    $("#emerContent").addClass('no-padding');
+                    $("#emerNoData").hide();
                     var i = 0;
-                    var iconText;
-                    $("#addressList").html('');
+                    var iconText = '';
+                    $("#emerList").html('');
                     for (i=0;i<totItems;i++) {
 
-                        if (addressDetails[i].AddressTypeId == 1) {iconText = '<span class="fa fa-home"></span>&nbsp;';} else {iconText = '<span class="fa fa-building"></span>&nbsp;';}
+                        //if (addressDetails[i].AddressTypeId == 1) {iconText = '<span class="fa fa-home"></span>&nbsp;';} else {iconText = '<span class="fa fa-building"></span>&nbsp;';}
                 
-                        $("#addressList").append('<li class="list-group-item"><span class="text-left">' + iconText + addressDetails[i].AddressName +'</span><span class="pull-right text-success">'+ addressDetails[i].City + '</span></li>');
+                        $("#emerList").append('<li class="list-group-item"><span class="text-left">' + iconText + emerDetails[i].ContactName +'</span><span class="pull-right text-success">'+ emerDetails[i].RelationName + '</span></li>');
                     }
                 }
                 else
                 {
-                    $("#addressNoData").html('No Data Available');
+                    $("#emerNoData").html('No Data Available');
                 }
             });
         }
@@ -1858,6 +1872,15 @@
             if(result == 1) {
                 loadFinancialDetails(gEmpId);
                 $('#finDetailsModal').modal('toggle');
+            }
+        }
+
+        function emerDetSubmitSuccess(result) {
+            if(result == 1) {
+                loadEmergencyContacts(gEmpId);
+                $('#emergencyDetailModal').modal('toggle');
+                
+
             }
         }
 
