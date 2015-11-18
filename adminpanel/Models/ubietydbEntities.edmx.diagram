@@ -69,6 +69,13 @@
         <EntityTypeShape EntityType="ubietydbModel.Relation" Width="1.5" PointX="16.375" PointY="0.875" />
         <AssociationConnector Association="ubietydbModel.FK_EmergencyContact_Relation" />
         <AssociationConnector Association="ubietydbModel.FK_EmergencyContact_EntityAddress" />
+        <EntityTypeShape EntityType="ubietydbModel.Degree" Width="1.5" PointX="18.625" PointY="18.5" />
+        <EntityTypeShape EntityType="ubietydbModel.EmpQualification" Width="1.5" PointX="20.875" PointY="13.75" />
+        <EntityTypeShape EntityType="ubietydbModel.Qualification" Width="1.5" PointX="16.375" PointY="18.625" />
+        <AssociationConnector Association="ubietydbModel.FK_Degree_Qualification" />
+        <AssociationConnector Association="ubietydbModel.FK_EmpQualification_Degree" />
+        <AssociationConnector Association="ubietydbModel.FK_EmpQualification_Employee" />
+        <AssociationConnector Association="ubietydbModel.FK_EmpQualification_Qualification" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

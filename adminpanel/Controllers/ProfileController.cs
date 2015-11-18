@@ -403,6 +403,35 @@ namespace adminpanel.Controllers
         }
 
 
+        [Route("getQual/")]
+        [HttpGet]
+        public List<QualDTO> getQual()
+        {
+            db.Configuration.ProxyCreationEnabled = false;
+
+            return (from recordset in db.Qualifications
+                    select new QualDTO
+                    {
+                        QualId = recordset.Id,
+                        QualName = recordset.QualificationName
+                    }).ToList();
+        }
+
+
+        [Route("getDegreeByQual/{QualId}")]
+        [HttpGet]
+        public List<DegreeDTO> getDegreeByQual(int QualId)
+        {
+            db.Configuration.ProxyCreationEnabled = false;
+
+            return (from recordset in db.Degrees
+             where recordset.Qualification == QualId
+             select new DegreeDTO
+             {
+                 DegreeId = recordset.Id,
+                 DegreeName = recordset.DegreeName
+             }).ToList();
+        }
     }
 }
 

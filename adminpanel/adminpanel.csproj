@@ -738,6 +738,10 @@
     <Compile Include="Models\Address.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Degree.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DegreeDTO.cs" />
     <Compile Include="Models\EmerContactModal.cs" />
     <Compile Include="Models\EmergencyContact.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
@@ -817,6 +821,9 @@
     <Compile Include="Models\empProfBasicDetails_Result.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EmpQualification.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\EmpStatu.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
@@ -884,6 +891,10 @@
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\passwordModel.cs" />
+    <Compile Include="Models\QualDTO.cs" />
+    <Compile Include="Models\Qualification.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Relation.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>

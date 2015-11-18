@@ -121,6 +121,14 @@
           <Property Name="contactTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="contactTypeName" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="Degree">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DegreeName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Qualification" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="EmergencyContact">
           <Key>
             <PropertyRef Name="Id" />
@@ -214,6 +222,19 @@
           <Property Name="modified" Type="datetime" />
           <Property Name="created" Type="datetime" />
         </EntityType>
+        <EntityType Name="EmpQualification">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmpId" Type="int" Nullable="false" />
+          <Property Name="Qualification" Type="int" Nullable="false" />
+          <Property Name="Degree" Type="int" Nullable="false" />
+          <Property Name="Institution" Type="nvarchar" MaxLength="100" />
+          <Property Name="Year" Type="int" Nullable="false" />
+          <Property Name="Stream" Type="nvarchar" MaxLength="50" />
+          <Property Name="Percentage" Type="int" />
+        </EntityType>
         <EntityType Name="EmpStatus">
           <Key>
             <PropertyRef Name="EmpStatusId" />
@@ -291,6 +312,13 @@
           </Key>
           <Property Name="OrgId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="OrgName" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Qualification">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="QualificationName" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Relation">
           <Key>
@@ -484,6 +512,18 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Degree_Qualification">
+          <End Role="Qualification" Type="Self.Qualification" Multiplicity="1" />
+          <End Role="Degree" Type="Self.Degree" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Qualification">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Degree">
+              <PropertyRef Name="Qualification" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_EmergencyContact_Employee">
           <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
           <End Role="EmergencyContact" Type="Self.EmergencyContact" Multiplicity="*" />
@@ -601,6 +641,42 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
             </Principal>
             <Dependent Role="EmployeeDetail">
               <PropertyRef Name="MaritalStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpQualification_Degree">
+          <End Role="Degree" Type="Self.Degree" Multiplicity="1" />
+          <End Role="EmpQualification" Type="Self.EmpQualification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Degree">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmpQualification">
+              <PropertyRef Name="Degree" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpQualification_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="EmpQualification" Type="Self.EmpQualification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="EmpQualification">
+              <PropertyRef Name="EmpId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpQualification_Qualification">
+          <End Role="Qualification" Type="Self.Qualification" Multiplicity="1" />
+          <End Role="EmpQualification" Type="Self.EmpQualification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Qualification">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmpQualification">
+              <PropertyRef Name="Qualification" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -775,6 +851,7 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <EntitySet Name="ClaimStatusHistory" EntityType="Self.ClaimStatusHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="contactType" EntityType="Self.contactType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Degree" EntityType="Self.Degree" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmergencyContact" EntityType="Self.EmergencyContact" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmpClient" EntityType="Self.EmpClient" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmpContactDetail" EntityType="Self.EmpContactDetail" Schema="dbo" store:Type="Tables" />
@@ -782,6 +859,7 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <EntitySet Name="EmpIdentity" EntityType="Self.EmpIdentity" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmployeeDetail" EntityType="Self.EmployeeDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmpQualification" EntityType="Self.EmpQualification" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmpStatus" EntityType="Self.EmpStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EntityAddresses" EntityType="Self.EntityAddresses" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EntityType" EntityType="Self.EntityType" Schema="dbo" store:Type="Tables" />
@@ -792,6 +870,7 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <EntitySet Name="Login" EntityType="Self.Login" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MaritalStatus" EntityType="Self.MaritalStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Organization" EntityType="Self.Organization" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Qualification" EntityType="Self.Qualification" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Relation" EntityType="Self.Relation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="attByClient" EntityType="Self.attByClient" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -875,6 +954,10 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
             <End Role="ClaimStatus" EntitySet="ClaimStatus" />
             <End Role="ClaimStatusHistory" EntitySet="ClaimStatusHistory" />
           </AssociationSet>
+          <AssociationSet Name="FK_Degree_Qualification" Association="Self.FK_Degree_Qualification">
+            <End Role="Qualification" EntitySet="Qualification" />
+            <End Role="Degree" EntitySet="Degree" />
+          </AssociationSet>
           <AssociationSet Name="FK_EmergencyContact_Employee" Association="Self.FK_EmergencyContact_Employee">
             <End Role="Employee" EntitySet="Employee" />
             <End Role="EmergencyContact" EntitySet="EmergencyContact" />
@@ -914,6 +997,18 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <AssociationSet Name="FK_EmployeeDetail_MaritalStatus" Association="Self.FK_EmployeeDetail_MaritalStatus">
             <End Role="MaritalStatus" EntitySet="MaritalStatus" />
             <End Role="EmployeeDetail" EntitySet="EmployeeDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpQualification_Degree" Association="Self.FK_EmpQualification_Degree">
+            <End Role="Degree" EntitySet="Degree" />
+            <End Role="EmpQualification" EntitySet="EmpQualification" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpQualification_Employee" Association="Self.FK_EmpQualification_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="EmpQualification" EntitySet="EmpQualification" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpQualification_Qualification" Association="Self.FK_EmpQualification_Qualification">
+            <End Role="Qualification" EntitySet="Qualification" />
+            <End Role="EmpQualification" EntitySet="EmpQualification" />
           </AssociationSet>
           <AssociationSet Name="FK_EntityAddresses_Address" Association="Self.FK_EntityAddresses_Address">
             <End Role="Address" EntitySet="Address" />
@@ -1047,6 +1142,7 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <NavigationProperty Name="EmpIdentity" Relationship="ubietydbModel.FK_EmpIdentity_Employee" FromRole="Employee" ToRole="EmpIdentity" />
           <NavigationProperty Name="EmpContactDetails" Relationship="ubietydbModel.FK_EmpContactDetail_Employee" FromRole="Employee" ToRole="EmpContactDetail" />
           <NavigationProperty Name="EmergencyContacts" Relationship="ubietydbModel.FK_EmergencyContact_Employee" FromRole="Employee" ToRole="EmergencyContact" />
+          <NavigationProperty Name="EmpQualifications" Relationship="ubietydbModel.FK_EmpQualification_Employee" FromRole="Employee" ToRole="EmpQualification" />
         </EntityType>
         <EntityType Name="EmpStatu">
           <Key>
@@ -1404,8 +1500,27 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
             <End Role="EmergencyContact" EntitySet="EmergencyContacts" />
           </AssociationSet>
           <FunctionImport Name="getEmergencyHeader" ReturnType="Collection(ubietydbModel.getEmergencyHeader_Result)">
-            <Parameter Name="EmpId" Mode="In" Type="Int32" />
+          <Parameter Name="EmpId" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="Degrees" EntityType="ubietydbModel.Degree" />
+          <EntitySet Name="EmpQualifications" EntityType="ubietydbModel.EmpQualification" />
+          <EntitySet Name="Qualifications" EntityType="ubietydbModel.Qualification" />
+          <AssociationSet Name="FK_Degree_Qualification" Association="ubietydbModel.FK_Degree_Qualification">
+            <End Role="Qualification" EntitySet="Qualifications" />
+            <End Role="Degree" EntitySet="Degrees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpQualification_Degree" Association="ubietydbModel.FK_EmpQualification_Degree">
+            <End Role="Degree" EntitySet="Degrees" />
+            <End Role="EmpQualification" EntitySet="EmpQualifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpQualification_Employee" Association="ubietydbModel.FK_EmpQualification_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="EmpQualification" EntitySet="EmpQualifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpQualification_Qualification" Association="ubietydbModel.FK_EmpQualification_Qualification">
+            <End Role="Qualification" EntitySet="Qualifications" />
+            <End Role="EmpQualification" EntitySet="EmpQualifications" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Group">
           <Key>
@@ -2019,6 +2134,89 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <Property Type="String" Name="RelationName" Nullable="false" MaxLength="50" />
           <Property Type="Int32" Name="EntityAddressId" Nullable="false" />
         </ComplexType>
+        <EntityType Name="Degree">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DegreeName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Qualification" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Qualification1" Relationship="ubietydbModel.FK_Degree_Qualification" FromRole="Degree" ToRole="Qualification" />
+          <NavigationProperty Name="EmpQualifications" Relationship="ubietydbModel.FK_EmpQualification_Degree" FromRole="Degree" ToRole="EmpQualification" />
+        </EntityType>
+        <EntityType Name="EmpQualification">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmpId" Type="Int32" Nullable="false" />
+          <Property Name="Qualification" Type="Int32" Nullable="false" />
+          <Property Name="Degree" Type="Int32" Nullable="false" />
+          <Property Name="Institution" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Year" Type="Int32" Nullable="false" />
+          <Property Name="Stream" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Percentage" Type="Int32" />
+          <NavigationProperty Name="Degree1" Relationship="ubietydbModel.FK_EmpQualification_Degree" FromRole="EmpQualification" ToRole="Degree" />
+          <NavigationProperty Name="Employee" Relationship="ubietydbModel.FK_EmpQualification_Employee" FromRole="EmpQualification" ToRole="Employee" />
+          <NavigationProperty Name="Qualification1" Relationship="ubietydbModel.FK_EmpQualification_Qualification" FromRole="EmpQualification" ToRole="Qualification" />
+        </EntityType>
+        <EntityType Name="Qualification">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="QualificationName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Degrees" Relationship="ubietydbModel.FK_Degree_Qualification" FromRole="Qualification" ToRole="Degree" />
+          <NavigationProperty Name="EmpQualifications" Relationship="ubietydbModel.FK_EmpQualification_Qualification" FromRole="Qualification" ToRole="EmpQualification" />
+        </EntityType>
+        <Association Name="FK_Degree_Qualification">
+          <End Type="ubietydbModel.Qualification" Role="Qualification" Multiplicity="1" />
+          <End Type="ubietydbModel.Degree" Role="Degree" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Qualification">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Degree">
+              <PropertyRef Name="Qualification" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpQualification_Degree">
+          <End Type="ubietydbModel.Degree" Role="Degree" Multiplicity="1" />
+          <End Type="ubietydbModel.EmpQualification" Role="EmpQualification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Degree">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmpQualification">
+              <PropertyRef Name="Degree" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpQualification_Employee">
+          <End Type="ubietydbModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="ubietydbModel.EmpQualification" Role="EmpQualification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="EmpQualification">
+              <PropertyRef Name="EmpId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpQualification_Qualification">
+          <End Type="ubietydbModel.Qualification" Role="Qualification" Multiplicity="1" />
+          <End Type="ubietydbModel.EmpQualification" Role="EmpQualification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Qualification">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmpQualification">
+              <PropertyRef Name="Qualification" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2529,6 +2727,37 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="Degrees">
+            <EntityTypeMapping TypeName="ubietydbModel.Degree">
+              <MappingFragment StoreEntitySet="Degree">
+                <ScalarProperty Name="Qualification" ColumnName="Qualification" />
+                <ScalarProperty Name="DegreeName" ColumnName="DegreeName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmpQualifications">
+            <EntityTypeMapping TypeName="ubietydbModel.EmpQualification">
+              <MappingFragment StoreEntitySet="EmpQualification">
+                <ScalarProperty Name="Percentage" ColumnName="Percentage" />
+                <ScalarProperty Name="Stream" ColumnName="Stream" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Institution" ColumnName="Institution" />
+                <ScalarProperty Name="Degree" ColumnName="Degree" />
+                <ScalarProperty Name="Qualification" ColumnName="Qualification" />
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Qualifications">
+            <EntityTypeMapping TypeName="ubietydbModel.Qualification">
+              <MappingFragment StoreEntitySet="Qualification">
+                <ScalarProperty Name="QualificationName" ColumnName="QualificationName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
