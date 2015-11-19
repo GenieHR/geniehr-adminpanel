@@ -895,6 +895,9 @@
     <Compile Include="Models\Qualification.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\qualsummary_Result.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Relation.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>

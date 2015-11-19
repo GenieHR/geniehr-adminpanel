@@ -132,6 +132,8 @@
     </div>
 
 
+
+
     <div class="modal inmodal fade" id="emergencyDetailModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
                     <form method="post" class="form-horizontal" id="emergencyDetailForm" >
@@ -235,6 +237,94 @@
                          </form>
         </div>
     </div>
+
+
+
+    <div class="modal inmodal fade" id="QualModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <form method="post" class="form-horizontal" id="QualDetailForm">
+
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <button type="button" data-dismiss="modal" class="close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title">Enter Your Qualification Details</h4>
+                    </div>
+                    <div class="modal-body ">
+                        <div class="row">
+
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Qualification</label>
+                                <div class="col-lg-8">
+                                    <select class="form-control" id="qQualification">
+                                        <option selected="selected" value="0">Loading...</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Degree</label>
+                                <div class="col-lg-8">
+                                    <select class="form-control" id="qDegree">
+                                        <option selected="selected" value="0">Select Qualification First</option>
+                                    </select>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Stream </label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" id="qStream" />
+                                    <span class="help-block">Like Computers / Electronics / Mechanical etc.</span>
+
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Institution </label>
+
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" id="qUniversity" />
+                                    <span class="help-block text-muted">School / College / University Name</span>
+                                </div>
+                            
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Year </label>
+
+                                <div class="col-lg-8">
+                                    <input type="number" required="required" max="2015" min="1900" class="form-control" id="qYear" />
+                                    <span class="help-block">Year in which you got qualified</span>
+
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Percentage </label>
+
+                                <div class="col-lg-8">
+                                    <input type="number" required="required" min="0" max="99.99" class="form-control" id="qPercentage" />
+                                    <span class="help-block">Percentage attained</span>
+
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <input type="submit" class="btn btn-success" />
+
+                    <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
 
     <div class="modal inmodal fade" id="finDetailsModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
@@ -449,10 +539,7 @@
                             <label class="col-lg-3 control-label">State<sup>*</sup></label>
 
                             <div class="col-lg-8">
-
                                 <input type="text" maxlength="11" class="form-control" required="required"  id="State"/>
-
-                                
                             </div>
                         </div>
 
@@ -1057,43 +1144,6 @@
                             <ul class="list-group" id="emerList">
                                 </ul>
 
-<%--
-                                <li class="list-group-item">
-                                    <span class="text-left">Father 
-
-                                    </span>
-
-                                    <span class="pull-right text-success">Sohail Khan
-                                &nbsp;
-                                <span class="pull-right"><span class="fa fa-pencil"></span></span>
-                                    </span>
-                                </li>
-
-                                <li class="list-group-item">
-                                    <span class="text-left">Doctor 
-
-                                    </span>
-
-
-
-                                    <span class="pull-right text-success">Mahinder Kumar
-                                &nbsp;
-                                <span class="pull-right"><span class="fa fa-pencil"></span></span>
-                                    </span>
-                                </li>
-                                <li class="list-group-item">
-                                    <span class="text-left">Friend 
-
-                                    </span>
-
-                                    <span class="pull-right text-success">Suresh Patil
-                                &nbsp;
-                                <span class="pull-right"><span class="fa fa-pencil"></span></span>
-                                    </span>
-                                </li>
-
-                            </ul>--%>
-
                             <h4 class="text-center" id="emerNoData">No Data Available</h4>
                         </div>
                     </div>
@@ -1107,53 +1157,30 @@
                 <div class="col-sm-4">
                     <div class="ibox float-e-margins collapsed">
                         <div class="ibox-title">
-                            <h5>Education Details</h5>
+                            <h5>Qualification Details</h5>
                             <div class="ibox-tools">
 
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                                     <i class="fa fa-plus"></i>
                                 </a>
                                 <ul class="dropdown-menu dropdown-user">
-                                    <li><a href="#">Add New Detail</a>
+                                    <li><a href="#"  data-target="#QualModal" data-toggle="modal">Add New Qualification Detail</a>
                                     </li>
                                 </ul>
-                                <a class="collapse-link">
+                                <a class="collapse-link qualBox">
                                     <i class="fa fa-chevron-up"></i>
                                 </a>
 
                             </div>
                         </div>
-                        <div class="ibox-content">
-                            <%--<ul class="list-group">
+                        <div class="ibox-content" id="qualContent">
 
-                                <li class="list-group-item">
-                                    <span class="text-left"><span class="fa fa-paperclip"></span>&nbsp; B. Com
+                            <ul class="list-group" id="qualList">
 
-                                    </span>
+                                
+                            </ul>
 
-                                    <span class="pull-right text-success">2014 &nbsp; <i class="fa fa-pencil"></i>
-                                    </span>
-                                </li>
-                                <li class="list-group-item">
-                                    <span class="text-left"><span class="fa fa-paperclip"></span>&nbsp; Intermediate
-
-                                    </span>
-
-                                    <span class="pull-right text-success">2011 &nbsp; <i class="fa fa-pencil"></i>
-                                    </span>
-                                </li>
-                                <li class="list-group-item">
-                                    <span class="text-left"><span class="fa fa-paperclip"></span>&nbsp; Secondary School
-
-                                    </span>
-
-                                    <span class="pull-right text-success">2009 &nbsp; <i class="fa fa-pencil"></i>
-                                    </span>
-                                </li>
-
-                            </ul>--%>
-
-                            <h4 class="text-center">No Data Available</h4>
+                            <h4 class="text-center" id="qualNoData">No Data Available</h4>
                         </div>
                     </div>
                 </div>
@@ -1197,21 +1224,12 @@
 
     <script>
 
-        var myDropzone, contactDetailLoaded = false, addressLoaded = false, emerLoaded = false;
+        var myDropzone, contactDetailLoaded = false, addressLoaded = false, emerLoaded = false, qualLoaded = false;
         var iDocUploadJSON,gDocType,gDocName;
         var gEmpId = <%= Session["EmpId"] %>;
 
         $(window).load(function () {
-
-            //$("#select2_bankName").select2({
-            //    placeholder: "Select a state",
-            //    allowClear: true, 
-            //});
-
-           // var empId = <%//= Session["EmpId"] %>;
             
-            //alert(docName());
-
             loadiDocUpload(gEmpId);
             loadBasicProfile(gEmpId);
             loadFinancialDetails(gEmpId);
@@ -1266,6 +1284,67 @@
             }
         });
 
+        $('#QualModal').on('shown.bs.modal', function() {
+            var qualURL = '../getQual/';
+            if ( $('#qQualification option').length == 1) {
+                $.getJSON(qualURL, function (items) {
+                    $.each(items, function (i, item) {
+                        $('#qQualification').append($('<option>', { 
+                            value: item.QualId,
+                            text : item.QualName 
+                        }));
+                    });
+                    $('#qQualification option[value="0"]').text('Select Qualification');
+                });
+            }
+            else
+            {
+                $("#qQualification").val('0');
+            }
+        });
+
+        $( "#qQualification" ).change(function() {
+        
+            if ($('#qQualification').val() != 0) {
+            $('#qDegree option[value="0"]').text('Loading Degree...');
+
+            var degreeURL = '../getDegreeByQual/' + $('#qQualification').val();
+            
+            $('#qDegree option').each(function() {
+                if ( $(this).val() != 0 ) {
+                    $(this).remove();
+                }
+            });
+
+            if ( $('#qDegree option').length == 1) {
+                $.getJSON(degreeURL, function (items) {
+                    $.each(items, function (i, item) {
+                        $('#qDegree').append($('<option>', { 
+                            value: item.DegreeId,
+                            text : item.DegreeName 
+                        }));
+                    });
+                    $('#qDegree option[value="0"]').text('Select Degree');
+                });
+            }
+            else
+            {
+                $("#qDegree").val('0');
+            }
+            }
+            else
+            {
+                $('#qDegree option').each(function() {
+                    if ( $(this).val() != 0 ) {
+                        $(this).remove();
+                    }
+                });
+
+                $('#qDegree option[value="0"]').text('Select Qualification First');
+            }
+
+        });
+
 
         $('.collapse-link.contactDetailBox').click(function () {
             var ibox = $(this).closest('div.ibox');
@@ -1311,6 +1390,22 @@
             }
         });
 
+        $('.collapse-link.qualBox').click(function () {
+            var ibox = $(this).closest('div.ibox');
+            var button = $(this).find('i');
+            if(!qualLoaded){
+                if (button.hasClass('fa-chevron-up')) {
+                
+                    qualLoaded = true;    
+                    $("#qualNoData").html('Fething Data...');
+
+                    loadQualSummary(gEmpId);
+                }
+            }
+        });
+
+        
+        
         $(document).on("click", ".docLink", function () {
 
             Dropzone.autoDiscover = false;
@@ -1417,6 +1512,35 @@
                 data: emergencyDetailJSON,
                 success: function(result) { 
                     emerDetSubmitSuccess(result);
+                },
+                datatype: "json"
+            });
+        });
+
+        
+        $( "#QualDetailForm" ).submit(function( event ) {
+            
+            event.preventDefault();
+
+            var qualDetailJSON = {
+
+                "EmpId"     :   gEmpId,
+                "Qualification"  :   $("#qQualification").val(),
+                "Degree":   $("#qDegree").val(),
+                "Institution":   $("#qUniversity").val(),
+                "Year":   $("#qYear").val(),
+                "Stream":   $("#qStream").val(),
+                "Percentage":   $("#qPercentage").val()
+            };
+        
+
+            $.ajax({
+                type: "POST",
+                url: "../putQualDetails",
+
+                data: qualDetailJSON,
+                success: function(result) { 
+                    qualDetSubmitSuccess(result);
                 },
                 datatype: "json"
             });
@@ -1736,6 +1860,33 @@
                 });
         }
       
+        function loadQualSummary(empId) {
+            var qualURL = '../getQualSummary/'+ empId;
+
+            $.getJSON(qualURL, function (qualDetails) {
+            
+                var totItems = qualDetails.length;
+
+                if(totItems > 0) {
+                    $("#qualContent").addClass('no-padding');
+                    $("#qualNoData").hide();
+                    var i = 0;
+                    var iconText = '';
+                    $("#qualList").html('');
+                    for (i=0;i<totItems;i++) {
+
+                        //if (addressDetails[i].AddressTypeId == 1) {iconText = '<span class="fa fa-home"></span>&nbsp;';} else {iconText = '<span class="fa fa-building"></span>&nbsp;';}
+                
+                        $("#qualList").append('<li class="list-group-item"><span class="text-left">' + iconText + qualDetails[i].DegreeName +'</span><span class="pull-right text-success">'+ qualDetails[i].Year + '</span></li>');
+                    }
+                }
+                else
+                {
+                    $("#qualNoData").html('No Data Available');
+                }
+            });
+        }
+      
         function loadEmergencyContacts(empId) {
             var emerContactURL = '../getEmergencySummary/'+ empId;
 
@@ -1864,8 +2015,6 @@
             $('#profileImageModal').modal('hide');
             $('#mainProfilePic').attr("src", '<%= System.Web.Configuration.WebConfigurationManager.AppSettings["ProfileURL"] + Session["EmpId"] %>');
             $('#smallProfileImg').attr("src", '<%= System.Web.Configuration.WebConfigurationManager.AppSettings["ProfileURL"] + Session["EmpId"] + "?" + DateTime.Now.ToString("ddMMyyyyhhmmsstt") %>');
-
-
         }
 
         function finDetSubmitSuccess(result) {
@@ -1879,11 +2028,15 @@
             if(result == 1) {
                 loadEmergencyContacts(gEmpId);
                 $('#emergencyDetailModal').modal('toggle');
-                
-
             }
         }
 
+        function qualDetSubmitSuccess(result) {
+            if(result == 1) {
+                loadQualSummary(gEmpId);
+                $('#QualModal').modal('toggle');
+            }
+        }
 
         function loadFinancialDetails(empId) {
             var finDetailsURL = '../GetFinDetail/'+ empId;
@@ -1925,7 +2078,6 @@
             $.getJSON(iDocUploadURL, function (iDocUploadResult) {
                 iDocUploadJSON = iDocUploadResult;
             });
-        
         }
 
         function zeroPad(num, places) {

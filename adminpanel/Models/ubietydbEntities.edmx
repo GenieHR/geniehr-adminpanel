@@ -838,6 +838,9 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <Parameter Name="EntityType" Type="int" Mode="In" />
           <Parameter Name="EmpId" Type="int" Mode="In" />
         </Function>
+        <Function Name="qualsummary" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EmpId" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="ubietydbModelStoreContainer">
           <EntitySet Name="Address" EntityType="Self.Address" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AddressType" EntityType="Self.AddressType" Schema="dbo" store:Type="Tables" />
@@ -1521,6 +1524,9 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
             <End Role="Qualification" EntitySet="Qualifications" />
             <End Role="EmpQualification" EntitySet="EmpQualifications" />
           </AssociationSet>
+          <FunctionImport Name="qualsummary" ReturnType="Collection(ubietydbModel.qualsummary_Result)">
+            <Parameter Name="EmpId" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="Group">
           <Key>
@@ -2217,6 +2223,11 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="qualsummary_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="Int32" Name="Year" Nullable="false" />
+          <Property Type="String" Name="DegreeName" Nullable="false" MaxLength="50" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2758,6 +2769,15 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="qualsummary" FunctionName="ubietydbModel.Store.qualsummary">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ubietydbModel.qualsummary_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="DegreeName" ColumnName="DegreeName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

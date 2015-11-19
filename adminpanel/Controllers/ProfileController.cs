@@ -197,6 +197,17 @@ namespace adminpanel.Controllers
 
         }
 
+        [Route("putQualDetails/")]
+        [HttpPost]
+
+        public int postQualificationDetail(EmpQualification empQualificaiton)
+        {
+            db.Configuration.ProxyCreationEnabled = false;
+            db.EmpQualifications.Add(empQualificaiton);
+
+            return db.SaveChanges();
+        }
+
         [Route("putEmpAddress/")]
         [HttpPost]
         public int postContactDetail(EmpAddressDetail empAddressDetail)
@@ -431,6 +442,15 @@ namespace adminpanel.Controllers
                  DegreeId = recordset.Id,
                  DegreeName = recordset.DegreeName
              }).ToList();
+        }
+
+        [Route("getQualSummary/{EmpId}")]
+        [HttpGet]
+        public dynamic getQualSummary(int EmpId)
+        {
+            db.Configuration.ProxyCreationEnabled = false;
+
+            return db.qualsummary(EmpId).ToList();
         }
     }
 }
