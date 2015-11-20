@@ -818,6 +818,9 @@
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EmployeeDTO.cs" />
+    <Compile Include="Models\EmpPastEmp.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\empProfBasicDetails_Result.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
@@ -891,6 +894,7 @@
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\passwordModel.cs" />
+    <Compile Include="Models\PastEmpDTO.cs" />
     <Compile Include="Models\QualDTO.cs" />
     <Compile Include="Models\Qualification.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>

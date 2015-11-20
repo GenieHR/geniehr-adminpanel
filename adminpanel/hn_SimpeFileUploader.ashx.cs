@@ -22,7 +22,7 @@ namespace adminpanel
             string empId = HttpContext.Current.Session["EmpId"].ToString();
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("StorageConnectionString"));
             CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
-
+            
             string doctype = context.Request.Params["doctype"];
             string docname = context.Request.Params["docname"];
 

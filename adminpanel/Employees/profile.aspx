@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="Employee Profile" Language="C#" MasterPageFile="~/Employees/EmployeeTemplate.Master" AutoEventWireup="true" CodeBehind="profile.aspx.cs" Inherits="adminpanel.passwords.profile" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+
     <link href="../css/plugins/jcrop/jquery.Jcrop.min.css" rel="stylesheet" />
     <link href="../css/plugins/dropzone/basic.css" rel="stylesheet" />
     <link href="../css/plugins/dropzone/dropzone.css" rel="stylesheet" />
@@ -132,6 +133,80 @@
     </div>
 
 
+    <div class="modal inmodal fade" id="pastEmpModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+                    <form method="post" class="form-horizontal" id="pastEmpForm" >
+
+            <div class="modal-content">
+                
+                <div class="modal-header">
+                    <button type="button" data-dismiss="modal" class="close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Enter your Past Employement Details</h4>
+                    <small class="font-bold">Enter the details of the companies you have worked earlier</small>
+                </div>
+                <div class="modal-body ">
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Company Name</label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" required="required"  id="pCompany"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Designation</label>
+                            
+                              
+                                <div class="col-lg-8">
+                                <input type="text" class="form-control" required="required"  id="pDesignation"/>
+                            </div>
+                           
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Location</label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control"  id="pLocation"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Salary</label>
+                            <div class="col-lg-8">
+                                <input type="number" class="form-control"  id="pSalary"/>
+                                <span class="help-block">Last drawn salary</span>
+                            </div>
+                        </div>
+
+                        
+                        
+                        <div class="form-group" id="pFromTo">
+                            <label class="col-lg-3 control-label">Tenure</label>
+                            <div class="col-lg-8">
+                                <div class="input-daterange input-group" id="datepicker">
+                                    <input type="text" class="input-sm form-control" name="start" id="pFromDate" />
+                                    <span class="input-group-addon">to</span>
+                                    <input type="text" class="input-sm form-control" name="end" id="pToDate" />
+                                </div>
+                    <span class="help-block">Start and End date of your job</span>
+
+                            </div>
+                            </div>
+
+                        
+                    
+                    </div>
+                </div>
+                <div class="modal-footer">
+                     <input type="submit" class="btn btn-success" id="pastEmpSubmit" />
+                    <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                </div>
+            
+
+            </div>
+                         </form>
+        </div>
+    </div>
 
 
     <div class="modal inmodal fade" id="emergencyDetailModal" tabindex="-1" role="dialog" aria-hidden="true">
@@ -1174,12 +1249,8 @@
                             </div>
                         </div>
                         <div class="ibox-content" id="qualContent">
-
                             <ul class="list-group" id="qualList">
-
-                                
                             </ul>
-
                             <h4 class="text-center" id="qualNoData">No Data Available</h4>
                         </div>
                     </div>
@@ -1188,23 +1259,26 @@
                 <div class="col-sm-4">
                     <div class="ibox float-e-margins collapsed">
                         <div class="ibox-title">
-                            <h5>Past Employement</h5>
+                            <h5>Past Employment</h5>
                             <div class="ibox-tools">
 
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                                     <i class="fa fa-plus"></i>
                                 </a>
                                 <ul class="dropdown-menu dropdown-user">
-                                    <li><a href="#">Add New Detail</a>
+                                    <li><a href="#" data-target="#pastEmpModal" data-toggle="modal">Add New Detail</a>
+                                    <%--<li><a href="#" >Add New Detail</a>--%>
                                     </li>
                                 </ul>
-                                <a class="collapse-link">
+                                <a class="collapse-link pastEmpBox">
                                     <i class="fa fa-chevron-up"></i>
                                 </a>
                             </div>
                         </div>
-                        <div class="ibox-content">
-                            <h4 class="text-center">No Data Available</h4>
+                        <div class="ibox-content" id="pastEmpContent">
+                            <ul class="list-group" id="pastEmpList">
+                            </ul>
+                            <h4 class="text-center" id="pastEmpNoData">No Data Available</h4>
                         </div>
                     </div>
                 </div>
@@ -1224,7 +1298,7 @@
 
     <script>
 
-        var myDropzone, contactDetailLoaded = false, addressLoaded = false, emerLoaded = false, qualLoaded = false;
+        var myDropzone, contactDetailLoaded = false, addressLoaded = false, emerLoaded = false, qualLoaded = false, pastEmpLoaded = false;
         var iDocUploadJSON,gDocType,gDocName;
         var gEmpId = <%= Session["EmpId"] %>;
 
@@ -1237,11 +1311,17 @@
          
             myDropzone = new Dropzone("#docUpload", {
                 url: "../hn_SimpeFileUploader.ashx",
+                init: function () {
+                    this.on("complete", function (file) {
+                        if (!(file.xhr.response === 'undefined')) {
+                            closeUploadModal();
+                        }
+                    });
+                },
                 maxFiles: 1,
-                queuecomplete : function() { closeUploadModal(); },
-                maxFileSize: 2,
+                maxFilesize: 2,
                 acceptedFiles: 'image/*,.pdf',
-                addRemoveLinks: false,
+                addRemoveLinks: true,
                 
                 success: function (file, response) {
                     var imgName = response;
@@ -1264,6 +1344,7 @@
             });
         });
 
+        
         $('#emergencyDetailModal').on('shown.bs.modal', function() {
 
             var relationsURL = '../getRelations/';
@@ -1404,6 +1485,19 @@
             }
         });
 
+        $('.collapse-link.pastEmpBox').click(function () {
+            var ibox = $(this).closest('div.ibox');
+            var button = $(this).find('i');
+            if(!pastEmpLoaded){
+                if (button.hasClass('fa-chevron-up')) {
+                
+                    pastEmpLoaded = true;    
+                    $("#pastEmpNoData").html('Fething Data...');
+
+                    loadPastEmpSummary(gEmpId);
+                }
+            }
+        });
         
         
         $(document).on("click", ".docLink", function () {
@@ -1625,6 +1719,10 @@
             });
         });
 
+
+
+
+
         $( "#basicDetailForm" ).submit(function( event ) {
             
             $("#basicDetSubmit").prop("disabled", true);
@@ -1656,6 +1754,41 @@
                 if(result == 1) {
                     sweetAlert("Success", "Details uploaded Succesfully!", "success");
                     }
+                },
+                datatype: "json"
+            });
+        });
+
+        
+        $( "#pastEmpForm" ).submit(function( event ) {
+            
+            $("#pastEmpSubmit").prop("disabled", true);
+
+            event.preventDefault();
+
+            var pastEmpJSON = {
+
+                "EmpId"        : gEmpId, 
+                "Company"    : $("#pCompany").val(),
+                "Designation"  : $("#pDesignation").val(),
+                "Location"     : $("#pLocation").val(),
+                "FromDate"     : $("#pFromDate").val(),
+                "ToDate"   : $("#pToDate").val(),
+                "Salary"   : $("#pSalary").val()
+            };
+        
+            $.ajax({
+                type: "POST",
+                url: "../PostPastEmp",
+                data: pastEmpJSON,
+                success: function(result) { 
+
+                    $("#pastEmpSubmit").prop("disabled", false);
+
+                    pastEmpSubmitSuccess(result);
+
+                    //if(result == 1) {
+                    //}
                 },
                 datatype: "json"
             });
@@ -1740,6 +1873,8 @@
         $("#dZUpload").dropzone({
             url: "../hn_SimpeFileUploader.ashx?doctype=profile",
             maxFiles: 1,
+            maxFilesize: 2,
+            acceptedFiles: 'image/*',
             addRemoveLinks: true,
             success: function (file, response) {
                 var imgName = response;
@@ -1753,8 +1888,20 @@
                 $('#mainProfilePic')[0].src += new Date().getTime();
 
             },
+
             error: function (file, response) {
+                if($.type(response) === "string")
+                    var message = response; 
+                else
+                    var message = response.message;
                 file.previewElement.classList.add("dz-error");
+                _ref = file.previewElement.querySelectorAll("[data-dz-errormessage]");
+                _results = [];
+                for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+                    node = _ref[_i];
+                    _results.push(node.textContent = message);
+                }
+                return _results;
             }
         });
 
@@ -1765,9 +1912,16 @@
             forceParse: false,
             calendarWeeks: true,
             autoclose: true,
-            format: "MM dd, yyyy"
+            format: "MM - yyyy"
         });
 
+        $('#pFromTo .input-daterange').datepicker({
+            keyboardNavigation: false,
+            forceParse: false,
+            startView: 2,
+            autoclose: true,
+            format: "MM - yyyy"
+        });
         function updateDocList(doctype, docname)
         {
             var thisDocArray = new Array();
@@ -1784,7 +1938,6 @@
                 }
 
                 $("#pleaseWait").hide();
-
 
                 if(thisDocArray.length > 0) 
                 {
@@ -1823,14 +1976,11 @@
                 {
                     $("#docIbox").hide();
                     $("#docUpload").show();
-
                 }
             });
         }
 
         function deleteIDoc(docId) {
-
-            //alert(docId);
             
             sweetAlert(
                 {   
@@ -1887,6 +2037,35 @@
             });
         }
       
+        function loadPastEmpSummary(empId) {
+
+            var pastEmpContactURL = '../getpastEmpSummary/'+ empId;
+
+            $.getJSON(pastEmpContactURL, function (pastEmpDetails) {
+            
+                var totItems = pastEmpDetails.length;
+
+                if(totItems > 0) {
+                    $("#pastEmpContent").addClass('no-padding');
+                    $("#pastEmpNoData").hide();
+                    var i = 0;
+                    var iconText = '';
+                    $("#pastEmpList").html('');
+                    for (i=0;i<totItems;i++) {
+
+                        //if (addressDetails[i].AddressTypeId == 1) {iconText = '<span class="fa fa-home"></span>&nbsp;';} else {iconText = '<span class="fa fa-building"></span>&nbsp;';}
+                
+                        $("#pastEmpList").append('<li class="list-group-item"><span class="text-left">' + iconText + pastEmpDetails[i].companyName +'</span><span class="pull-right text-success">'+ pastEmpDetails[i].designation + '</span></li>');
+                    }
+                }
+                else
+                {
+                    $("#pastEmpNoData").html('No Data Available');
+                }
+            });
+
+        }        
+
         function loadEmergencyContacts(empId) {
             var emerContactURL = '../getEmergencySummary/'+ empId;
 
@@ -2038,6 +2217,15 @@
             }
         }
 
+        function pastEmpSubmitSuccess(result)
+        {
+            if(result == 1) {
+                loadPastEmpSummary(gEmpId);
+                $('#pastEmpModal').modal('toggle');
+                sweetAlert("Success", "Past Employee Details Saved Succesfully!", "success");
+            }
+        }
+
         function loadFinancialDetails(empId) {
             var finDetailsURL = '../GetFinDetail/'+ empId;
 
@@ -2093,6 +2281,7 @@
         }
 
         function closeUploadModal() {
+            //alert(result);
             $('#idUploadModal').modal('toggle'); 
 
             sweetAlert("Document Saved!", "Your document is succesfully uploaded.", "success");

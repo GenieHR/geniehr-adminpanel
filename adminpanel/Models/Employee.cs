@@ -25,6 +25,7 @@ namespace adminpanel.Models
             this.EmpContactDetails = new HashSet<EmpContactDetail>();
             this.EmergencyContacts = new HashSet<EmergencyContact>();
             this.EmpQualifications = new HashSet<EmpQualification>();
+            this.EmpPastEmps = new HashSet<EmpPastEmp>();
         }
     
         public int EmpId { get; set; }
@@ -51,5 +52,6 @@ namespace adminpanel.Models
         public virtual ICollection<EmpContactDetail> EmpContactDetails { get; set; }
         public virtual ICollection<EmergencyContact> EmergencyContacts { get; set; }
         public virtual ICollection<EmpQualification> EmpQualifications { get; set; }
+        public virtual ICollection<EmpPastEmp> EmpPastEmps { get; set; }
     }
 }

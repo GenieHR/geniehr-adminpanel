@@ -12,21 +12,19 @@ namespace adminpanel.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class EmpQualification
+    public partial class EmpPastEmp
     {
         public int Id { get; set; }
         public int EmpId { get; set; }
-        public int Qualification { get; set; }
-        public int Degree { get; set; }
-        public string Institution { get; set; }
-        public int Year { get; set; }
-        public string Stream { get; set; }
-        public Nullable<int> Percentage { get; set; }
-        public Nullable<System.DateTime> createdate { get; set; }
-        public Nullable<System.DateTime> modifieddate { get; set; }
+        public string Company { get; set; }
+        public string Designation { get; set; }
+        public string Location { get; set; }
+        public Nullable<decimal> Salary { get; set; }
+        public string FromDate { get; set; }
+        public string ToDate { get; set; }
+        public Nullable<System.DateTime> CreateDate { get; set; }
+        public Nullable<System.DateTime> ModifiedDate { get; set; }
     
-        public virtual Degree Degree1 { get; set; }
         public virtual Employee Employee { get; set; }
-        public virtual Qualification Qualification1 { get; set; }
     }
 }

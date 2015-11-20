@@ -76,6 +76,8 @@
         <AssociationConnector Association="ubietydbModel.FK_EmpQualification_Degree" />
         <AssociationConnector Association="ubietydbModel.FK_EmpQualification_Employee" />
         <AssociationConnector Association="ubietydbModel.FK_EmpQualification_Qualification" />
+        <EntityTypeShape EntityType="ubietydbModel.EmpPastEmp" Width="1.5" PointX="5.25" PointY="26.25" />
+        <AssociationConnector Association="ubietydbModel.FK_EmpPastEmp_Employee" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

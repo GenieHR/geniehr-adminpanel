@@ -203,10 +203,33 @@ namespace adminpanel.Controllers
         public int postQualificationDetail(EmpQualification empQualificaiton)
         {
             db.Configuration.ProxyCreationEnabled = false;
+            TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
+            DateTime currentTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+
+            empQualificaiton.createdate = currentTime;
+
             db.EmpQualifications.Add(empQualificaiton);
 
             return db.SaveChanges();
         }
+
+        [Route("PostPastEmp/")]
+        [HttpPost]
+
+        public int postPastEmployment(EmpPastEmp empPastEmp)
+        {
+            db.Configuration.ProxyCreationEnabled = false;
+
+            TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
+            DateTime currentTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+
+            empPastEmp.CreateDate = currentTime;
+
+            db.EmpPastEmps.Add(empPastEmp);
+
+            return db.SaveChanges();
+        }
+
 
         [Route("putEmpAddress/")]
         [HttpPost]
@@ -428,6 +451,22 @@ namespace adminpanel.Controllers
                     }).ToList();
         }
 
+        [Route("getpastEmpSummary/{EmpId}")]
+        [HttpGet]
+        public List<PastEmpDTO> pastEmp(int EmpId)
+        {
+            db.Configuration.ProxyCreationEnabled = false;
+
+            return (from recordset in db.EmpPastEmps
+                    where recordset.EmpId == EmpId
+                    select new PastEmpDTO
+                    {
+                        pastEmpId = recordset.Id,
+                        companyName = recordset.Company,
+                        designation = recordset.Designation
+                    }).ToList();
+        }
+
 
         [Route("getDegreeByQual/{QualId}")]
         [HttpGet]
@@ -450,8 +489,11 @@ namespace adminpanel.Controllers
         {
             db.Configuration.ProxyCreationEnabled = false;
 
+
             return db.qualsummary(EmpId).ToList();
         }
+
+
     }
 }
 
