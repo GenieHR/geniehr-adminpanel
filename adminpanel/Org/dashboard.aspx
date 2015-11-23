@@ -1,8 +1,7 @@
-﻿<%@ Page Title="Quick Reports" Language="C#" MasterPageFile="~/template.Master" AutoEventWireup="true" CodeBehind="dashboard.aspx.cs" Inherits="adminpanel.dashboard" %>
+﻿<%@ Page Title="Quick Reports" Language="C#" MasterPageFile="~/Org/OrgTemplate.Master" AutoEventWireup="true" CodeBehind="dashboard.aspx.cs" Inherits="adminpanel.Org.dashboard" %>
 
-
-<asp:Content ID="Content2" ContentPlaceHolderID="body" runat="server">
-            <style type="text/css">
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+              <style type="text/css">
 .paging-nav {
   text-align: right;
   padding-top: 2px;
@@ -23,7 +22,13 @@
   font-weight: bold;
 }
 </style>
+
     <link href="css/plugins/datapicker/datepicker3.css" rel="stylesheet" />
+
+</asp:content>
+
+<asp:Content ID="Content2" ContentPlaceHolderID="body" runat="server">
+  
     
     <%--<div class="container">
     <div class="menu-wrap">
@@ -48,7 +53,7 @@
     <div class="row wrapper border-bottom white-bg page-heading">
  
         <div class="col-lg-10">
-                <h1 class="text-info"><%= Request.QueryString["Client"].Split('|')[1] %></h1>
+                <h1 class="text-info" id="clientName"></h1>
                 <h3>Quick Reports</h3>
 
             </div>
@@ -56,7 +61,7 @@
         <div class="col-lg-2 pull-right">
             <br />
             <br />
-        <a href="ShowEmployees.aspx?Client=<%= Request.QueryString["Client"] %>" class="btn btn-xs btn-outline btn-primary">Show all Employees</a>
+        <%--<a href="ShowEmployees.aspx?Client=<%= Request.QueryString["Client"] %>" class="btn btn-xs btn-outline btn-primary">Show all Employees</a>--%>
 
             </div>
             
@@ -146,7 +151,7 @@
 
         </asp:Content>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="javascriptPart" runat="server">
+<asp:Content ID="Content3" ContentPlaceHolderID="javascriptPart" runat="server">
 
     <script src="js/plugins/date/date.js"></script>
     <script src="js/plugins/date/extras.js"></script>
@@ -160,6 +165,8 @@
 <script>
     
     var url = '<%= ConfigurationManager.AppSettings["StorageURL"] %>';
+
+    $("#clientName").html(localStorage.getItem("org_clientName"));
 
  $('input').click(function () {
                     var img = $('#imageId');
@@ -184,11 +191,8 @@
         })
             .on('changeDate', function (e) {
 
-                //var span = ;
-
                 populateTableData((new TimeSpan(Date.today() - Date.parse($('#selDate').val()))).days);
         });        $('#data_1 .input-group.date').datepicker('update', new Date());
-
         
         populateTableData(0);
         
@@ -202,7 +206,7 @@
 
         $("#jsonTable").find("tr:gt(0)").remove();
 
-        var todayAttURL = 'api/attOfClient/<%= Request.QueryString["Client"].Split('|')[0] %>/' + numDays;
+        var todayAttURL = 'api/attOfClient/' + localStorage.getItem("org_clientId") + '/' + numDays;
 
         $.getJSON(todayAttURL, function (result) {
             orgJSON = result;

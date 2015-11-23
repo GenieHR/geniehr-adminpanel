@@ -265,7 +265,8 @@
     <Content Include="css\plugins\toastr\toastr.min.css" />
     <Content Include="css\spinners.css" />
     <Content Include="css\style.css" />
-    <Content Include="dashboard.aspx" />
+    <Content Include="Org\ATS\AddCandidate.aspx" />
+    <Content Include="Org\dashboard.aspx" />
     <Content Include="Employees\home.aspx" />
     <Content Include="Employees\profile.aspx" />
     <Content Include="fonts\font-awesome\css\font-awesome.css" />
@@ -395,6 +396,10 @@
     <Content Include="login.aspx" />
     <Content Include="logout.aspx" />
     <Content Include="main.aspx" />
+    <Content Include="Org\empProfile.aspx" />
+    <Content Include="Org\empProfileList.aspx" />
+    <Content Include="Org\home.aspx" />
+    <Content Include="Org\ShowClients.aspx" />
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
@@ -432,6 +437,7 @@
     <Content Include="Employees\EmployeeTemplate.Master" />
     <Content Include="hn_SimpeFileUploader.ashx" />
     <Content Include="js\plugins\masonry\masonry.pkgd.min.js" />
+    <Content Include="Org\OrgTemplate.Master" />
     <None Include="Properties\PublishProfiles\admintp.pubxml" />
     <None Include="Properties\PublishProfiles\ubietyadmin %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\ubietyadmin.pubxml" />
@@ -470,7 +476,6 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="ShowClients.aspx" />
-    <Content Include="ShowEmployees.aspx" />
     <Content Include="Site.Master" />
     <Content Include="staticMail.html" />
     <Content Include="testpage.html" />
@@ -618,6 +623,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\OrgController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Employees\changePassword.aspx.cs">
       <DependentUpon>changePassword.aspx</DependentUpon>
@@ -659,11 +665,21 @@
     <Compile Include="CreateEmployee.aspx.designer.cs">
       <DependentUpon>CreateEmployee.aspx</DependentUpon>
     </Compile>
-    <Compile Include="dashboard.aspx.cs">
+    <Compile Include="Models\profilestatus1_Result.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Org\ATS\AddCandidate.aspx.cs">
+      <DependentUpon>AddCandidate.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Org\ATS\AddCandidate.aspx.designer.cs">
+      <DependentUpon>AddCandidate.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Org\dashboard.aspx.cs">
       <DependentUpon>dashboard.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="dashboard.aspx.designer.cs">
+    <Compile Include="Org\dashboard.aspx.designer.cs">
       <DependentUpon>dashboard.aspx</DependentUpon>
     </Compile>
     <Compile Include="Default.aspx.cs">
@@ -895,6 +911,9 @@
     </Compile>
     <Compile Include="Models\passwordModel.cs" />
     <Compile Include="Models\PastEmpDTO.cs" />
+    <Compile Include="Models\profilestatus_Result.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\QualDTO.cs" />
     <Compile Include="Models\Qualification.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
@@ -920,6 +939,41 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ubietydbEntities.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Org\empProfile.aspx.cs">
+      <DependentUpon>empProfile.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Org\empProfile.aspx.designer.cs">
+      <DependentUpon>empProfile.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Org\empProfileList.aspx.cs">
+      <DependentUpon>empProfileList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Org\empProfileList.aspx.designer.cs">
+      <DependentUpon>empProfileList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Org\home.aspx.cs">
+      <DependentUpon>home.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Org\home.aspx.designer.cs">
+      <DependentUpon>home.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Org\OrgTemplate.Master.cs">
+      <DependentUpon>OrgTemplate.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Org\OrgTemplate.Master.designer.cs">
+      <DependentUpon>OrgTemplate.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Org\ShowClients.aspx.cs">
+      <DependentUpon>ShowClients.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Org\ShowClients.aspx.designer.cs">
+      <DependentUpon>ShowClients.aspx</DependentUpon>
+    </Compile>
     <Compile Include="profile.aspx.cs">
       <DependentUpon>profile.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -934,13 +988,6 @@
     </Compile>
     <Compile Include="ShowClients.aspx.designer.cs">
       <DependentUpon>ShowClients.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="ShowEmployees.aspx.cs">
-      <DependentUpon>ShowEmployees.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ShowEmployees.aspx.designer.cs">
-      <DependentUpon>ShowEmployees.aspx</DependentUpon>
     </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>

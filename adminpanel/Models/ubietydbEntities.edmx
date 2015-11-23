@@ -867,6 +867,9 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <Parameter Name="EntityType" Type="int" Mode="In" />
           <Parameter Name="EmpId" Type="int" Mode="In" />
         </Function>
+        <Function Name="profilestatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ClientId" Type="int" Mode="In" />
+        </Function>
         <Function Name="qualsummary" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EmpId" Type="int" Mode="In" />
         </Function>
@@ -1567,6 +1570,12 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
             <End Role="Employee" EntitySet="Employees" />
             <End Role="EmpPastEmp" EntitySet="EmpPastEmps" />
           </AssociationSet>
+          <FunctionImport Name="profilestatus" ReturnType="Collection(ubietydbModel.profilestatus_Result)">
+          <Parameter Name="ClientId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="profilestatus1" ReturnType="Collection(ubietydbModel.profilestatus1_Result)">
+            <Parameter Name="ClientId" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="Group">
           <Key>
@@ -2298,6 +2307,31 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="profilestatus_Result">
+          <Property Type="Int32" Name="EmpId" Nullable="false" />
+          <Property Type="String" Name="EmpName" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="Basic_Detail" Nullable="false" />
+          <Property Type="Int32" Name="Contact_Detail" Nullable="false" />
+          <Property Type="Int32" Name="Addresses" Nullable="false" />
+          <Property Type="Int32" Name="Bank" Nullable="false" />
+          <Property Type="Int32" Name="Identity" Nullable="false" />
+          <Property Type="Int32" Name="PastEmp" Nullable="false" />
+          <Property Type="Int32" Name="Qualification" Nullable="false" />
+          <Property Type="Int32" Name="Emergency" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="profilestatus1_Result">
+          <Property Type="Int32" Name="EmpId" Nullable="false" />
+          <Property Type="String" Name="EmpName" Nullable="false" MaxLength="100" />
+          <Property Type="Int64" Name="PrimaryMobile" Nullable="true" />
+          <Property Type="Int32" Name="Basic_Detail" Nullable="false" />
+          <Property Type="Int32" Name="Contact_Detail" Nullable="false" />
+          <Property Type="Int32" Name="Addresses" Nullable="false" />
+          <Property Type="Int32" Name="Bank" Nullable="false" />
+          <Property Type="Int32" Name="Identity" Nullable="false" />
+          <Property Type="Int32" Name="PastEmp" Nullable="false" />
+          <Property Type="Int32" Name="Qualification" Nullable="false" />
+          <Property Type="Int32" Name="Emergency" Nullable="false" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2866,6 +2900,23 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="profilestatus1" FunctionName="ubietydbModel.Store.profilestatus">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ubietydbModel.profilestatus1_Result">
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
+                <ScalarProperty Name="PrimaryMobile" ColumnName="PrimaryMobile" />
+                <ScalarProperty Name="Basic_Detail" ColumnName="Basic Detail" />
+                <ScalarProperty Name="Contact_Detail" ColumnName="Contact Detail" />
+                <ScalarProperty Name="Addresses" ColumnName="Addresses" />
+                <ScalarProperty Name="Bank" ColumnName="Bank" />
+                <ScalarProperty Name="Identity" ColumnName="Identity" />
+                <ScalarProperty Name="PastEmp" ColumnName="PastEmp" />
+                <ScalarProperty Name="Qualification" ColumnName="Qualification" />
+                <ScalarProperty Name="Emergency" ColumnName="Emergency" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -1,7 +1,5 @@
-﻿<%@ Page Title="Employee Profile" Language="C#" MasterPageFile="~/Employees/EmployeeTemplate.Master" AutoEventWireup="true" CodeBehind="profile.aspx.cs" Inherits="adminpanel.passwords.profile" %>
-
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Org/OrgTemplate.Master" AutoEventWireup="true" CodeBehind="empProfile.aspx.cs" Inherits="adminpanel.Org.empProfile" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-
     <link href="../css/plugins/jcrop/jquery.Jcrop.min.css" rel="stylesheet" />
     <link href="../css/plugins/dropzone/basic.css" rel="stylesheet" />
     <link href="../css/plugins/dropzone/dropzone.css" rel="stylesheet" />
@@ -13,7 +11,6 @@
  
     </style>
 </asp:Content>
-
 <asp:Content ID="Content2" ContentPlaceHolderID="body" runat="server">
 
     <div class="modal inmodal fade" id="profileImageModal" tabindex="-1" role="dialog" aria-hidden="true">
@@ -640,15 +637,17 @@
     <div class="row wrapper border-bottom white-bg page-heading">
 
         <div class="col-lg-12">
-            <h2>My Profile</h2>
+            <h2>Employee Profile</h2>
             <ol class="breadcrumb">
                 <li>
-                    <a href="home.aspx">Home</a>
+                    <a href="showClients.aspx" title="Change Client" id="clientName"></a>
                 </li>
 
-                <li class="active">
-                    <strong>Profile</strong>
+                <li >
+                    Employees
                 </li>
+
+
             </ol>
         </div>
 
@@ -676,10 +675,10 @@
                             <%--  <h2 class="text-info"><%//= Session["loggedinuserName"] %></h2>--%>
 
                             <div style="margin-top: 25px" id="profileImgContainer">
-                                <img id="mainProfilePic" src="<%= System.Web.Configuration.WebConfigurationManager.AppSettings["ProfileURL"] + Session["EmpId"] %>" onerror="this.src='../img/pp/big_blank.jpg'" style="height: 200px; width: 200px; overflow: hidden" />
+                                <img id="mainProfilePic"  onerror="this.src='../img/pp/big_blank.jpg'" style="height: 200px; width: 200px; overflow: hidden" />
                             </div>
 
-                            <h5><a href="#" data-toggle="modal" data-target="#profileImageModal">Change Image</a></h5>
+                            <%--<h5><a href="#" data-toggle="modal" data-target="#profileImageModal">Change Image</a></h5>--%>
                         </div>
 
                         <div class="col-sm-4">
@@ -930,7 +929,7 @@
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
 
-                    <center><input type="submit" id="basicDetSubmit" class="btn btn-primary" value="Save Details"/></center>
+                    <%--<center><input type="submit" id="basicDetSubmit" class="btn btn-primary" value="Save Details"/></center>--%>
                     </div>
 
                     </div>
@@ -951,12 +950,15 @@
                             <div class="ibox-tools">
 
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                    <i class="fa fa-pencil"></i>
+                                    <i class="fa fa-eye"></i>
                                 </a>
-                                <ul class="dropdown-menu dropdown-user">
+
+                                <%--<ul class="dropdown-menu dropdown-user">
                                     <li><a href="#" data-toggle="modal" data-target="#finDetailsModal">Update Details</a>
                                     </li>
                                 </ul>
+                                --%>
+
                                 <a class="collapse-link">
                                     <i class="fa fa-chevron-up"></i>
                                 </a>
@@ -1037,7 +1039,7 @@
                                     
                                     <span class="pull-right text-success">
 
-                                    &nbsp; <a data-target="#identityModal" data-toggle="modal" data-doctype="dl" class="docLink"><i class="fa fa-pencil"></i></a>
+                                    &nbsp; <a data-target="#identityModal" data-toggle="modal" data-doctype="dl" class="docLink"><%-- <i class="fa fa-pencil"></i> --%></a>
                                     </span>
 
                                     <span class="pull-right text-success" id="DL">
@@ -1054,11 +1056,11 @@
                                     </span>
                                     <span class="pull-right text-success">
 
-                                    &nbsp; <a data-target="#identityModal" data-toggle="modal" data-doctype="adhaar" class="docLink"><i class="fa fa-pencil"></i></a>
+                                    &nbsp; <a data-target="#identityModal" data-toggle="modal" data-doctype="adhaar" class="docLink"><%-- <i class="fa fa-pencil"></i> --%></a>
                                     </span>
 
                                     <span class="pull-right text-success" id="Adhaar">
-                                    <i class="fa fa-pencil"></i>
+                                    <%-- <i class="fa fa-pencil"></i> --%>
 
                                     </span>
                                 </li>
@@ -1069,12 +1071,12 @@
                                     </span>
                                     <span class="pull-right text-success">
 
-                                    &nbsp; <a data-target="#identityModal" data-toggle="modal" data-doctype="voter" class="docLink"><i class="fa fa-pencil"></i></a>
+                                    &nbsp; <a data-target="#identityModal" data-toggle="modal" data-doctype="voter" class="docLink"><%-- <i class="fa fa-pencil"></i> --%></a>
 
                                     </span>
 
                                     <span class="pull-right text-success" id="Voter">
-                                    <i class="fa fa-pencil"></i>
+                                    <%-- <i class="fa fa-pencil"></i> --%>
 
                                     </span>
                                 </li><li class="list-group-item">
@@ -1084,7 +1086,7 @@
                                     
                                     <span class="pull-right text-success">
 
-                                    &nbsp; <a data-target="#identityModal" data-toggle="modal" data-doctype="passport" class="docLink"><i class="fa fa-pencil"></i></a>
+                                    &nbsp; <a data-target="#identityModal" data-toggle="modal" data-doctype="passport" class="docLink"><%-- <i class="fa fa-pencil"></i> --%></a>
 
                                     </span>
 
@@ -1101,7 +1103,7 @@
                                     
                                     <span class="pull-right text-success">
 
-                                    &nbsp; <a data-target="#identityModal" data-toggle="modal" data-doctype="pan" class="docLink"><i class="fa fa-pencil"></i></a>
+                                    &nbsp; <a data-target="#identityModal" data-toggle="modal" data-doctype="pan" class="docLink"><%-- <i class="fa fa-pencil"></i> --%></a>
 
                                     </span>
 
@@ -1124,9 +1126,9 @@
                             <div class="ibox-tools">
 
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                    <i class="fa fa-plus"></i>
+                                    <i class="fa fa-eye"></i>
                                 </a>
-                                <ul class="dropdown-menu dropdown-user">
+                                <%--<ul class="dropdown-menu dropdown-user">
 
                                     <li><a class="contactTypeLink" data-contacttype="1" data-toggle="modal" data-target="#contactDetailsModal" href="#">New Mobile Number</a>
                                     </li>
@@ -1134,7 +1136,7 @@
                                     <li><a class="contactTypeLink" data-contacttype="2" data-toggle="modal" data-target="#contactDetailsModal" href="#">New Email Address</a>
                                     </li>
 
-                                </ul>
+                                </ul>--%>
 
                                 <a class="collapse-link contactDetailBox">
                                     <i class="fa fa-chevron-up"></i>
@@ -1162,13 +1164,13 @@
                             <div class="ibox-tools">
 
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                    <i class="fa fa-plus"></i>
+                                    <i class="fa fa-eye"></i>
                                 </a>
                                 <ul class="dropdown-menu dropdown-user">
 
-                                    <li id="permAddLink"><a href="#"  class="addressType" data-toggle="modal" data-target="#addressModal" data-addresstype="1">Add Permanent Address</a></li>
+                                    <%-- <li id="permAddLink"><a href="#"  class="addressType" data-toggle="modal" data-target="#addressModal" data-addresstype="1">Add Permanent Address</a></li>
                                     <li id="currAddLink" ><a href="#" class="addressType" data-toggle="modal" data-target="#addressModal"  data-addresstype="2">Add Current Address</a></li>
-                                    <%--<li ><a href="#" data-toggle="modal" data-target="#addressModal"  data-addresstype="3">Add Office Address</a></li>--%>
+                                   <li ><a href="#" data-toggle="modal" data-target="#addressModal"  data-addresstype="3">Add Office Address</a></li>--%>
                                     <%--<li ><a href="#" data-toggle="modal" data-target="#addressModal"  data-addresstype="4">Add Other Address</a></li>--%>
                                     
                                 </ul>
@@ -1196,13 +1198,13 @@
                             <div class="ibox-tools">
 
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                    <i class="fa fa-plus"></i>
+                                    <i class="fa fa-eye"></i>
                                 </a>
-                                <ul class="dropdown-menu dropdown-user">
+                               <%-- <ul class="dropdown-menu dropdown-user">
                                     <li><a href="#" data-target="#emergencyDetailModal" data-toggle="modal">Add New Emergency Contact</a>
                                     </li>
 
-                                </ul>
+                                </ul>--%>
                                 <a class="collapse-link emerBox">
                                     <i class="fa fa-chevron-up"></i>
                                 </a>
@@ -1230,12 +1232,12 @@
                             <div class="ibox-tools">
 
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                    <i class="fa fa-plus"></i>
+                                    <i class="fa fa-eye"></i>
                                 </a>
-                                <ul class="dropdown-menu dropdown-user">
+                                <%--<ul class="dropdown-menu dropdown-user">
                                     <li><a href="#"  data-target="#QualModal" data-toggle="modal">Add New Qualification Detail</a>
                                     </li>
-                                </ul>
+                                </ul>--%>
                                 <a class="collapse-link qualBox">
                                     <i class="fa fa-chevron-up"></i>
                                 </a>
@@ -1257,13 +1259,13 @@
                             <div class="ibox-tools">
 
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                    <i class="fa fa-plus"></i>
+                                    <i class="fa fa-eye"></i>
                                 </a>
-                                <ul class="dropdown-menu dropdown-user">
+                                <%--<ul class="dropdown-menu dropdown-user">
                                     <li><a href="#" data-target="#pastEmpModal" data-toggle="modal">Add New Detail</a>
-                                    <%--<li><a href="#" >Add New Detail</a>--%>
+                                    <li><a href="#" >Add New Detail</a>
                                     </li>
-                                </ul>
+                                </ul>--%>
                                 <a class="collapse-link pastEmpBox">
                                     <i class="fa fa-chevron-up"></i>
                                 </a>
@@ -1294,10 +1296,14 @@
 
         var myDropzone, contactDetailLoaded = false, addressLoaded = false, emerLoaded = false, qualLoaded = false, pastEmpLoaded = false;
         var iDocUploadJSON,gDocType,gDocName;
-        var gEmpId = <%= Session["EmpId"] %>;
+        var gEmpId = localStorage.getItem("org_empid");
 
         $(window).load(function () {
-            
+            $("#clientName").html(localStorage.getItem("org_clientName"));
+
+
+            $("#mainProfilePic").attr("src", "<%= System.Web.Configuration.WebConfigurationManager.AppSettings["ProfileURL"]  %>" + gEmpId);
+
             loadiDocUpload(gEmpId);
             loadBasicProfile(gEmpId);
             loadFinancialDetails(gEmpId);
@@ -1961,7 +1967,7 @@
 
                         var uploadTime = date + "-" + month + "-" + year + " " + hour + ":" + minute;
 
-                        var attachmentRow =  '<tr><td>' + (i+1) + '</td><td>' + docType + '</td><td>' + uploadTime +'</td><td><a target="_blank" href="' + hrefLink + thisDocArray[i] + '"><i class="fa fa-download" title="Download"></i></a> &nbsp; <a href="#" onclick="deleteIDoc(\'' + (gEmpId +'-' + thisDocArray[i]).replace(/\//g, "-").replace(".","_") + '\')"><i class="fa fa-trash" title="Delete"></i></a></td></tr>'
+                        var attachmentRow =  '<tr><td>' + (i+1) + '</td><td>' + docType + '</td><td>' + uploadTime +'</td><td><a target="_blank" href="' + hrefLink + thisDocArray[i] + '"><i class="fa fa-download" title="Download"></i></a> </td></tr>'
 
                         $("#docTable tbody").append(attachmentRow);
                     }

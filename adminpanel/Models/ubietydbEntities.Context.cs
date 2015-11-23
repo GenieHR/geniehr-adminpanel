@@ -230,5 +230,23 @@ namespace adminpanel.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<qualsummary_Result>("qualsummary", empIdParameter);
         }
+    
+        public virtual ObjectResult<profilestatus_Result> profilestatus(Nullable<int> clientId)
+        {
+            var clientIdParameter = clientId.HasValue ?
+                new ObjectParameter("ClientId", clientId) :
+                new ObjectParameter("ClientId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<profilestatus_Result>("profilestatus", clientIdParameter);
+        }
+    
+        public virtual ObjectResult<profilestatus1_Result> profilestatus1(Nullable<int> clientId)
+        {
+            var clientIdParameter = clientId.HasValue ?
+                new ObjectParameter("ClientId", clientId) :
+                new ObjectParameter("ClientId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<profilestatus1_Result>("profilestatus1", clientIdParameter);
+        }
     }
 }

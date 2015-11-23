@@ -31,7 +31,7 @@ namespace Admin
                 
                 if (System.Web.HttpContext.Current.User.IsInRole("OrgEmployee"))
                 {
-                    Response.Redirect("~/showclients.aspx");
+                    Response.Redirect("~/Org/showclients.aspx");
                 }
                 else if (System.Web.HttpContext.Current.User.IsInRole("ClientAdmin"))
                 {

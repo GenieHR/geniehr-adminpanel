@@ -5,9 +5,9 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace Admin.Org
+namespace adminpanel.Org
 {
-    public partial class ShowClients : System.Web.UI.Page
+    public partial class OrgTemplate : System.Web.UI.MasterPage
     {
         protected void Page_Load(object sender, EventArgs e)
         {
