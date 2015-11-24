@@ -74,17 +74,23 @@
                     </ul>
                 </li>--%>
 
+            
                 <li>
                     <a href="#"><i class="fa  fa-user"></i> <span class="nav-label">Employees</span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
-                        <li><a href="#">Create</a></li>
+                        <li><a href="#">Create New</a></li>
                         <li><a href="empProfileList.aspx">Profiles</a></li>
+                        <li><a href="#">Attendance</a></li>
                     </ul>
                 </li>
 
                 <li>
-                    <a href="#"><i class="fa  fa-book"></i> <span class="nav-label">Attendance</span></a>
+                    <a href="#"><i class="fa  fa-user"></i> <span class="nav-label">ATS</span> <span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
+                        <li><a href="AddCandidate.aspx">Add Candidate</a></li>
+                    </ul>
                 </li>
+
 
             </ul>
     </nav>

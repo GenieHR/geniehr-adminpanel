@@ -65,6 +65,7 @@ namespace adminpanel.Models
         public virtual DbSet<EmpQualification> EmpQualifications { get; set; }
         public virtual DbSet<Qualification> Qualifications { get; set; }
         public virtual DbSet<EmpPastEmp> EmpPastEmps { get; set; }
+        public virtual DbSet<Candidate> Candidates { get; set; }
     
         public virtual ObjectResult<getEmpOfGroups_Result> getEmpOfGroups()
         {

@@ -78,6 +78,10 @@
         <AssociationConnector Association="ubietydbModel.FK_EmpQualification_Qualification" />
         <EntityTypeShape EntityType="ubietydbModel.EmpPastEmp" Width="1.5" PointX="5.25" PointY="26.25" />
         <AssociationConnector Association="ubietydbModel.FK_EmpPastEmp_Employee" />
+        <EntityTypeShape EntityType="ubietydbModel.Candidate" Width="1.5" PointX="21.625" PointY="7.875" />
+        <AssociationConnector Association="ubietydbModel.FK_Candidate_Employee" />
+        <AssociationConnector Association="ubietydbModel.FK_Candidate_Employee1" />
+        <AssociationConnector Association="ubietydbModel.FK_Candidate_Qualification" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -243,6 +243,8 @@
     <Content Include="css\plugins\dropzone\basic.css" />
     <Content Include="css\plugins\dropzone\dropzone.css" />
     <Content Include="css\plugins\jcrop\jquery.Jcrop.min.css" />
+    <Content Include="css\plugins\jqueryrange\jquery.range.css" />
+    <Content Include="css\plugins\noUISlider\jquery.nouislider.css" />
     <Content Include="css\plugins\select2\select2.min.css" />
     <Content Include="css\plugins\sweetalert\sweetalert.css" />
     <Content Include="Employees\changePassword.aspx" />
@@ -265,7 +267,8 @@
     <Content Include="css\plugins\toastr\toastr.min.css" />
     <Content Include="css\spinners.css" />
     <Content Include="css\style.css" />
-    <Content Include="Org\ATS\AddCandidate.aspx" />
+    <Content Include="js\plugins\jqueryrange\jquery.range-min.js" />
+    <Content Include="Org\AddCandidate.aspx" />
     <Content Include="Org\dashboard.aspx" />
     <Content Include="Employees\home.aspx" />
     <Content Include="Employees\profile.aspx" />
@@ -665,14 +668,17 @@
     <Compile Include="CreateEmployee.aspx.designer.cs">
       <DependentUpon>CreateEmployee.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Candidate.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\profilestatus1_Result.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Org\ATS\AddCandidate.aspx.cs">
+    <Compile Include="Org\AddCandidate.aspx.cs">
       <DependentUpon>AddCandidate.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Org\ATS\AddCandidate.aspx.designer.cs">
+    <Compile Include="Org\AddCandidate.aspx.designer.cs">
       <DependentUpon>AddCandidate.aspx</DependentUpon>
     </Compile>
     <Compile Include="Org\dashboard.aspx.cs">

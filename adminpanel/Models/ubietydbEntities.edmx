@@ -53,6 +53,39 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="BloodGroupName" Type="nvarchar" MaxLength="10" Nullable="false" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'ubietydb.dbo.Candidate' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Candidate">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="CandidateName" />
+            <PropertyRef Name="PrimaryMobile" />
+            <PropertyRef Name="CurrentExp" />
+            <PropertyRef Name="CurrentLocation" />
+            <PropertyRef Name="TotalExp" />
+            <PropertyRef Name="NativePlace" />
+            <PropertyRef Name="HighestQualification" />
+            <PropertyRef Name="CreatedBy" />
+            <PropertyRef Name="CreatedOn" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CandidateName" Type="nchar" MaxLength="100" Nullable="false" />
+          <Property Name="PrimaryMobile" Type="bigint" Nullable="false" />
+          <Property Name="AlternateNumber" Type="bigint" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" />
+          <Property Name="CurrentCompany" Type="nvarchar" MaxLength="100" />
+          <Property Name="CurrentSalary" Type="money" />
+          <Property Name="CurrentExp" Type="int" Nullable="false" />
+          <Property Name="CurrentLocation" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Designation" Type="nvarchar" MaxLength="50" />
+          <Property Name="TotalExp" Type="int" Nullable="false" />
+          <Property Name="NativePlace" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="HighestQualification" Type="int" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedOn" Type="datetime" />
+          <Property Name="ModifiedBy" Type="int" />
+        </EntityType>
         <EntityType Name="claimHistory">
           <Key>
             <PropertyRef Name="Id" />
@@ -442,6 +475,42 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
             </Principal>
             <Dependent Role="Attendance">
               <PropertyRef Name="EmpId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Candidate_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Candidate" Type="Self.Candidate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="Candidate">
+              <PropertyRef Name="ModifiedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Candidate_Employee1">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Candidate" Type="Self.Candidate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="Candidate">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Candidate_Qualification">
+          <End Role="Qualification" Type="Self.Qualification" Multiplicity="1" />
+          <End Role="Candidate" Type="Self.Candidate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Qualification">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Candidate">
+              <PropertyRef Name="HighestQualification" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -908,6 +977,27 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <EntitySet Name="Organization" EntityType="Self.Organization" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Qualification" EntityType="Self.Qualification" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Relation" EntityType="Self.Relation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Candidate" EntityType="Self.Candidate" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Candidate].[Id] AS [Id], 
+    [Candidate].[CandidateName] AS [CandidateName], 
+    [Candidate].[PrimaryMobile] AS [PrimaryMobile], 
+    [Candidate].[AlternateNumber] AS [AlternateNumber], 
+    [Candidate].[Email] AS [Email], 
+    [Candidate].[CurrentCompany] AS [CurrentCompany], 
+    [Candidate].[CurrentSalary] AS [CurrentSalary], 
+    [Candidate].[CurrentExp] AS [CurrentExp], 
+    [Candidate].[CurrentLocation] AS [CurrentLocation], 
+    [Candidate].[Designation] AS [Designation], 
+    [Candidate].[TotalExp] AS [TotalExp], 
+    [Candidate].[NativePlace] AS [NativePlace], 
+    [Candidate].[HighestQualification] AS [HighestQualification], 
+    [Candidate].[CreatedBy] AS [CreatedBy], 
+    [Candidate].[CreatedOn] AS [CreatedOn], 
+    [Candidate].[ModifiedOn] AS [ModifiedOn], 
+    [Candidate].[ModifiedBy] AS [ModifiedBy]
+    FROM [dbo].[Candidate] AS [Candidate]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="attByClient" EntityType="Self.attByClient" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [attByClient].[empid] AS [empid], 
@@ -961,6 +1051,18 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <AssociationSet Name="FK_Attendance_Employee" Association="Self.FK_Attendance_Employee">
             <End Role="Employee" EntitySet="Employee" />
             <End Role="Attendance" EntitySet="Attendance" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Candidate_Employee" Association="Self.FK_Candidate_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Candidate" EntitySet="Candidate" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Candidate_Employee1" Association="Self.FK_Candidate_Employee1">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Candidate" EntitySet="Candidate" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Candidate_Qualification" Association="Self.FK_Candidate_Qualification">
+            <End Role="Qualification" EntitySet="Qualification" />
+            <End Role="Candidate" EntitySet="Candidate" />
           </AssociationSet>
           <AssociationSet Name="FK_claimHistory_claimJSON" Association="Self.FK_claimHistory_claimJSON">
             <End Role="claimJSON" EntitySet="claimJSON" />
@@ -1184,6 +1286,8 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <NavigationProperty Name="EmergencyContacts" Relationship="ubietydbModel.FK_EmergencyContact_Employee" FromRole="Employee" ToRole="EmergencyContact" />
           <NavigationProperty Name="EmpQualifications" Relationship="ubietydbModel.FK_EmpQualification_Employee" FromRole="Employee" ToRole="EmpQualification" />
           <NavigationProperty Name="EmpPastEmps" Relationship="ubietydbModel.FK_EmpPastEmp_Employee" FromRole="Employee" ToRole="EmpPastEmp" />
+          <NavigationProperty Name="Candidates" Relationship="ubietydbModel.FK_Candidate_Employee" FromRole="Employee" ToRole="Candidate" />
+          <NavigationProperty Name="Candidates1" Relationship="ubietydbModel.FK_Candidate_Employee1" FromRole="Employee" ToRole="Candidate" />
         </EntityType>
         <EntityType Name="EmpStatu">
           <Key>
@@ -1574,8 +1678,21 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <Parameter Name="ClientId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="profilestatus1" ReturnType="Collection(ubietydbModel.profilestatus1_Result)">
-            <Parameter Name="ClientId" Mode="In" Type="Int32" />
+          <Parameter Name="ClientId" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="Candidates" EntityType="ubietydbModel.Candidate" />
+          <AssociationSet Name="FK_Candidate_Employee" Association="ubietydbModel.FK_Candidate_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Candidate" EntitySet="Candidates" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Candidate_Employee1" Association="ubietydbModel.FK_Candidate_Employee1">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Candidate" EntitySet="Candidates" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Candidate_Qualification" Association="ubietydbModel.FK_Candidate_Qualification">
+            <End Role="Qualification" EntitySet="Qualifications" />
+            <End Role="Candidate" EntitySet="Candidates" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Group">
           <Key>
@@ -2225,6 +2342,7 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <Property Name="QualificationName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Degrees" Relationship="ubietydbModel.FK_Degree_Qualification" FromRole="Qualification" ToRole="Degree" />
           <NavigationProperty Name="EmpQualifications" Relationship="ubietydbModel.FK_EmpQualification_Qualification" FromRole="Qualification" ToRole="EmpQualification" />
+          <NavigationProperty Name="Candidates" Relationship="ubietydbModel.FK_Candidate_Qualification" FromRole="Qualification" ToRole="Candidate" />
         </EntityType>
         <Association Name="FK_Degree_Qualification">
           <End Type="ubietydbModel.Qualification" Role="Qualification" Multiplicity="1" />
@@ -2332,6 +2450,76 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <Property Type="Int32" Name="Qualification" Nullable="false" />
           <Property Type="Int32" Name="Emergency" Nullable="false" />
         </ComplexType>
+        <EntityType Name="Candidate">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="CandidateName" />
+            <PropertyRef Name="PrimaryMobile" />
+            <PropertyRef Name="CurrentExp" />
+            <PropertyRef Name="CurrentLocation" />
+            <PropertyRef Name="TotalExp" />
+            <PropertyRef Name="NativePlace" />
+            <PropertyRef Name="HighestQualification" />
+            <PropertyRef Name="CreatedBy" />
+            <PropertyRef Name="CreatedOn" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CandidateName" Type="String" Nullable="false" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="PrimaryMobile" Type="Int64" Nullable="false" />
+          <Property Name="AlternateNumber" Type="Int64" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CurrentCompany" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CurrentSalary" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="CurrentExp" Type="Int32" Nullable="false" />
+          <Property Name="CurrentLocation" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Designation" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TotalExp" Type="Int32" Nullable="false" />
+          <Property Name="NativePlace" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="HighestQualification" Type="Int32" Nullable="false" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <NavigationProperty Name="Employee" Relationship="ubietydbModel.FK_Candidate_Employee" FromRole="Candidate" ToRole="Employee" />
+          <NavigationProperty Name="Employee1" Relationship="ubietydbModel.FK_Candidate_Employee1" FromRole="Candidate" ToRole="Employee" />
+          <NavigationProperty Name="Qualification" Relationship="ubietydbModel.FK_Candidate_Qualification" FromRole="Candidate" ToRole="Qualification" />
+        </EntityType>
+        <Association Name="FK_Candidate_Employee">
+          <End Type="ubietydbModel.Employee" Role="Employee" Multiplicity="0..1" />
+          <End Type="ubietydbModel.Candidate" Role="Candidate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="Candidate">
+              <PropertyRef Name="ModifiedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Candidate_Employee1">
+          <End Type="ubietydbModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="ubietydbModel.Candidate" Role="Candidate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="Candidate">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Candidate_Qualification">
+          <End Type="ubietydbModel.Qualification" Role="Qualification" Multiplicity="1" />
+          <End Type="ubietydbModel.Candidate" Role="Candidate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Qualification">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Candidate">
+              <PropertyRef Name="HighestQualification" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2917,6 +3105,29 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="Candidates">
+            <EntityTypeMapping TypeName="ubietydbModel.Candidate">
+              <MappingFragment StoreEntitySet="Candidate">
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="HighestQualification" ColumnName="HighestQualification" />
+                <ScalarProperty Name="NativePlace" ColumnName="NativePlace" />
+                <ScalarProperty Name="TotalExp" ColumnName="TotalExp" />
+                <ScalarProperty Name="Designation" ColumnName="Designation" />
+                <ScalarProperty Name="CurrentLocation" ColumnName="CurrentLocation" />
+                <ScalarProperty Name="CurrentExp" ColumnName="CurrentExp" />
+                <ScalarProperty Name="CurrentSalary" ColumnName="CurrentSalary" />
+                <ScalarProperty Name="CurrentCompany" ColumnName="CurrentCompany" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="AlternateNumber" ColumnName="AlternateNumber" />
+                <ScalarProperty Name="PrimaryMobile" ColumnName="PrimaryMobile" />
+                <ScalarProperty Name="CandidateName" ColumnName="CandidateName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

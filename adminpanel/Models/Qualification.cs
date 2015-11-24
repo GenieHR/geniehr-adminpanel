@@ -18,6 +18,7 @@ namespace adminpanel.Models
         {
             this.Degrees = new HashSet<Degree>();
             this.EmpQualifications = new HashSet<EmpQualification>();
+            this.Candidates = new HashSet<Candidate>();
         }
     
         public int Id { get; set; }
@@ -25,5 +26,6 @@ namespace adminpanel.Models
     
         public virtual ICollection<Degree> Degrees { get; set; }
         public virtual ICollection<EmpQualification> EmpQualifications { get; set; }
+        public virtual ICollection<Candidate> Candidates { get; set; }
     }
 }
