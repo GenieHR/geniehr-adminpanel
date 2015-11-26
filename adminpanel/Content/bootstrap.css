@@ -1997,6 +1997,13 @@ textarea.input-lg {
   }
 }
 
+@media (min-width: 768px) {
+  .form-horizontal .control-label1 {
+    text-align: left;
+  }
+}
+
+
 .btn {
   display: inline-block;
   padding: 6px 12px;

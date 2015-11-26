@@ -269,6 +269,7 @@
     <Content Include="css\style.css" />
     <Content Include="js\plugins\jqueryrange\jquery.range-min.js" />
     <Content Include="Org\AddCandidate.aspx" />
+    <Content Include="Org\AddOrgEmployee.aspx" />
     <Content Include="Org\dashboard.aspx" />
     <Content Include="Employees\home.aspx" />
     <Content Include="Employees\profile.aspx" />
@@ -441,6 +442,7 @@
     <Content Include="hn_SimpeFileUploader.ashx" />
     <Content Include="js\plugins\masonry\masonry.pkgd.min.js" />
     <Content Include="Org\OrgTemplate.Master" />
+    <Content Include="Org\OrgManager.Master" />
     <None Include="Properties\PublishProfiles\admintp.pubxml" />
     <None Include="Properties\PublishProfiles\ubietyadmin %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\ubietyadmin.pubxml" />
@@ -680,6 +682,13 @@
     </Compile>
     <Compile Include="Org\AddCandidate.aspx.designer.cs">
       <DependentUpon>AddCandidate.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Org\AddOrgEmployee.aspx.cs">
+      <DependentUpon>AddOrgEmployee.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Org\AddOrgEmployee.aspx.designer.cs">
+      <DependentUpon>AddOrgEmployee.aspx</DependentUpon>
     </Compile>
     <Compile Include="Org\dashboard.aspx.cs">
       <DependentUpon>dashboard.aspx</DependentUpon>
@@ -965,6 +974,13 @@
     </Compile>
     <Compile Include="Org\home.aspx.designer.cs">
       <DependentUpon>home.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Org\OrgManager.Master.cs">
+      <DependentUpon>OrgManager.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Org\OrgManager.Master.designer.cs">
+      <DependentUpon>OrgManager.Master</DependentUpon>
     </Compile>
     <Compile Include="Org\OrgTemplate.Master.cs">
       <DependentUpon>OrgTemplate.Master</DependentUpon>

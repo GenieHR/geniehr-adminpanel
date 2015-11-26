@@ -1,0 +1,143 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="OrgTemplate.master.cs" Inherits="adminpanel.Org.OrgManager" %>
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head runat="server">
+    <title></title>
+
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css"/>
+
+    <link href="../css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../css/style.css" rel="stylesheet"/>
+    
+    <link href="../css/menu_cornermorph.css" rel="stylesheet" />
+    
+    <link href="../css/plugins/toastr/toastr.min.css" rel="stylesheet" />
+    <link href="../fonts/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="../css/animate.css" rel="stylesheet"/>
+    <link href="../css/normalize.css" rel="stylesheet" />
+    
+    <style>
+        body {
+        overflow-y: scroll;
+        }
+    </style>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+
+    </asp:ContentPlaceHolder>
+
+</head>
+
+<body class="">
+     
+    <div id="wrapper" >
+
+    <nav class="navbar-default navbar-static-side" role="navigation">
+        <ul class="nav metismenu" id="side-menu">
+                <li class="nav-header">
+                    <div class="dropdown profile-element"> <span>
+                            <img id="smallProfileImg" alt="image" class="img-circle" onerror="this.src='../img/pp/blank.png'" style="width:48px;height:48px" src="<%= System.Web.Configuration.WebConfigurationManager.AppSettings["ProfileURL"] + Session["EmpId"] %>" />
+                             </span>
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold"><%= Session["loggedinuserName"] %></strong>
+                             </span> <span class="text-muted text-xs block"><%= Session["Designation"] %><b class="caret"></b></span> </span> </a>
+                        <ul class="dropdown-menu m-t-xs">
+                            <li><a href="#">Profile</a></li>
+                            <li><a href="#">Change Password</a></li>
+                            <li class="divider"></li>
+                            <li><a href="../logout.aspx">Logout</a></li>
+                        </ul>
+                    </div>
+                    <div class="logo-element">
+                        <i class="fa  fa-th-list"></i>
+                    </div>
+                </li>
+                <li>
+                    <a href="home.aspx"><i class="fa fa-home"></i> <span class="nav-label">Home</span></a>
+                    </li>
+
+                    <li>
+                    <a href="showClients.aspx"><i class="fa fa-home"></i> <span class="nav-label">Clients</span></a>
+                    </li>
+
+            
+                <li>
+                    <a href="#"><i class="fa  fa-user"></i> <span class="nav-label">Client Employees</span> <span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
+                        <li><a href="#">Create New</a></li>
+                        <li><a href="empProfileList.aspx">Profiles</a></li>
+                        <li><a href="#">Attendance</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="#"><i class="fa  fa-user"></i> <span class="nav-label">ATS</span> <span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
+                        <li><a href="AddOrgEmployee.aspx">Employee</a></li>
+                        <li><a href="AddCandidate.aspx">Candidate</a></li>
+                    </ul>
+                </li>
+            </ul>
+    </nav>
+
+	
+	    <div id="page-wrapper" class="gray-bg">
+        <div class="row border-bottom">
+		
+        <nav class="navbar navbar-static-top  " role="navigation" style="margin-bottom: 0">
+
+        <div class="navbar-header">
+            <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+            <div role="search" class="navbar-form-custom" >
+                <div class="form-group">
+                    <input type="text" placeholder="Search" class="form-control" name="top-search" id="top-search"/>
+                </div>
+            </div>
+        </div>
+
+            <ul class="nav navbar-top-links navbar-right">
+                  <li>
+                    <a href="../logout.aspx">
+                        <i class="fa fa-sign-out"></i> Log out
+                    </a>
+                </li>
+                </ul>
+
+        </nav>
+        
+           
+        </div>
+
+
+ <asp:ContentPlaceHolder   ID="body" runat="server" >
+
+</asp:ContentPlaceHolder>
+
+    </div>
+
+</div>
+            
+    <script src="../js/jquery-2.1.1.js"></script>
+    <script src="../js/jquery-ui-1.10.4.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="../js/inspinia.js"></script>
+    <script src="../js/plugins/toastr/toastr.min.js"></script>
+    <script src="../js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="../js/classie.js"></script>
+    <script src="../js/main.js"></script>
+
+ <asp:ContentPlaceHolder   ID="javascriptPart" runat="server" >
+
+ </asp:ContentPlaceHolder>
+
+</body>
+</html>
+
