@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ShowClients.aspx.cs" MasterPageFile="~/Org/OrgTemplate.Master" Inherits="Admin.Org.ShowClients" Title="Clients"%>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ShowClients.aspx.cs" MasterPageFile="~/Org/OrgTemplate1.Master" Inherits="Admin.Org.ShowClients" Title="Clients"%>
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="body" Runat="Server">

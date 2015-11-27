@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace adminpanel.Org
 {
-    public partial class OrgTemplate : System.Web.UI.MasterPage
+    public partial class OrgTemplate1 : System.Web.UI.MasterPage
     {
         protected void Page_Load(object sender, EventArgs e)
         {

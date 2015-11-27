@@ -14,7 +14,6 @@ using Microsoft.AspNet.Identity;
 using System.Web.Configuration;
 using System.Threading.Tasks;
 using System.Web;
-using adminpanel.Models;
 using UbietyDataServices.Models;
 
 namespace Admin.Controllers
@@ -121,9 +120,10 @@ namespace Admin.Controllers
         
             // IdentityResult result = manager.Create(user, Environment.GetEnvironmentVariable("DefaultPassword"));
 
+            string[] roles =  { "", "", "", "", "ClientEmployee", "ClientAdmin", "OrgEmployee", "OrgManager" };
+            int roleIndex = employee.EmpStatus;
             if (result.Succeeded)
             {
-                string roleid = employee.EmpStatus == 4?"ClientEmployee":"ClientAdmin";
                 employee.AuthUserId = user.Id;
                 employee.ProfilePic = "0";
                 employee.EmpStatus = 1;
@@ -135,8 +135,8 @@ namespace Admin.Controllers
                 }
                 else
                 {
-                    manager.AddToRole(employee.AuthUserId, "ClientEmployee");
-                    manager.AddToRole(employee.AuthUserId, roleid);
+                    //manager.AddToRole(employee.AuthUserId, "ClientEmployee");
+                    manager.AddToRole(employee.AuthUserId, roles[roleIndex]);
                 }
             }
             return CreatedAtRoute("DefaultApi", new { id = employee.EmpId }, employee);

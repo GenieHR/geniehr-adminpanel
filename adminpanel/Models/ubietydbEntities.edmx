@@ -53,20 +53,9 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="BloodGroupName" Type="nvarchar" MaxLength="10" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'ubietydb.dbo.Candidate' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Candidate">
           <Key>
             <PropertyRef Name="Id" />
-            <PropertyRef Name="CandidateName" />
-            <PropertyRef Name="PrimaryMobile" />
-            <PropertyRef Name="CurrentExp" />
-            <PropertyRef Name="CurrentLocation" />
-            <PropertyRef Name="TotalExp" />
-            <PropertyRef Name="NativePlace" />
-            <PropertyRef Name="HighestQualification" />
-            <PropertyRef Name="CreatedBy" />
-            <PropertyRef Name="CreatedOn" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CandidateName" Type="nchar" MaxLength="100" Nullable="false" />
@@ -948,6 +937,7 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <EntitySet Name="Attendance" EntityType="Self.Attendance" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AttendanceFlag" EntityType="Self.AttendanceFlag" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BloodGroup" EntityType="Self.BloodGroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Candidate" EntityType="Self.Candidate" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="claimHistory" EntityType="Self.claimHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="claimJSON" EntityType="Self.claimJSON" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ClaimRevision" EntityType="Self.ClaimRevision" Schema="dbo" store:Type="Tables" />
@@ -977,27 +967,6 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <EntitySet Name="Organization" EntityType="Self.Organization" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Qualification" EntityType="Self.Qualification" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Relation" EntityType="Self.Relation" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Candidate" EntityType="Self.Candidate" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [Candidate].[Id] AS [Id], 
-    [Candidate].[CandidateName] AS [CandidateName], 
-    [Candidate].[PrimaryMobile] AS [PrimaryMobile], 
-    [Candidate].[AlternateNumber] AS [AlternateNumber], 
-    [Candidate].[Email] AS [Email], 
-    [Candidate].[CurrentCompany] AS [CurrentCompany], 
-    [Candidate].[CurrentSalary] AS [CurrentSalary], 
-    [Candidate].[CurrentExp] AS [CurrentExp], 
-    [Candidate].[CurrentLocation] AS [CurrentLocation], 
-    [Candidate].[Designation] AS [Designation], 
-    [Candidate].[TotalExp] AS [TotalExp], 
-    [Candidate].[NativePlace] AS [NativePlace], 
-    [Candidate].[HighestQualification] AS [HighestQualification], 
-    [Candidate].[CreatedBy] AS [CreatedBy], 
-    [Candidate].[CreatedOn] AS [CreatedOn], 
-    [Candidate].[ModifiedOn] AS [ModifiedOn], 
-    [Candidate].[ModifiedBy] AS [ModifiedBy]
-    FROM [dbo].[Candidate] AS [Candidate]</DefiningQuery>
-          </EntitySet>
           <EntitySet Name="attByClient" EntityType="Self.attByClient" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [attByClient].[empid] AS [empid], 
@@ -1288,7 +1257,7 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <NavigationProperty Name="EmpPastEmps" Relationship="ubietydbModel.FK_EmpPastEmp_Employee" FromRole="Employee" ToRole="EmpPastEmp" />
           <NavigationProperty Name="Candidates" Relationship="ubietydbModel.FK_Candidate_Employee" FromRole="Employee" ToRole="Candidate" />
           <NavigationProperty Name="Candidates1" Relationship="ubietydbModel.FK_Candidate_Employee1" FromRole="Employee" ToRole="Candidate" />
-        </EntityType>
+          </EntityType>
         <EntityType Name="EmpStatu">
           <Key>
             <PropertyRef Name="EmpStatusId" />
@@ -1693,7 +1662,7 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
             <End Role="Qualification" EntitySet="Qualifications" />
             <End Role="Candidate" EntitySet="Candidates" />
           </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
         <EntityType Name="Group">
           <Key>
             <PropertyRef Name="Id" />
@@ -2453,15 +2422,6 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
         <EntityType Name="Candidate">
           <Key>
             <PropertyRef Name="Id" />
-            <PropertyRef Name="CandidateName" />
-            <PropertyRef Name="PrimaryMobile" />
-            <PropertyRef Name="CurrentExp" />
-            <PropertyRef Name="CurrentLocation" />
-            <PropertyRef Name="TotalExp" />
-            <PropertyRef Name="NativePlace" />
-            <PropertyRef Name="HighestQualification" />
-            <PropertyRef Name="CreatedBy" />
-            <PropertyRef Name="CreatedOn" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CandidateName" Type="String" Nullable="false" MaxLength="100" FixedLength="true" Unicode="true" />
@@ -2520,7 +2480,7 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>

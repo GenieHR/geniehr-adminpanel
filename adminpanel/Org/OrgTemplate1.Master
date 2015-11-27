@@ -1,4 +1,5 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="OrgTemplate.master.cs" Inherits="adminpanel.Org.OrgTemplate" %>
+﻿
+<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="OrgTemplate1.Master.cs" Inherits="adminpanel.Org.OrgTemplate1" %>
 
 
 <!DOCTYPE html>
@@ -6,7 +7,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head runat="server">
-    <title></title>
 
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -16,9 +16,7 @@
 
     <link href="../css/bootstrap.min.css" rel="stylesheet" />
     <link href="../css/style.css" rel="stylesheet"/>
-    
     <link href="../css/menu_cornermorph.css" rel="stylesheet" />
-    
     <link href="../css/plugins/toastr/toastr.min.css" rel="stylesheet" />
     <link href="../fonts/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
     <link href="../css/animate.css" rel="stylesheet"/>
@@ -29,6 +27,7 @@
         overflow-y: scroll;
         }
     </style>
+
     <asp:ContentPlaceHolder ID="head" runat="server">
 
     </asp:ContentPlaceHolder>
@@ -59,40 +58,30 @@
                         <i class="fa  fa-th-list"></i>
                     </div>
                 </li>
+                
                 <li>
-                    <a href="home.aspx"><i class="fa fa-home"></i> <span class="nav-label">Home</span></a>
-                    </li>
-
-                    <li>
-                    <a href="showClients.aspx"><i class="fa fa-home"></i> <span class="nav-label">Clients</span></a>
-                    </li>
-
-                <%--<li>
-                    <a href="#"><i class="fa  fa-money"></i> <span class="nav-label">Claims</span> <span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level collapse">
-                        <li><a href="#">View Claims</a></li>
-                    </ul>
-                </li>--%>
-
+                    <a href="#"><i class="fa fa-home"></i> <span class="nav-label">Home</span></a>
+                </li>
             
                 <li>
-                    <a href="#"><i class="fa  fa-user"></i> <span class="nav-label">Employees</span> <span class="fa arrow"></span></a>
+                    <a href="#"><i class="fa  fa-user"></i> <span class="nav-label">Clients</span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
-                        <li><a href="#">Create New</a></li>
+                        <li><a href="showClients.aspx"><i class="fa fa-home"></i> <span class="nav-label">Select Clients</span></a></li>
+                        <li><a href="#">Employees</a></li>
                         <li><a href="empProfileList.aspx">Profiles</a></li>
                         <li><a href="#">Attendance</a></li>
                     </ul>
                 </li>
 
+            
                 <li>
                     <a href="#"><i class="fa  fa-user"></i> <span class="nav-label">ATS</span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
-                        <li><a href="AddCandidate.aspx">Add Candidate</a></li>
+                        <li><a href="AddCandidate.aspx">Candidate</a></li>
                     </ul>
                 </li>
-
-
-            </ul>
+            
+        </ul>
     </nav>
 
 	
@@ -117,7 +106,6 @@
                     </a>
                 </li>
                 </ul>
-
         </nav>
         
            
@@ -126,10 +114,9 @@
 
  <asp:ContentPlaceHolder   ID="body" runat="server" >
 
+</asp:ContentPlaceHolder>
 
- </asp:ContentPlaceHolder>
-        </div>
-            
+    </div>
 
 </div>
             

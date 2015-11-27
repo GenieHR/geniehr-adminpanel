@@ -16,8 +16,8 @@ namespace Admin
         protected void Page_Load(object sender, EventArgs e)
         {
 
-       //     var userStore = new UserStore<IdentityUser>();
-       //     var manager = new UserManager<IdentityUser>(userStore);
+            //var userStore = new UserStore<IdentityUser>();
+            //var manager = new UserManager<IdentityUser>(userStore);
 
            // var user = new IdentityUser();
 
@@ -36,14 +36,14 @@ namespace Admin
 
 			//DefaultConnection1 context = new DefaultConnection1();
 
-            var userStore = new UserStore<IdentityUser>();
-            var UserManager = new UserManager<IdentityUser>(userStore);
+            //var userStore = new UserStore<IdentityUser>();
+            //var UserManager = new UserManager<IdentityUser>(userStore);
 
         //try
         //{
-            //var user = UserManager.FindByName("laks@geniehr.com");
-            //UserManager.AddToRole(user.Id, "ClientAdmin");
-            
+            //var user = UserManager.FindByName("aakshi.garg@talentpull.in");
+            //UserManager.AddToRole(user.Id, "OrgManager");
+            //UserManager.RemoveFromRole(user.Id, "ClientEmployee");
             //UserManager.RemoveFromRole(user.Id, "ClientManager");
 
             //var user = UserManager.FindByName("yogi.tomer@gmail.com");

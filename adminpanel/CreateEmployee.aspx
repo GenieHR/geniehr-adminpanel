@@ -82,12 +82,21 @@
                                 <div class="form-group"><label class="col-sm-2 control-label">Role</label>
 
                                     <div class="col-sm-10">
-                                        <div style="margin-top:5px;"><label> <input type="radio"  value="5"  name="RoleOfUser"/> Client Admin </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label> <input type="radio" checked="checked" value="4"  name="RoleOfUser"/> Client Employee </label></div>
+                                        <div style="margin-top:5px;">
+
+                                            <label> 
+                                            <input type="radio"  value="5"  name="RoleOfUser"/> Client Admin 
+                                            </label>
+
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                                            <label> 
+                                                <input type="radio" checked="checked" value="4"  name="RoleOfUser"/> Client Employee 
+                                            </label>
+
+                                        </div>
                                     </div>
                                 </div>
-
-                                
-
 
                                 <div class="hr-line-dashed"></div>
 

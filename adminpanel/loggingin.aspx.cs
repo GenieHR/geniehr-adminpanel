@@ -71,7 +71,19 @@ namespace Admin
                 {
                     Response.Redirect("~/Dashboard.aspx");
                 }
-                
+                else if (System.Web.HttpContext.Current.User.IsInRole("OrgManager"))
+                {
+                    Session["SelectClientId"] = employee.CompanyId;
+                    Response.Redirect("~/org/AddOrgEmployee.aspx");
+                }
+                else if (System.Web.HttpContext.Current.User.IsInRole("OrgEmployee"))
+                {
+                    Session["SelectClientId"] = employee.CompanyId;
+                    Response.Redirect("~/org/Home.aspx");
+                }
+
+                //
+                //
             }
         }
     

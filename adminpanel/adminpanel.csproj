@@ -441,11 +441,10 @@
     <Content Include="Employees\EmployeeTemplate.Master" />
     <Content Include="hn_SimpeFileUploader.ashx" />
     <Content Include="js\plugins\masonry\masonry.pkgd.min.js" />
-    <Content Include="Org\OrgTemplate.Master" />
     <Content Include="Org\OrgManager.Master" />
-    <None Include="Properties\PublishProfiles\admintp.pubxml" />
-    <None Include="Properties\PublishProfiles\ubietyadmin %282%29.pubxml" />
-    <None Include="Properties\PublishProfiles\ubietyadmin.pubxml" />
+    <Content Include="Org\OrgTemplate1.Master" />
+    <None Include="Properties\PublishProfiles\Talentpull.pubxml" />
+    <None Include="Properties\PublishProfiles\GenieHR.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="profile.aspx" />
     <Content Include="Scripts\bootstrap.js" />
@@ -628,6 +627,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\CandidateController.cs" />
     <Compile Include="Controllers\OrgController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Employees\changePassword.aspx.cs">
@@ -673,6 +673,7 @@
     <Compile Include="Models\Candidate.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CandidateDTO.cs" />
     <Compile Include="Models\profilestatus1_Result.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
@@ -982,12 +983,12 @@
     <Compile Include="Org\OrgManager.Master.designer.cs">
       <DependentUpon>OrgManager.Master</DependentUpon>
     </Compile>
-    <Compile Include="Org\OrgTemplate.Master.cs">
-      <DependentUpon>OrgTemplate.Master</DependentUpon>
+    <Compile Include="Org\OrgTemplate1.Master.cs">
+      <DependentUpon>OrgTemplate1.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Org\OrgTemplate.Master.designer.cs">
-      <DependentUpon>OrgTemplate.Master</DependentUpon>
+    <Compile Include="Org\OrgTemplate1.Master.designer.cs">
+      <DependentUpon>OrgTemplate1.Master</DependentUpon>
     </Compile>
     <Compile Include="Org\ShowClients.aspx.cs">
       <DependentUpon>ShowClients.aspx</DependentUpon>

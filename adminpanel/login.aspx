@@ -22,7 +22,7 @@
     <div class="middle-box text-center loginscreen animated fadeInDown">
         <div>
             <div class="text-center">
-            <img src="img/logo.png" />
+            <img src="<%= System.Web.Configuration.WebConfigurationManager.AppSettings["LogosURL"]  %>logo.png" />
             </div>
             <br />
              <div class="ibox-content text-center">
