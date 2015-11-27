@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Org/OrgTemplate.Master" AutoEventWireup="true" CodeBehind="empProfileList.aspx.cs" Inherits="adminpanel.Org.empProfileList" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Org/OrgTemplate1.Master" AutoEventWireup="true" CodeBehind="empProfileList.aspx.cs" Inherits="adminpanel.Org.empProfileList" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     
 </asp:Content>

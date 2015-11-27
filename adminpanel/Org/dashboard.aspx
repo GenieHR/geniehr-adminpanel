@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Quick Reports" Language="C#" MasterPageFile="~/Org/OrgTemplate.Master" AutoEventWireup="true" CodeBehind="dashboard.aspx.cs" Inherits="adminpanel.Org.dashboard" %>
+﻿<%@ Page Title="Quick Reports" Language="C#" MasterPageFile="~/Org/OrgTemplate1.Master" AutoEventWireup="true" CodeBehind="dashboard.aspx.cs" Inherits="adminpanel.Org.dashboard" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
               <style type="text/css">
