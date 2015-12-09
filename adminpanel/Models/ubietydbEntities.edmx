@@ -64,8 +64,8 @@
           <Property Name="Email" Type="nvarchar" MaxLength="100" />
           <Property Name="CurrentCompany" Type="nvarchar" MaxLength="100" />
           <Property Name="CurrentSalary" Type="money" />
-          <Property Name="CurrentExp" Type="int" Nullable="false" />
-          <Property Name="CurrentLocation" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="CurrentExp" Type="int" />
+          <Property Name="CurrentLocation" Type="nvarchar" MaxLength="100" />
           <Property Name="Designation" Type="nvarchar" MaxLength="50" />
           <Property Name="TotalExp" Type="int" Nullable="false" />
           <Property Name="NativePlace" Type="nvarchar" MaxLength="50" Nullable="false" />
@@ -74,6 +74,7 @@
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="ModifiedOn" Type="datetime" />
           <Property Name="ModifiedBy" Type="int" />
+          <Property Name="degree" Type="int" />
         </EntityType>
         <EntityType Name="claimHistory">
           <Key>
@@ -151,6 +152,13 @@
           <Property Name="DegreeName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Qualification" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="DocTypes">
+          <Key>
+            <PropertyRef Name="DocTypeId" />
+          </Key>
+          <Property Name="DocTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DocTypeName" Type="nchar" MaxLength="10" />
+        </EntityType>
         <EntityType Name="EmergencyContact">
           <Key>
             <PropertyRef Name="Id" />
@@ -181,6 +189,16 @@
           <Property Name="contactTypeId" Type="int" Nullable="false" />
           <Property Name="contactLable" Type="nvarchar" MaxLength="50" />
           <Property Name="contactData" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EmpDocs">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmpId" Type="int" Nullable="false" />
+          <Property Name="DocTypeId" Type="int" Nullable="false" />
+          <Property Name="DocRemarks" Type="nvarchar" MaxLength="255" />
+          <Property Name="DocReference" Type="nvarchar" MaxLength="255" Nullable="false" />
         </EntityType>
         <EntityType Name="EmpFinDetail">
           <Key>
@@ -419,7 +437,7 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <Property Name="companyId" Type="int" />
           <Property Name="empname" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
-        <Association Name="FK__claimJSON__claim__025D5595">
+        <Association Name="FK__claimJSON__claim__2A164134">
           <End Role="ClaimStatus" Type="Self.ClaimStatus" Multiplicity="0..1" />
           <End Role="claimJSON" Type="Self.claimJSON" Multiplicity="*" />
           <ReferentialConstraint>
@@ -659,6 +677,30 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_EmpDocs_DocTypes">
+          <End Role="DocTypes" Type="Self.DocTypes" Multiplicity="1" />
+          <End Role="EmpDocs" Type="Self.EmpDocs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DocTypes">
+              <PropertyRef Name="DocTypeId" />
+            </Principal>
+            <Dependent Role="EmpDocs">
+              <PropertyRef Name="DocTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpDocs_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="EmpDocs" Type="Self.EmpDocs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="EmpDocs">
+              <PropertyRef Name="EmpId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_EmpFinDetail_Employee">
           <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
           <End Role="EmpFinDetail" Type="Self.EmpFinDetail" Multiplicity="0..1" />
@@ -889,6 +931,9 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <Parameter Name="managerId" Type="int" Mode="In" />
           <Parameter Name="numDays" Type="int" Mode="In" />
         </Function>
+        <Function Name="getCandidatesByCreatedBy" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EmpId" Type="int" Mode="In" />
+        </Function>
         <Function Name="getEmergencyHeader" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EmpId" Type="int" Mode="In" />
         </Function>
@@ -946,9 +991,11 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="contactType" EntityType="Self.contactType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Degree" EntityType="Self.Degree" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DocTypes" EntityType="Self.DocTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmergencyContact" EntityType="Self.EmergencyContact" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmpClient" EntityType="Self.EmpClient" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmpContactDetail" EntityType="Self.EmpContactDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmpDocs" EntityType="Self.EmpDocs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmpFinDetail" EntityType="Self.EmpFinDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmpIdentity" EntityType="Self.EmpIdentity" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
@@ -1005,7 +1052,7 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
     [clientEmployee].[empname] AS [empname]
     FROM [dbo].[clientEmployee] AS [clientEmployee]</DefiningQuery>
           </EntitySet>
-          <AssociationSet Name="FK__claimJSON__claim__025D5595" Association="Self.FK__claimJSON__claim__025D5595">
+          <AssociationSet Name="FK__claimJSON__claim__2A164134" Association="Self.FK__claimJSON__claim__2A164134">
             <End Role="ClaimStatus" EntitySet="ClaimStatus" />
             <End Role="claimJSON" EntitySet="claimJSON" />
           </AssociationSet>
@@ -1084,6 +1131,14 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <AssociationSet Name="FK_EmpContactDetail_Employee" Association="Self.FK_EmpContactDetail_Employee">
             <End Role="Employee" EntitySet="Employee" />
             <End Role="EmpContactDetail" EntitySet="EmpContactDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpDocs_DocTypes" Association="Self.FK_EmpDocs_DocTypes">
+            <End Role="DocTypes" EntitySet="DocTypes" />
+            <End Role="EmpDocs" EntitySet="EmpDocs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpDocs_Employee" Association="Self.FK_EmpDocs_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="EmpDocs" EntitySet="EmpDocs" />
           </AssociationSet>
           <AssociationSet Name="FK_EmpFinDetail_Employee" Association="Self.FK_EmpFinDetail_Employee">
             <End Role="Employee" EntitySet="Employee" />
@@ -1257,6 +1312,7 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <NavigationProperty Name="EmpPastEmps" Relationship="ubietydbModel.FK_EmpPastEmp_Employee" FromRole="Employee" ToRole="EmpPastEmp" />
           <NavigationProperty Name="Candidates" Relationship="ubietydbModel.FK_Candidate_Employee" FromRole="Employee" ToRole="Candidate" />
           <NavigationProperty Name="Candidates1" Relationship="ubietydbModel.FK_Candidate_Employee1" FromRole="Employee" ToRole="Candidate" />
+          <NavigationProperty Name="EmpDocs" Relationship="ubietydbModel.FK_EmpDocs_Employee" FromRole="Employee" ToRole="EmpDoc" />
           </EntityType>
         <EntityType Name="EmpStatu">
           <Key>
@@ -1662,6 +1718,22 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
             <End Role="Qualification" EntitySet="Qualifications" />
             <End Role="Candidate" EntitySet="Candidates" />
           </AssociationSet>
+          <EntitySet Name="DocTypes" EntityType="ubietydbModel.DocType" />
+          <EntitySet Name="EmpDocs" EntityType="ubietydbModel.EmpDoc" />
+          <AssociationSet Name="FK_EmpDocs_DocTypes" Association="ubietydbModel.FK_EmpDocs_DocTypes">
+            <End Role="DocType" EntitySet="DocTypes" />
+            <End Role="EmpDoc" EntitySet="EmpDocs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpDocs_Employee" Association="ubietydbModel.FK_EmpDocs_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="EmpDoc" EntitySet="EmpDocs" />
+          </AssociationSet>
+          <FunctionImport Name="getCandidatesByCreatedBy" ReturnType="Collection(ubietydbModel.getCandidatesByCreatedBy_Result)">
+          <Parameter Name="EmpId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="getCandidatesByCreatedBy1" ReturnType="Collection(ubietydbModel.getCandidatesByCreatedBy1_Result)">
+          <Parameter Name="EmpId" Mode="In" Type="Int32" />
+          </FunctionImport>
           </EntityContainer>
         <EntityType Name="Group">
           <Key>
@@ -2430,8 +2502,8 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="CurrentCompany" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="CurrentSalary" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="CurrentExp" Type="Int32" Nullable="false" />
-          <Property Name="CurrentLocation" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CurrentExp" Type="Int32" />
+          <Property Name="CurrentLocation" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Designation" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="TotalExp" Type="Int32" Nullable="false" />
           <Property Name="NativePlace" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -2443,6 +2515,7 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <NavigationProperty Name="Employee" Relationship="ubietydbModel.FK_Candidate_Employee" FromRole="Candidate" ToRole="Employee" />
           <NavigationProperty Name="Employee1" Relationship="ubietydbModel.FK_Candidate_Employee1" FromRole="Candidate" ToRole="Employee" />
           <NavigationProperty Name="Qualification" Relationship="ubietydbModel.FK_Candidate_Qualification" FromRole="Candidate" ToRole="Qualification" />
+          <Property Name="degree" Type="Int32" />
         </EntityType>
         <Association Name="FK_Candidate_Employee">
           <End Type="ubietydbModel.Employee" Role="Employee" Multiplicity="0..1" />
@@ -2480,6 +2553,76 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="DocType">
+          <Key>
+            <PropertyRef Name="DocTypeId" />
+          </Key>
+          <Property Name="DocTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DocTypeName" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="EmpDocs" Relationship="ubietydbModel.FK_EmpDocs_DocTypes" FromRole="DocType" ToRole="EmpDoc" />
+        </EntityType>
+        <EntityType Name="EmpDoc">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmpId" Type="Int32" Nullable="false" />
+          <Property Name="DocTypeId" Type="Int32" Nullable="false" />
+          <Property Name="DocRemarks" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="DocReference" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="DocType" Relationship="ubietydbModel.FK_EmpDocs_DocTypes" FromRole="EmpDoc" ToRole="DocType" />
+          <NavigationProperty Name="Employee" Relationship="ubietydbModel.FK_EmpDocs_Employee" FromRole="EmpDoc" ToRole="Employee" />
+        </EntityType>
+        <Association Name="FK_EmpDocs_DocTypes">
+          <End Type="ubietydbModel.DocType" Role="DocType" Multiplicity="1" />
+          <End Type="ubietydbModel.EmpDoc" Role="EmpDoc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DocType">
+              <PropertyRef Name="DocTypeId" />
+            </Principal>
+            <Dependent Role="EmpDoc">
+              <PropertyRef Name="DocTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpDocs_Employee">
+          <End Type="ubietydbModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="ubietydbModel.EmpDoc" Role="EmpDoc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="EmpDoc">
+              <PropertyRef Name="EmpId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="getCandidatesByCreatedBy_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="Int32" Name="CreatedBy" Nullable="false" />
+          <Property Type="String" Name="CandidateName" Nullable="false" MaxLength="100" />
+          <Property Type="Int64" Name="PrimaryMobile" Nullable="false" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="TotalExp" Nullable="false" />
+          <Property Type="String" Name="QualificationName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="DegreeName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CurrentLocation" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="CreatedBy1" Nullable="false" MaxLength="100" />
+          <Property Type="DateTime" Name="AddedOn" Nullable="false" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="getCandidatesByCreatedBy1_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="Int32" Name="CreatedById" Nullable="false" />
+          <Property Type="String" Name="CandidateName" Nullable="false" MaxLength="100" />
+          <Property Type="Int64" Name="PrimaryMobile" Nullable="false" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="TotalExp" Nullable="false" />
+          <Property Type="String" Name="QualificationName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="DegreeName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CurrentLocation" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="CreatedBy" Nullable="false" MaxLength="100" />
+          <Property Type="DateTime" Name="AddedOn" Nullable="false" Precision="23" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3068,6 +3211,7 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <EntitySetMapping Name="Candidates">
             <EntityTypeMapping TypeName="ubietydbModel.Candidate">
               <MappingFragment StoreEntitySet="Candidate">
+                <ScalarProperty Name="degree" ColumnName="degree" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
@@ -3088,6 +3232,42 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="DocTypes">
+            <EntityTypeMapping TypeName="ubietydbModel.DocType">
+              <MappingFragment StoreEntitySet="DocTypes">
+                <ScalarProperty Name="DocTypeName" ColumnName="DocTypeName" />
+                <ScalarProperty Name="DocTypeId" ColumnName="DocTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmpDocs">
+            <EntityTypeMapping TypeName="ubietydbModel.EmpDoc">
+              <MappingFragment StoreEntitySet="EmpDocs">
+                <ScalarProperty Name="DocReference" ColumnName="DocReference" />
+                <ScalarProperty Name="DocRemarks" ColumnName="DocRemarks" />
+                <ScalarProperty Name="DocTypeId" ColumnName="DocTypeId" />
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="getCandidatesByCreatedBy1" FunctionName="ubietydbModel.Store.getCandidatesByCreatedBy">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ubietydbModel.getCandidatesByCreatedBy1_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CreatedById" ColumnName="CreatedById" />
+                <ScalarProperty Name="CandidateName" ColumnName="CandidateName" />
+                <ScalarProperty Name="PrimaryMobile" ColumnName="PrimaryMobile" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="TotalExp" ColumnName="TotalExp" />
+                <ScalarProperty Name="QualificationName" ColumnName="QualificationName" />
+                <ScalarProperty Name="DegreeName" ColumnName="DegreeName" />
+                <ScalarProperty Name="CurrentLocation" ColumnName="CurrentLocation" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="AddedOn" ColumnName="AddedOn" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

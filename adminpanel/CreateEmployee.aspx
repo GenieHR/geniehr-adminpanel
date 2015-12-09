@@ -128,7 +128,7 @@
 
                 var empJSON = $.parseJSON('{ "companyid": 0, "designation": "", "empnum": "", "empname": "", "empstatus": 1, "email": "", "primarymobile": 0 }');
 
-                empJSON.companyid = <%= Session["SelectClientId"] %>;
+                empJSON.companyid = localStorage.getItem("org_clientId");
                 empJSON.designation = $('#designation').val();
                 empJSON.empnum = $('#empnum').val();
                 empJSON.empname = $('#empname').val();

@@ -58,7 +58,8 @@
                             <tbody>
                                 
                             </tbody>
-                        </table>                </div>
+                        </table>
+                </div>
                 </div>
             </div>
         </div>

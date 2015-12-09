@@ -34,6 +34,15 @@ namespace adminpanel.Controllers
 
         }
 
+        [Route("getcandidatesbyEmpId/{EmpId}")]
+        [HttpGet]
+        public dynamic PutCandidate(int EmpId)
+        {
+            db.Configuration.ProxyCreationEnabled = false;
+
+            return db.getCandidatesByCreatedBy(EmpId);
+
+        }
 
 
 

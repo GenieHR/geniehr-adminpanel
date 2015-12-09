@@ -1915,7 +1915,8 @@
             startView: 2,
             autoclose: true,
             format: "MM - yyyy"
-        });
+        });
+
         function updateDocList(doctype, docname)
         {
             var thisDocArray = new Array();

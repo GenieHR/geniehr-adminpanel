@@ -25,6 +25,7 @@
         .button-hide {
             display: none;
         }
+
     </style>
 
     <div class="row wrapper border-bottom white-bg page-heading">
@@ -487,7 +488,7 @@
 
     $( document ).ready(function() {
         $.ajax({
-            url: 'api/getEmployeeManagers/' + empId,
+            url: '../api/getEmployeeManagers/' + empId,
             success: function (data) {
                 var manNames;
                 manNames = data[0].Manager_Name
@@ -549,7 +550,7 @@ function submitClaim() {
 
 
     $.ajax({
-        url: 'api/claimJSONs',
+        url: '../api/claimJSONs',
         type: 'post',
         dataType: 'json',
         data: uploadVal,

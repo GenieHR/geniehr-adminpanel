@@ -100,7 +100,7 @@
 
                                 <label class="col-sm-2 control-label">Native Place</label>
                                 <div class="col-sm-5">
-                                    <input type="text" class="form-control" id="NativePlace" />
+                                    <input type="text" required="required" class="form-control" id="NativePlace" />
                                 </div>
                             </div>
                             <div class="form-group">
@@ -109,7 +109,7 @@
                                    <div class="col-sm-5">
                                         <div class="input-group m-b">
                                             <span class="input-group-addon">+91</span>
-                                            <input type="number" class="form-control" id="PrimaryMobile"/>
+                                            <input  type="tel" pattern="^\d{10}$" title="Enter a valid mobile number" class="form-control" id="PrimaryMobile"/>
                                         </div>
                                     </div>
                             </div>
@@ -133,21 +133,13 @@
 
 
                                     <div class="col-sm-5">
-                                        <div class="input-group m-b">
-                                            <input type="text" class="form-control" id="Email"/>
-                                            <span class="input-group-addon">@</span>
-                                            <select class="form-control" id="emailDomain">
-                                                <option>gmail.com</option>
-                                                <option>yahoo.com</option>
-                                                <option>yahoo.co.in</option>
-                                            </select>
-                                        </div>
+                                            <input type="email" class="form-control" id="Email"/>
+                                            
                                     </div>
                                     </div>
                              <div class="form-group">
                                 <label class="col-sm-2 control-label">Total Experience</label>
                                 <div class="row">
-
                                     <div class="col-sm-5">
                                         <div class="input-group m-b">
                                             <input type="number" min="0" class="form-control" value="0" id="TotalExpY"/>
@@ -263,13 +255,13 @@
 
             $("#candidateSubmit").prop("disabled", true);
             event.preventDefault();
-
+                
             var candidateDetailJSON = {
                 "CreatedBy": gEmpId,
                 "CandidateName": $("#CandidateName").val(),
                 "PrimaryMobile": $("#PrimaryMobile").val(),
                 "AlternateNumber": $("#AlternateNumber").val(),
-                "Email": $("#Email").val() + '@' + $("#emailDomain").val(),
+                "Email": $("#Email").val(),
                 "CurrentCompany": $("#CurrentCompany").val(),
                 "CurrentSalary": $("#CurrentSalary").val(),
                 "CurrentExp": parseInt($("#CurrentExpY").val()) +  Math.round($("#CurrentExpM").val()/12),
@@ -277,7 +269,8 @@
                 "Designation": $("#Designation").val(),
                 "TotalExp": parseInt($("#TotalExpY").val()) + Math.round($("#TotalExpM").val()/12),
                 "NativePlace": $("#NativePlace").val(),
-                "HighestQualification": $("#qQualification").val()
+                "HighestQualification": $("#qQualification").val(),
+                "Degree" : $("#qDegree").val()
             };
 
             $.ajax({

@@ -40,6 +40,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AspNet.ScriptManager.jQuery, Version=2.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\AspNet.ScriptManager.jQuery.2.1.4\lib\net45\AspNet.ScriptManager.jQuery.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
@@ -143,9 +147,6 @@
     <Reference Include="AspNet.ScriptManager.bootstrap">
       <HintPath>..\packages\AspNet.ScriptManager.bootstrap.3.0.0\lib\net45\AspNet.ScriptManager.bootstrap.dll</HintPath>
     </Reference>
-    <Reference Include="AspNet.ScriptManager.jQuery">
-      <HintPath>..\packages\AspNet.ScriptManager.jQuery.1.10.2\lib\net45\AspNet.ScriptManager.jQuery.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.ScriptManager.MSAjax">
       <HintPath>..\packages\Microsoft.AspNet.ScriptManager.MSAjax.5.0.0\lib\net45\Microsoft.ScriptManager.MSAjax.dll</HintPath>
     </Reference>
@@ -243,6 +244,9 @@
     <Content Include="css\plugins\dropzone\basic.css" />
     <Content Include="css\plugins\dropzone\dropzone.css" />
     <Content Include="css\plugins\jcrop\jquery.Jcrop.min.css" />
+    <Content Include="css\plugins\jqGrid\ui.jqgrid-bootstrap-ui.css" />
+    <Content Include="css\plugins\jqGrid\ui.jqgrid-bootstrap.css" />
+    <Content Include="css\plugins\jqGrid\ui.jqgrid.css" />
     <Content Include="css\plugins\jqueryrange\jquery.range.css" />
     <Content Include="css\plugins\noUISlider\jquery.nouislider.css" />
     <Content Include="css\plugins\select2\select2.min.css" />
@@ -267,9 +271,11 @@
     <Content Include="css\plugins\toastr\toastr.min.css" />
     <Content Include="css\spinners.css" />
     <Content Include="css\style.css" />
+    <Content Include="Employees\docs.aspx" />
     <Content Include="js\plugins\jqueryrange\jquery.range-min.js" />
     <Content Include="Org\AddCandidate.aspx" />
     <Content Include="Org\AddOrgEmployee.aspx" />
+    <Content Include="Org\CreateEmployee.aspx" />
     <Content Include="Org\dashboard.aspx" />
     <Content Include="Employees\home.aspx" />
     <Content Include="Employees\profile.aspx" />
@@ -403,6 +409,7 @@
     <Content Include="Org\empProfile.aspx" />
     <Content Include="Org\empProfileList.aspx" />
     <Content Include="Org\home.aspx" />
+    <Content Include="Org\MyCandidates.aspx" />
     <Content Include="Org\ShowClients.aspx" />
     <Content Include="packages.config">
       <SubType>Designer</SubType>
@@ -443,14 +450,18 @@
     <Content Include="js\plugins\masonry\masonry.pkgd.min.js" />
     <Content Include="Org\OrgManager.Master" />
     <Content Include="Org\OrgTemplate1.Master" />
-    <None Include="Properties\PublishProfiles\Talentpull.pubxml" />
     <None Include="Properties\PublishProfiles\GenieHR.pubxml" />
+    <None Include="Properties\PublishProfiles\talentpull - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\talentpull - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\ubietyadmin - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\ubietyadmin - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="profile.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Scripts\jquery-1.10.2.js" />
-    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <None Include="Scripts\jquery-2.1.4.intellisense.js" />
+    <Content Include="Scripts\jquery-2.1.4.js" />
+    <Content Include="Scripts\jquery-2.1.4.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
@@ -491,10 +502,10 @@
     </Content>
     <Content Include="Bundle.config" />
     <None Include="Project_Readme.html" />
-    <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Site.Mobile.Master" />
     <Content Include="UbietyMenu.Master" />
     <Content Include="template.Master" />
+    <Content Include="Scripts\jquery-2.1.4.min.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -628,6 +639,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CandidateController.cs" />
+    <Compile Include="Controllers\DocumentController.cs" />
     <Compile Include="Controllers\OrgController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Employees\changePassword.aspx.cs">
@@ -670,10 +682,29 @@
     <Compile Include="CreateEmployee.aspx.designer.cs">
       <DependentUpon>CreateEmployee.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Employees\docs.aspx.cs">
+      <DependentUpon>docs.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Employees\docs.aspx.designer.cs">
+      <DependentUpon>docs.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Models\Candidate.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CandidateDTO.cs" />
+    <Compile Include="Models\DocType.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EmpDoc.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\getCandidatesByCreatedBy1_Result.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\getCandidatesByCreatedBy_Result.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\profilestatus1_Result.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
@@ -690,6 +721,13 @@
     </Compile>
     <Compile Include="Org\AddOrgEmployee.aspx.designer.cs">
       <DependentUpon>AddOrgEmployee.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Org\CreateEmployee.aspx.cs">
+      <DependentUpon>CreateEmployee.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Org\CreateEmployee.aspx.designer.cs">
+      <DependentUpon>CreateEmployee.aspx</DependentUpon>
     </Compile>
     <Compile Include="Org\dashboard.aspx.cs">
       <DependentUpon>dashboard.aspx</DependentUpon>
@@ -975,6 +1013,13 @@
     </Compile>
     <Compile Include="Org\home.aspx.designer.cs">
       <DependentUpon>home.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Org\MyCandidates.aspx.cs">
+      <DependentUpon>MyCandidates.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Org\MyCandidates.aspx.designer.cs">
+      <DependentUpon>MyCandidates.aspx</DependentUpon>
     </Compile>
     <Compile Include="Org\OrgManager.Master.cs">
       <DependentUpon>OrgManager.Master</DependentUpon>

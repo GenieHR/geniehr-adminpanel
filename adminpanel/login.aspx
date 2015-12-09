@@ -51,6 +51,8 @@
     <script src="js/jquery-2.1.1.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script>
+        localStorage.org_clientId = 0;
+
         function getParameterByName(name) {
             name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
             var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),

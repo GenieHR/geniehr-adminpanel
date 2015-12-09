@@ -82,7 +82,7 @@
                 </li>
 
                 <li>
-                    <a href="#"><i class="fa  fa-paperclip"></i> <span class="nav-label">My Documents</span> </a>
+                    <a href="docs.aspx"><i class="fa  fa-paperclip"></i> <span class="nav-label">My Documents</span> </a>
                 </li>
 
             </ul>
