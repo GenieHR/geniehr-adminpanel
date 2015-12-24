@@ -236,7 +236,8 @@
 
         var attendanceURL = "api/attendance/of/temp/" + getParameterByName('EmpId');
         var profileURL = "api/getempdetail/of/" + getParameterByName('EmpId') + '?jsoncallback=?';
-         <% // TODO: Environment Varialbe %>
+        
+        <% // TODO: Environment Varialbe %>
 
         var url = '<%= ConfigurationManager.AppSettings["StorageURL"] %>';
 

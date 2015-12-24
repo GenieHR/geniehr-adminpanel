@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace adminpanel
+namespace adminpanel.Client
 {
     public partial class main : System.Web.UI.Page
     {

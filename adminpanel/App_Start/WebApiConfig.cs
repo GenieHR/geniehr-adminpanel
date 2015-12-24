@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Http;
-//using Newtonsoft.Json;
+﻿using System.Web.Http;
+using Newtonsoft.Json;
 
 namespace adminpanel
 {
@@ -11,12 +8,10 @@ namespace adminpanel
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services
+
             config.MapHttpAttributeRoutes();
             config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new System.Net.Http.Headers.MediaTypeHeaderValue("text/html"));
-            config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-
-            // Web API routes
-            //config.MapHttpAttributeRoutes();
+            config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",

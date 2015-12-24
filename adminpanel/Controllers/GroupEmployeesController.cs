@@ -19,6 +19,24 @@ namespace adminpanel.Controllers
     {
         private ubietydbEntities db = new ubietydbEntities();
 
+        //[Route("api/getClientEmp/{clientId}")]
+        //[HttpGet]
+        //public dynamic getEmployees(int clientId)
+        //{
+
+        //}
+
+
+        [Route("api/divincharge/{clientId}/fordiv/{divId}")]
+        [HttpGet]
+        public dynamic getDivIncharge(int clientId, int divId)
+        {
+            db.Configuration.ProxyCreationEnabled = false;
+            return db.getDivIncharge(clientId, divId).ToList();
+
+        }
+
+
         [Route("api/clientEmp/of/{clientId}/notingroup/{groupId}")]
         [HttpGet]
         public dynamic getEmployees(int clientId, int groupId)
@@ -66,7 +84,6 @@ namespace adminpanel.Controllers
 
             return empList;
 
-           // return groupEmployees;
         }
 
         [Route("api/removeEmployee/{EmpId}/from/{GroupId}")]

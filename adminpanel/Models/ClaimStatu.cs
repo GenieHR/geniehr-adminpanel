@@ -21,11 +21,11 @@ public partial class ClaimStatu
     public ClaimStatu()
     {
 
-        this.ClaimStatusHistories = new HashSet<ClaimStatusHistory>();
-
         this.claimHistories = new HashSet<claimHistory>();
 
         this.claimJSONs = new HashSet<claimJSON>();
+
+        this.ClaimStatusHistories = new HashSet<ClaimStatusHistory>();
 
     }
 
@@ -36,11 +36,11 @@ public partial class ClaimStatu
 
 
 
-    public virtual ICollection<ClaimStatusHistory> ClaimStatusHistories { get; set; }
-
     public virtual ICollection<claimHistory> claimHistories { get; set; }
 
     public virtual ICollection<claimJSON> claimJSONs { get; set; }
+
+    public virtual ICollection<ClaimStatusHistory> ClaimStatusHistories { get; set; }
 
 }
 

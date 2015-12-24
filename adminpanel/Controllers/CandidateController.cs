@@ -28,10 +28,7 @@ namespace adminpanel.Controllers
             candidate.CreatedOn = currentTime;
 
             db.Candidates.Add(candidate);
-
             return db.SaveChanges();
-
-
         }
 
         [Route("getcandidatesbyEmpId/{EmpId}")]
@@ -39,12 +36,7 @@ namespace adminpanel.Controllers
         public dynamic PutCandidate(int EmpId)
         {
             db.Configuration.ProxyCreationEnabled = false;
-
-            return db.getCandidatesByCreatedBy(EmpId);
-
+            return new { data = db.getCandidatesByCreatedBy(EmpId) };
         }
-
-
-
     }
 }

@@ -36,9 +36,9 @@ public partial class EmergencyContact
 
     public virtual Employee Employee { get; set; }
 
-    public virtual Relation Relation1 { get; set; }
-
     public virtual EntityAddress EntityAddress { get; set; }
+
+    public virtual Relation Relation1 { get; set; }
 
 }
 

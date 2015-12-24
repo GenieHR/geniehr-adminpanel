@@ -148,9 +148,11 @@
                             <div class="col-lg-12" id="expensesTableDiv">
                             </div>
                         </div>
-                        <div class="row text-center">
-                            <input type="button" value="Submit Claim" onclick="javascript:submitClaim()" class="btn btn-info" />
-                            <input type="button" value="Save Draft" onclick="javascript:saveDraftClaim()" class="btn btn-info" />
+                        <div class="row text-right">
+                            <input type="button" value="Submit" onclick="javascript:submitClaim()" class="btn btn-success" />
+                            <input type="button" value="Save" onclick="javascript:saveDraftClaim()" class="btn btn-info" />
+                            <input type="button" value="Discard" onclick="javascript:discardClaim()" class="btn btn-danger" />
+
 
                         </div>
                     </div>
@@ -463,6 +465,21 @@
         </div>
     </div>
 
+    <div class="modal fade" id="draftClaimModal">
+        <div class="vertical-alignment-helper">
+            <div class="modal-dialog vertical-align-center">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div id="loadingContentDraft" class="text-center">
+                            <h3>Saving claim, Please wait.</h3>
+                            <i class="fa fa-2x fa-spinner fa-pulse"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </asp:Content>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="javascriptPart" runat="server">
@@ -481,12 +498,26 @@
         window.location = 'claim.aspx';
     })
 
+    var gClaimNo = null, gClaimId = -1;
     var newId = 0;
     var claimJSON = $.parseJSON('{"travelExpense":0, "foodExpense":0, "hotelExpense":0,"otherExpense":0, "totalExpense":0,"claimpurpose":"","Travels":[],"Hotels":[],"Food":[],"Others":[]}');
 
     $("#claimDate").datepicker({ dateFormat: 'MM dd, yy' }).datepicker("setDate", new Date());
 
     $( document ).ready(function() {
+
+
+        $.ajax({
+            url: '../api/getClaimDraft/' + empId,
+            success: function (data) {
+                if (data.lenght > 0) {
+                    gClaimNo = data[0].claimNo;
+                    gClaimId = data[0].id;
+                }
+            }
+        });
+
+
         $.ajax({
             url: '../api/getEmployeeManagers/' + empId,
             success: function (data) {
@@ -508,8 +539,72 @@ function activateTab(tab) {
     $('.nav-tabs a[href="#' + tab + '"]').tab('show');
 }
 
+
+
+    
 function saveDraftClaim() {
-    alert('coming soon');
+  
+    if( $.trim($("#claimPurpose").val()) == "") {
+        alert("Claim pupose cannot be blank");
+        $("#claimPurpose").focus();
+        return false;
+    }
+
+    $('#draftClaimModal').modal({
+        backdrop: 'static',
+        keyboard: false
+    });
+
+    $('#draftClaimModal').modal();
+           
+    claimJSON.travelExpense = parseInt($("#sumTravelAmt").html());
+    claimJSON.claimpurpose = $("#claimPurpose").val();
+    claimJSON.foodExpense = parseInt($("#sumFoodAmt").html());
+    claimJSON.hotelExpense = parseInt($("#sumHotelAmt").html());
+    claimJSON.otherExpense = parseInt($("#summOthAmt").html());
+    claimJSON.totalExpense = parseInt($("#summTotAmt").html());
+            
+    if (gClaimId > -1) {
+    var uploadVal = {
+        "id": gClaimId,
+        "claimNo": gClaimNo,
+        "EmpId": empId,
+        "claimDate": $("#claimDate").val(),
+        "claimPurpose": claimJSON.claimpurpose,
+        "claimText": JSON.stringify(claimJSON),
+        "totalAmount": parseInt($("#summTotAmt").html()),
+        "claimstatus": 0
+    };
+    }
+    else
+    {
+        var uploadVal = {
+          
+            "EmpId": empId,
+            "claimDate": $("#claimDate").val(),
+            "claimPurpose": claimJSON.claimpurpose,
+            "claimText": JSON.stringify(claimJSON),
+            "totalAmount": parseInt($("#summTotAmt").html()),
+            "claimstatus": 0
+        };
+    }
+
+    $.ajax({
+        url: '../api/draftClaimJSON',
+        type: 'post',
+        dataType: 'json',
+        data: uploadVal,
+        success: function (data) {
+            gClaimNo = data.claimNo;
+            gClaimId = data.id;
+
+            $("#loadingContentDraft").html('<h3>Draft Claim No <span class="text-success">' + gClaimNo + ' </span> saved. <br/><br/> You can continue updating the claim</h3><a data-dismiss="modal">Close</a>');
+            
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            $("#loadingContentDraft").html('<h3 class="text-danger">Error submitting claim. ' + errorThrown + '  </h3><a data-dismiss="modal">Ok</a>');
+        }
+    });
 }
 
 function submitClaim() {
@@ -545,7 +640,7 @@ function submitClaim() {
         "claimPurpose": claimJSON.claimpurpose,
         "claimText": JSON.stringify(claimJSON),
         "totalAmount": parseInt($("#summTotAmt").html()),
-        "claimstatus": 0
+        "claimstatus": 1
     };
 
 
@@ -556,6 +651,8 @@ function submitClaim() {
         data: uploadVal,
         success: function (data) {
             $("#loadingContent").html('<h3>Claim no. <span class="text-success">' + data.claimNo + ' </span> submitted succesfully</h3><a data-dismiss="modal">Close</a>');
+            gClaimNo = null;
+            gClaimId = -1;
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             $("#loadingContent").html('<h3 class="text-danger">Error submitting claim. ' + errorThrown + '  </h3><a data-dismiss="modal">Close</a>');
@@ -678,6 +775,14 @@ function calculateSummOthersAmt() {
     $("#summOthAmt").html(totAmt);
 }
 
+function loadExpenses(expenseJSON) {
+    $('#expensesTableDiv').html('<table id="expensesTable" class=" table table-stripped table-bordered table-hover table-condensed"><thead><tr><th style="width: 10%;">Type </th><th style="width: 10%;">Date </th><th style="width: 60%">Notes</th><th style="width: 10%" class="curr">Amount</th><th style="width: 10%">Manage</th></tr></thead><tbody></tbody></table>');
+
+    newId++;
+
+    var lineId = expenseType + '_' + newId;
+
+}
 
 function addExpense(expenseType) {
             

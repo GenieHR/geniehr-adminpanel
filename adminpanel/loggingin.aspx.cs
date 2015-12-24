@@ -55,7 +55,7 @@ namespace Admin
 
                     //var emp = context.getEmpsofManager(employee.EmpId);
 
-                    Response.Redirect("~/main.aspx");
+                    Response.Redirect("~/Client/main.aspx");
                 }
                 else if (System.Web.HttpContext.Current.User.IsInRole("ClientEmployee"))
                 {

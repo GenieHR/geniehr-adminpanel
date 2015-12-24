@@ -21,11 +21,11 @@ public partial class Qualification
     public Qualification()
     {
 
+        this.Candidates = new HashSet<Candidate>();
+
         this.Degrees = new HashSet<Degree>();
 
         this.EmpQualifications = new HashSet<EmpQualification>();
-
-        this.Candidates = new HashSet<Candidate>();
 
     }
 
@@ -36,11 +36,11 @@ public partial class Qualification
 
 
 
+    public virtual ICollection<Candidate> Candidates { get; set; }
+
     public virtual ICollection<Degree> Degrees { get; set; }
 
     public virtual ICollection<EmpQualification> EmpQualifications { get; set; }
-
-    public virtual ICollection<Candidate> Candidates { get; set; }
 
 }
 

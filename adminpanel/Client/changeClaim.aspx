@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/template.Master" CodeBehind="changeClaim.aspx.cs" Inherits="adminpanel.viewClaim" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Client/ClientManager.Master" CodeBehind="changeClaim.aspx.cs" Inherits="adminpanel.Client.viewClaim" %>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="body" runat="server">
     <style>
@@ -54,8 +54,6 @@
                                         <div class="col-lg-8 col-sm-8 col-md-8">
 
                                             <form id="summaryForm" method="get" class="form-horizontal">
-
-                                                
 
                                                 <div class="form-group">
                                                     <label class="col-sm-2 control-label">Claim No.</label>
@@ -537,7 +535,7 @@
 
             if (!logPopulated) {
             $.ajax({
-                url: "api/getClaimLog/" + window.localStorage.getItem("cliamId"),
+                url: "../api/getClaimLog/" + window.localStorage.getItem("cliamId"),
             }).done(function (claimLog) {
                 logPopulated = true;
                 var i;
@@ -564,7 +562,7 @@
         $(document).ready(function () {
 
             $.ajax({
-                url: "api/claimJSONs/" + window.localStorage.getItem("cliamId"),
+                url: "../api/claimJSONs/" + window.localStorage.getItem("cliamId"),
             }).done(function (result) {
                 originalClaimText = result.claimText;
 
@@ -590,7 +588,7 @@
                 $("#claimNo").val(result.claimNo);
 
                 $.ajax({
-                    url: "GetEmpDetail/of/" + result.EmpId,
+                    url: "../GetEmpDetail/of/" + result.EmpId,
                 }).done(function (empDetails) {
                     $("#empName").val(empDetails.employee[0].EmpName);
                     $("#empNum").val(empDetails.employee[0].EmpNum);
@@ -643,7 +641,7 @@
             if (claimResponse == 'A') {
 
                 var submittedClaim = JSON.parse(originalClaimText);
-                claimUploadJson.claimStatus = 1;
+                claimUploadJson.claimStatus = 3;
 
 
                 if (claimJSON.totalExpenseA != submittedClaim.totalExpense) {
@@ -653,17 +651,17 @@
                 }
             }
             else if (claimResponse == 'R') {
-                claimUploadJson.claimStatus = 2;
+                claimUploadJson.claimStatus = 4;
 
             }
 
             $.ajax({
-                url: 'api/ClaimUpdate',
+                url: '../api/ClaimUpdate',
                 type: 'post',
                 dataType: 'json',
                 data: claimUploadJson,
                 success: function (data) {
-                    alert('success');
+                    //alert('success');
                 },
                 error: function(XMLHttpRequest, textStatus, errorThrown) {
                     alert(errorThrown);

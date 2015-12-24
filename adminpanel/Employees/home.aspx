@@ -40,11 +40,13 @@
                                 </span>
                                 <span class="label label-primary">5</span> Write a letter to Sandra
                             </li>
-                        </ul>           --%>  
+                        </ul>
+           --%>  
 
              </div>
-            </div>    <blockquote>
-    Welcome to the Self Service Portal of <span class="text-info">GenieHR Solutions Pvt. Ltd.</span>
+            </div>
+    <blockquote>
+    Welcome to the Self Service Portal of <span class="text-info" id="orgName"></span>
 <br />
 <br />
     <span class="text-danger">An updated profile and contact information helps us in serving you better.</span>
@@ -58,7 +60,6 @@
     <ol>
         <li> Your historical pay statements. </li>
         <li> Your profile and education details. </li>
-
         <li> Addresses and contact information. </li>
         <li> Education upgradation. </li>
         <li> Your bank details. </li>
@@ -81,6 +82,11 @@ Alternately you can also reach us at +91-8888888--%>
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="javascriptPart" runat="server">
+    <script>
 
+        $.getJSON("../getEmpOrgId/<%= Session["EmpId"] %>", function (data) {
+            $("#orgName").html(data);
+        });
 
+    </script>
 </asp:Content>

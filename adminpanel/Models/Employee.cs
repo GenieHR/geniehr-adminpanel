@@ -23,29 +23,31 @@ public partial class Employee
 
         this.Attendances = new HashSet<Attendance>();
 
-        this.GroupEmployees = new HashSet<GroupEmployee>();
-
-        this.GroupIncharges = new HashSet<GroupIncharge>();
-
-        this.claimJSONs = new HashSet<claimJSON>();
-
-        this.claimHistories = new HashSet<claimHistory>();
-
-        this.ClaimRevisions = new HashSet<ClaimRevision>();
-
-        this.EmpContactDetails = new HashSet<EmpContactDetail>();
-
-        this.EmergencyContacts = new HashSet<EmergencyContact>();
-
-        this.EmpQualifications = new HashSet<EmpQualification>();
-
-        this.EmpPastEmps = new HashSet<EmpPastEmp>();
-
         this.Candidates = new HashSet<Candidate>();
 
         this.Candidates1 = new HashSet<Candidate>();
 
+        this.claimHistories = new HashSet<claimHistory>();
+
+        this.claimJSONs = new HashSet<claimJSON>();
+
+        this.ClaimRevisions = new HashSet<ClaimRevision>();
+
+        this.EmergencyContacts = new HashSet<EmergencyContact>();
+
+        this.EmpContactDetails = new HashSet<EmpContactDetail>();
+
         this.EmpDocs = new HashSet<EmpDoc>();
+
+        this.EmpPastEmps = new HashSet<EmpPastEmp>();
+
+        this.EmpQualifications = new HashSet<EmpQualification>();
+
+        this.GroupEmployees = new HashSet<GroupEmployee>();
+
+        this.GroupIncharges = new HashSet<GroupIncharge>();
+
+        this.GroupTypeIncharges = new HashSet<GroupTypeIncharge>();
 
     }
 
@@ -74,37 +76,39 @@ public partial class Employee
 
     public virtual ICollection<Attendance> Attendances { get; set; }
 
-    public virtual EmpStatu EmpStatu { get; set; }
+    public virtual ICollection<Candidate> Candidates { get; set; }
 
-    public virtual Login Login { get; set; }
-
-    public virtual ICollection<GroupEmployee> GroupEmployees { get; set; }
-
-    public virtual ICollection<GroupIncharge> GroupIncharges { get; set; }
-
-    public virtual ICollection<claimJSON> claimJSONs { get; set; }
+    public virtual ICollection<Candidate> Candidates1 { get; set; }
 
     public virtual ICollection<claimHistory> claimHistories { get; set; }
 
+    public virtual ICollection<claimJSON> claimJSONs { get; set; }
+
     public virtual ICollection<ClaimRevision> ClaimRevisions { get; set; }
+
+    public virtual ICollection<EmergencyContact> EmergencyContacts { get; set; }
+
+    public virtual ICollection<EmpContactDetail> EmpContactDetails { get; set; }
+
+    public virtual ICollection<EmpDoc> EmpDocs { get; set; }
 
     public virtual EmpFinDetail EmpFinDetail { get; set; }
 
     public virtual EmpIdentity EmpIdentity { get; set; }
 
-    public virtual ICollection<EmpContactDetail> EmpContactDetails { get; set; }
-
-    public virtual ICollection<EmergencyContact> EmergencyContacts { get; set; }
-
-    public virtual ICollection<EmpQualification> EmpQualifications { get; set; }
+    public virtual EmpStatu EmpStatu { get; set; }
 
     public virtual ICollection<EmpPastEmp> EmpPastEmps { get; set; }
 
-    public virtual ICollection<Candidate> Candidates { get; set; }
+    public virtual ICollection<EmpQualification> EmpQualifications { get; set; }
 
-    public virtual ICollection<Candidate> Candidates1 { get; set; }
+    public virtual ICollection<GroupEmployee> GroupEmployees { get; set; }
 
-    public virtual ICollection<EmpDoc> EmpDocs { get; set; }
+    public virtual ICollection<GroupIncharge> GroupIncharges { get; set; }
+
+    public virtual ICollection<GroupTypeIncharge> GroupTypeIncharges { get; set; }
+
+    public virtual Login Login { get; set; }
 
 }
 

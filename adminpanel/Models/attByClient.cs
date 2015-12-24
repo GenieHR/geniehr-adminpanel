@@ -22,6 +22,8 @@ public partial class attByClient
 
     public string MarkDate { get; set; }
 
+    public string MarkTime { get; set; }
+
     public string Coordinates { get; set; }
 
     public Nullable<int> CompanyId { get; set; }

@@ -38,9 +38,9 @@ public partial class EntityAddress
 
     public virtual Address Address { get; set; }
 
-    public virtual EntityType EntityType { get; set; }
-
     public virtual ICollection<EmergencyContact> EmergencyContacts { get; set; }
+
+    public virtual EntityType EntityType { get; set; }
 
 }
 

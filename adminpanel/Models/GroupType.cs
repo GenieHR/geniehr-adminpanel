@@ -23,6 +23,8 @@ public partial class GroupType
 
         this.Groups = new HashSet<Group>();
 
+        this.GroupTypeIncharges = new HashSet<GroupTypeIncharge>();
+
     }
 
 
@@ -34,9 +36,11 @@ public partial class GroupType
 
 
 
+    public virtual Client Client { get; set; }
+
     public virtual ICollection<Group> Groups { get; set; }
 
-    public virtual Client Client { get; set; }
+    public virtual ICollection<GroupTypeIncharge> GroupTypeIncharges { get; set; }
 
 }
 

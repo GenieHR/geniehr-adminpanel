@@ -86,14 +86,15 @@ namespace adminpanel.Controllers
             {
                 return BadRequest(ModelState);
             }
+            
+            claimJSON.claimNo = db.getNextClaimNo(claimJSON.EmpId).FirstOrDefault();
 
-            claimJSON.claimNo = db.getNextClaimNo(claimJSON.EmpId).FirstOrDefault(); 
             db.claimJSONs.Add(claimJSON);
 
             try
             {
                 if (db.SaveChanges() == 1) {
-                    createClaimLog(claimJSON.id,0,claimJSON.EmpId,"Claim Created");
+                    createClaimLog(claimJSON.id, claimJSON.claimstatus, claimJSON.EmpId,"Claim Created");
                 };
             }
             catch (DbUpdateException)
@@ -111,8 +112,73 @@ namespace adminpanel.Controllers
             return CreatedAtRoute("DefaultApi", new { id = claimJSON.id }, claimJSON);
         }
 
-        
-        
+        [Route("api/getClaimDraft/{EmpId}")]
+        [HttpGet]
+
+        public dynamic getClaimDraft(int EmpId)
+        {
+            db.Configuration.ProxyCreationEnabled = false;
+            return (from recordset in db.claimJSONs where recordset.EmpId == EmpId && recordset.claimstatus == 0 select recordset).ToList();
+        }
+
+
+        [Route("api/draftClaimJSON")]
+        [HttpPost]
+
+        public dynamic postDraftclaimJSON(claimJSON claimJSON)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (claimJSON.claimNo == null)
+
+            { 
+                claimJSON.claimNo = "Draft/" + db.getNextClaimNo(claimJSON.EmpId).FirstOrDefault();
+
+            db.claimJSONs.Add(claimJSON);
+
+            try
+            {
+                if (db.SaveChanges() == 1)
+                {
+                    createClaimLog(claimJSON.id, claimJSON.claimstatus, claimJSON.EmpId, "Draft Claim Created");
+                };
+            }
+            catch (DbUpdateException)
+            {
+                if (claimJSONExists(claimJSON.id))
+                {
+                    return Conflict();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            }
+            else
+            {
+                claimJSON claim = new claimJSON();
+                claim = db.claimJSONs.Find(claimJSON.id);
+
+                claim.claimPurpose = claimJSON.claimPurpose;
+                claim.claimText = claimJSON.claimText;
+                claim.totalAmount = claimJSON.totalAmount;
+
+                db.Entry(claim).State = EntityState.Modified;
+
+                if (db.SaveChanges() == 1)
+                {
+                    createClaimLog(claimJSON.id, claimJSON.claimstatus, claimJSON.EmpId, "Draft Claim Updated");
+                };
+            }
+
+            return claimJSON;
+        }
+
+
         private int createClaimLog(int claimId, int statusId, int empId, string remarks)
         {
             claimHistory claimHistory = new claimHistory();

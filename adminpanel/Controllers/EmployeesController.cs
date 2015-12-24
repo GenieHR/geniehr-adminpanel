@@ -179,6 +179,7 @@ namespace Admin.Controllers
             return new { employee = dataset2 };
         }
 
+        
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -204,6 +205,16 @@ namespace Admin.Controllers
             var empclients = context.Employees.Where(b => b.CompanyId == ClientId).ToList();
             return empclients;
         }
+
+        [Route("getEmpOrgId/{EmpId}")]
+        [HttpGet]
+        public string getEmpOrgId(int EmpId)
+        {
+            db.Configuration.ProxyCreationEnabled = false;
+            return db.getEmpOrgName(EmpId).FirstOrDefault();
+
+        }
+
 
         [Route("api/getMyEmps/{ManagerId}")]
         [HttpGet]

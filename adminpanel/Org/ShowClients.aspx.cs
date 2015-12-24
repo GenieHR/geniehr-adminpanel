@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace Admin
+namespace adminpanel.Org
 {
     public partial class ShowClients : System.Web.UI.Page
     {

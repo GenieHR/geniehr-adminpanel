@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Quick Reports" Language="C#" MasterPageFile="~/Org/OrgTemplate1.Master" AutoEventWireup="true" CodeBehind="dashboard.aspx.cs" Inherits="adminpanel.Org.dashboard" %>
+﻿<%@ Page Title="Quick Reports" Language="C#" MasterPageFile="~/Org/OrgTemplate1.Master" AutoEventWireup="true" CodeBehind="dashboard.aspx.cs" Inherits="adminpanel.Client.dashboard" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
               <style type="text/css">
@@ -80,7 +80,8 @@
                                 <div  class="input-group input-xs date">
                                     <span class="input-group-addon"> <i class="fa fa-calendar"></i></span><input type="text" id="selDate" class="form-control" />
                                 </div>
-                            </div>                                </div>
+                            </div>
+                                </div>
                         </div>
                             </div>
                         <div class="ibox-content ">
@@ -192,7 +193,10 @@
             .on('changeDate', function (e) {
 
                 populateTableData((new TimeSpan(Date.today() - Date.parse($('#selDate').val()))).days);
-        });        $('#data_1 .input-group.date').datepicker('update', new Date());
+        });
+
+        $('#data_1 .input-group.date').datepicker('update', new Date());
+
         
         populateTableData(0);
         

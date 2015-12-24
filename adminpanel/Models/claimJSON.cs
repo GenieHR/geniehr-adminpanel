@@ -42,15 +42,15 @@ public partial class claimJSON
 
     public decimal totalAmount { get; set; }
 
-    public Nullable<int> claimstatus { get; set; }
+    public int claimstatus { get; set; }
 
 
-
-    public virtual Employee Employee { get; set; }
 
     public virtual ICollection<claimHistory> claimHistories { get; set; }
 
     public virtual ClaimStatu ClaimStatu { get; set; }
+
+    public virtual Employee Employee { get; set; }
 
     public virtual ICollection<ClaimRevision> ClaimRevisions { get; set; }
 

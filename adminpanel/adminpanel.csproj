@@ -21,6 +21,10 @@
     <IISExpressUseClassicPipelineMode />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -40,6 +44,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="AspNet.ScriptManager.bootstrap, Version=3.3.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\AspNet.ScriptManager.bootstrap.3.3.6\lib\net45\AspNet.ScriptManager.bootstrap.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="AspNet.ScriptManager.jQuery, Version=2.1.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\AspNet.ScriptManager.jQuery.2.1.4\lib\net45\AspNet.ScriptManager.jQuery.dll</HintPath>
       <Private>True</Private>
@@ -52,8 +64,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="Hyak.Common">
-      <HintPath>..\packages\Hyak.Common.1.0.2\lib\net45\Hyak.Common.dll</HintPath>
+    <Reference Include="Hyak.Common, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Hyak.Common.1.1.0\lib\net45\Hyak.Common.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -63,28 +76,70 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Azure.Common">
-      <HintPath>..\packages\Microsoft.Azure.Common.2.0.4\lib\net45\Microsoft.Azure.Common.dll</HintPath>
+    <Reference Include="Microsoft.AspNet.Identity.Owin, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.Azure.Common.NetFramework">
-      <HintPath>..\packages\Microsoft.Azure.Common.2.0.4\lib\net45\Microsoft.Azure.Common.NetFramework.dll</HintPath>
+    <Reference Include="Microsoft.Azure.Common, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Azure.Common.2.1.0\lib\net45\Microsoft.Azure.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Azure.Common.NetFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Azure.Common.2.1.0\lib\net45\Microsoft.Azure.Common.NetFramework.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Azure.KeyVault.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.Data.Edm, Version=5.6.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.Data.Edm.5.6.4\lib\net40\Microsoft.Data.Edm.dll</HintPath>
+    <Reference Include="Microsoft.Data.Edm, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.Edm.5.7.0\lib\net40\Microsoft.Data.Edm.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.Data.OData, Version=5.6.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.Data.OData.5.6.4\lib\net40\Microsoft.Data.OData.dll</HintPath>
+    <Reference Include="Microsoft.Data.OData, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.OData.5.7.0\lib\net40\Microsoft.Data.OData.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.Data.Services.Client, Version=5.6.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.Data.Services.Client.5.6.4\lib\net40\Microsoft.Data.Services.Client.dll</HintPath>
+    <Reference Include="Microsoft.Data.Services.Client, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.Services.Client.5.7.0\lib\net40\Microsoft.Data.Services.Client.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.3.0.1\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.3.0.1\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.3.0.1\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Facebook, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Facebook.3.0.1\lib\net45\Microsoft.Owin.Security.Facebook.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Google, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Google.3.0.1\lib\net45\Microsoft.Owin.Security.Google.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.MicrosoftAccount, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.MicrosoftAccount.3.0.1\lib\net45\Microsoft.Owin.Security.MicrosoftAccount.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Twitter, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Twitter.3.0.1\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Threading.Tasks">
       <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.dll</HintPath>
@@ -101,36 +156,48 @@
     <Reference Include="Microsoft.WindowsAzure.Management.Storage">
       <HintPath>..\packages\Microsoft.WindowsAzure.Management.Storage.5.1.1\lib\net40\Microsoft.WindowsAzure.Management.Storage.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.WindowsAzure.Storage, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\WindowsAzure.Storage.6.0.0\lib\net40\Microsoft.WindowsAzure.Storage.dll</HintPath>
+    <Reference Include="Microsoft.WindowsAzure.Storage, Version=6.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsAzure.Storage.6.2.0\lib\net40\Microsoft.WindowsAzure.Storage.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <Private>True</Private>
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Net" />
     <Reference Include="System.Net.Http" />
-    <Reference Include="System.Net.Http.Extensions">
-      <HintPath>..\packages\Microsoft.Net.Http.2.2.22\lib\net45\System.Net.Http.Extensions.dll</HintPath>
+    <Reference Include="System.Net.Http.Extensions, Version=2.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\net45\System.Net.Http.Extensions.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="System.Net.Http.Primitives">
-      <HintPath>..\packages\Microsoft.Net.Http.2.2.22\lib\net45\System.Net.Http.Primitives.dll</HintPath>
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http.Primitives, Version=4.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\net45\System.Net.Http.Primitives.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Net.Http.WebRequest" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
-    <Reference Include="System.Spatial, Version=5.6.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\System.Spatial.5.6.4\lib\net40\System.Spatial.dll</HintPath>
+    <Reference Include="System.Spatial, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Spatial.5.7.0\lib\net40\System.Spatial.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.Extensions" />
-    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
@@ -144,9 +211,6 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
-    <Reference Include="AspNet.ScriptManager.bootstrap">
-      <HintPath>..\packages\AspNet.ScriptManager.bootstrap.3.0.0\lib\net45\AspNet.ScriptManager.bootstrap.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.ScriptManager.MSAjax">
       <HintPath>..\packages\Microsoft.AspNet.ScriptManager.MSAjax.5.0.0\lib\net45\Microsoft.ScriptManager.MSAjax.dll</HintPath>
     </Reference>
@@ -156,14 +220,6 @@
     <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
       <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
     </Reference>
-    <Reference Include="WebGrease">
-      <Private>True</Private>
-      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
-    </Reference>
-    <Reference Include="Antlr3.Runtime">
-      <Private>True</Private>
-      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.AspNet.Web.Optimization.WebForms">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.WebForms.1.1.3\lib\net45\Microsoft.AspNet.Web.Optimization.WebForms.dll</HintPath>
@@ -171,55 +227,21 @@
     <Reference Include="Microsoft.AspNet.FriendlyUrls">
       <HintPath>..\packages\Microsoft.AspNet.FriendlyUrls.Core.1.0.2\lib\net45\Microsoft.AspNet.FriendlyUrls.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="WebGrease, Version=1.6.5135.21930, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Net.Http.Formatting">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.2\lib\net45\System.Net.Http.Formatting.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Http">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.2\lib\net45\System.Web.Http.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Http.WebHost">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.2\lib\net45\System.Web.Http.WebHost.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.AspNet.Identity.Owin">
-      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.1.0\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Providers">
       <HintPath>..\packages\Microsoft.AspNet.Providers.Core.2.0.0\lib\net40\System.Web.Providers.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Owin">
-      <HintPath>..\packages\Microsoft.Owin.3.0.0\lib\net45\Microsoft.Owin.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Host.SystemWeb">
-      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.3.0.0\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Security">
-      <HintPath>..\packages\Microsoft.Owin.Security.3.0.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Security.Facebook">
-      <HintPath>..\packages\Microsoft.Owin.Security.Facebook.3.0.0\lib\net45\Microsoft.Owin.Security.Facebook.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Security.Cookies">
-      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.3.0.0\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Security.Google">
-      <HintPath>..\packages\Microsoft.Owin.Security.Google.3.0.0\lib\net45\Microsoft.Owin.Security.Google.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Security.Twitter">
-      <HintPath>..\packages\Microsoft.Owin.Security.Twitter.3.0.0\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Security.MicrosoftAccount">
-      <HintPath>..\packages\Microsoft.Owin.Security.MicrosoftAccount.3.0.0\lib\net45\Microsoft.Owin.Security.MicrosoftAccount.dll</HintPath>
-    </Reference>
     <Reference Include="Owin">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Security.OAuth">
-      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.0\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -240,7 +262,14 @@
     <Content Include="Account\TwoFactorAuthenticationSignIn.aspx" />
     <Content Include="Account\VerifyPhoneNumber.aspx" />
     <Content Include="AddClaim.aspx" />
+    <Content Include="Client\empProfile.aspx" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.min.css" />
     <Content Include="css\imgEffects.css" />
+    <Content Include="css\plugins\datatables\dataTables.bootstrap.css" />
+    <Content Include="css\plugins\datatables\dataTables.responsive.css" />
+    <Content Include="css\plugins\datatables\dataTables.tableTools.min.css" />
     <Content Include="css\plugins\dropzone\basic.css" />
     <Content Include="css\plugins\dropzone\dropzone.css" />
     <Content Include="css\plugins\jcrop\jquery.Jcrop.min.css" />
@@ -255,7 +284,6 @@
     <Content Include="Employees\claim.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
     <Content Include="CreateEmployee.aspx" />
     <Content Include="css\animate.css" />
@@ -272,6 +300,7 @@
     <Content Include="css\spinners.css" />
     <Content Include="css\style.css" />
     <Content Include="Employees\docs.aspx" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="js\plugins\jqueryrange\jquery.range-min.js" />
     <Content Include="Org\AddCandidate.aspx" />
     <Content Include="Org\AddOrgEmployee.aspx" />
@@ -282,7 +311,6 @@
     <Content Include="fonts\font-awesome\css\font-awesome.css" />
     <Content Include="fonts\font-awesome\css\font-awesome.min.css" />
     <Content Include="fonts\font-awesome\fonts\fontawesome-webfonte0a5.svg" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="GroupManagement.aspx" />
     <Content Include="HtmlPage1.html" />
     <Content Include="img\fb.png" />
@@ -405,7 +433,7 @@
     <Content Include="loggingin.aspx" />
     <Content Include="login.aspx" />
     <Content Include="logout.aspx" />
-    <Content Include="main.aspx" />
+    <Content Include="Client\main.aspx" />
     <Content Include="Org\empProfile.aspx" />
     <Content Include="Org\empProfileList.aspx" />
     <Content Include="Org\home.aspx" />
@@ -414,9 +442,6 @@
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Account\Web.config" />
     <EntityDeploy Include="Models\ubietydbEntities.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
@@ -450,20 +475,28 @@
     <Content Include="js\plugins\masonry\masonry.pkgd.min.js" />
     <Content Include="Org\OrgManager.Master" />
     <Content Include="Org\OrgTemplate1.Master" />
-    <None Include="Properties\PublishProfiles\GenieHR.pubxml" />
-    <None Include="Properties\PublishProfiles\talentpull - FTP.pubxml" />
-    <None Include="Properties\PublishProfiles\talentpull - Web Deploy.pubxml" />
-    <None Include="Properties\PublishProfiles\ubietyadmin - FTP.pubxml" />
-    <None Include="Properties\PublishProfiles\ubietyadmin - Web Deploy.pubxml" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Client\ClientManager.Master" />
+    <None Include="Properties\PublishProfiles\geniehr.pubxml" />
+    <None Include="Properties\PublishProfiles\talentpull.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="profile.aspx" />
+    <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />
-    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\respond.js" />
+    <Content Include="Scripts\respond.matchmedia.addListener.js" />
+    <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\WebForms\DetailsView.js" />
     <Content Include="Scripts\WebForms\Focus.js" />
@@ -495,7 +528,7 @@
     <Content Include="staticMail.html" />
     <Content Include="testpage.html" />
     <Content Include="userProfile.aspx" />
-    <Content Include="changeClaim.aspx" />
+    <Content Include="Client\changeClaim.aspx" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -638,6 +671,20 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Client\ClientManager.Master.cs">
+      <DependentUpon>ClientManager.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Client\ClientManager.Master.designer.cs">
+      <DependentUpon>ClientManager.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Client\empProfile.aspx.cs">
+      <DependentUpon>empProfile.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Client\empProfile.aspx.designer.cs">
+      <DependentUpon>empProfile.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\CandidateController.cs" />
     <Compile Include="Controllers\DocumentController.cs" />
     <Compile Include="Controllers\OrgController.cs" />
@@ -689,14 +736,119 @@
     <Compile Include="Employees\docs.aspx.designer.cs">
       <DependentUpon>docs.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Address.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AddressType.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\attByClient.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Attendance.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AttendanceFlag.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\attendancereport.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\attRepTemp.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BloodGroup.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Candidate.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CandidateDTO.cs" />
+    <Compile Include="Models\claimHistory.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\claimJSON.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\claimLog_Result.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ClaimRevision.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ClaimStatu.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ClaimStatusHistory.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Client.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\clientEmployee.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\contactType.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\dailyAttendance.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Degree.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DocType.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EmergencyContact.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EmpClient.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EmpContactDetail.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\EmpDoc.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EmpFinDetail.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EmpIdentity.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Employee.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EmployeeDetail.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EmpPastEmp.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\empProfBasicDetails_Result.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EmpQualification.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EmpStatu.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityAddress.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityType.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\getAttendanceByClientsDays_Result.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\getAttendanceByClientsDays_Result1.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\getAttendanceByManagerId_Result.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\getCandidatesByCreatedBy1_Result.cs">
@@ -705,7 +857,79 @@
     <Compile Include="Models\getCandidatesByCreatedBy_Result.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\getDivIncharge_Result.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\getEmergencyHeader_Result.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\getEmpContactDetail_Result.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\getEmpDetofManager_Result.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\getEmpOfGroups1_Result.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\getEmpOfGroups_Result.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\getManagerDetail_Result.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\getOpenCliamsByManagerId_Result.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\getShortAddress_Result.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Group.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GroupEmployee.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GroupIncharge.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GroupType.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GroupTypeIncharge.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Login.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MaritalStatu.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Organization.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\profilestatus1_Result.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\profilestatus_Result.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Qualification.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\qualsummary_Result.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Relation.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Role.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vprofile.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vProfileDetail.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Org\AddCandidate.aspx.cs">
@@ -798,186 +1022,27 @@
     <Compile Include="logout.aspx.designer.cs">
       <DependentUpon>logout.aspx</DependentUpon>
     </Compile>
-    <Compile Include="main.aspx.cs">
+    <Compile Include="Client\main.aspx.cs">
       <DependentUpon>main.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="main.aspx.designer.cs">
+    <Compile Include="Client\main.aspx.designer.cs">
       <DependentUpon>main.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Address.cs">
-      <DependentUpon>ubietydbEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Degree.cs">
-      <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DegreeDTO.cs" />
     <Compile Include="Models\EmerContactModal.cs" />
-    <Compile Include="Models\EmergencyContact.cs">
-      <DependentUpon>ubietydbEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\EmpAddressDetail.cs" />
-    <Compile Include="Models\AddressType.cs">
-      <DependentUpon>ubietydbEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\attByClient.cs">
-      <DependentUpon>ubietydbEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Attendance.cs">
-      <DependentUpon>ubietydbEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\AttendanceDTO.cs" />
-    <Compile Include="Models\AttendanceFlag.cs">
-      <DependentUpon>ubietydbEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\AttendanceLineDetail.cs" />
-    <Compile Include="Models\attendancereport.cs">
-      <DependentUpon>ubietydbEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\attRepTemp.cs">
-      <DependentUpon>ubietydbEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\BloodGroup.cs">
-      <DependentUpon>ubietydbEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\claimHistory.cs">
-      <DependentUpon>ubietydbEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\claimJSON.cs">
-      <DependentUpon>ubietydbEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\claimLog_Result.cs">
-      <DependentUpon>ubietydbEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ClaimRevision.cs">
-      <DependentUpon>ubietydbEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\claimUpdateDTO.cs" />
-    <Compile Include="Models\ClaimStatu.cs">
-      <DependentUpon>ubietydbEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ClaimStatusHistory.cs">
-      <DependentUpon>ubietydbEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Client.cs">
-      <DependentUpon>ubietydbEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\clientEmployee.cs">
-      <DependentUpon>ubietydbEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\contactType.cs">
-      <DependentUpon>ubietydbEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\EmpClient.cs">
-      <DependentUpon>ubietydbEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\EmpContactDetail.cs">
-      <DependentUpon>ubietydbEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\EmpContacts.cs" />
-    <Compile Include="Models\EmpFinDetail.cs">
-      <DependentUpon>ubietydbEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\EmpIdentity.cs">
-      <DependentUpon>ubietydbEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Employee.cs">
-      <DependentUpon>ubietydbEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\EmployeeDetail.cs">
-      <DependentUpon>ubietydbEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\EmployeeDTO.cs" />
-    <Compile Include="Models\EmpPastEmp.cs">
-      <DependentUpon>ubietydbEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\empProfBasicDetails_Result.cs">
-      <DependentUpon>ubietydbEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\EmpQualification.cs">
-      <DependentUpon>ubietydbEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\EmpStatu.cs">
-      <DependentUpon>ubietydbEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\EntityAddress.cs">
-      <DependentUpon>ubietydbEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\EntityType.cs">
-      <DependentUpon>ubietydbEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\getAttendanceByClientsDays_Result.cs">
-      <DependentUpon>ubietydbEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\getAttendanceByClientsDays_Result1.cs">
-      <DependentUpon>ubietydbEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\getAttendanceByManagerId_Result.cs">
-      <DependentUpon>ubietydbEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\getEmergencyHeader_Result.cs">
-      <DependentUpon>ubietydbEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\getEmpContactDetail_Result.cs">
-      <DependentUpon>ubietydbEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\getEmpDetofManager_Result.cs">
-      <DependentUpon>ubietydbEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\getEmpOfGroups1_Result.cs">
-      <DependentUpon>ubietydbEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\getEmpOfGroups_Result.cs">
-      <DependentUpon>ubietydbEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\getManagerDetail_Result.cs">
-      <DependentUpon>ubietydbEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\getOpenCliamsByManagerId_Result.cs">
-      <DependentUpon>ubietydbEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\getShortAddress_Result.cs">
-      <DependentUpon>ubietydbEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Group.cs">
-      <DependentUpon>ubietydbEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\GroupEmpDTO.cs" />
-    <Compile Include="Models\GroupEmployee.cs">
-      <DependentUpon>ubietydbEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\GroupIncharge.cs">
-      <DependentUpon>ubietydbEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\GroupType.cs">
-      <DependentUpon>ubietydbEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\IDDoc.cs" />
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\Login.cs">
-      <DependentUpon>ubietydbEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\MaritalStatu.cs">
-      <DependentUpon>ubietydbEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Organization.cs">
-      <DependentUpon>ubietydbEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\passwordModel.cs" />
     <Compile Include="Models\PastEmpDTO.cs" />
-    <Compile Include="Models\profilestatus_Result.cs">
-      <DependentUpon>ubietydbEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\QualDTO.cs" />
-    <Compile Include="Models\Qualification.cs">
-      <DependentUpon>ubietydbEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\qualsummary_Result.cs">
-      <DependentUpon>ubietydbEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Relation.cs">
-      <DependentUpon>ubietydbEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\ubietydbEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1093,11 +1158,11 @@
     <Compile Include="userProfile.aspx.designer.cs">
       <DependentUpon>userProfile.aspx</DependentUpon>
     </Compile>
-    <Compile Include="changeClaim.aspx.cs">
+    <Compile Include="Client\changeClaim.aspx.cs">
       <DependentUpon>changeClaim.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="changeClaim.aspx.designer.cs">
+    <Compile Include="Client\changeClaim.aspx.designer.cs">
       <DependentUpon>changeClaim.aspx</DependentUpon>
     </Compile>
     <Compile Include="ViewSwitcher.ascx.cs">
@@ -1146,12 +1211,9 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
   </Target>
-  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
-  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
-    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
-    <Error Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
-  </Target>
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

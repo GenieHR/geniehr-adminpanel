@@ -29,9 +29,9 @@
             <div class="col-lg-2 col-md-3">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>Group Types</h5>
+                        <h5>Divisions</h5>
                         <div class="ibox-tools">
-                            <a data-toggle="modal" data-target="#groupTypeModal" title="Add a new Group Type">
+                            <a data-toggle="modal" data-target="#groupTypeModal" title="Add a new Division">
                                 <i class="fa fa-plus"></i>
                             </a>
                         </div>
@@ -103,15 +103,44 @@
             <div class="modal-content animated fadeIn">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title">Add Group Type</h4>
-                    <small>Use this screen to add a new Group Type</small>
+                    <h4 class="modal-title">Add Division</h4>
+                    <small>Use this screen to add a new Division</small>
                 </div>
                 <div class="modal-body">
                     <div class="text-center">
                         <form id="groupTypeForm" action="api/GroupTypes" class="m-t form-horizontal" role="form">
-                            <input type="text" placeholder="Group Type Name" class="form-control" id="groupTypeName" name="groupTypeName" />
+                            <input type="text" placeholder="Division Name" class="form-control" id="groupTypeName" name="groupTypeName" />
                             <br />
                             <button type="submit" id="btnAddGroupType" data-loading-text="<i class='fa fa-spinner fa-pulse'></i>" class="btn btn-primary ">Create</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal inmodal" id="groupTypeEditModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content animated fadeIn">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Edit Division</h4>
+                    <small>Use this screen to edit name & manager detail</small>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center">
+                        <form id="groupTypeEditForm" action="api/GroupTypes" class="m-t form-horizontal" role="form">
+                            <div class="form-group">
+
+                            <input type="text" placeholder="Division Name" class="form-control" id="groupTypeEditName" name="groupTypeName" />
+                                </div>
+                            <div class="form-group">
+
+                            <input type="text" placeholder="Division Manager" class="form-control" id="groupTypeManagerName" name="groupTypeManagerName" />
+                                </div>
+
+                            <br />
+                            <button type="submit" id="btnEditGroupType" data-loading-text="<i class='fa fa-spinner fa-pulse'></i>" class="btn btn-primary ">Update</button>
                         </form>
                     </div>
                 </div>
@@ -144,10 +173,6 @@
     </div>
 
 
-    
-
-
-
     <script src="js/plugins/validate/jquery.validate.min.js"></script>
 
     <script src="js/plugins/toastr/toastr.min.js"></script>
@@ -166,8 +191,14 @@
 
         $( document ).ready(function() {
             $('#groupsLoadingSpinner').hide();
-            $('#groupsTitle').html('Select Group Type');
+            $('#groupsTitle').html('Select Division');
             loadGroupTypes(true);    
+
+            //$('#groupTypeEditModal').on('shown.bs.modal', function() {
+            //    alert(this.getAttribute("data-test"));
+
+            //});
+
 
         });
         
@@ -183,7 +214,7 @@
                 }
 
                 for (i=0;i<totGrpTypJSON;i++){
-                    $('#groupTypeList').append('<li id="groupTypeli' + grpTypJSON[i].Id + '" class="list-group-item">  <a onclick = "showGroups(this)"  data-grouptype-id="' + grpTypJSON[i].Id + '" data-grouptype-name="' + grpTypJSON[i].GroupType1 + '" class="faArrowIcon">' + grpTypJSON[i].GroupType1  + '</a><br/> </li>');
+                    $('#groupTypeList').append('<li id="groupTypeli' + grpTypJSON[i].Id + '" class="list-group-item">  <a onclick = "showGroups(this)"  data-grouptype-id="' + grpTypJSON[i].Id + '" data-grouptype-name="' + grpTypJSON[i].GroupType1 + '" class="faArrowIcon">' + grpTypJSON[i].GroupType1  + '</a> <a  id="groupTypeEdit" data-toggle="modal" data-target="#groupTypeEditModal" data-grouptype-id="' + grpTypJSON[i].Id + '" data-grouptype-name="' + grpTypJSON[i].GroupType1 + '"  title="Manage Division" class="small pull-right fa fa-gear"></a><br/> </li>');
                 }
             });
         }
@@ -192,6 +223,11 @@
             var groupTypeId = $(this).data('grouptypeid');
             $(".modal-body #groupTypeId").val( groupTypeId );
             document.getElementById("groupNameSpan").innerHTML = $(this).data('grouptypename');
+        });
+
+        $(document).on("click", "#groupTypeEdit", function () {
+            $('#groupTypeEditName').val($(this).data('grouptype-name'));
+
 
         });
 
@@ -236,7 +272,7 @@
                 var totGrpsJSON = grpsJSON.length;
 
                 for (i=0;i<totGrpsJSON;i++) {
-                    $('#groupsDivBox').append('<div class="col-lg-3"> <div class="ibox"><div class="ibox-content product-box"> <div class="row vertical-align text-center "> <span  onclick="populateGroupEmployees(' + grpsJSON[i].Id + ')" class="product-name ">' + grpsJSON[i].GroupName + '</span></div> </div></div></div>'); groupTypeName
+                    $('#groupsDivBox').append('<div class="col-lg-3"> <div class="ibox"><div class="ibox-content product-box"> <div class="row vertical-align text-center "> <span  onclick="populateGroupEmployees(' + grpsJSON[i].Id + ')" class="product-name ">' + grpsJSON[i].GroupName + '</span></div> </div></div></div>'); 
                 }
 
                 $("#aGroupDiv").data( 'grouptypeid', groupTypeId );
@@ -258,14 +294,14 @@
 
                 posting.done(function (data) {
                     if (data.Id == 0) {
-                        toastr.error('', 'Error creating Group Type');
+                        toastr.error('', 'Error creating Division');
                     }
                     else
                     {
                         $('#btnAddGroupType').prop('disabled', false);
                         $('#groupTypeModal').modal('toggle');
                         $('#groupTypeForm').trigger("reset");
-                        toastr.success('', 'Group Type created succesfully')
+                        toastr.success('', 'Division created succesfully')
         
                         loadGroupTypes(false);
                     }
