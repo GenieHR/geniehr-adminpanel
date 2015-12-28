@@ -217,6 +217,8 @@
         var skills;
         var output = [];
 
+        $("#skills").select2();
+
         $.ajax({
             url: "../api/skills"
         }).done(function(skills) {
@@ -226,15 +228,15 @@
             });
 
             $('#skills').html(output.join(''));
-            $("#skills").select2();
         });
-
-
+        
+        
         $("#candidateForm").submit(function (event) {
 
             $("#candidateSubmit").prop("disabled", true);
             event.preventDefault();
-
+        
+            
             var candidateDetailJSON = {
                 "CreatedBy": gEmpId,
                 "CandidateName": $("#CandidateName").val(),
@@ -249,7 +251,8 @@
                 "TotalExp": parseInt($("#TotalExpY").val()) + Math.round($("#TotalExpM").val()/12),
                 "NativePlace": $("#NativePlace").val(),
                 "HighestQualification": $("#qQualification").val(),
-                "Degree" : $("#qDegree").val()
+                "Degree" : $("#qDegree").val(),
+                "SkillList":JSON.stringify($("#skills").val())
             };
 
             $.ajax({
@@ -260,13 +263,13 @@
 
                     $("#candidateSubmit").prop("disabled", false);
 
-                    if (result == 1) {
-
-
+                    if (result > 0) {
 
                         sweetAlert("Data Saved!", "The candidate details succesfully added.", "success");
                         $('#candidateForm')[0].reset();
-                    
+                    }
+                    else {
+                        sweetAlert("Error!", result, "error");
                     }
                 },
                 datatype: "json"

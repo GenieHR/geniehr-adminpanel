@@ -13,7 +13,7 @@
         <EntityTypeShape EntityType="ubietydbModel.Candidate" Width="1.5" PointX="8.25" PointY="28.375" />
         <EntityTypeShape EntityType="ubietydbModel.claimHistory" Width="1.5" PointX="10.5" PointY="31.375" />
         <EntityTypeShape EntityType="ubietydbModel.claimJSON" Width="1.5" PointX="8.25" PointY="34.25" />
-        <EntityTypeShape EntityType="ubietydbModel.ClaimRevision" Width="1.5" PointX="13.5" PointY="31.375" />
+        <EntityTypeShape EntityType="ubietydbModel.ClaimRevision" Width="1.5" PointX="17.125" PointY="31.125" />
         <EntityTypeShape EntityType="ubietydbModel.ClaimStatu" Width="1.5" PointX="6" PointY="42" />
         <EntityTypeShape EntityType="ubietydbModel.ClaimStatusHistory" Width="1.5" PointX="8.25" PointY="42" />
         <EntityTypeShape EntityType="ubietydbModel.Client" Width="1.5" PointX="0.75" PointY="38" />
@@ -95,10 +95,10 @@
         <AssociationConnector Association="ubietydbModel.FK_GroupTypeIncharge_GroupType" />
         <EntityTypeShape EntityType="ubietydbModel.Skill" Width="1.5" PointX="11.25" PointY="16" />
         <EntityTypeShape EntityType="ubietydbModel.SkillGroup" Width="1.5" PointX="9" PointY="16.25" />
-        <EntityTypeShape EntityType="ubietydbModel.CandidateSkill" Width="1.5" PointX="13.5" PointY="28" />
+        <AssociationConnector Association="ubietydbModel.FK_Skill_SkillGroup" />
+        <EntityTypeShape EntityType="ubietydbModel.CandidateSkill" Width="1.5" PointX="13.5" PointY="23.875" />
         <AssociationConnector Association="ubietydbModel.FK_CandidateSkill_Candidate" />
         <AssociationConnector Association="ubietydbModel.FK_CandidateSkill_Skill" />
-        <AssociationConnector Association="ubietydbModel.FK_Skill_SkillGroup" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

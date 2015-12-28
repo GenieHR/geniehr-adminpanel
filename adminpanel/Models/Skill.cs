@@ -34,9 +34,9 @@ public partial class Skill
 
 
 
-    public virtual ICollection<CandidateSkill> CandidateSkills { get; set; }
-
     public virtual SkillGroup SkillGroup { get; set; }
+
+    public virtual ICollection<CandidateSkill> CandidateSkills { get; set; }
 
 }
 

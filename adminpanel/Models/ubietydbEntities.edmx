@@ -71,20 +71,16 @@
           <Property Name="NativePlace" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="HighestQualification" Type="int" Nullable="false" />
           <Property Name="CreatedBy" Type="int" Nullable="false" />
-          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" />
           <Property Name="ModifiedOn" Type="datetime" />
           <Property Name="ModifiedBy" Type="int" />
           <Property Name="degree" Type="int" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'ubietydb.dbo.CandidateSkill' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="CandidateSkill">
           <Key>
             <PropertyRef Name="id" />
-            <PropertyRef Name="CandidateId" />
-            <PropertyRef Name="SkillId" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CandidateId" Type="int" Nullable="false" />
           <Property Name="SkillId" Type="int" Nullable="false" />
         </EntityType>
@@ -1132,6 +1128,7 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
           <EntitySet Name="AttendanceFlag" EntityType="Self.AttendanceFlag" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BloodGroup" EntityType="Self.BloodGroup" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Candidate" EntityType="Self.Candidate" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CandidateSkill" EntityType="Self.CandidateSkill" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="claimHistory" EntityType="Self.claimHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="claimJSON" EntityType="Self.claimJSON" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ClaimRevision" EntityType="Self.ClaimRevision" Schema="dbo" store:Type="Tables" />
@@ -1167,13 +1164,6 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Skill" EntityType="Self.Skill" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SkillGroup" EntityType="Self.SkillGroup" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="CandidateSkill" EntityType="Self.CandidateSkill" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [CandidateSkill].[id] AS [id], 
-    [CandidateSkill].[CandidateId] AS [CandidateId], 
-    [CandidateSkill].[SkillId] AS [SkillId]
-    FROM [dbo].[CandidateSkill] AS [CandidateSkill]</DefiningQuery>
-          </EntitySet>
           <EntitySet Name="attByClient" EntityType="Self.attByClient" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [attByClient].[empid] AS [empid], 
@@ -1715,6 +1705,10 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
           </AssociationSet>
           <EntitySet Name="Skills" EntityType="ubietydbModel.Skill" />
           <EntitySet Name="SkillGroups" EntityType="ubietydbModel.SkillGroup" />
+          <AssociationSet Name="FK_Skill_SkillGroup" Association="ubietydbModel.FK_Skill_SkillGroup">
+            <End Role="SkillGroup" EntitySet="SkillGroups" />
+            <End Role="Skill" EntitySet="Skills" />
+          </AssociationSet>
           <EntitySet Name="CandidateSkills" EntityType="ubietydbModel.CandidateSkill" />
           <AssociationSet Name="FK_CandidateSkill_Candidate" Association="ubietydbModel.FK_CandidateSkill_Candidate">
             <End Role="Candidate" EntitySet="Candidates" />
@@ -1723,10 +1717,6 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
           <AssociationSet Name="FK_CandidateSkill_Skill" Association="ubietydbModel.FK_CandidateSkill_Skill">
             <End Role="Skill" EntitySet="Skills" />
             <End Role="CandidateSkill" EntitySet="CandidateSkills" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Skill_SkillGroup" Association="ubietydbModel.FK_Skill_SkillGroup">
-            <End Role="SkillGroup" EntitySet="SkillGroups" />
-            <End Role="Skill" EntitySet="Skills" />
           </AssociationSet>
           </EntityContainer>
         <ComplexType Name="getEmpOfGroups_Result">
@@ -1962,7 +1952,7 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
           <Property Name="NativePlace" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="HighestQualification" Type="Int32" Nullable="false" />
           <Property Name="CreatedBy" Type="Int32" Nullable="false" />
-          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
           <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
           <Property Name="ModifiedBy" Type="Int32" />
           <Property Name="degree" Type="Int32" />
@@ -2958,8 +2948,8 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="SkillName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="SkillGroupId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="CandidateSkills" Relationship="ubietydbModel.FK_CandidateSkill_Skill" FromRole="Skill" ToRole="CandidateSkill" />
           <NavigationProperty Name="SkillGroup" Relationship="ubietydbModel.FK_Skill_SkillGroup" FromRole="Skill" ToRole="SkillGroup" />
+          <NavigationProperty Name="CandidateSkills" Relationship="ubietydbModel.FK_CandidateSkill_Skill" FromRole="Skill" ToRole="CandidateSkill" />
         </EntityType>
         <EntityType Name="SkillGroup">
           <Key>
@@ -2969,13 +2959,23 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
           <Property Name="SkillGroupName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Skills" Relationship="ubietydbModel.FK_Skill_SkillGroup" FromRole="SkillGroup" ToRole="Skill" />
         </EntityType>
+        <Association Name="FK_Skill_SkillGroup">
+          <End Type="ubietydbModel.SkillGroup" Role="SkillGroup" Multiplicity="1" />
+          <End Type="ubietydbModel.Skill" Role="Skill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SkillGroup">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Skill">
+              <PropertyRef Name="SkillGroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityType Name="CandidateSkill">
           <Key>
             <PropertyRef Name="id" />
-            <PropertyRef Name="CandidateId" />
-            <PropertyRef Name="SkillId" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CandidateId" Type="Int32" Nullable="false" />
           <Property Name="SkillId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Candidate" Relationship="ubietydbModel.FK_CandidateSkill_Candidate" FromRole="CandidateSkill" ToRole="Candidate" />
@@ -3002,18 +3002,6 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
             </Principal>
             <Dependent Role="CandidateSkill">
               <PropertyRef Name="SkillId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Skill_SkillGroup">
-          <End Type="ubietydbModel.SkillGroup" Role="SkillGroup" Multiplicity="1" />
-          <End Type="ubietydbModel.Skill" Role="Skill" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SkillGroup">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Skill">
-              <PropertyRef Name="SkillGroupId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>

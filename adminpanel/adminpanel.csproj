@@ -772,6 +772,7 @@
     <Compile Include="Models\CandidateSkill.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CandidateSkillsDTO.cs" />
     <Compile Include="Models\claimHistory.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>

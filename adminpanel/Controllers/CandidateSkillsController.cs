@@ -15,8 +15,14 @@ namespace adminpanel.Controllers
     public class CandidateSkillsController : ApiController
     {
         private ubietydbEntities db = new ubietydbEntities();
-        
+
+        //[Route("putcandidate/")]
+        //[HttpPost]
+        //public void PutCandidate(Candidate candidate)
+        //{
+
+        //}
 
 
+        }
     }
-}
