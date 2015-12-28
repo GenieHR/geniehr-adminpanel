@@ -443,6 +443,9 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Account\Web.config" />
+    <Content Include="Workflows\wf-nec-001.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <EntityDeploy Include="Models\ubietydbEntities.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>ubietydbEntities.Designer.cs</LastGenOutput>
@@ -686,9 +689,11 @@
       <DependentUpon>empProfile.aspx</DependentUpon>
     </Compile>
     <Compile Include="Controllers\CandidateController.cs" />
+    <Compile Include="Controllers\CandidateSkillsController.cs" />
     <Compile Include="Controllers\DocumentController.cs" />
     <Compile Include="Controllers\OrgController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
+    <Compile Include="Controllers\SkillsController.cs" />
     <Compile Include="Employees\changePassword.aspx.cs">
       <DependentUpon>changePassword.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -764,6 +769,9 @@
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CandidateDTO.cs" />
+    <Compile Include="Models\CandidateSkill.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\claimHistory.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
@@ -924,6 +932,13 @@
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Role.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Skill.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SkillDTO.cs" />
+    <Compile Include="Models\SkillGroup.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vprofile.cs">

@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<workflow id="wf-nec-001" desc="generic workflow">
+  <activity>
+    <seq_no>1</seq_no>
+    
+    <timeout>
+      <units>days</units>
+      <timeout_value>2</timeout_value>
+    </timeout>
+    
+    <inputs>
+
+      <input>
+        <datatype>variable</datatype>
+        <name>status</name>
+      </input>
+
+      <input>
+        <datatype>variable</datatype>
+        <name>emp_name</name>
+      </input>
+
+    </inputs>
+
+    <tasks>
+
+      <task type="email">
+        <to>
+          <datatype>variable</datatype>
+          <name>to_email</name>
+        </to>
+
+        <subject>
+          <datatype>variable</datatype>
+          <name>subject</name>
+        </subject>
+
+        <body>
+          <datatype>variable</datatype>
+          <name>body</name>
+        </body>
+        
+      </task>
+
+    </tasks>
+
+  </activity>
+
+</workflow>

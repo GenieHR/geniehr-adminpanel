@@ -18,6 +18,14 @@ using System;
 public partial class Candidate
 {
 
+    public Candidate()
+    {
+
+        this.CandidateSkills = new HashSet<CandidateSkill>();
+
+    }
+
+
     public int Id { get; set; }
 
     public string CandidateName { get; set; }
@@ -61,6 +69,8 @@ public partial class Candidate
     public virtual Employee Employee1 { get; set; }
 
     public virtual Qualification Qualification { get; set; }
+
+    public virtual ICollection<CandidateSkill> CandidateSkills { get; set; }
 
 }
 

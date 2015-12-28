@@ -127,6 +127,12 @@ public partial class ubietydbEntities : DbContext
 
     public virtual DbSet<vProfileDetail> vProfileDetails { get; set; }
 
+    public virtual DbSet<Skill> Skills { get; set; }
+
+    public virtual DbSet<SkillGroup> SkillGroups { get; set; }
+
+    public virtual DbSet<CandidateSkill> CandidateSkills { get; set; }
+
 
     public virtual ObjectResult<getEmpOfGroups_Result> getEmpOfGroups()
     {

@@ -3,6 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link href="../css/plugins/sweetalert/sweetalert.css" rel="stylesheet" />
 
+    <link href="../css/plugins/select2/select2.min.css" rel="stylesheet" />
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="body" runat="server">
@@ -29,43 +30,22 @@
                             <h5>Add New Candidate</h5>
                         </div>
                         <div class="ibox-content">
+
                             <div class="hr-line-dashed"></div>
-                            <h4 class="text-info">Job Details</h4>
+                            <h4 class="text-info">Candidate Skills</h4>
                             <div class="hr-line-dashed"></div>
-                            <div class="form-group">
-
-                                <label class="col-sm-2 control-label">Job Id</label>
-                                <div class="col-sm-5">
-                            
-                            <select class="form-control" id="jobId">
-                                                <option value="0">Select</option>
-                                                <option value="2">Dragon_Rigger_001</option>
-                                                <option value="1">Dragon_Engineer_257</option>
-                                            </select>
-                                    </div>
-                                </div>
-                            <div class="form-group">
-
-                                <label class="col-sm-2 control-label">Company</label>
-                                <div class="col-sm-5">
-                            
-                                     <input class="form-control" readonly="readonly" id="Company" ></input>
-
-                                </div>
-                                </div>
 
                             <div class="form-group">
 
-                                <label class="col-sm-2 control-label">No. of Openings</label>
+                                <label class="col-sm-2 control-label">Skills</label>
                                 <div class="col-sm-5">
-                            
-                                     <input class="form-control" readonly="readonly"  id="Openings" ></input>
-
+                                     <select class="form-control" id="skills" multiple="multiple" required="required">
+                                         
+                                    </select>
                                 </div>
 
                                 </div>
-
-                            
+                           
                             <div class="hr-line-dashed"></div>
                             <h4 class="text-info">Candidate Details</h4>
                             <div class="hr-line-dashed"></div>
@@ -229,33 +209,32 @@
 
 <asp:Content ID="Content3" ContentPlaceHolderID="javascriptPart" runat="server">
     <script src="../js/plugins/sweetalert/sweetalert.min.js"></script>
-
-
+    <script src="../js/plugins/select2/select2.min.js"></script>
     <script>
+
         var gEmpId = <%= Session["EmpId"] %>;
 
-        $("#jobId").change(function () {
-            if($("#jobId").val() == 1) {
-            $("#Company").val("Dragonwave");
-            $("#Openings").val("5");
-            }
-            if ($("#jobId").val() == 2) {
-                $("#Company").val("Dragonwave");
-                $("#Openings").val("2");
-            }
-            if ($("#jobId").val() == 0) {
-                $("#Company").val("");
-                $("#Openings").val("");
-            }
-        });
+        var skills;
+        var output = [];
 
+        $.ajax({
+            url: "../api/skills"
+        }).done(function(skills) {
+            $.each(skills, function(i)
+            {
+                output.push('<option value="'+ skills[i].id +'">'+ skills[i].skill +'</option>');
+            });
+
+            $('#skills').html(output.join(''));
+            $("#skills").select2();
+        });
 
 
         $("#candidateForm").submit(function (event) {
 
             $("#candidateSubmit").prop("disabled", true);
             event.preventDefault();
-                
+
             var candidateDetailJSON = {
                 "CreatedBy": gEmpId,
                 "CandidateName": $("#CandidateName").val(),
@@ -282,8 +261,12 @@
                     $("#candidateSubmit").prop("disabled", false);
 
                     if (result == 1) {
+
+
+
                         sweetAlert("Data Saved!", "The candidate details succesfully added.", "success");
                         $('#candidateForm')[0].reset();
+                    
                     }
                 },
                 datatype: "json"
