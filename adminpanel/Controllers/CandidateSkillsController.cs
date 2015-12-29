@@ -16,13 +16,7 @@ namespace adminpanel.Controllers
     {
         private ubietydbEntities db = new ubietydbEntities();
 
-        //[Route("putcandidate/")]
-        //[HttpPost]
-        //public void PutCandidate(Candidate candidate)
-        //{
-
-        //}
-
+        
 
         }
     }
