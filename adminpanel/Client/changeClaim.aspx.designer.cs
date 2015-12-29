@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace adminpanel.Org {
+namespace adminpanel.Client {
     
     
     public partial class viewClaim {

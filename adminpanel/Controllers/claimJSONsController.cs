@@ -251,5 +251,21 @@ namespace adminpanel.Controllers
             return db.getManagerDetail(EmpId);
         }
 
+        [Route("api/getOrgEmployeeDetails/{EmpId}")]
+        [HttpGet]
+
+        public dynamic getOrgEmployeeDetails(int EmpId)
+        {
+            db.Configuration.ProxyCreationEnabled = false;
+            return db.getOrgEmpDetail(EmpId);
+        }
+
+        [Route("api/getDivIncharge/{EmpId}")]
+        [HttpGet]
+
+        public dynamic getDivIncharge(int EmpId)
+        {
+            return db.getGroupTypeIncharge(EmpId);
+        }
     }
 }

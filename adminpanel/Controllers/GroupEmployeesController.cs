@@ -18,24 +18,7 @@ namespace adminpanel.Controllers
     public class GroupEmployeesController : ApiController
     {
         private ubietydbEntities db = new ubietydbEntities();
-
-        //[Route("api/getClientEmp/{clientId}")]
-        //[HttpGet]
-        //public dynamic getEmployees(int clientId)
-        //{
-
-        //}
-
-
-        [Route("api/divincharge/{clientId}/fordiv/{divId}")]
-        [HttpGet]
-        public dynamic getDivIncharge(int clientId, int divId)
-        {
-            db.Configuration.ProxyCreationEnabled = false;
-            return db.getDivIncharge(clientId, divId).ToList();
-
-        }
-
+        
 
         [Route("api/clientEmp/of/{clientId}/notingroup/{groupId}")]
         [HttpGet]

@@ -13,10 +13,9 @@ using adminpanel.Models;
 namespace adminpanel.Controllers
 {
     public class CandidateSkillsController : ApiController
-    {
-        private ubietydbEntities db = new ubietydbEntities();
+        {
+            private ubietydbEntities db = new ubietydbEntities();
 
-        
-
+            
         }
     }

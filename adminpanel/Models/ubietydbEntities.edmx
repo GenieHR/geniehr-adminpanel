@@ -71,16 +71,20 @@
           <Property Name="NativePlace" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="HighestQualification" Type="int" Nullable="false" />
           <Property Name="CreatedBy" Type="int" Nullable="false" />
-          <Property Name="CreatedOn" Type="datetime" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="ModifiedOn" Type="datetime" />
           <Property Name="ModifiedBy" Type="int" />
           <Property Name="degree" Type="int" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'ubietydb.dbo.CandidateSkill' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="CandidateSkill">
           <Key>
             <PropertyRef Name="id" />
+            
+            
           </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="CandidateId" Type="int" Nullable="false" />
           <Property Name="SkillId" Type="int" Nullable="false" />
         </EntityType>
@@ -515,7 +519,7 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
           <Property Name="Qualification" Type="int" />
           <Property Name="Emergency" Type="int" />
         </EntityType>
-        <Association Name="FK__claimJSON__claim__2A164134">
+        <Association Name="FK__claimJSON__claim__025D5595">
           <End Role="ClaimStatus" Type="Self.ClaimStatus" Multiplicity="1" />
           <End Role="claimJSON" Type="Self.claimJSON" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1073,8 +1077,7 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
           <Parameter Name="EmpId" Type="int" Mode="In" />
         </Function>
         <Function Name="getDivIncharge" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="clientId" Type="int" Mode="In" />
-          <Parameter Name="divId" Type="int" Mode="In" />
+          <Parameter Name="EmpId" Type="int" Mode="In" />
         </Function>
         <Function Name="getEmergencyHeader" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EmpId" Type="int" Mode="In" />
@@ -1095,6 +1098,9 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
         <Function Name="getEmpsofManager" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ManagerId" Type="int" Mode="In" />
         </Function>
+        <Function Name="getGroupTypeIncharge" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EmpId" Type="int" Mode="In" />
+        </Function>
         <Function Name="getIST" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="datetime" />
         <Function Name="getManagerDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EmpId" Type="int" Mode="In" />
@@ -1110,6 +1116,9 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
         </Function>
         <Function Name="getOpenCliamsByManagerId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="managerId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="getOrgEmpDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EmpId" Type="int" Mode="In" />
         </Function>
         <Function Name="getShortAddress" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EntityType" Type="int" Mode="In" />
@@ -1128,7 +1137,6 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
           <EntitySet Name="AttendanceFlag" EntityType="Self.AttendanceFlag" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BloodGroup" EntityType="Self.BloodGroup" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Candidate" EntityType="Self.Candidate" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="CandidateSkill" EntityType="Self.CandidateSkill" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="claimHistory" EntityType="Self.claimHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="claimJSON" EntityType="Self.claimJSON" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ClaimRevision" EntityType="Self.ClaimRevision" Schema="dbo" store:Type="Tables" />
@@ -1164,6 +1172,13 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Skill" EntityType="Self.Skill" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SkillGroup" EntityType="Self.SkillGroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CandidateSkill" EntityType="Self.CandidateSkill" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [CandidateSkill].[id] AS [id], 
+    [CandidateSkill].[CandidateId] AS [CandidateId], 
+    [CandidateSkill].[SkillId] AS [SkillId]
+    FROM [dbo].[CandidateSkill] AS [CandidateSkill]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="attByClient" EntityType="Self.attByClient" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [attByClient].[empid] AS [empid], 
@@ -1231,7 +1246,7 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
     [vProfileDetails].[Emergency] AS [Emergency]
     FROM [dbo].[vProfileDetails] AS [vProfileDetails]</DefiningQuery>
           </EntitySet>
-          <AssociationSet Name="FK__claimJSON__claim__2A164134" Association="Self.FK__claimJSON__claim__2A164134">
+          <AssociationSet Name="FK__claimJSON__claim__025D5595" Association="Self.FK__claimJSON__claim__025D5595">
             <End Role="ClaimStatus" EntitySet="ClaimStatus" />
             <End Role="claimJSON" EntitySet="claimJSON" />
           </AssociationSet>
@@ -1486,8 +1501,7 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
           <Parameter Name="EmpId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="getDivIncharge" ReturnType="Collection(ubietydbModel.getDivIncharge_Result)">
-            <Parameter Name="clientId" Mode="In" Type="Int32" />
-            <Parameter Name="divId" Mode="In" Type="Int32" />
+            <Parameter Name="EmpId" Mode="In" Type="Int32" />
           </FunctionImport>
           <EntitySet Name="Addresses" EntityType="ubietydbModel.Address" />
           <EntitySet Name="AddressTypes" EntityType="ubietydbModel.AddressType" />
@@ -1718,6 +1732,15 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
             <End Role="Skill" EntitySet="Skills" />
             <End Role="CandidateSkill" EntitySet="CandidateSkills" />
           </AssociationSet>
+          <FunctionImport Name="getOrgEmpDetail" ReturnType="Collection(ubietydbModel.getOrgEmpDetail_Result)">
+          <Parameter Name="EmpId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="getDivIncharge1" ReturnType="Collection(ubietydbModel.getDivIncharge1_Result)">
+            <Parameter Name="EmpId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="getGroupTypeIncharge" ReturnType="Collection(ubietydbModel.getGroupTypeIncharge_Result)">
+            <Parameter Name="EmpId" Mode="In" Type="Int32" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="getEmpOfGroups_Result">
           <Property Type="String" Name="AuthUserId" Nullable="true" MaxLength="255" />
@@ -1952,7 +1975,7 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
           <Property Name="NativePlace" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="HighestQualification" Type="Int32" Nullable="false" />
           <Property Name="CreatedBy" Type="Int32" Nullable="false" />
-          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" Nullable="false" />
           <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
           <Property Name="ModifiedBy" Type="Int32" />
           <Property Name="degree" Type="Int32" />
@@ -3005,6 +3028,21 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="getOrgEmpDetail_Result">
+          <Property Type="String" Name="EmpName" Nullable="false" MaxLength="100" />
+          <Property Type="Int64" Name="PrimaryMobile" Nullable="true" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="getDivIncharge1_Result">
+          <Property Type="Int32" Name="EmpId" Nullable="false" />
+          <Property Type="String" Name="EmpNum" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="EmpName" Nullable="false" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="getGroupTypeIncharge_Result">
+          <Property Type="String" Name="EmpName" Nullable="false" MaxLength="100" />
+          <Property Type="Int64" Name="PrimaryMobile" Nullable="true" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="50" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3190,15 +3228,6 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="getEmpOrgName" FunctionName="ubietydbModel.Store.getEmpOrgName" />
-          <FunctionImportMapping FunctionImportName="getDivIncharge" FunctionName="ubietydbModel.Store.getDivIncharge">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ubietydbModel.getDivIncharge_Result">
-                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
-                <ScalarProperty Name="EmpNum" ColumnName="EmpNum" />
-                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <EntitySetMapping Name="Addresses">
             <EntityTypeMapping TypeName="ubietydbModel.Address">
               <MappingFragment StoreEntitySet="Address">
@@ -3739,6 +3768,33 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="getOrgEmpDetail" FunctionName="ubietydbModel.Store.getOrgEmpDetail">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ubietydbModel.getOrgEmpDetail_Result">
+                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
+                <ScalarProperty Name="PrimaryMobile" ColumnName="PrimaryMobile" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getDivIncharge1" FunctionName="ubietydbModel.Store.getDivIncharge">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ubietydbModel.getDivIncharge1_Result">
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+                <ScalarProperty Name="EmpNum" ColumnName="EmpNum" />
+                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getGroupTypeIncharge" FunctionName="ubietydbModel.Store.getGroupTypeIncharge">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ubietydbModel.getGroupTypeIncharge_Result">
+                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
+                <ScalarProperty Name="PrimaryMobile" ColumnName="PrimaryMobile" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

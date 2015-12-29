@@ -193,6 +193,10 @@
                                         <input type="radio" required="required" value="Bus" name="modeoftravel" id="inlineCheckbox3" />
                                         Bus
                                     </label>
+                                    <label class="checkbox-inline">
+                                        <input type="radio" required="required" value="Bike" name="modeoftravel" id="inlineCheckbox4" />
+                                        Bike
+                                    </label>
                                 </div>
 
                             </div>
@@ -491,7 +495,7 @@
     var intHotelNo = -1;
     var intFoodNo = -1;
     var intOthersNo = -1;
-
+    var managerInfo, orgEmpInfo;
     var travelLineId,hotelLineId,foodLineId,othersLineId;
 
     $('#myModal').on('hidden.bs.modal', function () {
@@ -517,10 +521,19 @@
             }
         });
 
+        
+
+        $.ajax({
+            url: '../api/getOrgEmployeeDetails/' + empId,
+            success: function (data) {
+                orgEmpInfo = data;
+            }
+        });
 
         $.ajax({
             url: '../api/getEmployeeManagers/' + empId,
             success: function (data) {
+                managerInfo = data;
                 var manNames;
                 manNames = data[0].Manager_Name
 
@@ -651,8 +664,28 @@ function submitClaim() {
         data: uploadVal,
         success: function (data) {
             $("#loadingContent").html('<h3>Claim no. <span class="text-success">' + data.claimNo + ' </span> submitted succesfully</h3><a data-dismiss="modal">Close</a>');
+            
+            var emailJSON = {
+                "toEmailAddress":managerInfo[0].Manager_Email,
+                "ccEmailAddress":orgEmpInfo[0].Email,
+                "mailSubject": "Claim (" + data.claimNo  + ") from <%= Session["loggedinuserName"] %>",
+                "mailBody":'<html><body>Dear ' +  managerInfo[0].Manager_Name +' ,<br /> <br /><%= Session["loggedinuserName"] %> has created a claim ('+ data.claimNo + '). Please login to <a href="http://ubiety.geniehr.com">Ubiety</a> and take necessary action on the claim.<br /><br />Thank You.<br /><br />For,<br/>Team GenieHR Solutions Pvt. Ltd.<br/><br/>Please Note: This is a system generated email and is not monitored. Please don’t reply to this email.</body></html>'
+            }
+
+            
+            $.ajax({
+                type: "post",
+                url: '../sendmail',
+                data: JSON.stringify(emailJSON),
+                contentType: 'application/json',
+                dataType: "json"
+            });
+
             gClaimNo = null;
             gClaimId = -1;
+
+
+
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             $("#loadingContent").html('<h3 class="text-danger">Error submitting claim. ' + errorThrown + '  </h3><a data-dismiss="modal">Close</a>');

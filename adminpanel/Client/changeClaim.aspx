@@ -98,7 +98,7 @@
                                                     <label class="col-sm-2 control-label">Status</label>
 
                                                     <div class="col-sm-4">
-                                                        <input type="text" readonly class="form-control" value="Create" />
+                                                        <input type="text" readonly  class="form-control" value="Create" />
                                                     </div>
                                                 </div>
                                             </form>
@@ -108,7 +108,7 @@
                                                 <thead>
                                                     <tr>
                                                         <th style="width: 50%">Expense</th>
-                                                        <th style="width: 25%">Claimed ( &#x20B9 )</th>
+                                                        <th style="width: 25%">Claim ( &#x20B9 )</th>
                                                         <th style="width: 25%">Approved ( &#x20B9 )</th>
 
                                                     </tr>
@@ -117,26 +117,26 @@
                                                     <tr>
                                                         <td>Travel</td>
                                                         <td class="curr" id="sumTravelAmt">0.00</td>
-                                                        <td  ><input style="width:60px" id="sumTravelAmtA" readonly onchange="updateSummVal()" onclick="this.select();" type="number" /></td>
+                                                        <td  ><input style="width:60px;border:hidden"  id="sumTravelAmtA" readonly onchange="updateSummVal()" onclick="this.select();" type="number" /></td>
 
                                                     </tr>
                                                     <tr>
                                                         <td>Hotel</td>
                                                         <td class="curr" id="sumHotelAmt">0.00</td>
-                                                        <td  ><input style="width:60px" id="sumHotelAmtA"  readonly  onchange="updateSummVal()"  onclick="this.select();" type="number" /></td>
+                                                        <td  ><input style="width:60px;border:hidden" id="sumHotelAmtA"  readonly  onchange="updateSummVal()"  onclick="this.select();" type="number" /></td>
 
 
                                                     </tr>
                                                     <tr>
                                                         <td>Food</td>
                                                         <td class="curr" id="sumFoodAmt">0.00</td>
-                                                        <td  ><input style="width:60px" id="sumFoodAmtA"  readonly  onchange="updateSummVal()"  onclick="this.select();" type="number" /></td>
+                                                        <td  ><input style="width:60px;border:hidden" id="sumFoodAmtA"  readonly  onchange="updateSummVal()"  onclick="this.select();" type="number" /></td>
                                                     </tr>
 
                                                     <tr>
                                                         <td>Others</td>
                                                         <td class="curr" id="summOthAmt">0.00</td>
-                                                        <td  ><input style="width:60px" id="summOthAmtA"  readonly  onchange="updateSummVal()" onclick="this.select();" type="number" /></td>
+                                                        <td  ><input style="width:60px;border:hidden" id="summOthAmtA"  readonly  onchange="updateSummVal()" onclick="this.select();" type="number" /></td>
 
                                                     </tr>
                                                 </tbody>
@@ -174,8 +174,8 @@
                                         </div>
                                     </div>
                                     <div class="row text-center">
-                                    <input type="button" onclick="saveClaimChanges('A')" value="Approve" class="btn btn-info" />
-                                    <input type="button" onclick="saveClaimChanges('R')" value="Reject" class="btn btn-danger" />
+                                    <input type="button" onclick="saveClaimChanges('A')" value="Approve" id="btnApprove" class="btn btn-info" />
+                                    <input type="button" onclick="saveClaimChanges('R')" value="Reject" id="btnReject"  class="btn btn-danger" />
             
                                                                 </div>
                                 </div>
@@ -215,6 +215,10 @@
                                                 <label class="checkbox-inline">
                                                     <input type="radio" disabled="disabled" value="Bus" name="modeoftravel" id="inlineCheckbox3" />
                                                     Bus
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="radio" disabled="disabled" value="Bike" name="modeoftravel" id="inlineCheckbox4" />
+                                                    Bike
                                                 </label>
                                             </div>
 
@@ -526,9 +530,12 @@
 
     <script>
 
-        var claimJSON;
+        var claimJSON, cliamNum;
         var fullJSONText;
         var logPopulated = false;
+
+        //
+
 
         function populateClaimLog()
         {
@@ -558,9 +565,12 @@
 
         var originalClaimText;
         var claimResponse;
+        var manager2Exists = false;
+        var manager2Info, orgEmpInfo, gEmpDetails;
 
         $(document).ready(function () {
-
+            
+            
             $.ajax({
                 url: "../api/claimJSONs/" + window.localStorage.getItem("cliamId"),
             }).done(function (result) {
@@ -587,9 +597,29 @@
                 $("#claimDate").val(result.claimDate.substring(0, 10));
                 $("#claimNo").val(result.claimNo);
 
+                cliamNum = result.claimNo;
+
+                $.ajax({
+                    url: "../api/getDivIncharge/" + result.EmpId,
+                }).done(function (manager2) {
+                
+                    if(manager2.length > 0) {
+                        manager2Exists = true;
+                        manager2Info = manager2;
+                    }
+                });
+
+                $.ajax({
+                    url: '../api/getOrgEmployeeDetails/' + result.EmpId,
+                    success: function (data) {
+                        orgEmpInfo = data;
+                    }
+                });
+                
                 $.ajax({
                     url: "../GetEmpDetail/of/" + result.EmpId,
                 }).done(function (empDetails) {
+                    gEmpDetails = empDetails; 
                     $("#empName").val(empDetails.employee[0].EmpName);
                     $("#empNum").val(empDetails.employee[0].EmpNum);
 
@@ -641,8 +671,16 @@
             if (claimResponse == 'A') {
 
                 var submittedClaim = JSON.parse(originalClaimText);
-                claimUploadJson.claimStatus = 3;
 
+                
+                if (manager2Exists) {
+                    claimUploadJson.claimStatus = 2;
+                }
+                else
+                {
+                    claimUploadJson.claimStatus = 3;
+                }
+                     
 
                 if (claimJSON.totalExpenseA != submittedClaim.totalExpense) {
 
@@ -652,7 +690,6 @@
             }
             else if (claimResponse == 'R') {
                 claimUploadJson.claimStatus = 4;
-
             }
 
             $.ajax({
@@ -661,7 +698,52 @@
                 dataType: 'json',
                 data: claimUploadJson,
                 success: function (data) {
-                    //alert('success');
+                    $('#btnApprove').hide();
+                    $('#btnReject').hide();
+                    alert('Claim Succesfully Updated');
+                    $('#myModal').modal('hide');
+
+                    //Mail to Employee if claim is rejected
+
+                    if (claimResponse == 'R'){
+                    var emailJSON = {
+
+                        "toEmailAddress":gEmpDetails.employee[0].Email,
+                        "ccEmailAddress":orgEmpInfo[0].Email,
+                        "mailSubject": "Claim (" + cliamNum  + ") has been Rejected!!",
+                        "mailBody":'<html><body>Dear ' +  gEmpDetails.employee[0].EmpName +' ,<br /> <br /> Your claim no. '+ cliamNum + ' is rejected. Please login to <a href="http://ubiety.geniehr.com">Ubiety</a> to view further details. <br /><br />Thank You.<br /><br />For,<br/>Team GenieHR Solutions Pvt. Ltd.<br/><br/>Please Note: This is a system generated email and is not monitored. Please don’t reply to this email.</body></html>'
+                    }
+                    
+                    $.ajax({
+                        type: "post",
+                        url: '../sendmail',
+                        data: JSON.stringify(emailJSON),
+                        contentType: 'application/json',
+                        dataType: "json"
+                    });
+                    }
+                    
+                    // Mail to Second Level Manager if exists
+
+                    if (manager2Exists && claimResponse == 'A') {
+
+                    var emailJSON = {
+
+                        "toEmailAddress":manager2Info[0].Email,
+                        "ccEmailAddress":orgEmpInfo[0].Email,
+                        "mailSubject": "Claim (" + cliamNum  + ") from " + gEmpDetails.employee[0].EmpName,
+                        "mailBody":'<html><body>Dear ' +  manager2Info[0].EmpName +' ,<br /> <br />' + gEmpDetails.employee[0].EmpName + ' claim no. '+ cliamNum + ' requires your action. Please login to <a href="http://ubiety.geniehr.com">Ubiety</a> to view the claim and approve / reject for further processing.<br /><br />Thank You.<br /><br />For,<br/>Team GenieHR Solutions Pvt. Ltd.<br/><br/>Please Note: This is a system generated email and is not monitored. Please don’t reply to this email.</body></html>'
+                    }
+                    
+                    $.ajax({
+                        type: "post",
+                        url: '../sendmail',
+                        data: JSON.stringify(emailJSON),
+                        contentType: 'application/json',
+                        dataType: "json"
+                    });
+                }
+
                 },
                 error: function(XMLHttpRequest, textStatus, errorThrown) {
                     alert(errorThrown);

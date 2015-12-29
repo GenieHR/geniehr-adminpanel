@@ -413,20 +413,51 @@ public partial class ubietydbEntities : DbContext
     }
 
 
-    public virtual ObjectResult<getDivIncharge_Result> getDivIncharge(Nullable<int> clientId, Nullable<int> divId)
+    public virtual ObjectResult<getDivIncharge_Result> getDivIncharge(Nullable<int> empId)
     {
 
-        var clientIdParameter = clientId.HasValue ?
-            new ObjectParameter("clientId", clientId) :
-            new ObjectParameter("clientId", typeof(int));
+        var empIdParameter = empId.HasValue ?
+            new ObjectParameter("EmpId", empId) :
+            new ObjectParameter("EmpId", typeof(int));
 
 
-        var divIdParameter = divId.HasValue ?
-            new ObjectParameter("divId", divId) :
-            new ObjectParameter("divId", typeof(int));
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getDivIncharge_Result>("getDivIncharge", empIdParameter);
+    }
 
 
-        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getDivIncharge_Result>("getDivIncharge", clientIdParameter, divIdParameter);
+    public virtual ObjectResult<getOrgEmpDetail_Result> getOrgEmpDetail(Nullable<int> empId)
+    {
+
+        var empIdParameter = empId.HasValue ?
+            new ObjectParameter("EmpId", empId) :
+            new ObjectParameter("EmpId", typeof(int));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getOrgEmpDetail_Result>("getOrgEmpDetail", empIdParameter);
+    }
+
+
+    public virtual ObjectResult<getDivIncharge1_Result> getDivIncharge1(Nullable<int> empId)
+    {
+
+        var empIdParameter = empId.HasValue ?
+            new ObjectParameter("EmpId", empId) :
+            new ObjectParameter("EmpId", typeof(int));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getDivIncharge1_Result>("getDivIncharge1", empIdParameter);
+    }
+
+
+    public virtual ObjectResult<getGroupTypeIncharge_Result> getGroupTypeIncharge(Nullable<int> empId)
+    {
+
+        var empIdParameter = empId.HasValue ?
+            new ObjectParameter("EmpId", empId) :
+            new ObjectParameter("EmpId", typeof(int));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getGroupTypeIncharge_Result>("getGroupTypeIncharge", empIdParameter);
     }
 
 }
