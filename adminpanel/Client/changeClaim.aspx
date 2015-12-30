@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Client/ClientManager.Master" CodeBehind="changeClaim.aspx.cs" Inherits="adminpanel.Client.viewClaim" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Client/ClientManager.Master" Title="Process Claim" CodeBehind="changeClaim.aspx.cs" Inherits="adminpanel.Client.viewClaim" %>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="body" runat="server">
     <style>

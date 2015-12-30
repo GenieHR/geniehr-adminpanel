@@ -509,18 +509,62 @@
     $("#claimDate").datepicker({ dateFormat: 'MM dd, yy' }).datepicker("setDate", new Date());
 
     $( document ).ready(function() {
-
-
+        
         $.ajax({
             url: '../api/getClaimDraft/' + empId,
             success: function (data) {
-                if (data.lenght > 0) {
+                alert('came here with ' + data.length);
+                if (data.length > 0) {
                     gClaimNo = data[0].claimNo;
                     gClaimId = data[0].id;
+
+                    claimJSON = JSON.parse(data[0].claimText);
+
+                    $("#sumTravelAmt").val(claimJSON.travelExpense);
+
+                    $("#sumFoodAmt").html(claimJSON.foodExpense);
+
+                    $("#summOthAmt").html(claimJSON.otherExpense);
+
+                    $("#sumHotelAmt").html(claimJSON.hotelExpense);
+
+                    $("#summTotAmt").html(claimJSON.totalExpense);
+
+                    $("#claimPurpose").val(data[0].claimPurpose);
+
+                    $("#claimDate").val(data[0].claimDate.substring(0, 10));
+                    $("#claimNo").val(data[0].claimNo);
+
+                           
+                    if($("#expensesTable").length == 0) {
+                        $('#expensesTableDiv').html('<table id="expensesTable" class=" table table-stripped table-bordered table-hover table-condensed"><thead><tr><th style="width: 10%;">Type </th><th style="width: 10%;">Date </th><th style="width: 60%">Notes</th><th style="width: 10%" class="curr">Amount</th><th style="width: 10%">Manage</th></tr></thead><tbody></tbody></table>');
+                    }
+
+                    var i = 0;
+
+                    for (i = 0; i < claimJSON.Travels.length; i++) {
+                        var lineId = 'Travel_' + i;
+                        $('#expensesTable  tbody').append('<tr><td>Travel</td><td>' + claimJSON.Travels[i].traveldate + '</td><td>' + claimJSON.Travels[i].purpose + '</td><td class="curr">' + claimJSON.Travels[i].totalamount + '</td><td class="text-center text-info"><a href="#" onclick="viewvalues(\'' + lineId + '\')"><i class="fa fa-eye"></i></a></tr>');
+                    }
+
+                    for (i = 0; i < claimJSON.Hotels.length; i++) {
+                        var lineId = 'Hotel_' + i;
+                        $('#expensesTable  tbody').append('<tr><td>Hotel</td><td>' + claimJSON.Hotels[i].staytodate + '</td><td>' + claimJSON.Hotels[i].hotelname + '</td><td class="curr">' + claimJSON.Hotels[i].totalamount + '</td><td class="text-center text-info"><a href="#" onclick="viewvalues(\'' + lineId + '\')"><i class="fa fa-eye"></i></a></tr>');
+                    }
+
+                    for (i = 0; i < claimJSON.Food.length; i++) {
+                        var lineId = 'Food_' + i;
+                        $('#expensesTable  tbody').append('<tr><td>Food</td><td>' + claimJSON.Food[i].expensedate + '</td><td>' + claimJSON.Food[i].restaurantname + '</td><td class="curr">' + claimJSON.Food[i].totalamount + '</td><td class="text-center text-info"><a href="#" onclick="viewvalues(\'' + lineId + '\')"><i class="fa fa-eye"></i></a></tr>');
+                    }
+
+                    for (i = 0; i < claimJSON.Others.length; i++) {
+                        var lineId = 'Others_' + i;
+                        $('#expensesTable  tbody').append('<tr><td>Others</td><td>' + claimJSON.Others[i].otherexpensedate + '</td><td>' + claimJSON.Others[i].otherdesc + '</td><td class="curr">' + claimJSON.Others[i].otherexpenseamt + '</td><td class="text-center text-info"><a href="#" onclick="viewvalues(\'' + lineId + '\')"><i class="fa fa-eye"></i></a></tr>');
+                    }
+
                 }
             }
         });
-
         
 
         $.ajax({
@@ -546,13 +590,12 @@
                 $("#managerName").val(manNames);
             }
         });
+
     });
        
 function activateTab(tab) {
     $('.nav-tabs a[href="#' + tab + '"]').tab('show');
 }
-
-
 
     
 function saveDraftClaim() {
@@ -620,8 +663,9 @@ function saveDraftClaim() {
     });
 }
 
+
 function submitClaim() {
-            
+                
     if(parseInt($("#summTotAmt").html()) == 0) {
         alert("Add atleast one expense");
         return false;
@@ -656,7 +700,6 @@ function submitClaim() {
         "claimstatus": 1
     };
 
-
     $.ajax({
         url: '../api/claimJSONs',
         type: 'post',
@@ -665,6 +708,7 @@ function submitClaim() {
         success: function (data) {
             $("#loadingContent").html('<h3>Claim no. <span class="text-success">' + data.claimNo + ' </span> submitted succesfully</h3><a data-dismiss="modal">Close</a>');
             
+    
             var emailJSON = {
                 "toEmailAddress":managerInfo[0].Manager_Email,
                 "ccEmailAddress":orgEmpInfo[0].Email,
@@ -683,9 +727,7 @@ function submitClaim() {
 
             gClaimNo = null;
             gClaimId = -1;
-
-
-
+            
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             $("#loadingContent").html('<h3 class="text-danger">Error submitting claim. ' + errorThrown + '  </h3><a data-dismiss="modal">Close</a>');
@@ -764,7 +806,6 @@ function calculateTotalAmt() {
     $("#summTotAmt").html(totamt);
 }
 
-
 function calculateSummTravelAmt() {
     var i = claimJSON.Travels.length;
     var p;
@@ -774,8 +815,7 @@ function calculateSummTravelAmt() {
     }
     $("#sumTravelAmt").html(totAmt);
 }
-
-
+    
 function calculateSummHotelAmt() {
     var i = claimJSON.Hotels.length;
     var p;
@@ -785,8 +825,7 @@ function calculateSummHotelAmt() {
     }
     $("#sumHotelAmt").html(totAmt);
 }
-
-
+    
 function calculateSummFoodAmt() {
     var i = claimJSON.Food.length;
     var p;
@@ -796,7 +835,6 @@ function calculateSummFoodAmt() {
     }
     $("#sumFoodAmt").html(totAmt);
 }
-
 
 function calculateSummOthersAmt() {
     var i = claimJSON.Others.length;
@@ -871,8 +909,7 @@ function addExpense(expenseType) {
         "hideMethod": "fadeOut"
     }
 }
-
-
+    
 function editvalues(valId) {
             
     var expenseType = valId.split('_')[0];
