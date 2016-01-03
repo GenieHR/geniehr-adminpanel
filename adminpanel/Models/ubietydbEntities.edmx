@@ -390,6 +390,14 @@ warning 6002: The table/view 'ubietydb.dbo.CandidateSkill' does not have a prima
           <Property Name="OrgId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="OrgName" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
+        <EntityType Name="OrgChart">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CompanyId" Type="int" Nullable="false" />
+          <Property Name="OrgChartName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="Qualification">
           <Key>
             <PropertyRef Name="Id" />
@@ -1047,6 +1055,18 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_OrgChart_Client_ClientId">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="OrgChart" Type="Self.OrgChart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ClientId" />
+            </Principal>
+            <Dependent Role="OrgChart">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Skill_SkillGroup">
           <End Role="SkillGroup" Type="Self.SkillGroup" Multiplicity="1" />
           <End Role="Skill" Type="Self.Skill" Multiplicity="*" />
@@ -1167,6 +1187,7 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
           <EntitySet Name="Login" EntityType="Self.Login" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MaritalStatus" EntityType="Self.MaritalStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Organization" EntityType="Self.Organization" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrgChart" EntityType="Self.OrgChart" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Qualification" EntityType="Self.Qualification" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Relation" EntityType="Self.Relation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
@@ -1421,6 +1442,10 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
           <AssociationSet Name="FK_Login_Employee" Association="Self.FK_Login_Employee">
             <End Role="Employee" EntitySet="Employee" />
             <End Role="Login" EntitySet="Login" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrgChart_Client_ClientId" Association="Self.FK_OrgChart_Client_ClientId">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="OrgChart" EntitySet="OrgChart" />
           </AssociationSet>
           <AssociationSet Name="FK_Skill_SkillGroup" Association="Self.FK_Skill_SkillGroup">
             <End Role="SkillGroup" EntitySet="SkillGroup" />
@@ -1736,11 +1761,16 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
           <Parameter Name="EmpId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="getDivIncharge1" ReturnType="Collection(ubietydbModel.getDivIncharge1_Result)">
-            <Parameter Name="EmpId" Mode="In" Type="Int32" />
+          <Parameter Name="EmpId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="getGroupTypeIncharge" ReturnType="Collection(ubietydbModel.getGroupTypeIncharge_Result)">
-            <Parameter Name="EmpId" Mode="In" Type="Int32" />
+          <Parameter Name="EmpId" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="OrgCharts" EntityType="ubietydbModel.OrgChart" />
+          <AssociationSet Name="FK_OrgChart_Client_ClientId" Association="ubietydbModel.FK_OrgChart_Client_ClientId">
+            <End Role="Client" EntitySet="Clients" />
+            <End Role="OrgChart" EntitySet="OrgCharts" />
+          </AssociationSet>
           </EntityContainer>
         <ComplexType Name="getEmpOfGroups_Result">
           <Property Type="String" Name="AuthUserId" Nullable="true" MaxLength="255" />
@@ -2058,6 +2088,7 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
           <Property Name="OrgId" Type="Int32" />
           <Property Name="ClientLogoURL" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="GroupTypes" Relationship="ubietydbModel.FK_GroupType_Client" FromRole="Client" ToRole="GroupType" />
+          <NavigationProperty Name="OrgCharts" Relationship="ubietydbModel.FK_OrgChart_Client_ClientId" FromRole="Client" ToRole="OrgChart" />
         </EntityType>
         <EntityType Name="contactType">
           <Key>
@@ -3043,6 +3074,27 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
           <Property Type="Int64" Name="PrimaryMobile" Nullable="true" />
           <Property Type="String" Name="Email" Nullable="true" MaxLength="50" />
         </ComplexType>
+        <EntityType Name="OrgChart">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CompanyId" Type="Int32" Nullable="false" />
+          <Property Name="OrgChartName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Client" Relationship="ubietydbModel.FK_OrgChart_Client_ClientId" FromRole="OrgChart" ToRole="Client" />
+        </EntityType>
+        <Association Name="FK_OrgChart_Client_ClientId">
+          <End Type="ubietydbModel.Client" Role="Client" Multiplicity="1" />
+          <End Type="ubietydbModel.OrgChart" Role="OrgChart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ClientId" />
+            </Principal>
+            <Dependent Role="OrgChart">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3795,6 +3847,15 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="OrgCharts">
+            <EntityTypeMapping TypeName="ubietydbModel.OrgChart">
+              <MappingFragment StoreEntitySet="OrgChart">
+                <ScalarProperty Name="OrgChartName" ColumnName="OrgChartName" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

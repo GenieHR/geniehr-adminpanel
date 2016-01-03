@@ -15,32 +15,18 @@ namespace adminpanel.Models
 using System;
     using System.Collections.Generic;
     
-public partial class Client
+public partial class OrgChart
 {
 
-    public Client()
-    {
+    public int Id { get; set; }
 
-        this.GroupTypes = new HashSet<GroupType>();
+    public int CompanyId { get; set; }
 
-        this.OrgCharts = new HashSet<OrgChart>();
-
-    }
-
-
-    public int ClientId { get; set; }
-
-    public string ClientName { get; set; }
-
-    public Nullable<int> OrgId { get; set; }
-
-    public string ClientLogoURL { get; set; }
+    public string OrgChartName { get; set; }
 
 
 
-    public virtual ICollection<GroupType> GroupTypes { get; set; }
-
-    public virtual ICollection<OrgChart> OrgCharts { get; set; }
+    public virtual Client Client { get; set; }
 
 }
 

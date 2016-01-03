@@ -434,8 +434,10 @@
     <Content Include="login.aspx" />
     <Content Include="logout.aspx" />
     <Content Include="Client\main.aspx" />
+    <Content Include="Org\EmpHierarchy.aspx" />
     <Content Include="Org\empProfile.aspx" />
     <Content Include="Org\empProfileList.aspx" />
+    <Content Include="Org\HierarchyFrame.aspx" />
     <Content Include="Org\home.aspx" />
     <Content Include="Org\MyCandidates.aspx" />
     <Content Include="Org\ShowClients.aspx" />
@@ -927,6 +929,9 @@
     <Compile Include="Models\Organization.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\OrgChart.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\profilestatus1_Result.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
@@ -1084,6 +1089,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ubietydbEntities.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Org\EmpHierarchy.aspx.cs">
+      <DependentUpon>EmpHierarchy.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Org\EmpHierarchy.aspx.designer.cs">
+      <DependentUpon>EmpHierarchy.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Org\empProfile.aspx.cs">
       <DependentUpon>empProfile.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1097,6 +1109,13 @@
     </Compile>
     <Compile Include="Org\empProfileList.aspx.designer.cs">
       <DependentUpon>empProfileList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Org\HierarchyFrame.aspx.cs">
+      <DependentUpon>HierarchyFrame.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Org\HierarchyFrame.aspx.designer.cs">
+      <DependentUpon>HierarchyFrame.aspx</DependentUpon>
     </Compile>
     <Compile Include="Org\home.aspx.cs">
       <DependentUpon>home.aspx</DependentUpon>

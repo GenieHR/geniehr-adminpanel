@@ -513,25 +513,21 @@
         $.ajax({
             url: '../api/getClaimDraft/' + empId,
             success: function (data) {
-                alert('came here with ' + data.length);
+
+
                 if (data.length > 0) {
+
                     gClaimNo = data[0].claimNo;
                     gClaimId = data[0].id;
 
                     claimJSON = JSON.parse(data[0].claimText);
 
-                    $("#sumTravelAmt").val(claimJSON.travelExpense);
-
+                    $("#sumTravelAmt").html(claimJSON.travelExpense);
                     $("#sumFoodAmt").html(claimJSON.foodExpense);
-
                     $("#summOthAmt").html(claimJSON.otherExpense);
-
                     $("#sumHotelAmt").html(claimJSON.hotelExpense);
-
                     $("#summTotAmt").html(claimJSON.totalExpense);
-
                     $("#claimPurpose").val(data[0].claimPurpose);
-
                     $("#claimDate").val(data[0].claimDate.substring(0, 10));
                     $("#claimNo").val(data[0].claimNo);
 
@@ -544,24 +540,23 @@
 
                     for (i = 0; i < claimJSON.Travels.length; i++) {
                         var lineId = 'Travel_' + i;
-                        $('#expensesTable  tbody').append('<tr><td>Travel</td><td>' + claimJSON.Travels[i].traveldate + '</td><td>' + claimJSON.Travels[i].purpose + '</td><td class="curr">' + claimJSON.Travels[i].totalamount + '</td><td class="text-center text-info"><a href="#" onclick="viewvalues(\'' + lineId + '\')"><i class="fa fa-eye"></i></a></tr>');
+                        $('#expensesTable  tbody').append('<tr><td>Travel</td><td>' + claimJSON.Travels[i].traveldate + '</td><td>' + claimJSON.Travels[i].purpose + '</td><td class="curr">' + claimJSON.Travels[i].totalamount + '</td><td class="text-center text-info"><a href="#" onclick="javascript:editvalues(\'' + lineId + '\')"><i class="fa fa-pencil-square-o"></i></a></tr>');
                     }
 
                     for (i = 0; i < claimJSON.Hotels.length; i++) {
                         var lineId = 'Hotel_' + i;
-                        $('#expensesTable  tbody').append('<tr><td>Hotel</td><td>' + claimJSON.Hotels[i].staytodate + '</td><td>' + claimJSON.Hotels[i].hotelname + '</td><td class="curr">' + claimJSON.Hotels[i].totalamount + '</td><td class="text-center text-info"><a href="#" onclick="viewvalues(\'' + lineId + '\')"><i class="fa fa-eye"></i></a></tr>');
+                        $('#expensesTable  tbody').append('<tr><td>Hotel</td><td>' + claimJSON.Hotels[i].staytodate + '</td><td>' + claimJSON.Hotels[i].hotelname + '</td><td class="curr">' + claimJSON.Hotels[i].totalamount + '</td><td class="text-center text-info"><a href="#" onclick="javascript:editvalues(\'' + lineId + '\')"><i class="fa fa-pencil-square-o"></i></a></tr>');
                     }
 
                     for (i = 0; i < claimJSON.Food.length; i++) {
                         var lineId = 'Food_' + i;
-                        $('#expensesTable  tbody').append('<tr><td>Food</td><td>' + claimJSON.Food[i].expensedate + '</td><td>' + claimJSON.Food[i].restaurantname + '</td><td class="curr">' + claimJSON.Food[i].totalamount + '</td><td class="text-center text-info"><a href="#" onclick="viewvalues(\'' + lineId + '\')"><i class="fa fa-eye"></i></a></tr>');
+                        $('#expensesTable  tbody').append('<tr><td>Food</td><td>' + claimJSON.Food[i].expensedate + '</td><td>' + claimJSON.Food[i].restaurantname + '</td><td class="curr">' + claimJSON.Food[i].totalamount + '</td><td class="text-center text-info"><a href="#" onclick="javascript:editvalues(\'' + lineId + '\')"><i class="fa fa-pencil-square-o"></i></a></tr>');
                     }
 
                     for (i = 0; i < claimJSON.Others.length; i++) {
                         var lineId = 'Others_' + i;
-                        $('#expensesTable  tbody').append('<tr><td>Others</td><td>' + claimJSON.Others[i].otherexpensedate + '</td><td>' + claimJSON.Others[i].otherdesc + '</td><td class="curr">' + claimJSON.Others[i].otherexpenseamt + '</td><td class="text-center text-info"><a href="#" onclick="viewvalues(\'' + lineId + '\')"><i class="fa fa-eye"></i></a></tr>');
+                        $('#expensesTable  tbody').append('<tr><td>Others</td><td>' + claimJSON.Others[i].otherexpensedate + '</td><td>' + claimJSON.Others[i].otherdesc + '</td><td class="curr">' + claimJSON.Others[i].otherexpenseamt + '</td><td class="text-center text-info"><a href="#" onclick="javascript:editvalues(\'' + lineId + '\')"><i class="fa fa-pencil-square-o"></i></a></tr>');
                     }
-
                 }
             }
         });
@@ -915,11 +910,17 @@ function editvalues(valId) {
     var expenseType = valId.split('_')[0];
     var editId = valId.split('_')[1];
     var len,i,foundId;
+    //alert(valId);
     
     switch (expenseType) {
         case 'Travel':
             len =  claimJSON.Travels.length;
+            //alert(len);
             for (i=0;i<len;i++) {
+                
+                //alert("claimJSON.Travels[i].id: " + claimJSON.Travels[i].id);
+                //alert("editId: " + editId);
+
                 if(claimJSON.Travels[i].id == editId) {
                     
                     intTravelNo = i;

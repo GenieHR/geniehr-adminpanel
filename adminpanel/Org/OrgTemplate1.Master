@@ -67,6 +67,7 @@
                     <a href="#"><i class="fa  fa-user"></i> <span class="nav-label">Clients</span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
                         <li><a href="showClients.aspx"><i class="fa fa-home"></i> <span class="nav-label">Select Clients</span></a></li>
+                        <li><a href="EmpHierarchy.aspx">Hierarchy</a></li>
                         <li><a href="CreateEmployee.aspx">Add Employees</a></li>
                         <li><a href="empProfileList.aspx">Profiles</a></li>
                     </ul>

@@ -99,6 +99,8 @@
         <EntityTypeShape EntityType="ubietydbModel.CandidateSkill" Width="1.5" PointX="13.5" PointY="23.875" />
         <AssociationConnector Association="ubietydbModel.FK_CandidateSkill_Candidate" />
         <AssociationConnector Association="ubietydbModel.FK_CandidateSkill_Skill" />
+        <EntityTypeShape EntityType="ubietydbModel.OrgChart" Width="1.5" PointX="3" PointY="44.25" />
+        <AssociationConnector Association="ubietydbModel.FK_OrgChart_Client_ClientId" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
