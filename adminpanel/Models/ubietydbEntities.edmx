@@ -46,6 +46,13 @@
           <Property Name="AttendanceFlagId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FlagName" Type="nvarchar" MaxLength="10" Nullable="false" />
         </EntityType>
+        <EntityType Name="Benefit">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BenefitName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="BloodGroup">
           <Key>
             <PropertyRef Name="Id" />
@@ -71,22 +78,32 @@
           <Property Name="NativePlace" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="HighestQualification" Type="int" Nullable="false" />
           <Property Name="CreatedBy" Type="int" Nullable="false" />
-          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" />
           <Property Name="ModifiedOn" Type="datetime" />
           <Property Name="ModifiedBy" Type="int" />
           <Property Name="degree" Type="int" />
+          <Property Name="NoticePeriod" Type="int" />
+          <Property Name="SourceId" Type="int" />
+          <Property Name="SourceNotes" Type="varchar" MaxLength="50" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'ubietydb.dbo.CandidateSkill' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="CandidateSkill">
           <Key>
             <PropertyRef Name="id" />
-            
-            
           </Key>
-          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CandidateId" Type="int" Nullable="false" />
           <Property Name="SkillId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Certification">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CertificationName" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="IssuedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="Version" Type="nvarchar" MaxLength="50" />
+          <Property Name="SkillId" Type="int" />
+          <Property Name="CertificationRemarks" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="claimHistory">
           <Key>
@@ -238,6 +255,21 @@ warning 6002: The table/view 'ubietydb.dbo.CandidateSkill' does not have a prima
           <Property Name="modified" Type="datetime" />
           <Property Name="created" Type="datetime" />
         </EntityType>
+        <EntityType Name="EmpJD">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmpId" Type="int" Nullable="false" />
+          <Property Name="JDId" Type="int" Nullable="false" />
+          <Property Name="Openings" Type="int" />
+          <Property Name="Remarks" Type="nvarchar(max)" />
+          <Property Name="Expiry" Type="datetime" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="ModifiedOn" Type="datetime" />
+        </EntityType>
         <EntityType Name="Employee">
           <Key>
             <PropertyRef Name="EmpId" />
@@ -367,6 +399,54 @@ warning 6002: The table/view 'ubietydb.dbo.CandidateSkill' does not have a prima
           <Property Name="GroupTypeId" Type="int" Nullable="false" />
           <Property Name="InchargeId" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="JobBenefit">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="JobId" Type="int" Nullable="false" />
+          <Property Name="BenefitId" Type="int" Nullable="false" />
+          <Property Name="BenefitDesc" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="JobCertification">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="JobId" Type="int" Nullable="false" />
+          <Property Name="CertificationId" Type="int" Nullable="false" />
+          <Property Name="CertifiedOn" Type="date" />
+          <Property Name="Expiry" Type="date" />
+        </EntityType>
+        <EntityType Name="JobDescription">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CleintId" Type="int" />
+          <Property Name="JobShortName" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="JobTitle" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="ExpFrom" Type="int" Nullable="false" />
+          <Property Name="ExpTo" Type="int" Nullable="false" />
+          <Property Name="JobLocation" Type="nvarchar" MaxLength="25" />
+          <Property Name="Salary" Type="money" />
+          <Property Name="Openings" Type="int" />
+          <Property Name="JobNotes" Type="nvarchar(max)" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="RExpFrom" Type="int" />
+          <Property Name="RExpTo" Type="int" />
+        </EntityType>
+        <EntityType Name="JobSkill">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="JobId" Type="int" Nullable="false" />
+          <Property Name="SkillId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Login">
           <Key>
             <PropertyRef Name="LoginId" />
@@ -390,14 +470,6 @@ warning 6002: The table/view 'ubietydb.dbo.CandidateSkill' does not have a prima
           <Property Name="OrgId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="OrgName" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
-        <EntityType Name="OrgChart">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="CompanyId" Type="int" Nullable="false" />
-          <Property Name="OrgChartName" Type="nvarchar" MaxLength="50" Nullable="false" />
-        </EntityType>
         <EntityType Name="Qualification">
           <Key>
             <PropertyRef Name="Id" />
@@ -411,13 +483,6 @@ warning 6002: The table/view 'ubietydb.dbo.CandidateSkill' does not have a prima
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RelationName" Type="nchar" MaxLength="50" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Roles">
-          <Key>
-            <PropertyRef Name="RoleId" />
-          </Key>
-          <Property Name="RoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="RoleName" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Skill">
           <Key>
@@ -434,19 +499,28 @@ warning 6002: The table/view 'ubietydb.dbo.CandidateSkill' does not have a prima
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="SkillGroupName" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'ubietydb.dbo.attByClient' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="attByClient">
+        <EntityType Name="Source">
           <Key>
-            <PropertyRef Name="empid" />
-            <PropertyRef Name="EmpName" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="empid" Type="int" Nullable="false" />
-          <Property Name="MarkDate" Type="nvarchar" MaxLength="10" />
-          <Property Name="MarkTime" Type="char" MaxLength="5" />
-          <Property Name="Coordinates" Type="nvarchar" MaxLength="61" />
-          <Property Name="CompanyId" Type="int" />
-          <Property Name="EmpName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SourceName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'ubietydb.dbo.test_att' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="test_att">
+          <Key>
+            <PropertyRef Name="AttendanceId" />
+            <PropertyRef Name="EmpId" />
+            <PropertyRef Name="MarkTime" />
+          </Key>
+          <Property Name="AttendanceId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmpId" Type="int" Nullable="false" />
+          <Property Name="MarkFlagId" Type="int" />
+          <Property Name="MarkTime" Type="datetime" Nullable="false" />
+          <Property Name="latitude" Type="float" />
+          <Property Name="longitude" Type="float" />
+          <Property Name="markcount" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'ubietydb.dbo.attendancereport' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -487,47 +561,7 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <Property Name="companyId" Type="int" />
           <Property Name="empname" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'ubietydb.dbo.dailyAttendance' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="dailyAttendance">
-          <Key>
-            <PropertyRef Name="EmpId" />
-            <PropertyRef Name="EmpName" />
-          </Key>
-          <Property Name="EmpId" Type="int" Nullable="false" />
-          <Property Name="MarkTime" Type="nvarchar" MaxLength="10" />
-          <Property Name="companyId" Type="int" />
-          <Property Name="EmpNum" Type="nvarchar" MaxLength="50" />
-          <Property Name="EmpName" Type="nvarchar" MaxLength="100" Nullable="false" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'ubietydb.dbo.vprofile' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="vprofile">
-          <Key>
-            <PropertyRef Name="empid" />
-            <PropertyRef Name="DataType" />
-          </Key>
-          <Property Name="empid" Type="int" Nullable="false" />
-          <Property Name="DataType" Type="varchar" MaxLength="14" Nullable="false" />
-          <Property Name="Count" Type="int" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="vProfileDetails">
-          <Key>
-            <PropertyRef Name="empid" />
-          </Key>
-          <Property Name="empid" Type="int" Nullable="false" />
-          <Property Name="Basic Detail" Type="int" />
-          <Property Name="Contact Detail" Type="int" />
-          <Property Name="Addresses" Type="int" />
-          <Property Name="Bank" Type="int" />
-          <Property Name="Identity" Type="int" />
-          <Property Name="PastEmp" Type="int" />
-          <Property Name="Qualification" Type="int" />
-          <Property Name="Emergency" Type="int" />
-        </EntityType>
-        <Association Name="FK__claimJSON__claim__025D5595">
+        <Association Name="FK__claimJSON__claim__2A164134">
           <End Role="ClaimStatus" Type="Self.ClaimStatus" Multiplicity="1" />
           <End Role="claimJSON" Type="Self.claimJSON" Multiplicity="*" />
           <ReferentialConstraint>
@@ -611,6 +645,18 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Candidate_Source_Id">
+          <End Role="Source" Type="Self.Source" Multiplicity="0..1" />
+          <End Role="Candidate" Type="Self.Candidate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Source">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Candidate">
+              <PropertyRef Name="SourceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_CandidateSkill_Candidate">
           <End Role="Candidate" Type="Self.Candidate" Multiplicity="1" />
           <End Role="CandidateSkill" Type="Self.CandidateSkill" Multiplicity="*" />
@@ -631,6 +677,18 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="CandidateSkill">
+              <PropertyRef Name="SkillId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Certification_Skill_Id">
+          <End Role="Skill" Type="Self.Skill" Multiplicity="0..1" />
+          <End Role="Certification" Type="Self.Certification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Skill">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Certification">
               <PropertyRef Name="SkillId" />
             </Dependent>
           </ReferentialConstraint>
@@ -839,6 +897,54 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_EmpJD_Employee_EmpId">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="EmpJD" Type="Self.EmpJD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="EmpJD">
+              <PropertyRef Name="EmpId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpJD_JobDescription_Id">
+          <End Role="JobDescription" Type="Self.JobDescription" Multiplicity="1" />
+          <End Role="EmpJD" Type="Self.EmpJD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JobDescription">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmpJD">
+              <PropertyRef Name="JDId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpJDC_Employee_EmpId">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="EmpJD" Type="Self.EmpJD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="EmpJD">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpJDM_Employee_EmpId">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="EmpJD" Type="Self.EmpJD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="EmpJD">
+              <PropertyRef Name="ModifiedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Employee_EmpStatus">
           <End Role="EmpStatus" Type="Self.EmpStatus" Multiplicity="1" />
           <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
@@ -1043,6 +1149,114 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_JobBenefit_Benefit_Id">
+          <End Role="Benefit" Type="Self.Benefit" Multiplicity="1" />
+          <End Role="JobBenefit" Type="Self.JobBenefit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Benefit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="JobBenefit">
+              <PropertyRef Name="BenefitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobBenefit_JobDescription_Id">
+          <End Role="JobDescription" Type="Self.JobDescription" Multiplicity="1" />
+          <End Role="JobBenefit" Type="Self.JobBenefit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JobDescription">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="JobBenefit">
+              <PropertyRef Name="JobId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobCertification_Certification_Id">
+          <End Role="Certification" Type="Self.Certification" Multiplicity="1" />
+          <End Role="JobCertification" Type="Self.JobCertification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Certification">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="JobCertification">
+              <PropertyRef Name="CertificationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobCertification_JobDescription_Id">
+          <End Role="JobDescription" Type="Self.JobDescription" Multiplicity="1" />
+          <End Role="JobCertification" Type="Self.JobCertification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JobDescription">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="JobCertification">
+              <PropertyRef Name="JobId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobDescription_Client_ClientId">
+          <End Role="Client" Type="Self.Client" Multiplicity="0..1" />
+          <End Role="JobDescription" Type="Self.JobDescription" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ClientId" />
+            </Principal>
+            <Dependent Role="JobDescription">
+              <PropertyRef Name="CleintId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobDescription_Employee_EmpId">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="JobDescription" Type="Self.JobDescription" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="JobDescription">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobDescriptionM_Employee_EmpId">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="JobDescription" Type="Self.JobDescription" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="JobDescription">
+              <PropertyRef Name="ModifiedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobSkill_JobDescription_Id">
+          <End Role="JobDescription" Type="Self.JobDescription" Multiplicity="1" />
+          <End Role="JobSkill" Type="Self.JobSkill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JobDescription">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="JobSkill">
+              <PropertyRef Name="JobId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobSkill_Skill_Id">
+          <End Role="Skill" Type="Self.Skill" Multiplicity="1" />
+          <End Role="JobSkill" Type="Self.JobSkill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Skill">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="JobSkill">
+              <PropertyRef Name="SkillId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Login_Employee">
           <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
           <End Role="Login" Type="Self.Login" Multiplicity="0..1" />
@@ -1052,18 +1266,6 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
             </Principal>
             <Dependent Role="Login">
               <PropertyRef Name="LoginId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_OrgChart_Client_ClientId">
-          <End Role="Client" Type="Self.Client" Multiplicity="1" />
-          <End Role="OrgChart" Type="Self.OrgChart" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Client">
-              <PropertyRef Name="ClientId" />
-            </Principal>
-            <Dependent Role="OrgChart">
-              <PropertyRef Name="CompanyId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1083,6 +1285,9 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
           <Parameter Name="ClaimId" Type="int" Mode="In" />
         </Function>
         <Function Name="empProfBasicDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EmpId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetAllClientsOfEmpOrg" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EmpId" Type="int" Mode="In" />
         </Function>
         <Function Name="getAttendanceByClientsDays" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -1118,9 +1323,6 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
         <Function Name="getEmpsofManager" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ManagerId" Type="int" Mode="In" />
         </Function>
-        <Function Name="getGroupTypeIncharge" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="EmpId" Type="int" Mode="In" />
-        </Function>
         <Function Name="getIST" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="datetime" />
         <Function Name="getManagerDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EmpId" Type="int" Mode="In" />
@@ -1137,9 +1339,6 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
         <Function Name="getOpenCliamsByManagerId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="managerId" Type="int" Mode="In" />
         </Function>
-        <Function Name="getOrgEmpDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="EmpId" Type="int" Mode="In" />
-        </Function>
         <Function Name="getShortAddress" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EntityType" Type="int" Mode="In" />
           <Parameter Name="EmpId" Type="int" Mode="In" />
@@ -1155,8 +1354,11 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
           <EntitySet Name="AddressType" EntityType="Self.AddressType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Attendance" EntityType="Self.Attendance" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AttendanceFlag" EntityType="Self.AttendanceFlag" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Benefit" EntityType="Self.Benefit" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BloodGroup" EntityType="Self.BloodGroup" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Candidate" EntityType="Self.Candidate" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CandidateSkill" EntityType="Self.CandidateSkill" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Certification" EntityType="Self.Certification" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="claimHistory" EntityType="Self.claimHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="claimJSON" EntityType="Self.claimJSON" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ClaimRevision" EntityType="Self.ClaimRevision" Schema="dbo" store:Type="Tables" />
@@ -1172,6 +1374,7 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
           <EntitySet Name="EmpDocs" EntityType="Self.EmpDocs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmpFinDetail" EntityType="Self.EmpFinDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmpIdentity" EntityType="Self.EmpIdentity" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmpJD" EntityType="Self.EmpJD" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmployeeDetail" EntityType="Self.EmployeeDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmpPastEmp" EntityType="Self.EmpPastEmp" Schema="dbo" store:Type="Tables" />
@@ -1184,31 +1387,28 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
           <EntitySet Name="GroupIncharge" EntityType="Self.GroupIncharge" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GroupType" EntityType="Self.GroupType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GroupTypeIncharge" EntityType="Self.GroupTypeIncharge" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="JobBenefit" EntityType="Self.JobBenefit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="JobCertification" EntityType="Self.JobCertification" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="JobDescription" EntityType="Self.JobDescription" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="JobSkill" EntityType="Self.JobSkill" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Login" EntityType="Self.Login" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MaritalStatus" EntityType="Self.MaritalStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Organization" EntityType="Self.Organization" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="OrgChart" EntityType="Self.OrgChart" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Qualification" EntityType="Self.Qualification" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Relation" EntityType="Self.Relation" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Skill" EntityType="Self.Skill" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SkillGroup" EntityType="Self.SkillGroup" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="CandidateSkill" EntityType="Self.CandidateSkill" store:Type="Tables" store:Schema="dbo">
+          <EntitySet Name="Source" EntityType="Self.Source" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="test_att" EntityType="Self.test_att" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
-    [CandidateSkill].[id] AS [id], 
-    [CandidateSkill].[CandidateId] AS [CandidateId], 
-    [CandidateSkill].[SkillId] AS [SkillId]
-    FROM [dbo].[CandidateSkill] AS [CandidateSkill]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="attByClient" EntityType="Self.attByClient" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [attByClient].[empid] AS [empid], 
-    [attByClient].[MarkDate] AS [MarkDate], 
-    [attByClient].[MarkTime] AS [MarkTime], 
-    [attByClient].[Coordinates] AS [Coordinates], 
-    [attByClient].[CompanyId] AS [CompanyId], 
-    [attByClient].[EmpName] AS [EmpName]
-    FROM [dbo].[attByClient] AS [attByClient]</DefiningQuery>
+    [test_att].[AttendanceId] AS [AttendanceId], 
+    [test_att].[EmpId] AS [EmpId], 
+    [test_att].[MarkFlagId] AS [MarkFlagId], 
+    [test_att].[MarkTime] AS [MarkTime], 
+    [test_att].[latitude] AS [latitude], 
+    [test_att].[longitude] AS [longitude], 
+    [test_att].[markcount] AS [markcount]
+    FROM [dbo].[test_att] AS [test_att]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="attendancereport" EntityType="Self.attendancereport" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -1238,36 +1438,7 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
     [clientEmployee].[empname] AS [empname]
     FROM [dbo].[clientEmployee] AS [clientEmployee]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="dailyAttendance" EntityType="Self.dailyAttendance" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [dailyAttendance].[EmpId] AS [EmpId], 
-    [dailyAttendance].[MarkTime] AS [MarkTime], 
-    [dailyAttendance].[companyId] AS [companyId], 
-    [dailyAttendance].[EmpNum] AS [EmpNum], 
-    [dailyAttendance].[EmpName] AS [EmpName]
-    FROM [dbo].[dailyAttendance] AS [dailyAttendance]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="vprofile" EntityType="Self.vprofile" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [vprofile].[empid] AS [empid], 
-    [vprofile].[DataType] AS [DataType], 
-    [vprofile].[Count] AS [Count]
-    FROM [dbo].[vprofile] AS [vprofile]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="vProfileDetails" EntityType="Self.vProfileDetails" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [vProfileDetails].[empid] AS [empid], 
-    [vProfileDetails].[Basic Detail] AS [Basic Detail], 
-    [vProfileDetails].[Contact Detail] AS [Contact Detail], 
-    [vProfileDetails].[Addresses] AS [Addresses], 
-    [vProfileDetails].[Bank] AS [Bank], 
-    [vProfileDetails].[Identity] AS [Identity], 
-    [vProfileDetails].[PastEmp] AS [PastEmp], 
-    [vProfileDetails].[Qualification] AS [Qualification], 
-    [vProfileDetails].[Emergency] AS [Emergency]
-    FROM [dbo].[vProfileDetails] AS [vProfileDetails]</DefiningQuery>
-          </EntitySet>
-          <AssociationSet Name="FK__claimJSON__claim__025D5595" Association="Self.FK__claimJSON__claim__025D5595">
+          <AssociationSet Name="FK__claimJSON__claim__2A164134" Association="Self.FK__claimJSON__claim__2A164134">
             <End Role="ClaimStatus" EntitySet="ClaimStatus" />
             <End Role="claimJSON" EntitySet="claimJSON" />
           </AssociationSet>
@@ -1295,6 +1466,10 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
             <End Role="Qualification" EntitySet="Qualification" />
             <End Role="Candidate" EntitySet="Candidate" />
           </AssociationSet>
+          <AssociationSet Name="FK_Candidate_Source_Id" Association="Self.FK_Candidate_Source_Id">
+            <End Role="Source" EntitySet="Source" />
+            <End Role="Candidate" EntitySet="Candidate" />
+          </AssociationSet>
           <AssociationSet Name="FK_CandidateSkill_Candidate" Association="Self.FK_CandidateSkill_Candidate">
             <End Role="Candidate" EntitySet="Candidate" />
             <End Role="CandidateSkill" EntitySet="CandidateSkill" />
@@ -1302,6 +1477,10 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
           <AssociationSet Name="FK_CandidateSkill_Skill" Association="Self.FK_CandidateSkill_Skill">
             <End Role="Skill" EntitySet="Skill" />
             <End Role="CandidateSkill" EntitySet="CandidateSkill" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Certification_Skill_Id" Association="Self.FK_Certification_Skill_Id">
+            <End Role="Skill" EntitySet="Skill" />
+            <End Role="Certification" EntitySet="Certification" />
           </AssociationSet>
           <AssociationSet Name="FK_claimHistory_claimJSON" Association="Self.FK_claimHistory_claimJSON">
             <End Role="claimJSON" EntitySet="claimJSON" />
@@ -1371,6 +1550,22 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
             <End Role="Employee" EntitySet="Employee" />
             <End Role="EmpIdentity" EntitySet="EmpIdentity" />
           </AssociationSet>
+          <AssociationSet Name="FK_EmpJD_Employee_EmpId" Association="Self.FK_EmpJD_Employee_EmpId">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="EmpJD" EntitySet="EmpJD" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpJD_JobDescription_Id" Association="Self.FK_EmpJD_JobDescription_Id">
+            <End Role="JobDescription" EntitySet="JobDescription" />
+            <End Role="EmpJD" EntitySet="EmpJD" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpJDC_Employee_EmpId" Association="Self.FK_EmpJDC_Employee_EmpId">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="EmpJD" EntitySet="EmpJD" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpJDM_Employee_EmpId" Association="Self.FK_EmpJDM_Employee_EmpId">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="EmpJD" EntitySet="EmpJD" />
+          </AssociationSet>
           <AssociationSet Name="FK_Employee_EmpStatus" Association="Self.FK_Employee_EmpStatus">
             <End Role="EmpStatus" EntitySet="EmpStatus" />
             <End Role="Employee" EntitySet="Employee" />
@@ -1439,13 +1634,45 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
             <End Role="GroupType" EntitySet="GroupType" />
             <End Role="GroupTypeIncharge" EntitySet="GroupTypeIncharge" />
           </AssociationSet>
+          <AssociationSet Name="FK_JobBenefit_Benefit_Id" Association="Self.FK_JobBenefit_Benefit_Id">
+            <End Role="Benefit" EntitySet="Benefit" />
+            <End Role="JobBenefit" EntitySet="JobBenefit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobBenefit_JobDescription_Id" Association="Self.FK_JobBenefit_JobDescription_Id">
+            <End Role="JobDescription" EntitySet="JobDescription" />
+            <End Role="JobBenefit" EntitySet="JobBenefit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobCertification_Certification_Id" Association="Self.FK_JobCertification_Certification_Id">
+            <End Role="Certification" EntitySet="Certification" />
+            <End Role="JobCertification" EntitySet="JobCertification" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobCertification_JobDescription_Id" Association="Self.FK_JobCertification_JobDescription_Id">
+            <End Role="JobDescription" EntitySet="JobDescription" />
+            <End Role="JobCertification" EntitySet="JobCertification" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobDescription_Client_ClientId" Association="Self.FK_JobDescription_Client_ClientId">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="JobDescription" EntitySet="JobDescription" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobDescription_Employee_EmpId" Association="Self.FK_JobDescription_Employee_EmpId">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="JobDescription" EntitySet="JobDescription" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobDescriptionM_Employee_EmpId" Association="Self.FK_JobDescriptionM_Employee_EmpId">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="JobDescription" EntitySet="JobDescription" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobSkill_JobDescription_Id" Association="Self.FK_JobSkill_JobDescription_Id">
+            <End Role="JobDescription" EntitySet="JobDescription" />
+            <End Role="JobSkill" EntitySet="JobSkill" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobSkill_Skill_Id" Association="Self.FK_JobSkill_Skill_Id">
+            <End Role="Skill" EntitySet="Skill" />
+            <End Role="JobSkill" EntitySet="JobSkill" />
+          </AssociationSet>
           <AssociationSet Name="FK_Login_Employee" Association="Self.FK_Login_Employee">
             <End Role="Employee" EntitySet="Employee" />
             <End Role="Login" EntitySet="Login" />
-          </AssociationSet>
-          <AssociationSet Name="FK_OrgChart_Client_ClientId" Association="Self.FK_OrgChart_Client_ClientId">
-            <End Role="Client" EntitySet="Client" />
-            <End Role="OrgChart" EntitySet="OrgChart" />
           </AssociationSet>
           <AssociationSet Name="FK_Skill_SkillGroup" Association="Self.FK_Skill_SkillGroup">
             <End Role="SkillGroup" EntitySet="SkillGroup" />
@@ -1528,12 +1755,24 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
           <FunctionImport Name="getDivIncharge" ReturnType="Collection(ubietydbModel.getDivIncharge_Result)">
             <Parameter Name="EmpId" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="getOrgEmpDetail" ReturnType="Collection(ubietydbModel.getOrgEmpDetail_Result)">
+          <Parameter Name="EmpId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="getDivIncharge1" ReturnType="Collection(ubietydbModel.getDivIncharge1_Result)">
+          <Parameter Name="EmpId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="getGroupTypeIncharge" ReturnType="Collection(ubietydbModel.getGroupTypeIncharge_Result)">
+          <Parameter Name="EmpId" Mode="In" Type="Int32" />
+          </FunctionImport>
           <EntitySet Name="Addresses" EntityType="ubietydbModel.Address" />
           <EntitySet Name="AddressTypes" EntityType="ubietydbModel.AddressType" />
           <EntitySet Name="Attendances" EntityType="ubietydbModel.Attendance" />
           <EntitySet Name="AttendanceFlags" EntityType="ubietydbModel.AttendanceFlag" />
+          <EntitySet Name="Benefits" EntityType="ubietydbModel.Benefit" />
           <EntitySet Name="BloodGroups" EntityType="ubietydbModel.BloodGroup" />
           <EntitySet Name="Candidates" EntityType="ubietydbModel.Candidate" />
+          <EntitySet Name="CandidateSkills" EntityType="ubietydbModel.CandidateSkill" />
+          <EntitySet Name="Certifications" EntityType="ubietydbModel.Certification" />
           <EntitySet Name="claimHistories" EntityType="ubietydbModel.claimHistory" />
           <EntitySet Name="claimJSONs" EntityType="ubietydbModel.claimJSON" />
           <EntitySet Name="ClaimRevisions" EntityType="ubietydbModel.ClaimRevision" />
@@ -1549,6 +1788,7 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
           <EntitySet Name="EmpDocs" EntityType="ubietydbModel.EmpDoc" />
           <EntitySet Name="EmpFinDetails" EntityType="ubietydbModel.EmpFinDetail" />
           <EntitySet Name="EmpIdentities" EntityType="ubietydbModel.EmpIdentity" />
+          <EntitySet Name="EmpJDs" EntityType="ubietydbModel.EmpJD" />
           <EntitySet Name="Employees" EntityType="ubietydbModel.Employee" />
           <EntitySet Name="EmployeeDetails" EntityType="ubietydbModel.EmployeeDetail" />
           <EntitySet Name="EmpPastEmps" EntityType="ubietydbModel.EmpPastEmp" />
@@ -1561,19 +1801,20 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
           <EntitySet Name="GroupIncharges" EntityType="ubietydbModel.GroupIncharge" />
           <EntitySet Name="GroupTypes" EntityType="ubietydbModel.GroupType" />
           <EntitySet Name="GroupTypeIncharges" EntityType="ubietydbModel.GroupTypeIncharge" />
+          <EntitySet Name="JobBenefits" EntityType="ubietydbModel.JobBenefit" />
+          <EntitySet Name="JobCertifications" EntityType="ubietydbModel.JobCertification" />
+          <EntitySet Name="JobDescriptions" EntityType="ubietydbModel.JobDescription" />
+          <EntitySet Name="JobSkills" EntityType="ubietydbModel.JobSkill" />
           <EntitySet Name="Logins" EntityType="ubietydbModel.Login" />
           <EntitySet Name="MaritalStatus" EntityType="ubietydbModel.MaritalStatu" />
           <EntitySet Name="Organizations" EntityType="ubietydbModel.Organization" />
           <EntitySet Name="Qualifications" EntityType="ubietydbModel.Qualification" />
           <EntitySet Name="Relations" EntityType="ubietydbModel.Relation" />
-          <EntitySet Name="Roles" EntityType="ubietydbModel.Role" />
-          <EntitySet Name="attByClients" EntityType="ubietydbModel.attByClient" />
-          <EntitySet Name="attendancereports" EntityType="ubietydbModel.attendancereport" />
-          <EntitySet Name="attRepTemps" EntityType="ubietydbModel.attRepTemp" />
+          <EntitySet Name="Skills" EntityType="ubietydbModel.Skill" />
+          <EntitySet Name="SkillGroups" EntityType="ubietydbModel.SkillGroup" />
+          <EntitySet Name="Sources" EntityType="ubietydbModel.Source" />
+          <EntitySet Name="test_att" EntityType="ubietydbModel.test_att" />
           <EntitySet Name="clientEmployees" EntityType="ubietydbModel.clientEmployee" />
-          <EntitySet Name="dailyAttendances" EntityType="ubietydbModel.dailyAttendance" />
-          <EntitySet Name="vprofiles" EntityType="ubietydbModel.vprofile" />
-          <EntitySet Name="vProfileDetails" EntityType="ubietydbModel.vProfileDetail" />
           <AssociationSet Name="FK_Address_AddressType" Association="ubietydbModel.FK_Address_AddressType">
             <End Role="AddressType" EntitySet="AddressTypes" />
             <End Role="Address" EntitySet="Addresses" />
@@ -1589,6 +1830,10 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
           <AssociationSet Name="FK_Attendance_Employee" Association="ubietydbModel.FK_Attendance_Employee">
             <End Role="Employee" EntitySet="Employees" />
             <End Role="Attendance" EntitySet="Attendances" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobBenefit_Benefit_Id" Association="ubietydbModel.FK_JobBenefit_Benefit_Id">
+            <End Role="Benefit" EntitySet="Benefits" />
+            <End Role="JobBenefit" EntitySet="JobBenefits" />
           </AssociationSet>
           <AssociationSet Name="FK_EmployeeDetail_BloodGroup" Association="ubietydbModel.FK_EmployeeDetail_BloodGroup">
             <End Role="BloodGroup" EntitySet="BloodGroups" />
@@ -1606,6 +1851,26 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
             <End Role="Qualification" EntitySet="Qualifications" />
             <End Role="Candidate" EntitySet="Candidates" />
           </AssociationSet>
+          <AssociationSet Name="FK_Candidate_Source_Id" Association="ubietydbModel.FK_Candidate_Source_Id">
+            <End Role="Source" EntitySet="Sources" />
+            <End Role="Candidate" EntitySet="Candidates" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CandidateSkill_Candidate" Association="ubietydbModel.FK_CandidateSkill_Candidate">
+            <End Role="Candidate" EntitySet="Candidates" />
+            <End Role="CandidateSkill" EntitySet="CandidateSkills" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CandidateSkill_Skill" Association="ubietydbModel.FK_CandidateSkill_Skill">
+            <End Role="Skill" EntitySet="Skills" />
+            <End Role="CandidateSkill" EntitySet="CandidateSkills" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Certification_Skill_Id" Association="ubietydbModel.FK_Certification_Skill_Id">
+            <End Role="Skill" EntitySet="Skills" />
+            <End Role="Certification" EntitySet="Certifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobCertification_Certification_Id" Association="ubietydbModel.FK_JobCertification_Certification_Id">
+            <End Role="Certification" EntitySet="Certifications" />
+            <End Role="JobCertification" EntitySet="JobCertifications" />
+          </AssociationSet>
           <AssociationSet Name="FK_claimHistory_claimJSON" Association="ubietydbModel.FK_claimHistory_claimJSON">
             <End Role="claimJSON" EntitySet="claimJSONs" />
             <End Role="claimHistory" EntitySet="claimHistories" />
@@ -1618,7 +1883,7 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
             <End Role="Employee" EntitySet="Employees" />
             <End Role="claimHistory" EntitySet="claimHistories" />
           </AssociationSet>
-          <AssociationSet Name="FK__claimJSON__claim__025D5595" Association="ubietydbModel.FK__claimJSON__claim__025D5595">
+          <AssociationSet Name="FK__claimJSON__claim__2A164134" Association="ubietydbModel.FK__claimJSON__claim__2A164134">
             <End Role="ClaimStatu" EntitySet="ClaimStatus" />
             <End Role="claimJSON" EntitySet="claimJSONs" />
           </AssociationSet>
@@ -1641,6 +1906,10 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
           <AssociationSet Name="FK_GroupType_Client" Association="ubietydbModel.FK_GroupType_Client">
             <End Role="Client" EntitySet="Clients" />
             <End Role="GroupType" EntitySet="GroupTypes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobDescription_Client_ClientId" Association="ubietydbModel.FK_JobDescription_Client_ClientId">
+            <End Role="Client" EntitySet="Clients" />
+            <End Role="JobDescription" EntitySet="JobDescriptions" />
           </AssociationSet>
           <AssociationSet Name="FK_EmpContactDetail_contactType" Association="ubietydbModel.FK_EmpContactDetail_contactType">
             <End Role="contactType" EntitySet="contactTypes" />
@@ -1686,6 +1955,22 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
             <End Role="Employee" EntitySet="Employees" />
             <End Role="EmpIdentity" EntitySet="EmpIdentities" />
           </AssociationSet>
+          <AssociationSet Name="FK_EmpJD_Employee_EmpId" Association="ubietydbModel.FK_EmpJD_Employee_EmpId">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="EmpJD" EntitySet="EmpJDs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpJD_JobDescription_Id" Association="ubietydbModel.FK_EmpJD_JobDescription_Id">
+            <End Role="JobDescription" EntitySet="JobDescriptions" />
+            <End Role="EmpJD" EntitySet="EmpJDs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpJDC_Employee_EmpId" Association="ubietydbModel.FK_EmpJDC_Employee_EmpId">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="EmpJD" EntitySet="EmpJDs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpJDM_Employee_EmpId" Association="ubietydbModel.FK_EmpJDM_Employee_EmpId">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="EmpJD" EntitySet="EmpJDs" />
+          </AssociationSet>
           <AssociationSet Name="FK_Employee_EmpStatus" Association="ubietydbModel.FK_Employee_EmpStatus">
             <End Role="EmpStatu" EntitySet="EmpStatus" />
             <End Role="Employee" EntitySet="Employees" />
@@ -1709,6 +1994,14 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
           <AssociationSet Name="FK_GroupTypeIncharge_Employee" Association="ubietydbModel.FK_GroupTypeIncharge_Employee">
             <End Role="Employee" EntitySet="Employees" />
             <End Role="GroupTypeIncharge" EntitySet="GroupTypeIncharges" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobDescription_Employee_EmpId" Association="ubietydbModel.FK_JobDescription_Employee_EmpId">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="JobDescription" EntitySet="JobDescriptions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobDescriptionM_Employee_EmpId" Association="ubietydbModel.FK_JobDescriptionM_Employee_EmpId">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="JobDescription" EntitySet="JobDescriptions" />
           </AssociationSet>
           <AssociationSet Name="FK_Login_Employee" Association="ubietydbModel.FK_Login_Employee">
             <End Role="Employee" EntitySet="Employees" />
@@ -1742,35 +2035,31 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
             <End Role="GroupType" EntitySet="GroupTypes" />
             <End Role="GroupTypeIncharge" EntitySet="GroupTypeIncharges" />
           </AssociationSet>
-          <EntitySet Name="Skills" EntityType="ubietydbModel.Skill" />
-          <EntitySet Name="SkillGroups" EntityType="ubietydbModel.SkillGroup" />
+          <AssociationSet Name="FK_JobBenefit_JobDescription_Id" Association="ubietydbModel.FK_JobBenefit_JobDescription_Id">
+            <End Role="JobDescription" EntitySet="JobDescriptions" />
+            <End Role="JobBenefit" EntitySet="JobBenefits" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobCertification_JobDescription_Id" Association="ubietydbModel.FK_JobCertification_JobDescription_Id">
+            <End Role="JobDescription" EntitySet="JobDescriptions" />
+            <End Role="JobCertification" EntitySet="JobCertifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobSkill_JobDescription_Id" Association="ubietydbModel.FK_JobSkill_JobDescription_Id">
+            <End Role="JobDescription" EntitySet="JobDescriptions" />
+            <End Role="JobSkill" EntitySet="JobSkills" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobSkill_Skill_Id" Association="ubietydbModel.FK_JobSkill_Skill_Id">
+            <End Role="Skill" EntitySet="Skills" />
+            <End Role="JobSkill" EntitySet="JobSkills" />
+          </AssociationSet>
           <AssociationSet Name="FK_Skill_SkillGroup" Association="ubietydbModel.FK_Skill_SkillGroup">
             <End Role="SkillGroup" EntitySet="SkillGroups" />
             <End Role="Skill" EntitySet="Skills" />
           </AssociationSet>
-          <EntitySet Name="CandidateSkills" EntityType="ubietydbModel.CandidateSkill" />
-          <AssociationSet Name="FK_CandidateSkill_Candidate" Association="ubietydbModel.FK_CandidateSkill_Candidate">
-            <End Role="Candidate" EntitySet="Candidates" />
-            <End Role="CandidateSkill" EntitySet="CandidateSkills" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CandidateSkill_Skill" Association="ubietydbModel.FK_CandidateSkill_Skill">
-            <End Role="Skill" EntitySet="Skills" />
-            <End Role="CandidateSkill" EntitySet="CandidateSkills" />
-          </AssociationSet>
-          <FunctionImport Name="getOrgEmpDetail" ReturnType="Collection(ubietydbModel.getOrgEmpDetail_Result)">
+          <EntitySet Name="attendancereports" EntityType="ubietydbModel.attendancereport" />
+          <EntitySet Name="attRepTemps" EntityType="ubietydbModel.attRepTemp" />
+          <FunctionImport Name="GetAllClientsOfEmpOrg" ReturnType="Collection(ubietydbModel.GetAllClientsOfEmpOrg_Result)">
           <Parameter Name="EmpId" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="getDivIncharge1" ReturnType="Collection(ubietydbModel.getDivIncharge1_Result)">
-          <Parameter Name="EmpId" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="getGroupTypeIncharge" ReturnType="Collection(ubietydbModel.getGroupTypeIncharge_Result)">
-          <Parameter Name="EmpId" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <EntitySet Name="OrgCharts" EntityType="ubietydbModel.OrgChart" />
-          <AssociationSet Name="FK_OrgChart_Client_ClientId" Association="ubietydbModel.FK_OrgChart_Client_ClientId">
-            <End Role="Client" EntitySet="Clients" />
-            <End Role="OrgChart" EntitySet="OrgCharts" />
-          </AssociationSet>
           </EntityContainer>
         <ComplexType Name="getEmpOfGroups_Result">
           <Property Type="String" Name="AuthUserId" Nullable="true" MaxLength="255" />
@@ -1932,6 +2221,21 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
           <Property Type="String" Name="EmpNum" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="EmpName" Nullable="false" MaxLength="100" />
         </ComplexType>
+        <ComplexType Name="getOrgEmpDetail_Result">
+          <Property Type="String" Name="EmpName" Nullable="false" MaxLength="100" />
+          <Property Type="Int64" Name="PrimaryMobile" Nullable="true" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="getDivIncharge1_Result">
+          <Property Type="Int32" Name="EmpId" Nullable="false" />
+          <Property Type="String" Name="EmpNum" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="EmpName" Nullable="false" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="getGroupTypeIncharge_Result">
+          <Property Type="String" Name="EmpName" Nullable="false" MaxLength="100" />
+          <Property Type="Int64" Name="PrimaryMobile" Nullable="true" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="50" />
+        </ComplexType>
         <EntityType Name="Address">
           <Key>
             <PropertyRef Name="AddressId" />
@@ -1979,6 +2283,14 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
           <Property Name="FlagName" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Attendances" Relationship="ubietydbModel.FK_Attendance_AttendanceFlag" FromRole="AttendanceFlag" ToRole="Attendance" />
         </EntityType>
+        <EntityType Name="Benefit">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BenefitName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="JobBenefits" Relationship="ubietydbModel.FK_JobBenefit_Benefit_Id" FromRole="Benefit" ToRole="JobBenefit" />
+        </EntityType>
         <EntityType Name="BloodGroup">
           <Key>
             <PropertyRef Name="Id" />
@@ -2005,14 +2317,41 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
           <Property Name="NativePlace" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="HighestQualification" Type="Int32" Nullable="false" />
           <Property Name="CreatedBy" Type="Int32" Nullable="false" />
-          <Property Name="CreatedOn" Type="DateTime" Precision="3" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
           <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
           <Property Name="ModifiedBy" Type="Int32" />
           <Property Name="degree" Type="Int32" />
+          <Property Name="NoticePeriod" Type="Int32" />
+          <Property Name="SourceId" Type="Int32" />
+          <Property Name="SourceNotes" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Employee" Relationship="ubietydbModel.FK_Candidate_Employee" FromRole="Candidate" ToRole="Employee" />
           <NavigationProperty Name="Employee1" Relationship="ubietydbModel.FK_Candidate_Employee1" FromRole="Candidate" ToRole="Employee" />
           <NavigationProperty Name="Qualification" Relationship="ubietydbModel.FK_Candidate_Qualification" FromRole="Candidate" ToRole="Qualification" />
+          <NavigationProperty Name="Source" Relationship="ubietydbModel.FK_Candidate_Source_Id" FromRole="Candidate" ToRole="Source" />
           <NavigationProperty Name="CandidateSkills" Relationship="ubietydbModel.FK_CandidateSkill_Candidate" FromRole="Candidate" ToRole="CandidateSkill" />
+        </EntityType>
+        <EntityType Name="CandidateSkill">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CandidateId" Type="Int32" Nullable="false" />
+          <Property Name="SkillId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Candidate" Relationship="ubietydbModel.FK_CandidateSkill_Candidate" FromRole="CandidateSkill" ToRole="Candidate" />
+          <NavigationProperty Name="Skill" Relationship="ubietydbModel.FK_CandidateSkill_Skill" FromRole="CandidateSkill" ToRole="Skill" />
+        </EntityType>
+        <EntityType Name="Certification">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CertificationName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="IssuedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Version" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SkillId" Type="Int32" />
+          <Property Name="CertificationRemarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Skill" Relationship="ubietydbModel.FK_Certification_Skill_Id" FromRole="Certification" ToRole="Skill" />
+          <NavigationProperty Name="JobCertifications" Relationship="ubietydbModel.FK_JobCertification_Certification_Id" FromRole="Certification" ToRole="JobCertification" />
         </EntityType>
         <EntityType Name="claimHistory">
           <Key>
@@ -2041,7 +2380,7 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
           <Property Name="totalAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="claimstatus" Type="Int32" Nullable="false" />
           <NavigationProperty Name="claimHistories" Relationship="ubietydbModel.FK_claimHistory_claimJSON" FromRole="claimJSON" ToRole="claimHistory" />
-          <NavigationProperty Name="ClaimStatu" Relationship="ubietydbModel.FK__claimJSON__claim__025D5595" FromRole="claimJSON" ToRole="ClaimStatu" />
+          <NavigationProperty Name="ClaimStatu" Relationship="ubietydbModel.FK__claimJSON__claim__2A164134" FromRole="claimJSON" ToRole="ClaimStatu" />
           <NavigationProperty Name="Employee" Relationship="ubietydbModel.FK_claimJSON_Employee" FromRole="claimJSON" ToRole="Employee" />
           <NavigationProperty Name="ClaimRevisions" Relationship="ubietydbModel.FK_ClaimRevision_claimJSON" FromRole="claimJSON" ToRole="ClaimRevision" />
         </EntityType>
@@ -2066,7 +2405,7 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Status" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="claimHistories" Relationship="ubietydbModel.FK_claimHistory_ClaimStatus" FromRole="ClaimStatu" ToRole="claimHistory" />
-          <NavigationProperty Name="claimJSONs" Relationship="ubietydbModel.FK__claimJSON__claim__025D5595" FromRole="ClaimStatu" ToRole="claimJSON" />
+          <NavigationProperty Name="claimJSONs" Relationship="ubietydbModel.FK__claimJSON__claim__2A164134" FromRole="ClaimStatu" ToRole="claimJSON" />
           <NavigationProperty Name="ClaimStatusHistories" Relationship="ubietydbModel.FK_ClaimStatusHistory_ClaimStatus" FromRole="ClaimStatu" ToRole="ClaimStatusHistory" />
         </EntityType>
         <EntityType Name="ClaimStatusHistory">
@@ -2088,7 +2427,7 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
           <Property Name="OrgId" Type="Int32" />
           <Property Name="ClientLogoURL" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="GroupTypes" Relationship="ubietydbModel.FK_GroupType_Client" FromRole="Client" ToRole="GroupType" />
-          <NavigationProperty Name="OrgCharts" Relationship="ubietydbModel.FK_OrgChart_Client_ClientId" FromRole="Client" ToRole="OrgChart" />
+          <NavigationProperty Name="JobDescriptions" Relationship="ubietydbModel.FK_JobDescription_Client_ClientId" FromRole="Client" ToRole="JobDescription" />
         </EntityType>
         <EntityType Name="contactType">
           <Key>
@@ -2192,6 +2531,25 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
           <Property Name="created" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Employee" Relationship="ubietydbModel.FK_EmpIdentity_Employee" FromRole="EmpIdentity" ToRole="Employee" />
         </EntityType>
+        <EntityType Name="EmpJD">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmpId" Type="Int32" Nullable="false" />
+          <Property Name="JDId" Type="Int32" Nullable="false" />
+          <Property Name="Openings" Type="Int32" />
+          <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Expiry" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Employee" Relationship="ubietydbModel.FK_EmpJD_Employee_EmpId" FromRole="EmpJD" ToRole="Employee" />
+          <NavigationProperty Name="JobDescription" Relationship="ubietydbModel.FK_EmpJD_JobDescription_Id" FromRole="EmpJD" ToRole="JobDescription" />
+          <NavigationProperty Name="Employee1" Relationship="ubietydbModel.FK_EmpJDC_Employee_EmpId" FromRole="EmpJD" ToRole="Employee" />
+          <NavigationProperty Name="Employee2" Relationship="ubietydbModel.FK_EmpJDM_Employee_EmpId" FromRole="EmpJD" ToRole="Employee" />
+        </EntityType>
         <EntityType Name="Employee">
           <Key>
             <PropertyRef Name="EmpId" />
@@ -2217,12 +2575,17 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
           <NavigationProperty Name="EmpDocs" Relationship="ubietydbModel.FK_EmpDocs_Employee" FromRole="Employee" ToRole="EmpDoc" />
           <NavigationProperty Name="EmpFinDetail" Relationship="ubietydbModel.FK_EmpFinDetail_Employee" FromRole="Employee" ToRole="EmpFinDetail" />
           <NavigationProperty Name="EmpIdentity" Relationship="ubietydbModel.FK_EmpIdentity_Employee" FromRole="Employee" ToRole="EmpIdentity" />
+          <NavigationProperty Name="EmpJDs" Relationship="ubietydbModel.FK_EmpJD_Employee_EmpId" FromRole="Employee" ToRole="EmpJD" />
+          <NavigationProperty Name="EmpJDs1" Relationship="ubietydbModel.FK_EmpJDC_Employee_EmpId" FromRole="Employee" ToRole="EmpJD" />
+          <NavigationProperty Name="EmpJDs2" Relationship="ubietydbModel.FK_EmpJDM_Employee_EmpId" FromRole="Employee" ToRole="EmpJD" />
           <NavigationProperty Name="EmpStatu" Relationship="ubietydbModel.FK_Employee_EmpStatus" FromRole="Employee" ToRole="EmpStatu" />
           <NavigationProperty Name="EmpPastEmps" Relationship="ubietydbModel.FK_EmpPastEmp_Employee" FromRole="Employee" ToRole="EmpPastEmp" />
           <NavigationProperty Name="EmpQualifications" Relationship="ubietydbModel.FK_EmpQualification_Employee" FromRole="Employee" ToRole="EmpQualification" />
           <NavigationProperty Name="GroupEmployees" Relationship="ubietydbModel.FK_GroupEmployee_Employee" FromRole="Employee" ToRole="GroupEmployee" />
           <NavigationProperty Name="GroupIncharges" Relationship="ubietydbModel.FK_GroupIncharge_Employee" FromRole="Employee" ToRole="GroupIncharge" />
           <NavigationProperty Name="GroupTypeIncharges" Relationship="ubietydbModel.FK_GroupTypeIncharge_Employee" FromRole="Employee" ToRole="GroupTypeIncharge" />
+          <NavigationProperty Name="JobDescriptions" Relationship="ubietydbModel.FK_JobDescription_Employee_EmpId" FromRole="Employee" ToRole="JobDescription" />
+          <NavigationProperty Name="JobDescriptions1" Relationship="ubietydbModel.FK_JobDescriptionM_Employee_EmpId" FromRole="Employee" ToRole="JobDescription" />
           <NavigationProperty Name="Login" Relationship="ubietydbModel.FK_Login_Employee" FromRole="Employee" ToRole="Login" />
         </EntityType>
         <EntityType Name="EmployeeDetail">
@@ -2362,6 +2725,67 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
           <NavigationProperty Name="Employee" Relationship="ubietydbModel.FK_GroupTypeIncharge_Employee" FromRole="GroupTypeIncharge" ToRole="Employee" />
           <NavigationProperty Name="GroupType" Relationship="ubietydbModel.FK_GroupTypeIncharge_GroupType" FromRole="GroupTypeIncharge" ToRole="GroupType" />
         </EntityType>
+        <EntityType Name="JobBenefit">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="JobId" Type="Int32" Nullable="false" />
+          <Property Name="BenefitId" Type="Int32" Nullable="false" />
+          <Property Name="BenefitDesc" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Benefit" Relationship="ubietydbModel.FK_JobBenefit_Benefit_Id" FromRole="JobBenefit" ToRole="Benefit" />
+          <NavigationProperty Name="JobDescription" Relationship="ubietydbModel.FK_JobBenefit_JobDescription_Id" FromRole="JobBenefit" ToRole="JobDescription" />
+        </EntityType>
+        <EntityType Name="JobCertification">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="JobId" Type="Int32" Nullable="false" />
+          <Property Name="CertificationId" Type="Int32" Nullable="false" />
+          <Property Name="CertifiedOn" Type="DateTime" Precision="0" />
+          <Property Name="Expiry" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Certification" Relationship="ubietydbModel.FK_JobCertification_Certification_Id" FromRole="JobCertification" ToRole="Certification" />
+          <NavigationProperty Name="JobDescription" Relationship="ubietydbModel.FK_JobCertification_JobDescription_Id" FromRole="JobCertification" ToRole="JobDescription" />
+        </EntityType>
+        <EntityType Name="JobDescription">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CleintId" Type="Int32" />
+          <Property Name="JobShortName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="JobTitle" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ExpFrom" Type="Int32" Nullable="false" />
+          <Property Name="ExpTo" Type="Int32" Nullable="false" />
+          <Property Name="JobLocation" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="Salary" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Openings" Type="Int32" />
+          <Property Name="JobNotes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <NavigationProperty Name="Client" Relationship="ubietydbModel.FK_JobDescription_Client_ClientId" FromRole="JobDescription" ToRole="Client" />
+          <NavigationProperty Name="EmpJDs" Relationship="ubietydbModel.FK_EmpJD_JobDescription_Id" FromRole="JobDescription" ToRole="EmpJD" />
+          <NavigationProperty Name="Employee" Relationship="ubietydbModel.FK_JobDescription_Employee_EmpId" FromRole="JobDescription" ToRole="Employee" />
+          <NavigationProperty Name="Employee1" Relationship="ubietydbModel.FK_JobDescriptionM_Employee_EmpId" FromRole="JobDescription" ToRole="Employee" />
+          <NavigationProperty Name="JobBenefits" Relationship="ubietydbModel.FK_JobBenefit_JobDescription_Id" FromRole="JobDescription" ToRole="JobBenefit" />
+          <NavigationProperty Name="JobCertifications" Relationship="ubietydbModel.FK_JobCertification_JobDescription_Id" FromRole="JobDescription" ToRole="JobCertification" />
+          <NavigationProperty Name="JobSkills" Relationship="ubietydbModel.FK_JobSkill_JobDescription_Id" FromRole="JobDescription" ToRole="JobSkill" />
+          <Property Name="RExpFrom" Type="Int32" />
+          <Property Name="RExpTo" Type="Int32" />
+        </EntityType>
+        <EntityType Name="JobSkill">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="JobId" Type="Int32" Nullable="false" />
+          <Property Name="SkillId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="JobDescription" Relationship="ubietydbModel.FK_JobSkill_JobDescription_Id" FromRole="JobSkill" ToRole="JobDescription" />
+          <NavigationProperty Name="Skill" Relationship="ubietydbModel.FK_JobSkill_Skill_Id" FromRole="JobSkill" ToRole="Skill" />
+        </EntityType>
         <EntityType Name="Login">
           <Key>
             <PropertyRef Name="LoginId" />
@@ -2405,48 +2829,47 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
           <Property Name="RelationName" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
           <NavigationProperty Name="EmergencyContacts" Relationship="ubietydbModel.FK_EmergencyContact_Relation" FromRole="Relation" ToRole="EmergencyContact" />
         </EntityType>
-        <EntityType Name="Role">
+        <EntityType Name="Skill">
           <Key>
-            <PropertyRef Name="RoleId" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RoleName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SkillName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SkillGroupId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CandidateSkills" Relationship="ubietydbModel.FK_CandidateSkill_Skill" FromRole="Skill" ToRole="CandidateSkill" />
+          <NavigationProperty Name="Certifications" Relationship="ubietydbModel.FK_Certification_Skill_Id" FromRole="Skill" ToRole="Certification" />
+          <NavigationProperty Name="JobSkills" Relationship="ubietydbModel.FK_JobSkill_Skill_Id" FromRole="Skill" ToRole="JobSkill" />
+          <NavigationProperty Name="SkillGroup" Relationship="ubietydbModel.FK_Skill_SkillGroup" FromRole="Skill" ToRole="SkillGroup" />
         </EntityType>
-        <EntityType Name="attByClient">
+        <EntityType Name="SkillGroup">
           <Key>
-            <PropertyRef Name="empid" />
-            <PropertyRef Name="EmpName" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="empid" Type="Int32" Nullable="false" />
-          <Property Name="MarkDate" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="MarkTime" Type="String" MaxLength="5" FixedLength="true" Unicode="false" />
-          <Property Name="Coordinates" Type="String" MaxLength="61" FixedLength="false" Unicode="true" />
-          <Property Name="CompanyId" Type="Int32" />
-          <Property Name="EmpName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SkillGroupName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Skills" Relationship="ubietydbModel.FK_Skill_SkillGroup" FromRole="SkillGroup" ToRole="Skill" />
         </EntityType>
-        <EntityType Name="attendancereport">
+        <EntityType Name="Source">
           <Key>
-            <PropertyRef Name="empid" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="empid" Type="Int32" Nullable="false" />
-          <Property Name="inlatitude" Type="Double" />
-          <Property Name="outlatitude" Type="Double" />
-          <Property Name="inlongitude" Type="Double" />
-          <Property Name="outlongitude" Type="Double" />
-          <Property Name="inmarktime" Type="DateTime" Precision="3" />
-          <Property Name="outmarktime" Type="DateTime" Precision="3" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SourceName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Candidates" Relationship="ubietydbModel.FK_Candidate_Source_Id" FromRole="Source" ToRole="Candidate" />
         </EntityType>
-        <EntityType Name="attRepTemp">
+        <EntityType Name="test_att">
           <Key>
-            <PropertyRef Name="attendanceid" />
-            <PropertyRef Name="empid" />
+            <PropertyRef Name="AttendanceId" />
+            <PropertyRef Name="EmpId" />
+            <PropertyRef Name="MarkTime" />
           </Key>
-          <Property Name="attendanceid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="empid" Type="Int32" Nullable="false" />
-          <Property Name="MarkDate" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
-          <Property Name="MarkTime" Type="String" MaxLength="5" FixedLength="true" Unicode="false" />
-          <Property Name="Coordinates" Type="String" MaxLength="61" FixedLength="false" Unicode="true" />
-          <Property Name="MarkCount" Type="Int32" />
+          <Property Name="AttendanceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmpId" Type="Int32" Nullable="false" />
+          <Property Name="MarkFlagId" Type="Int32" />
+          <Property Name="MarkTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="latitude" Type="Double" />
+          <Property Name="longitude" Type="Double" />
+          <Property Name="markcount" Type="Int32" />
         </EntityType>
         <EntityType Name="clientEmployee">
           <Key>
@@ -2456,40 +2879,6 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
           <Property Name="EmpId" Type="Int32" Nullable="false" />
           <Property Name="companyId" Type="Int32" />
           <Property Name="empname" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="dailyAttendance">
-          <Key>
-            <PropertyRef Name="EmpId" />
-            <PropertyRef Name="EmpName" />
-          </Key>
-          <Property Name="EmpId" Type="Int32" Nullable="false" />
-          <Property Name="MarkTime" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="companyId" Type="Int32" />
-          <Property Name="EmpNum" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="EmpName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="vprofile">
-          <Key>
-            <PropertyRef Name="empid" />
-            <PropertyRef Name="DataType" />
-          </Key>
-          <Property Name="empid" Type="Int32" Nullable="false" />
-          <Property Name="DataType" Type="String" Nullable="false" MaxLength="14" FixedLength="false" Unicode="false" />
-          <Property Name="Count" Type="Int32" />
-        </EntityType>
-        <EntityType Name="vProfileDetail">
-          <Key>
-            <PropertyRef Name="empid" />
-          </Key>
-          <Property Name="empid" Type="Int32" Nullable="false" />
-          <Property Name="Basic_Detail" Type="Int32" />
-          <Property Name="Contact_Detail" Type="Int32" />
-          <Property Name="Addresses" Type="Int32" />
-          <Property Name="Bank" Type="Int32" />
-          <Property Name="Identity" Type="Int32" />
-          <Property Name="PastEmp" Type="Int32" />
-          <Property Name="Qualification" Type="Int32" />
-          <Property Name="Emergency" Type="Int32" />
         </EntityType>
         <Association Name="FK_Address_AddressType">
           <End Type="ubietydbModel.AddressType" Role="AddressType" Multiplicity="1" />
@@ -2536,6 +2925,18 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
             </Principal>
             <Dependent Role="Attendance">
               <PropertyRef Name="EmpId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobBenefit_Benefit_Id">
+          <End Type="ubietydbModel.Benefit" Role="Benefit" Multiplicity="1" />
+          <End Type="ubietydbModel.JobBenefit" Role="JobBenefit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Benefit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="JobBenefit">
+              <PropertyRef Name="BenefitId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2587,6 +2988,66 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Candidate_Source_Id">
+          <End Type="ubietydbModel.Source" Role="Source" Multiplicity="0..1" />
+          <End Type="ubietydbModel.Candidate" Role="Candidate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Source">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Candidate">
+              <PropertyRef Name="SourceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CandidateSkill_Candidate">
+          <End Type="ubietydbModel.Candidate" Role="Candidate" Multiplicity="1" />
+          <End Type="ubietydbModel.CandidateSkill" Role="CandidateSkill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Candidate">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CandidateSkill">
+              <PropertyRef Name="CandidateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CandidateSkill_Skill">
+          <End Type="ubietydbModel.Skill" Role="Skill" Multiplicity="1" />
+          <End Type="ubietydbModel.CandidateSkill" Role="CandidateSkill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Skill">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CandidateSkill">
+              <PropertyRef Name="SkillId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Certification_Skill_Id">
+          <End Type="ubietydbModel.Skill" Role="Skill" Multiplicity="0..1" />
+          <End Type="ubietydbModel.Certification" Role="Certification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Skill">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Certification">
+              <PropertyRef Name="SkillId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobCertification_Certification_Id">
+          <End Type="ubietydbModel.Certification" Role="Certification" Multiplicity="1" />
+          <End Type="ubietydbModel.JobCertification" Role="JobCertification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Certification">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="JobCertification">
+              <PropertyRef Name="CertificationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_claimHistory_claimJSON">
           <End Type="ubietydbModel.claimJSON" Role="claimJSON" Multiplicity="1" />
           <End Type="ubietydbModel.claimHistory" Role="claimHistory" Multiplicity="*" />
@@ -2623,7 +3084,7 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__claimJSON__claim__025D5595">
+        <Association Name="FK__claimJSON__claim__2A164134">
           <End Type="ubietydbModel.ClaimStatu" Role="ClaimStatu" Multiplicity="1" />
           <End Type="ubietydbModel.claimJSON" Role="claimJSON" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2692,6 +3153,18 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
             </Principal>
             <Dependent Role="GroupType">
               <PropertyRef Name="ClientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobDescription_Client_ClientId">
+          <End Type="ubietydbModel.Client" Role="Client" Multiplicity="0..1" />
+          <End Type="ubietydbModel.JobDescription" Role="JobDescription" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ClientId" />
+            </Principal>
+            <Dependent Role="JobDescription">
+              <PropertyRef Name="CleintId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2827,6 +3300,54 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_EmpJD_Employee_EmpId">
+          <End Type="ubietydbModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="ubietydbModel.EmpJD" Role="EmpJD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="EmpJD">
+              <PropertyRef Name="EmpId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpJD_JobDescription_Id">
+          <End Type="ubietydbModel.JobDescription" Role="JobDescription" Multiplicity="1" />
+          <End Type="ubietydbModel.EmpJD" Role="EmpJD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JobDescription">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmpJD">
+              <PropertyRef Name="JDId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpJDC_Employee_EmpId">
+          <End Type="ubietydbModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="ubietydbModel.EmpJD" Role="EmpJD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="EmpJD">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpJDM_Employee_EmpId">
+          <End Type="ubietydbModel.Employee" Role="Employee" Multiplicity="0..1" />
+          <End Type="ubietydbModel.EmpJD" Role="EmpJD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="EmpJD">
+              <PropertyRef Name="ModifiedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Employee_EmpStatus">
           <End Type="ubietydbModel.EmpStatu" Role="EmpStatu" Multiplicity="1" />
           <End Type="ubietydbModel.Employee" Role="Employee" Multiplicity="*" />
@@ -2896,6 +3417,30 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
             </Principal>
             <Dependent Role="GroupTypeIncharge">
               <PropertyRef Name="InchargeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobDescription_Employee_EmpId">
+          <End Type="ubietydbModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="ubietydbModel.JobDescription" Role="JobDescription" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="JobDescription">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobDescriptionM_Employee_EmpId">
+          <End Type="ubietydbModel.Employee" Role="Employee" Multiplicity="0..1" />
+          <End Type="ubietydbModel.JobDescription" Role="JobDescription" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="JobDescription">
+              <PropertyRef Name="ModifiedBy" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2995,24 +3540,54 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="Skill">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="SkillName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="SkillGroupId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="SkillGroup" Relationship="ubietydbModel.FK_Skill_SkillGroup" FromRole="Skill" ToRole="SkillGroup" />
-          <NavigationProperty Name="CandidateSkills" Relationship="ubietydbModel.FK_CandidateSkill_Skill" FromRole="Skill" ToRole="CandidateSkill" />
-        </EntityType>
-        <EntityType Name="SkillGroup">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="SkillGroupName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Skills" Relationship="ubietydbModel.FK_Skill_SkillGroup" FromRole="SkillGroup" ToRole="Skill" />
-        </EntityType>
+        <Association Name="FK_JobBenefit_JobDescription_Id">
+          <End Type="ubietydbModel.JobDescription" Role="JobDescription" Multiplicity="1" />
+          <End Type="ubietydbModel.JobBenefit" Role="JobBenefit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JobDescription">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="JobBenefit">
+              <PropertyRef Name="JobId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobCertification_JobDescription_Id">
+          <End Type="ubietydbModel.JobDescription" Role="JobDescription" Multiplicity="1" />
+          <End Type="ubietydbModel.JobCertification" Role="JobCertification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JobDescription">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="JobCertification">
+              <PropertyRef Name="JobId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobSkill_JobDescription_Id">
+          <End Type="ubietydbModel.JobDescription" Role="JobDescription" Multiplicity="1" />
+          <End Type="ubietydbModel.JobSkill" Role="JobSkill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JobDescription">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="JobSkill">
+              <PropertyRef Name="JobId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobSkill_Skill_Id">
+          <End Type="ubietydbModel.Skill" Role="Skill" Multiplicity="1" />
+          <End Type="ubietydbModel.JobSkill" Role="JobSkill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Skill">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="JobSkill">
+              <PropertyRef Name="SkillId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Skill_SkillGroup">
           <End Type="ubietydbModel.SkillGroup" Role="SkillGroup" Multiplicity="1" />
           <End Type="ubietydbModel.Skill" Role="Skill" Multiplicity="*" />
@@ -3025,76 +3600,34 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="CandidateSkill">
+        <EntityType Name="attendancereport">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="empid" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CandidateId" Type="Int32" Nullable="false" />
-          <Property Name="SkillId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Candidate" Relationship="ubietydbModel.FK_CandidateSkill_Candidate" FromRole="CandidateSkill" ToRole="Candidate" />
-          <NavigationProperty Name="Skill" Relationship="ubietydbModel.FK_CandidateSkill_Skill" FromRole="CandidateSkill" ToRole="Skill" />
+          <Property Name="empid" Type="Int32" Nullable="false" />
+          <Property Name="inlatitude" Type="Double" />
+          <Property Name="outlatitude" Type="Double" />
+          <Property Name="inlongitude" Type="Double" />
+          <Property Name="outlongitude" Type="Double" />
+          <Property Name="inmarktime" Type="DateTime" Precision="3" />
+          <Property Name="outmarktime" Type="DateTime" Precision="3" />
         </EntityType>
-        <Association Name="FK_CandidateSkill_Candidate">
-          <End Type="ubietydbModel.Candidate" Role="Candidate" Multiplicity="1" />
-          <End Type="ubietydbModel.CandidateSkill" Role="CandidateSkill" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Candidate">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="CandidateSkill">
-              <PropertyRef Name="CandidateId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CandidateSkill_Skill">
-          <End Type="ubietydbModel.Skill" Role="Skill" Multiplicity="1" />
-          <End Type="ubietydbModel.CandidateSkill" Role="CandidateSkill" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Skill">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="CandidateSkill">
-              <PropertyRef Name="SkillId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <ComplexType Name="getOrgEmpDetail_Result">
-          <Property Type="String" Name="EmpName" Nullable="false" MaxLength="100" />
-          <Property Type="Int64" Name="PrimaryMobile" Nullable="true" />
-          <Property Type="String" Name="Email" Nullable="true" MaxLength="50" />
-        </ComplexType>
-        <ComplexType Name="getDivIncharge1_Result">
-          <Property Type="Int32" Name="EmpId" Nullable="false" />
-          <Property Type="String" Name="EmpNum" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="EmpName" Nullable="false" MaxLength="100" />
-        </ComplexType>
-        <ComplexType Name="getGroupTypeIncharge_Result">
-          <Property Type="String" Name="EmpName" Nullable="false" MaxLength="100" />
-          <Property Type="Int64" Name="PrimaryMobile" Nullable="true" />
-          <Property Type="String" Name="Email" Nullable="true" MaxLength="50" />
-        </ComplexType>
-        <EntityType Name="OrgChart">
+        <EntityType Name="attRepTemp">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="attendanceid" />
+            <PropertyRef Name="empid" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CompanyId" Type="Int32" Nullable="false" />
-          <Property Name="OrgChartName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Client" Relationship="ubietydbModel.FK_OrgChart_Client_ClientId" FromRole="OrgChart" ToRole="Client" />
+          <Property Name="attendanceid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="empid" Type="Int32" Nullable="false" />
+          <Property Name="MarkDate" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="MarkTime" Type="String" MaxLength="5" FixedLength="true" Unicode="false" />
+          <Property Name="Coordinates" Type="String" MaxLength="61" FixedLength="false" Unicode="true" />
+          <Property Name="MarkCount" Type="Int32" />
         </EntityType>
-        <Association Name="FK_OrgChart_Client_ClientId">
-          <End Type="ubietydbModel.Client" Role="Client" Multiplicity="1" />
-          <End Type="ubietydbModel.OrgChart" Role="OrgChart" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Client">
-              <PropertyRef Name="ClientId" />
-            </Principal>
-            <Dependent Role="OrgChart">
-              <PropertyRef Name="CompanyId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        <ComplexType Name="GetAllClientsOfEmpOrg_Result">
+          <Property Type="Int32" Name="ClientId" Nullable="false" />
+          <Property Type="String" Name="ClientName" Nullable="false" MaxLength="100" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3280,6 +3813,15 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="getEmpOrgName" FunctionName="ubietydbModel.Store.getEmpOrgName" />
+          <FunctionImportMapping FunctionImportName="getDivIncharge1" FunctionName="ubietydbModel.Store.getDivIncharge">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ubietydbModel.getDivIncharge1_Result">
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+                <ScalarProperty Name="EmpNum" ColumnName="EmpNum" />
+                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <EntitySetMapping Name="Addresses">
             <EntityTypeMapping TypeName="ubietydbModel.Address">
               <MappingFragment StoreEntitySet="Address">
@@ -3325,6 +3867,14 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Benefits">
+            <EntityTypeMapping TypeName="ubietydbModel.Benefit">
+              <MappingFragment StoreEntitySet="Benefit">
+                <ScalarProperty Name="BenefitName" ColumnName="BenefitName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="BloodGroups">
             <EntityTypeMapping TypeName="ubietydbModel.BloodGroup">
               <MappingFragment StoreEntitySet="BloodGroup">
@@ -3336,6 +3886,9 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
           <EntitySetMapping Name="Candidates">
             <EntityTypeMapping TypeName="ubietydbModel.Candidate">
               <MappingFragment StoreEntitySet="Candidate">
+                <ScalarProperty Name="SourceNotes" ColumnName="SourceNotes" />
+                <ScalarProperty Name="SourceId" ColumnName="SourceId" />
+                <ScalarProperty Name="NoticePeriod" ColumnName="NoticePeriod" />
                 <ScalarProperty Name="degree" ColumnName="degree" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
@@ -3353,6 +3906,27 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
                 <ScalarProperty Name="AlternateNumber" ColumnName="AlternateNumber" />
                 <ScalarProperty Name="PrimaryMobile" ColumnName="PrimaryMobile" />
                 <ScalarProperty Name="CandidateName" ColumnName="CandidateName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CandidateSkills">
+            <EntityTypeMapping TypeName="ubietydbModel.CandidateSkill">
+              <MappingFragment StoreEntitySet="CandidateSkill">
+                <ScalarProperty Name="SkillId" ColumnName="SkillId" />
+                <ScalarProperty Name="CandidateId" ColumnName="CandidateId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Certifications">
+            <EntityTypeMapping TypeName="ubietydbModel.Certification">
+              <MappingFragment StoreEntitySet="Certification">
+                <ScalarProperty Name="CertificationRemarks" ColumnName="CertificationRemarks" />
+                <ScalarProperty Name="SkillId" ColumnName="SkillId" />
+                <ScalarProperty Name="Version" ColumnName="Version" />
+                <ScalarProperty Name="IssuedBy" ColumnName="IssuedBy" />
+                <ScalarProperty Name="CertificationName" ColumnName="CertificationName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -3522,6 +4096,22 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="EmpJDs">
+            <EntityTypeMapping TypeName="ubietydbModel.EmpJD">
+              <MappingFragment StoreEntitySet="EmpJD">
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Expiry" ColumnName="Expiry" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="Openings" ColumnName="Openings" />
+                <ScalarProperty Name="JDId" ColumnName="JDId" />
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Employees">
             <EntityTypeMapping TypeName="ubietydbModel.Employee">
               <MappingFragment StoreEntitySet="Employee">
@@ -3663,6 +4253,58 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="JobBenefits">
+            <EntityTypeMapping TypeName="ubietydbModel.JobBenefit">
+              <MappingFragment StoreEntitySet="JobBenefit">
+                <ScalarProperty Name="BenefitDesc" ColumnName="BenefitDesc" />
+                <ScalarProperty Name="BenefitId" ColumnName="BenefitId" />
+                <ScalarProperty Name="JobId" ColumnName="JobId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JobCertifications">
+            <EntityTypeMapping TypeName="ubietydbModel.JobCertification">
+              <MappingFragment StoreEntitySet="JobCertification">
+                <ScalarProperty Name="Expiry" ColumnName="Expiry" />
+                <ScalarProperty Name="CertifiedOn" ColumnName="CertifiedOn" />
+                <ScalarProperty Name="CertificationId" ColumnName="CertificationId" />
+                <ScalarProperty Name="JobId" ColumnName="JobId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JobDescriptions">
+            <EntityTypeMapping TypeName="ubietydbModel.JobDescription">
+              <MappingFragment StoreEntitySet="JobDescription">
+                <ScalarProperty Name="RExpTo" ColumnName="RExpTo" />
+                <ScalarProperty Name="RExpFrom" ColumnName="RExpFrom" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="JobNotes" ColumnName="JobNotes" />
+                <ScalarProperty Name="Openings" ColumnName="Openings" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+                <ScalarProperty Name="JobLocation" ColumnName="JobLocation" />
+                <ScalarProperty Name="ExpTo" ColumnName="ExpTo" />
+                <ScalarProperty Name="ExpFrom" ColumnName="ExpFrom" />
+                <ScalarProperty Name="JobTitle" ColumnName="JobTitle" />
+                <ScalarProperty Name="JobShortName" ColumnName="JobShortName" />
+                <ScalarProperty Name="CleintId" ColumnName="CleintId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JobSkills">
+            <EntityTypeMapping TypeName="ubietydbModel.JobSkill">
+              <MappingFragment StoreEntitySet="JobSkill">
+                <ScalarProperty Name="SkillId" ColumnName="SkillId" />
+                <ScalarProperty Name="JobId" ColumnName="JobId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Logins">
             <EntityTypeMapping TypeName="ubietydbModel.Login">
               <MappingFragment StoreEntitySet="Login">
@@ -3705,23 +4347,50 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Roles">
-            <EntityTypeMapping TypeName="ubietydbModel.Role">
-              <MappingFragment StoreEntitySet="Roles">
-                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
-                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+          <EntitySetMapping Name="Skills">
+            <EntityTypeMapping TypeName="ubietydbModel.Skill">
+              <MappingFragment StoreEntitySet="Skill">
+                <ScalarProperty Name="SkillGroupId" ColumnName="SkillGroupId" />
+                <ScalarProperty Name="SkillName" ColumnName="SkillName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="attByClients">
-            <EntityTypeMapping TypeName="ubietydbModel.attByClient">
-              <MappingFragment StoreEntitySet="attByClient">
-                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
-                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
-                <ScalarProperty Name="Coordinates" ColumnName="Coordinates" />
+          <EntitySetMapping Name="SkillGroups">
+            <EntityTypeMapping TypeName="ubietydbModel.SkillGroup">
+              <MappingFragment StoreEntitySet="SkillGroup">
+                <ScalarProperty Name="SkillGroupName" ColumnName="SkillGroupName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sources">
+            <EntityTypeMapping TypeName="ubietydbModel.Source">
+              <MappingFragment StoreEntitySet="Source">
+                <ScalarProperty Name="SourceName" ColumnName="SourceName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="test_att">
+            <EntityTypeMapping TypeName="ubietydbModel.test_att">
+              <MappingFragment StoreEntitySet="test_att">
+                <ScalarProperty Name="markcount" ColumnName="markcount" />
+                <ScalarProperty Name="longitude" ColumnName="longitude" />
+                <ScalarProperty Name="latitude" ColumnName="latitude" />
                 <ScalarProperty Name="MarkTime" ColumnName="MarkTime" />
-                <ScalarProperty Name="MarkDate" ColumnName="MarkDate" />
-                <ScalarProperty Name="empid" ColumnName="empid" />
+                <ScalarProperty Name="MarkFlagId" ColumnName="MarkFlagId" />
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+                <ScalarProperty Name="AttendanceId" ColumnName="AttendanceId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="clientEmployees">
+            <EntityTypeMapping TypeName="ubietydbModel.clientEmployee">
+              <MappingFragment StoreEntitySet="clientEmployee">
+                <ScalarProperty Name="empname" ColumnName="empname" />
+                <ScalarProperty Name="companyId" ColumnName="companyId" />
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3750,113 +4419,15 @@ warning 6002: The table/view 'ubietydb.dbo.vProfileDetails' does not have a prim
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="clientEmployees">
-            <EntityTypeMapping TypeName="ubietydbModel.clientEmployee">
-              <MappingFragment StoreEntitySet="clientEmployee">
-                <ScalarProperty Name="empname" ColumnName="empname" />
-                <ScalarProperty Name="companyId" ColumnName="companyId" />
-                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="dailyAttendances">
-            <EntityTypeMapping TypeName="ubietydbModel.dailyAttendance">
-              <MappingFragment StoreEntitySet="dailyAttendance">
-                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
-                <ScalarProperty Name="EmpNum" ColumnName="EmpNum" />
-                <ScalarProperty Name="companyId" ColumnName="companyId" />
-                <ScalarProperty Name="MarkTime" ColumnName="MarkTime" />
-                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="vprofiles">
-            <EntityTypeMapping TypeName="ubietydbModel.vprofile">
-              <MappingFragment StoreEntitySet="vprofile">
-                <ScalarProperty Name="Count" ColumnName="Count" />
-                <ScalarProperty Name="DataType" ColumnName="DataType" />
-                <ScalarProperty Name="empid" ColumnName="empid" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="vProfileDetails">
-            <EntityTypeMapping TypeName="ubietydbModel.vProfileDetail">
-              <MappingFragment StoreEntitySet="vProfileDetails">
-                <ScalarProperty Name="Emergency" ColumnName="Emergency" />
-                <ScalarProperty Name="Qualification" ColumnName="Qualification" />
-                <ScalarProperty Name="PastEmp" ColumnName="PastEmp" />
-                <ScalarProperty Name="Identity" ColumnName="Identity" />
-                <ScalarProperty Name="Bank" ColumnName="Bank" />
-                <ScalarProperty Name="Addresses" ColumnName="Addresses" />
-                <ScalarProperty Name="Contact_Detail" ColumnName="Contact Detail" />
-                <ScalarProperty Name="Basic_Detail" ColumnName="Basic Detail" />
-                <ScalarProperty Name="empid" ColumnName="empid" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Skills">
-            <EntityTypeMapping TypeName="ubietydbModel.Skill">
-              <MappingFragment StoreEntitySet="Skill">
-                <ScalarProperty Name="SkillGroupId" ColumnName="SkillGroupId" />
-                <ScalarProperty Name="SkillName" ColumnName="SkillName" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SkillGroups">
-            <EntityTypeMapping TypeName="ubietydbModel.SkillGroup">
-              <MappingFragment StoreEntitySet="SkillGroup">
-                <ScalarProperty Name="SkillGroupName" ColumnName="SkillGroupName" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="CandidateSkills">
-            <EntityTypeMapping TypeName="ubietydbModel.CandidateSkill">
-              <MappingFragment StoreEntitySet="CandidateSkill">
-                <ScalarProperty Name="SkillId" ColumnName="SkillId" />
-                <ScalarProperty Name="CandidateId" ColumnName="CandidateId" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="getOrgEmpDetail" FunctionName="ubietydbModel.Store.getOrgEmpDetail">
+          <FunctionImportMapping FunctionImportName="GetAllClientsOfEmpOrg" FunctionName="ubietydbModel.Store.GetAllClientsOfEmpOrg">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="ubietydbModel.getOrgEmpDetail_Result">
-                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
-                <ScalarProperty Name="PrimaryMobile" ColumnName="PrimaryMobile" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
+              <ComplexTypeMapping TypeName="ubietydbModel.GetAllClientsOfEmpOrg_Result">
+                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+                <ScalarProperty Name="ClientName" ColumnName="ClientName" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="getDivIncharge1" FunctionName="ubietydbModel.Store.getDivIncharge">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ubietydbModel.getDivIncharge1_Result">
-                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
-                <ScalarProperty Name="EmpNum" ColumnName="EmpNum" />
-                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="getGroupTypeIncharge" FunctionName="ubietydbModel.Store.getGroupTypeIncharge">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ubietydbModel.getGroupTypeIncharge_Result">
-                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
-                <ScalarProperty Name="PrimaryMobile" ColumnName="PrimaryMobile" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <EntitySetMapping Name="OrgCharts">
-            <EntityTypeMapping TypeName="ubietydbModel.OrgChart">
-              <MappingFragment StoreEntitySet="OrgChart">
-                <ScalarProperty Name="OrgChartName" ColumnName="OrgChartName" />
-                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-        </EntityContainerMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

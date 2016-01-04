@@ -474,6 +474,7 @@ namespace adminpanel.Controllers
         {
             db.Configuration.ProxyCreationEnabled = false;
 
+            if (QualId != 0) { 
             return (from recordset in db.Degrees
              where recordset.Qualification == QualId
              select new DegreeDTO
@@ -481,6 +482,16 @@ namespace adminpanel.Controllers
                  DegreeId = recordset.Id,
                  DegreeName = recordset.DegreeName
              }).ToList();
+            }
+            else
+            {
+                return (from recordset in db.Degrees
+                        select new DegreeDTO
+                        {
+                            DegreeId = recordset.Id,
+                            DegreeName = recordset.DegreeName
+                        }).ToList();
+            }
         }
 
         [Route("getQualSummary/{EmpId}")]

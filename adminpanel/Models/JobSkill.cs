@@ -15,26 +15,20 @@ namespace adminpanel.Models
 using System;
     using System.Collections.Generic;
     
-public partial class vProfileDetail
+public partial class JobSkill
 {
 
-    public int empid { get; set; }
+    public int Id { get; set; }
 
-    public Nullable<int> Basic_Detail { get; set; }
+    public int JobId { get; set; }
 
-    public Nullable<int> Contact_Detail { get; set; }
+    public int SkillId { get; set; }
 
-    public Nullable<int> Addresses { get; set; }
 
-    public Nullable<int> Bank { get; set; }
 
-    public Nullable<int> Identity { get; set; }
+    public virtual JobDescription JobDescription { get; set; }
 
-    public Nullable<int> PastEmp { get; set; }
-
-    public Nullable<int> Qualification { get; set; }
-
-    public Nullable<int> Emergency { get; set; }
+    public virtual Skill Skill { get; set; }
 
 }
 

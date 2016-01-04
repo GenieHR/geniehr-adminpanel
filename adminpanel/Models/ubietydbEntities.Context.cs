@@ -43,9 +43,15 @@ public partial class ubietydbEntities : DbContext
 
     public virtual DbSet<AttendanceFlag> AttendanceFlags { get; set; }
 
+    public virtual DbSet<Benefit> Benefits { get; set; }
+
     public virtual DbSet<BloodGroup> BloodGroups { get; set; }
 
     public virtual DbSet<Candidate> Candidates { get; set; }
+
+    public virtual DbSet<CandidateSkill> CandidateSkills { get; set; }
+
+    public virtual DbSet<Certification> Certifications { get; set; }
 
     public virtual DbSet<claimHistory> claimHistories { get; set; }
 
@@ -77,6 +83,8 @@ public partial class ubietydbEntities : DbContext
 
     public virtual DbSet<EmpIdentity> EmpIdentities { get; set; }
 
+    public virtual DbSet<EmpJD> EmpJDs { get; set; }
+
     public virtual DbSet<Employee> Employees { get; set; }
 
     public virtual DbSet<EmployeeDetail> EmployeeDetails { get; set; }
@@ -101,6 +109,14 @@ public partial class ubietydbEntities : DbContext
 
     public virtual DbSet<GroupTypeIncharge> GroupTypeIncharges { get; set; }
 
+    public virtual DbSet<JobBenefit> JobBenefits { get; set; }
+
+    public virtual DbSet<JobCertification> JobCertifications { get; set; }
+
+    public virtual DbSet<JobDescription> JobDescriptions { get; set; }
+
+    public virtual DbSet<JobSkill> JobSkills { get; set; }
+
     public virtual DbSet<Login> Logins { get; set; }
 
     public virtual DbSet<MaritalStatu> MaritalStatus { get; set; }
@@ -111,29 +127,19 @@ public partial class ubietydbEntities : DbContext
 
     public virtual DbSet<Relation> Relations { get; set; }
 
-    public virtual DbSet<Role> Roles { get; set; }
-
-    public virtual DbSet<attByClient> attByClients { get; set; }
-
-    public virtual DbSet<attendancereport> attendancereports { get; set; }
-
-    public virtual DbSet<attRepTemp> attRepTemps { get; set; }
-
-    public virtual DbSet<clientEmployee> clientEmployees { get; set; }
-
-    public virtual DbSet<dailyAttendance> dailyAttendances { get; set; }
-
-    public virtual DbSet<vprofile> vprofiles { get; set; }
-
-    public virtual DbSet<vProfileDetail> vProfileDetails { get; set; }
-
     public virtual DbSet<Skill> Skills { get; set; }
 
     public virtual DbSet<SkillGroup> SkillGroups { get; set; }
 
-    public virtual DbSet<CandidateSkill> CandidateSkills { get; set; }
+    public virtual DbSet<Source> Sources { get; set; }
 
-    public virtual DbSet<OrgChart> OrgCharts { get; set; }
+    public virtual DbSet<test_att> test_att { get; set; }
+
+    public virtual DbSet<clientEmployee> clientEmployees { get; set; }
+
+    public virtual DbSet<attendancereport> attendancereports { get; set; }
+
+    public virtual DbSet<attRepTemp> attRepTemps { get; set; }
 
 
     public virtual ObjectResult<getEmpOfGroups_Result> getEmpOfGroups()
@@ -460,6 +466,18 @@ public partial class ubietydbEntities : DbContext
 
 
         return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getGroupTypeIncharge_Result>("getGroupTypeIncharge", empIdParameter);
+    }
+
+
+    public virtual ObjectResult<GetAllClientsOfEmpOrg_Result> GetAllClientsOfEmpOrg(Nullable<int> empId)
+    {
+
+        var empIdParameter = empId.HasValue ?
+            new ObjectParameter("EmpId", empId) :
+            new ObjectParameter("EmpId", typeof(int));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllClientsOfEmpOrg_Result>("GetAllClientsOfEmpOrg", empIdParameter);
     }
 
 }

@@ -15,12 +15,24 @@ namespace adminpanel.Models
 using System;
     using System.Collections.Generic;
     
-public partial class Role
+public partial class JobCertification
 {
 
-    public int RoleId { get; set; }
+    public int Id { get; set; }
 
-    public string RoleName { get; set; }
+    public int JobId { get; set; }
+
+    public int CertificationId { get; set; }
+
+    public Nullable<System.DateTime> CertifiedOn { get; set; }
+
+    public Nullable<System.DateTime> Expiry { get; set; }
+
+
+
+    public virtual Certification Certification { get; set; }
+
+    public virtual JobDescription JobDescription { get; set; }
 
 }
 

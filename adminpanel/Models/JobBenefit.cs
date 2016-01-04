@@ -15,14 +15,22 @@ namespace adminpanel.Models
 using System;
     using System.Collections.Generic;
     
-public partial class vprofile
+public partial class JobBenefit
 {
 
-    public int empid { get; set; }
+    public int Id { get; set; }
 
-    public string DataType { get; set; }
+    public int JobId { get; set; }
 
-    public Nullable<int> Count { get; set; }
+    public int BenefitId { get; set; }
+
+    public string BenefitDesc { get; set; }
+
+
+
+    public virtual Benefit Benefit { get; set; }
+
+    public virtual JobDescription JobDescription { get; set; }
 
 }
 

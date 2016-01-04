@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Add Employee" Language="C#" MasterPageFile="~/Org/OrgManager.Master" AutoEventWireup="true" CodeBehind="AddOrgEmployee.aspx.cs" Inherits="adminpanel.Client.AddOrgEmployee" %>
+﻿<%@ Page Title="Add Employee" Language="C#" MasterPageFile="~/Org/OrgManager.Master" AutoEventWireup="true" CodeBehind="AddOrgEmployee.aspx.cs" Inherits="adminpanel.Org.AddOrgEmployee" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style>

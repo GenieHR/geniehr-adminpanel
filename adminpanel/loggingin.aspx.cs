@@ -74,7 +74,7 @@ namespace Admin
                 else if (System.Web.HttpContext.Current.User.IsInRole("OrgManager"))
                 {
                     Session["SelectClientId"] = employee.CompanyId;
-                    Response.Redirect("~/org/AddOrgEmployee.aspx");
+                    Response.Redirect("~/org/JobDescription.aspx");
                 }
                 else if (System.Web.HttpContext.Current.User.IsInRole("OrgEmployee"))
                 {

@@ -4,70 +4,82 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="d76620c6670b4486b189f239cd5a8336" Name="Diagram1" ZoomLevel="81">
-        <EntityTypeShape EntityType="ubietydbModel.Address" Width="1.5" PointX="0.75" PointY="23.375" />
-        <EntityTypeShape EntityType="ubietydbModel.AddressType" Width="1.5" PointX="1.5" PointY="18.125" />
-        <EntityTypeShape EntityType="ubietydbModel.Attendance" Width="1.5" PointX="11.25" PointY="23.5" />
-        <EntityTypeShape EntityType="ubietydbModel.AttendanceFlag" Width="1.5" PointX="9" PointY="22.125" />
-        <EntityTypeShape EntityType="ubietydbModel.BloodGroup" Width="1.5" PointX="0.75" PointY="3.75" />
-        <EntityTypeShape EntityType="ubietydbModel.Candidate" Width="1.5" PointX="8.25" PointY="28.375" />
-        <EntityTypeShape EntityType="ubietydbModel.claimHistory" Width="1.5" PointX="10.5" PointY="31.375" />
-        <EntityTypeShape EntityType="ubietydbModel.claimJSON" Width="1.5" PointX="8.25" PointY="34.25" />
-        <EntityTypeShape EntityType="ubietydbModel.ClaimRevision" Width="1.5" PointX="17.125" PointY="31.125" />
-        <EntityTypeShape EntityType="ubietydbModel.ClaimStatu" Width="1.5" PointX="6" PointY="42" />
-        <EntityTypeShape EntityType="ubietydbModel.ClaimStatusHistory" Width="1.5" PointX="8.25" PointY="42" />
-        <EntityTypeShape EntityType="ubietydbModel.Client" Width="1.5" PointX="0.75" PointY="38" />
-        <EntityTypeShape EntityType="ubietydbModel.contactType" Width="1.5" PointX="6" PointY="22.125" />
-        <EntityTypeShape EntityType="ubietydbModel.Degree" Width="1.5" PointX="9" PointY="39" />
-        <EntityTypeShape EntityType="ubietydbModel.DocType" Width="1.5" PointX="9" PointY="19.125" />
-        <EntityTypeShape EntityType="ubietydbModel.EmergencyContact" Width="1.5" PointX="5.25" PointY="25.5" />
+      <Diagram DiagramId="d76620c6670b4486b189f239cd5a8336" Name="Diagram1" ZoomLevel="75">
+        <EntityTypeShape EntityType="ubietydbModel.Address" Width="1.5" PointX="0.75" PointY="55.5" />
+        <EntityTypeShape EntityType="ubietydbModel.AddressType" Width="1.5" PointX="1.5" PointY="60.375" />
+        <EntityTypeShape EntityType="ubietydbModel.Attendance" Width="1.5" PointX="11.25" PointY="32.25" />
+        <EntityTypeShape EntityType="ubietydbModel.AttendanceFlag" Width="1.5" PointX="9" PointY="21" />
+        <EntityTypeShape EntityType="ubietydbModel.Benefit" Width="1.5" PointX="8.25" PointY="24" />
+        <EntityTypeShape EntityType="ubietydbModel.BloodGroup" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ubietydbModel.Candidate" Width="1.5" PointX="11.25" PointY="40.75" />
+        <EntityTypeShape EntityType="ubietydbModel.CandidateSkill" Width="1.5" PointX="13.5" PointY="42.75" />
+        <EntityTypeShape EntityType="ubietydbModel.Certification" Width="1.5" PointX="5.25" PointY="23.5" />
+        <EntityTypeShape EntityType="ubietydbModel.claimHistory" Width="1.5" PointX="10.5" PointY="36.375" />
+        <EntityTypeShape EntityType="ubietydbModel.claimJSON" Width="1.5" PointX="5.25" PointY="33.125" />
+        <EntityTypeShape EntityType="ubietydbModel.ClaimRevision" Width="1.5" PointX="13.5" PointY="33.375" />
+        <EntityTypeShape EntityType="ubietydbModel.ClaimStatu" Width="1.5" PointX="3" PointY="31.75" />
+        <EntityTypeShape EntityType="ubietydbModel.ClaimStatusHistory" Width="1.5" PointX="5.25" PointY="14.75" />
+        <EntityTypeShape EntityType="ubietydbModel.Client" Width="1.5" PointX="3" PointY="28.625" />
+        <EntityTypeShape EntityType="ubietydbModel.contactType" Width="1.5" PointX="3" PointY="58" />
+        <EntityTypeShape EntityType="ubietydbModel.Degree" Width="1.5" PointX="6" PointY="49.75" />
+        <EntityTypeShape EntityType="ubietydbModel.DocType" Width="1.5" PointX="6" PointY="21" />
+        <EntityTypeShape EntityType="ubietydbModel.EmergencyContact" Width="1.5" PointX="5.25" PointY="41.25" />
         <EntityTypeShape EntityType="ubietydbModel.EmpClient" Width="1.5" PointX="5.75" PointY="2" />
-        <EntityTypeShape EntityType="ubietydbModel.EmpContactDetail" Width="1.5" PointX="8.25" PointY="24.625" />
-        <EntityTypeShape EntityType="ubietydbModel.EmpDoc" Width="1.5" PointX="11.25" PointY="27.75" />
-        <EntityTypeShape EntityType="ubietydbModel.EmpFinDetail" Width="1.5" PointX="5.25" PointY="64.125" />
-        <EntityTypeShape EntityType="ubietydbModel.EmpIdentity" Width="1.5" PointX="5.25" PointY="67.625" />
-        <EntityTypeShape EntityType="ubietydbModel.Employee" Width="1.5" PointX="3" PointY="27.75" />
+        <EntityTypeShape EntityType="ubietydbModel.EmpContactDetail" Width="1.5" PointX="5.25" PointY="45.5" />
+        <EntityTypeShape EntityType="ubietydbModel.EmpDoc" Width="1.5" PointX="8.25" PointY="30.625" />
+        <EntityTypeShape EntityType="ubietydbModel.EmpFinDetail" Width="1.5" PointX="5.25" PointY="53.375" />
+        <EntityTypeShape EntityType="ubietydbModel.EmpIdentity" Width="1.5" PointX="5.25" PointY="86.75" />
+        <EntityTypeShape EntityType="ubietydbModel.EmpJD" Width="1.5" PointX="8.25" PointY="41.875" />
+        <EntityTypeShape EntityType="ubietydbModel.Employee" Width="1.5" PointX="3" PointY="35.125" />
         <EntityTypeShape EntityType="ubietydbModel.EmployeeDetail" Width="1.5" PointX="3" PointY="2.25" />
-        <EntityTypeShape EntityType="ubietydbModel.EmpPastEmp" Width="1.5" PointX="5.25" PointY="73.875" />
-        <EntityTypeShape EntityType="ubietydbModel.EmpQualification" Width="1.5" PointX="11.25" PointY="35.25" />
-        <EntityTypeShape EntityType="ubietydbModel.EmpStatu" Width="1.5" PointX="0.75" PointY="30.125" />
-        <EntityTypeShape EntityType="ubietydbModel.EntityAddress" Width="1.5" PointX="3" PointY="22.625" />
-        <EntityTypeShape EntityType="ubietydbModel.EntityType" Width="1.5" PointX="0.75" PointY="21" />
-        <EntityTypeShape EntityType="ubietydbModel.Group" Width="1.5" PointX="3" PointY="40.875" />
-        <EntityTypeShape EntityType="ubietydbModel.GroupEmployee" Width="1.5" PointX="5.25" PointY="36" />
-        <EntityTypeShape EntityType="ubietydbModel.GroupIncharge" Width="1.5" PointX="5.25" PointY="33" />
-        <EntityTypeShape EntityType="ubietydbModel.GroupType" Width="1.5" PointX="3" PointY="37.875" />
-        <EntityTypeShape EntityType="ubietydbModel.GroupTypeIncharge" Width="1.5" PointX="5.25" PointY="30" />
-        <EntityTypeShape EntityType="ubietydbModel.Login" Width="1.5" PointX="5.25" PointY="71.125" />
-        <EntityTypeShape EntityType="ubietydbModel.MaritalStatu" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ubietydbModel.EmpPastEmp" Width="1.5" PointX="5.25" PointY="90.25" />
+        <EntityTypeShape EntityType="ubietydbModel.EmpQualification" Width="1.5" PointX="8.25" PointY="37" />
+        <EntityTypeShape EntityType="ubietydbModel.EmpStatu" Width="1.5" PointX="0.75" PointY="38" />
+        <EntityTypeShape EntityType="ubietydbModel.EntityAddress" Width="1.5" PointX="3" PointY="54.75" />
+        <EntityTypeShape EntityType="ubietydbModel.EntityType" Width="1.5" PointX="0.75" PointY="53.25" />
+        <EntityTypeShape EntityType="ubietydbModel.Group" Width="1.5" PointX="3" PointY="43.625" />
+        <EntityTypeShape EntityType="ubietydbModel.GroupEmployee" Width="1.5" PointX="5.25" PointY="37.75" />
+        <EntityTypeShape EntityType="ubietydbModel.GroupIncharge" Width="1.5" PointX="13.25" PointY="37.75" />
+        <EntityTypeShape EntityType="ubietydbModel.GroupType" Width="1.5" PointX="6" PointY="17.625" />
+        <EntityTypeShape EntityType="ubietydbModel.GroupTypeIncharge" Width="1.5" PointX="8.25" PointY="33.75" />
+        <EntityTypeShape EntityType="ubietydbModel.JobBenefit" Width="1.5" PointX="10.5" PointY="25.625" />
+        <EntityTypeShape EntityType="ubietydbModel.JobCertification" Width="1.5" PointX="7.5" PointY="26.625" />
+        <EntityTypeShape EntityType="ubietydbModel.JobDescription" Width="1.5" PointX="5.25" PointY="27.25" />
+        <EntityTypeShape EntityType="ubietydbModel.JobSkill" Width="1.5" PointX="10.5" PointY="28.75" />
+        <EntityTypeShape EntityType="ubietydbModel.Login" Width="1.5" PointX="5.25" PointY="94.125" />
+        <EntityTypeShape EntityType="ubietydbModel.MaritalStatu" Width="1.5" PointX="0.75" PointY="3.75" />
         <EntityTypeShape EntityType="ubietydbModel.Organization" Width="1.5" PointX="5.75" PointY="5" />
-        <EntityTypeShape EntityType="ubietydbModel.Qualification" Width="1.5" PointX="6" PointY="39" />
-        <EntityTypeShape EntityType="ubietydbModel.Relation" Width="1.5" PointX="3" PointY="35.25" />
-        <EntityTypeShape EntityType="ubietydbModel.Role" Width="1.5" PointX="0.75" PointY="8" />
-        <EntityTypeShape EntityType="ubietydbModel.attByClient" Width="1.5" PointX="2.75" PointY="8" />
-        <EntityTypeShape EntityType="ubietydbModel.attendancereport" Width="1.5" PointX="4.75" PointY="8" />
-        <EntityTypeShape EntityType="ubietydbModel.attRepTemp" Width="1.5" PointX="6.75" PointY="8" />
-        <EntityTypeShape EntityType="ubietydbModel.clientEmployee" Width="1.5" PointX="7.75" PointY="2" />
-        <EntityTypeShape EntityType="ubietydbModel.dailyAttendance" Width="1.5" PointX="7.75" PointY="5" />
-        <EntityTypeShape EntityType="ubietydbModel.vprofile" Width="1.5" PointX="8.75" PointY="8" />
-        <EntityTypeShape EntityType="ubietydbModel.vProfileDetail" Width="1.5" PointX="9.75" PointY="2" />
+        <EntityTypeShape EntityType="ubietydbModel.Qualification" Width="1.5" PointX="3.75" PointY="49.75" />
+        <EntityTypeShape EntityType="ubietydbModel.Relation" Width="1.5" PointX="3" PointY="46.875" />
+        <EntityTypeShape EntityType="ubietydbModel.Skill" Width="1.5" PointX="3" PointY="23.625" />
+        <EntityTypeShape EntityType="ubietydbModel.SkillGroup" Width="1.5" PointX="0.75" PointY="24" />
+        <EntityTypeShape EntityType="ubietydbModel.Source" Width="1.5" PointX="9" PointY="47" />
+        <EntityTypeShape EntityType="ubietydbModel.test_att" Width="1.5" PointX="0.75" PointY="8" />
+        <EntityTypeShape EntityType="ubietydbModel.clientEmployee" Width="1.5" PointX="2.75" PointY="8" />
         <AssociationConnector Association="ubietydbModel.FK_Address_AddressType" />
         <AssociationConnector Association="ubietydbModel.FK_EntityAddresses_Address" />
         <AssociationConnector Association="ubietydbModel.FK_Attendance_AttendanceFlag" />
         <AssociationConnector Association="ubietydbModel.FK_Attendance_Employee" />
+        <AssociationConnector Association="ubietydbModel.FK_JobBenefit_Benefit_Id" />
         <AssociationConnector Association="ubietydbModel.FK_EmployeeDetail_BloodGroup" />
         <AssociationConnector Association="ubietydbModel.FK_Candidate_Employee" />
         <AssociationConnector Association="ubietydbModel.FK_Candidate_Employee1" />
         <AssociationConnector Association="ubietydbModel.FK_Candidate_Qualification" />
+        <AssociationConnector Association="ubietydbModel.FK_Candidate_Source_Id" />
+        <AssociationConnector Association="ubietydbModel.FK_CandidateSkill_Candidate" />
+        <AssociationConnector Association="ubietydbModel.FK_CandidateSkill_Skill" />
+        <AssociationConnector Association="ubietydbModel.FK_Certification_Skill_Id" />
+        <AssociationConnector Association="ubietydbModel.FK_JobCertification_Certification_Id" />
         <AssociationConnector Association="ubietydbModel.FK_claimHistory_claimJSON" />
         <AssociationConnector Association="ubietydbModel.FK_claimHistory_ClaimStatus" />
         <AssociationConnector Association="ubietydbModel.FK_claimHistory_Employee" />
-        <AssociationConnector Association="ubietydbModel.FK__claimJSON__claim__025D5595" />
+        <AssociationConnector Association="ubietydbModel.FK__claimJSON__claim__2A164134" />
         <AssociationConnector Association="ubietydbModel.FK_claimJSON_Employee" />
         <AssociationConnector Association="ubietydbModel.FK_ClaimRevision_claimJSON" />
         <AssociationConnector Association="ubietydbModel.FK_ClaimRevision_Employee" />
         <AssociationConnector Association="ubietydbModel.FK_ClaimStatusHistory_ClaimStatus" />
         <AssociationConnector Association="ubietydbModel.FK_GroupType_Client" />
+        <AssociationConnector Association="ubietydbModel.FK_JobDescription_Client_ClientId" />
         <AssociationConnector Association="ubietydbModel.FK_EmpContactDetail_contactType" />
         <AssociationConnector Association="ubietydbModel.FK_Degree_Qualification" />
         <AssociationConnector Association="ubietydbModel.FK_EmpQualification_Degree" />
@@ -79,12 +91,18 @@
         <AssociationConnector Association="ubietydbModel.FK_EmpDocs_Employee" />
         <AssociationConnector Association="ubietydbModel.FK_EmpFinDetail_Employee" />
         <AssociationConnector Association="ubietydbModel.FK_EmpIdentity_Employee" />
+        <AssociationConnector Association="ubietydbModel.FK_EmpJD_Employee_EmpId" />
+        <AssociationConnector Association="ubietydbModel.FK_EmpJD_JobDescription_Id" />
+        <AssociationConnector Association="ubietydbModel.FK_EmpJDC_Employee_EmpId" />
+        <AssociationConnector Association="ubietydbModel.FK_EmpJDM_Employee_EmpId" />
         <AssociationConnector Association="ubietydbModel.FK_Employee_EmpStatus" />
         <AssociationConnector Association="ubietydbModel.FK_EmpPastEmp_Employee" />
         <AssociationConnector Association="ubietydbModel.FK_EmpQualification_Employee" />
         <AssociationConnector Association="ubietydbModel.FK_GroupEmployee_Employee" />
         <AssociationConnector Association="ubietydbModel.FK_GroupIncharge_Employee" />
         <AssociationConnector Association="ubietydbModel.FK_GroupTypeIncharge_Employee" />
+        <AssociationConnector Association="ubietydbModel.FK_JobDescription_Employee_EmpId" />
+        <AssociationConnector Association="ubietydbModel.FK_JobDescriptionM_Employee_EmpId" />
         <AssociationConnector Association="ubietydbModel.FK_Login_Employee" />
         <AssociationConnector Association="ubietydbModel.FK_EmployeeDetail_MaritalStatus" />
         <AssociationConnector Association="ubietydbModel.FK_EmpQualification_Qualification" />
@@ -93,14 +111,13 @@
         <AssociationConnector Association="ubietydbModel.FK_GroupEmployee_Group" />
         <AssociationConnector Association="ubietydbModel.FK_GroupIncharge_Group" />
         <AssociationConnector Association="ubietydbModel.FK_GroupTypeIncharge_GroupType" />
-        <EntityTypeShape EntityType="ubietydbModel.Skill" Width="1.5" PointX="11.25" PointY="16" />
-        <EntityTypeShape EntityType="ubietydbModel.SkillGroup" Width="1.5" PointX="9" PointY="16.25" />
+        <AssociationConnector Association="ubietydbModel.FK_JobBenefit_JobDescription_Id" />
+        <AssociationConnector Association="ubietydbModel.FK_JobCertification_JobDescription_Id" />
+        <AssociationConnector Association="ubietydbModel.FK_JobSkill_JobDescription_Id" />
+        <AssociationConnector Association="ubietydbModel.FK_JobSkill_Skill_Id" />
         <AssociationConnector Association="ubietydbModel.FK_Skill_SkillGroup" />
-        <EntityTypeShape EntityType="ubietydbModel.CandidateSkill" Width="1.5" PointX="13.5" PointY="23.875" />
-        <AssociationConnector Association="ubietydbModel.FK_CandidateSkill_Candidate" />
-        <AssociationConnector Association="ubietydbModel.FK_CandidateSkill_Skill" />
-        <EntityTypeShape EntityType="ubietydbModel.OrgChart" Width="1.5" PointX="3" PointY="44.25" />
-        <AssociationConnector Association="ubietydbModel.FK_OrgChart_Client_ClientId" />
+        <EntityTypeShape EntityType="ubietydbModel.attendancereport" Width="1.5" PointX="5.375" PointY="7.75" />
+        <EntityTypeShape EntityType="ubietydbModel.attRepTemp" Width="1.5" PointX="7.375" PointY="7.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

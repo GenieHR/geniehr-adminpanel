@@ -13,22 +13,13 @@ namespace adminpanel.Models
 {
 
 using System;
-    using System.Collections.Generic;
     
-public partial class attByClient
+public partial class GetAllClientsOfEmpOrg_Result
 {
 
-    public int empid { get; set; }
+    public int ClientId { get; set; }
 
-    public string MarkDate { get; set; }
-
-    public string MarkTime { get; set; }
-
-    public string Coordinates { get; set; }
-
-    public Nullable<int> CompanyId { get; set; }
-
-    public string EmpName { get; set; }
+    public string ClientName { get; set; }
 
 }
 

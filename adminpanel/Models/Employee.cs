@@ -39,6 +39,12 @@ public partial class Employee
 
         this.EmpDocs = new HashSet<EmpDoc>();
 
+        this.EmpJDs = new HashSet<EmpJD>();
+
+        this.EmpJDs1 = new HashSet<EmpJD>();
+
+        this.EmpJDs2 = new HashSet<EmpJD>();
+
         this.EmpPastEmps = new HashSet<EmpPastEmp>();
 
         this.EmpQualifications = new HashSet<EmpQualification>();
@@ -48,6 +54,10 @@ public partial class Employee
         this.GroupIncharges = new HashSet<GroupIncharge>();
 
         this.GroupTypeIncharges = new HashSet<GroupTypeIncharge>();
+
+        this.JobDescriptions = new HashSet<JobDescription>();
+
+        this.JobDescriptions1 = new HashSet<JobDescription>();
 
     }
 
@@ -96,6 +106,12 @@ public partial class Employee
 
     public virtual EmpIdentity EmpIdentity { get; set; }
 
+    public virtual ICollection<EmpJD> EmpJDs { get; set; }
+
+    public virtual ICollection<EmpJD> EmpJDs1 { get; set; }
+
+    public virtual ICollection<EmpJD> EmpJDs2 { get; set; }
+
     public virtual EmpStatu EmpStatu { get; set; }
 
     public virtual ICollection<EmpPastEmp> EmpPastEmps { get; set; }
@@ -107,6 +123,10 @@ public partial class Employee
     public virtual ICollection<GroupIncharge> GroupIncharges { get; set; }
 
     public virtual ICollection<GroupTypeIncharge> GroupTypeIncharges { get; set; }
+
+    public virtual ICollection<JobDescription> JobDescriptions { get; set; }
+
+    public virtual ICollection<JobDescription> JobDescriptions1 { get; set; }
 
     public virtual Login Login { get; set; }
 

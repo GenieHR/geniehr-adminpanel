@@ -13,20 +13,15 @@ namespace adminpanel.Models
 {
 
 using System;
-    using System.Collections.Generic;
     
-public partial class OrgChart
+public partial class getOrgEmpDetail_Result
 {
 
-    public int Id { get; set; }
+    public string EmpName { get; set; }
 
-    public int CompanyId { get; set; }
+    public Nullable<long> PrimaryMobile { get; set; }
 
-    public string OrgChartName { get; set; }
-
-
-
-    public virtual Client Client { get; set; }
+    public string Email { get; set; }
 
 }
 

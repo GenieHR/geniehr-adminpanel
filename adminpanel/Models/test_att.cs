@@ -15,18 +15,22 @@ namespace adminpanel.Models
 using System;
     using System.Collections.Generic;
     
-public partial class dailyAttendance
+public partial class test_att
 {
+
+    public int AttendanceId { get; set; }
 
     public int EmpId { get; set; }
 
-    public string MarkTime { get; set; }
+    public Nullable<int> MarkFlagId { get; set; }
 
-    public Nullable<int> companyId { get; set; }
+    public System.DateTime MarkTime { get; set; }
 
-    public string EmpNum { get; set; }
+    public Nullable<double> latitude { get; set; }
 
-    public string EmpName { get; set; }
+    public Nullable<double> longitude { get; set; }
+
+    public Nullable<int> markcount { get; set; }
 
 }
 

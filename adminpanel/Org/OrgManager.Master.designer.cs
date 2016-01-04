@@ -10,7 +10,7 @@
 namespace adminpanel.Org {
     
     
-    public partial class OrgTemplate {
+    public partial class OrgManager {
         
         /// <summary>
         /// head control.

@@ -23,7 +23,7 @@ public partial class Client
 
         this.GroupTypes = new HashSet<GroupType>();
 
-        this.OrgCharts = new HashSet<OrgChart>();
+        this.JobDescriptions = new HashSet<JobDescription>();
 
     }
 
@@ -40,7 +40,7 @@ public partial class Client
 
     public virtual ICollection<GroupType> GroupTypes { get; set; }
 
-    public virtual ICollection<OrgChart> OrgCharts { get; set; }
+    public virtual ICollection<JobDescription> JobDescriptions { get; set; }
 
 }
 

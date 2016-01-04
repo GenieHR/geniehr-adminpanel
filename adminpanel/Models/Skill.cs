@@ -23,6 +23,10 @@ public partial class Skill
 
         this.CandidateSkills = new HashSet<CandidateSkill>();
 
+        this.Certifications = new HashSet<Certification>();
+
+        this.JobSkills = new HashSet<JobSkill>();
+
     }
 
 
@@ -34,9 +38,13 @@ public partial class Skill
 
 
 
-    public virtual SkillGroup SkillGroup { get; set; }
-
     public virtual ICollection<CandidateSkill> CandidateSkills { get; set; }
+
+    public virtual ICollection<Certification> Certifications { get; set; }
+
+    public virtual ICollection<JobSkill> JobSkills { get; set; }
+
+    public virtual SkillGroup SkillGroup { get; set; }
 
 }
 

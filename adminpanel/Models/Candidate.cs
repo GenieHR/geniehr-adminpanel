@@ -54,13 +54,19 @@ public partial class Candidate
 
     public int CreatedBy { get; set; }
 
-    public System.DateTime CreatedOn { get; set; }
+    public Nullable<System.DateTime> CreatedOn { get; set; }
 
     public Nullable<System.DateTime> ModifiedOn { get; set; }
 
     public Nullable<int> ModifiedBy { get; set; }
 
     public Nullable<int> degree { get; set; }
+
+    public Nullable<int> NoticePeriod { get; set; }
+
+    public Nullable<int> SourceId { get; set; }
+
+    public string SourceNotes { get; set; }
 
 
 
@@ -69,6 +75,8 @@ public partial class Candidate
     public virtual Employee Employee1 { get; set; }
 
     public virtual Qualification Qualification { get; set; }
+
+    public virtual Source Source { get; set; }
 
     public virtual ICollection<CandidateSkill> CandidateSkills { get; set; }
 

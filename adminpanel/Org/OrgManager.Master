@@ -1,4 +1,4 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="OrgTemplate1.master.cs" Inherits="adminpanel.Client.OrgManager" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="OrgManager.master.cs" Inherits="adminpanel.Org.OrgManager" %>
 
 
 <!DOCTYPE html>
@@ -81,7 +81,7 @@
                 <li>
                     <a href="#"><i class="fa  fa-user"></i> <span class="nav-label">ATS</span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
-                        <li><a href="#">Job Management</a></li>
+                        <li><a href="JobDescription.aspx">Job Description</a></li>
                         <li><a href="#">Employee Performance</a></li>
                         <li><a href="AddCandidate.aspx">Candidate</a></li>
 

@@ -439,6 +439,7 @@
     <Content Include="Org\empProfileList.aspx" />
     <Content Include="Org\HierarchyFrame.aspx" />
     <Content Include="Org\home.aspx" />
+    <Content Include="Org\JobDescription.aspx" />
     <Content Include="Org\MyCandidates.aspx" />
     <Content Include="Org\ShowClients.aspx" />
     <Content Include="packages.config">
@@ -693,6 +694,7 @@
     <Compile Include="Controllers\CandidateController.cs" />
     <Compile Include="Controllers\CandidateSkillsController.cs" />
     <Compile Include="Controllers\DocumentController.cs" />
+    <Compile Include="Controllers\JobDescriptionsController.cs" />
     <Compile Include="Controllers\OrgController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\SkillsController.cs" />
@@ -749,9 +751,6 @@
     <Compile Include="Models\AddressType.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\attByClient.cs">
-      <DependentUpon>ubietydbEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Attendance.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
@@ -764,6 +763,10 @@
     <Compile Include="Models\attRepTemp.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Benefit.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BenefitDTO.cs" />
     <Compile Include="Models\BloodGroup.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
@@ -775,6 +778,10 @@
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CandidateSkillsDTO.cs" />
+    <Compile Include="Models\Certification.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CertificationDTO.cs" />
     <Compile Include="Models\claimHistory.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
@@ -802,9 +809,6 @@
     <Compile Include="Models\contactType.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\dailyAttendance.cs">
-      <DependentUpon>ubietydbEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Degree.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
@@ -830,6 +834,9 @@
     <Compile Include="Models\EmpIdentity.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EmpJD.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Employee.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
@@ -852,6 +859,9 @@
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EntityType.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GetAllClientsOfEmpOrg_Result.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\getAttendanceByClientsDays_Result.cs">
@@ -920,6 +930,18 @@
     <Compile Include="Models\GroupTypeIncharge.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\JobBenefit.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\JobCertification.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\JobDescription.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\JobSkill.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Login.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
@@ -927,9 +949,6 @@
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Organization.cs">
-      <DependentUpon>ubietydbEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\OrgChart.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\profilestatus1_Result.cs">
@@ -947,9 +966,6 @@
     <Compile Include="Models\Relation.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Role.cs">
-      <DependentUpon>ubietydbEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Skill.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
@@ -957,10 +973,10 @@
     <Compile Include="Models\SkillGroup.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\vprofile.cs">
+    <Compile Include="Models\Source.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\vProfileDetail.cs">
+    <Compile Include="Models\test_att.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Org\AddCandidate.aspx.cs">
@@ -1123,6 +1139,13 @@
     </Compile>
     <Compile Include="Org\home.aspx.designer.cs">
       <DependentUpon>home.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Org\JobDescription.aspx.cs">
+      <DependentUpon>JobDescription.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Org\JobDescription.aspx.designer.cs">
+      <DependentUpon>JobDescription.aspx</DependentUpon>
     </Compile>
     <Compile Include="Org\MyCandidates.aspx.cs">
       <DependentUpon>MyCandidates.aspx</DependentUpon>
