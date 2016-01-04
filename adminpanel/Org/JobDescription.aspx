@@ -13,7 +13,7 @@
             </div>
 
     <div class="col-sm-12">
-            <form method="post" id="candidateForm" class="form-horizontal">
+            <form method="post" id="JDForm" class="form-horizontal">
                 <div class="ibox">
                         <div class="ibox-title">
                             <h5>New Job Description</h5>
@@ -24,6 +24,7 @@
                             <h4 class="text-info">Job Details</h4>
                             <div class="hr-line-dashed"></div>
                             
+
                             <div class="form-group">
 
                                 <label class="col-sm-2 control-label">Job Title</label>
@@ -35,14 +36,14 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Short Name</label>
                                 <div class="col-sm-5">
-                                    <input type="text" required="required" class="form-control" id="ShortName" />
+                                    <input type="text" required="required" class="form-control" id="JobShortName" />
                                 </div>
                             </div>
                             
                              <div class="form-group">
                                 <label class="col-lg-2 control-label">Cleint</label>
                                 <div class="col-lg-5">
-                                    <select class="form-control" id="JobClient">
+                                    <select class="form-control" id="CleintId">
                                         <option selected="selected" value="0">Loading...</option>
                                     </select>
                                 </div>
@@ -60,7 +61,15 @@
 
                                 <label class="col-sm-2 control-label">No. of Openings</label>
                                 <div class="col-sm-5">
-                                    <input type="number" required="required" min="1" class="form-control" id="JobOpenings" />
+                                    <input type="number" required="required" min="1" class="form-control" id="Openings" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+
+                                <label class="col-sm-2 control-label">Job Notes</label>
+                                <div class="col-sm-5">
+                                    <textarea  class="form-control" id="JobNotes"  ></textarea>
                                 </div>
                             </div>
 
@@ -136,19 +145,22 @@
                             <h4 class="text-info">Salary & Packages</h4>
                             <div class="hr-line-dashed"></div>
 
+                            
                             <div class="form-group">
-
-                                <label class="col-sm-2 control-label">Salary</label>
-                                 <div class="row">
+                                <label class="col-sm-2 control-label"> Salary (Yrs)</label>
+                                <div class="row">
                                     <div class="col-sm-5">
                                            <div class="input-group m-b">
-                                            
-                                            <input class="form-control" type="number" min="0" id="Salary" required="required"/>
+                                            <span class="input-group-addon">From</span>
+                                            <input class="form-control" type="number" min="0"  id="Salary" required="required"/>
+                                            <span class="input-group-addon">To</span>
+                                            <input class="form-control" type="number" min="0"  id="SalaryTo" required="required"/>
                                             <span class="input-group-addon">per month</span>
 
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
 
                             <div class="form-group">
@@ -171,6 +183,8 @@
 </table>
                                     </div>
                                 </div>
+          <div class="text-center">      <input type="submit" value="Create JD" class="btn btn-success" id="JDFormSubmit"/></div>
+
                            </div>
                     </div>
                 </form>
@@ -178,7 +192,7 @@
 
 
     </div>
-    <button onclick="getAllBenefitVals()" >Click to set val</button>
+    <%--<button onclick="getAllBenefitVals()" >Click to set val</button>--%>
 </asp:Content>
 
 <asp:Content ID="Content3" ContentPlaceHolderID="javascriptPart" runat="server">
@@ -187,13 +201,61 @@
 
     <script>
 
-        
-
         var gEmpId = <%= Session["EmpId"] %>;
 
+
+        $("#JDForm").submit(function (event) {
+
+            $("#JDFormSubmit").prop("disabled", true);
+            event.preventDefault();
+
+            
+            var JDJson = {
+                "CreatedBy": gEmpId,
+                "JobTitle": $("#JobTitle").val(),
+                "JobShortName": $("#JobShortName").val(),
+                "CleintId": $("#CleintId").val(),
+                "JobLocation": $("#JobLocation").val(),
+                "Openings": $("#Openings").val(),
+                "JobNotes": $("#JobNotes").val(),
+                "ExpFrom": $("#ExpFrom").val(),
+                "ExpTo": $("#ExpTo").val(),
+                "RExpFrom": $("#RExpFrom").val(),
+                "RExpTo": $("#RExpTo").val(),
+                "Salary": $("#Salary").val(),
+                "SalaryTo": $("#SalaryTo").val(),
+                "skillList":JSON.stringify($("#skills").val()),
+                "certification":JSON.stringify($("#certification").val()),
+                "qualification":JSON.stringify($("#degree").val())
+            };
+
+            prompt("",JSON.stringify($("#skills").val));
+
+            $.ajax({
+                type: "POST",
+                url: "../postJD",
+                data: JDJson,
+                success: function (result) {
+
+                    $("#JDFormSubmit").prop("disabled", false);
+
+                    if (result > 0) {
+
+                        sweetAlert("Data Saved!", "JD succesfully added.", "success");
+                        $('#JDForm')[0].reset();
+                    }
+                    else {
+                        sweetAlert("Error!", result, "error");
+                    }
+                },
+                datatype: "json"
+            });
+        });
+
+
         var skills;
-        var benefitHTML    =  '<select class="benefitSelect"><option value="0">Select Benefit</option>';
-        var benefitRemHTML = '<input class="benefitRemarks" />'
+        var benefitHTML    =  '<select class="form-control benefitSelect"><option value="0">Select Benefit</option>';
+        var benefitRemHTML = '<input class="form-control benefitRemarks" />'
 
         var output = [];
         var certOutput = [];
@@ -201,20 +263,20 @@
 
         var qualURL = '../getorgclients/' + gEmpId;
 
-        if ( $('#JobClient option').length == 1) {
+        if ( $('#CleintId option').length == 1) {
             $.getJSON(qualURL, function (items) {
                 $.each(items, function (i, item) {
-                    $('#JobClient').append($('<option>', { 
+                    $('#CleintId').append($('<option>', { 
                         value: item.ClientId,
                         text : item.ClientName 
                     }));
                 });
-                $('#JobClient option[value="0"]').text('Select Client');
+                $('#CleintId option[value="0"]').text('Select Client');
             });
         }
         else
         {
-            $("#JobClient").val('0');
+            $("#CleintId").val('0');
         }
 
         
@@ -274,16 +336,16 @@
 
           benefitHTML +=  '</select>';
 
-          $("#benefitTable tbody").append('<tr><td>' + benefitHTML + '</td><td>' + benefitRemHTML + '</td><td class="text-center remove"><span class="fa fa-remove"></span></td></tr>');
+          $("#benefitTable tbody").append('<tr><td>' + benefitHTML + '</td><td>' + benefitRemHTML + '</td><td class="text-center text-danger remove"><span class="fa fa-remove"></span></td></tr>');
 
           
           
       });
 
       function addRowToBenefitTable() {
-          $("#benefitTable tbody").append('<tr><td>' + benefitHTML + '</td><td>' + benefitRemHTML + '</td><td class="text-center remove"><span class="fa fa-remove"></span></td></tr>');
-
+          $("#benefitTable tbody").append('<tr><td>' + benefitHTML + '</td><td>' + benefitRemHTML + '</td><td class="text-center text-danger remove"><span class="fa fa-remove"></span></td></tr>');
       }
+
 
 
       $( document ).on( "click", ".remove", function(){  $(this).parent("tr:first").remove() });
@@ -306,11 +368,13 @@
           });
 
           $(benefitId).each(function(i) {
-              allBenefitVal.push('{"benefitId":' + benefitId[i] + ',"benefitRem":' + '\"' + benefitRem[i] + '\"}');
-              //allBenefitVal.push([benefitId[i],benefitRem[i]])
+              
+              if (benefitId[i] != 0)
+              
+                  allBenefitVal.push('{"benefitId":' + benefitId[i] + ',"benefitRem":' + '\"' + benefitRem[i] + '\"}');
           })
 
-          prompt("", JSON.stringify(allBenefitVal));
+          return JSON.stringify(allBenefitVal);
 
         }
 

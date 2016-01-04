@@ -438,6 +438,16 @@
           <Property Name="ModifiedBy" Type="int" />
           <Property Name="RExpFrom" Type="int" />
           <Property Name="RExpTo" Type="int" />
+          <Property Name="SalaryTo" Type="money" />
+        </EntityType>
+        <EntityType Name="JobQualification">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="JobId" Type="int" Nullable="false" />
+          <Property Name="DegreeId" Type="int" Nullable="false" />
+          <Property Name="MinimumPercent" Type="int" />
         </EntityType>
         <EntityType Name="JobSkill">
           <Key>
@@ -1233,6 +1243,30 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_JobQualification_Degree_Id">
+          <End Role="Degree" Type="Self.Degree" Multiplicity="1" />
+          <End Role="JobQualification" Type="Self.JobQualification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Degree">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="JobQualification">
+              <PropertyRef Name="DegreeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobQualification_JobDescription_Id">
+          <End Role="JobDescription" Type="Self.JobDescription" Multiplicity="1" />
+          <End Role="JobQualification" Type="Self.JobQualification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JobDescription">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="JobQualification">
+              <PropertyRef Name="JobId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_JobSkill_JobDescription_Id">
           <End Role="JobDescription" Type="Self.JobDescription" Multiplicity="1" />
           <End Role="JobSkill" Type="Self.JobSkill" Multiplicity="*" />
@@ -1390,6 +1424,7 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <EntitySet Name="JobBenefit" EntityType="Self.JobBenefit" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="JobCertification" EntityType="Self.JobCertification" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="JobDescription" EntityType="Self.JobDescription" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="JobQualification" EntityType="Self.JobQualification" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="JobSkill" EntityType="Self.JobSkill" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Login" EntityType="Self.Login" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MaritalStatus" EntityType="Self.MaritalStatus" Schema="dbo" store:Type="Tables" />
@@ -1661,6 +1696,14 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <AssociationSet Name="FK_JobDescriptionM_Employee_EmpId" Association="Self.FK_JobDescriptionM_Employee_EmpId">
             <End Role="Employee" EntitySet="Employee" />
             <End Role="JobDescription" EntitySet="JobDescription" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobQualification_Degree_Id" Association="Self.FK_JobQualification_Degree_Id">
+            <End Role="Degree" EntitySet="Degree" />
+            <End Role="JobQualification" EntitySet="JobQualification" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobQualification_JobDescription_Id" Association="Self.FK_JobQualification_JobDescription_Id">
+            <End Role="JobDescription" EntitySet="JobDescription" />
+            <End Role="JobQualification" EntitySet="JobQualification" />
           </AssociationSet>
           <AssociationSet Name="FK_JobSkill_JobDescription_Id" Association="Self.FK_JobSkill_JobDescription_Id">
             <End Role="JobDescription" EntitySet="JobDescription" />
@@ -2060,6 +2103,15 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <FunctionImport Name="GetAllClientsOfEmpOrg" ReturnType="Collection(ubietydbModel.GetAllClientsOfEmpOrg_Result)">
           <Parameter Name="EmpId" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="JobQualifications" EntityType="ubietydbModel.JobQualification" />
+          <AssociationSet Name="FK_JobQualification_Degree_Id" Association="ubietydbModel.FK_JobQualification_Degree_Id">
+            <End Role="Degree" EntitySet="Degrees" />
+            <End Role="JobQualification" EntitySet="JobQualifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobQualification_JobDescription_Id" Association="ubietydbModel.FK_JobQualification_JobDescription_Id">
+            <End Role="JobDescription" EntitySet="JobDescriptions" />
+            <End Role="JobQualification" EntitySet="JobQualifications" />
+          </AssociationSet>
           </EntityContainer>
         <ComplexType Name="getEmpOfGroups_Result">
           <Property Type="String" Name="AuthUserId" Nullable="true" MaxLength="255" />
@@ -2446,6 +2498,7 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <Property Name="Qualification" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Qualification1" Relationship="ubietydbModel.FK_Degree_Qualification" FromRole="Degree" ToRole="Qualification" />
           <NavigationProperty Name="EmpQualifications" Relationship="ubietydbModel.FK_EmpQualification_Degree" FromRole="Degree" ToRole="EmpQualification" />
+          <NavigationProperty Name="JobQualifications" Relationship="ubietydbModel.FK_JobQualification_Degree_Id" FromRole="Degree" ToRole="JobQualification" />
         </EntityType>
         <EntityType Name="DocType">
           <Key>
@@ -2775,6 +2828,8 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <NavigationProperty Name="JobSkills" Relationship="ubietydbModel.FK_JobSkill_JobDescription_Id" FromRole="JobDescription" ToRole="JobSkill" />
           <Property Name="RExpFrom" Type="Int32" />
           <Property Name="RExpTo" Type="Int32" />
+          <Property Name="SalaryTo" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="JobQualifications" Relationship="ubietydbModel.FK_JobQualification_JobDescription_Id" FromRole="JobDescription" ToRole="JobQualification" />
         </EntityType>
         <EntityType Name="JobSkill">
           <Key>
@@ -3628,6 +3683,41 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <Property Type="Int32" Name="ClientId" Nullable="false" />
           <Property Type="String" Name="ClientName" Nullable="false" MaxLength="100" />
         </ComplexType>
+        <EntityType Name="JobQualification">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="JobId" Type="Int32" Nullable="false" />
+          <Property Name="DegreeId" Type="Int32" Nullable="false" />
+          <Property Name="MinimumPercent" Type="Int32" />
+          <NavigationProperty Name="Degree" Relationship="ubietydbModel.FK_JobQualification_Degree_Id" FromRole="JobQualification" ToRole="Degree" />
+          <NavigationProperty Name="JobDescription" Relationship="ubietydbModel.FK_JobQualification_JobDescription_Id" FromRole="JobQualification" ToRole="JobDescription" />
+        </EntityType>
+        <Association Name="FK_JobQualification_Degree_Id">
+          <End Type="ubietydbModel.Degree" Role="Degree" Multiplicity="1" />
+          <End Type="ubietydbModel.JobQualification" Role="JobQualification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Degree">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="JobQualification">
+              <PropertyRef Name="DegreeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobQualification_JobDescription_Id">
+          <End Type="ubietydbModel.JobDescription" Role="JobDescription" Multiplicity="1" />
+          <End Type="ubietydbModel.JobQualification" Role="JobQualification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JobDescription">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="JobQualification">
+              <PropertyRef Name="JobId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4277,6 +4367,7 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <EntitySetMapping Name="JobDescriptions">
             <EntityTypeMapping TypeName="ubietydbModel.JobDescription">
               <MappingFragment StoreEntitySet="JobDescription">
+                <ScalarProperty Name="SalaryTo" ColumnName="SalaryTo" />
                 <ScalarProperty Name="RExpTo" ColumnName="RExpTo" />
                 <ScalarProperty Name="RExpFrom" ColumnName="RExpFrom" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
@@ -4427,6 +4518,16 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="JobQualifications">
+            <EntityTypeMapping TypeName="ubietydbModel.JobQualification">
+              <MappingFragment StoreEntitySet="JobQualification">
+                <ScalarProperty Name="MinimumPercent" ColumnName="MinimumPercent" />
+                <ScalarProperty Name="DegreeId" ColumnName="DegreeId" />
+                <ScalarProperty Name="JobId" ColumnName="JobId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -118,6 +118,9 @@
         <AssociationConnector Association="ubietydbModel.FK_Skill_SkillGroup" />
         <EntityTypeShape EntityType="ubietydbModel.attendancereport" Width="1.5" PointX="5.375" PointY="7.75" />
         <EntityTypeShape EntityType="ubietydbModel.attRepTemp" Width="1.5" PointX="7.375" PointY="7.75" />
+        <EntityTypeShape EntityType="ubietydbModel.JobQualification" Width="1.5" PointX="14.25" PointY="45.5" />
+        <AssociationConnector Association="ubietydbModel.FK_JobQualification_Degree_Id" />
+        <AssociationConnector Association="ubietydbModel.FK_JobQualification_JobDescription_Id" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

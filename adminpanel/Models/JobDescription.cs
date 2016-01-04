@@ -29,6 +29,8 @@ public partial class JobDescription
 
         this.JobSkills = new HashSet<JobSkill>();
 
+        this.JobQualifications = new HashSet<JobQualification>();
+
     }
 
 
@@ -64,6 +66,8 @@ public partial class JobDescription
 
     public Nullable<int> RExpTo { get; set; }
 
+    public Nullable<decimal> SalaryTo { get; set; }
+
 
 
     public virtual Client Client { get; set; }
@@ -79,6 +83,8 @@ public partial class JobDescription
     public virtual ICollection<JobCertification> JobCertifications { get; set; }
 
     public virtual ICollection<JobSkill> JobSkills { get; set; }
+
+    public virtual ICollection<JobQualification> JobQualifications { get; set; }
 
 }
 

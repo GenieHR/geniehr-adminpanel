@@ -15,32 +15,22 @@ namespace adminpanel.Models
 using System;
     using System.Collections.Generic;
     
-public partial class Degree
+public partial class JobQualification
 {
-
-    public Degree()
-    {
-
-        this.EmpQualifications = new HashSet<EmpQualification>();
-
-        this.JobQualifications = new HashSet<JobQualification>();
-
-    }
-
 
     public int Id { get; set; }
 
-    public string DegreeName { get; set; }
+    public int JobId { get; set; }
 
-    public int Qualification { get; set; }
+    public int DegreeId { get; set; }
+
+    public Nullable<int> MinimumPercent { get; set; }
 
 
 
-    public virtual Qualification Qualification1 { get; set; }
+    public virtual Degree Degree { get; set; }
 
-    public virtual ICollection<EmpQualification> EmpQualifications { get; set; }
-
-    public virtual ICollection<JobQualification> JobQualifications { get; set; }
+    public virtual JobDescription JobDescription { get; set; }
 
 }
 

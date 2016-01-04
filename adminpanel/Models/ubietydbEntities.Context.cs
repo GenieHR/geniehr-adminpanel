@@ -141,6 +141,8 @@ public partial class ubietydbEntities : DbContext
 
     public virtual DbSet<attRepTemp> attRepTemps { get; set; }
 
+    public virtual DbSet<JobQualification> JobQualifications { get; set; }
+
 
     public virtual ObjectResult<getEmpOfGroups_Result> getEmpOfGroups()
     {
