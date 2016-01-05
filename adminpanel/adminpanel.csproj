@@ -301,9 +301,13 @@
     <Content Include="css\style.css" />
     <Content Include="Employees\docs.aspx" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="img\pp\1.jpg" />
+    <Content Include="img\pp\2.jpg" />
     <Content Include="img\pp\3.JPG" />
     <Content Include="img\pp\4.jpg" />
     <Content Include="img\pp\5.jpg" />
+    <Content Include="img\pp\6.jpg" />
+    <Content Include="img\pp\7.jpg" />
     <Content Include="js\plugins\jqueryrange\jquery.range-min.js" />
     <Content Include="Org\AddCandidate.aspx" />
     <Content Include="Org\AddOrgEmployee.aspx" />
@@ -328,10 +332,6 @@
     <Content Include="img\logos\5.png" />
     <Content Include="img\logos\6.png" />
     <Content Include="img\pp\0.png" />
-    <Content Include="img\pp\20.png" />
-    <Content Include="img\pp\23.png" />
-    <Content Include="img\pp\24.png" />
-    <Content Include="img\pp\26.png" />
     <Content Include="img\pp\add_user.png" />
     <Content Include="img\logo.png" />
     <Content Include="img\pp\big_blank.jpg" />
@@ -698,6 +698,7 @@
     <Compile Include="Controllers\CandidateController.cs" />
     <Compile Include="Controllers\CandidateSkillsController.cs" />
     <Compile Include="Controllers\DocumentController.cs" />
+    <Compile Include="Controllers\EmpJDsController.cs" />
     <Compile Include="Controllers\JobDescriptionsController.cs" />
     <Compile Include="Controllers\OrgController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
@@ -838,6 +839,7 @@
     <Compile Include="Models\EmpIdentity.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\empIdJobId.cs" />
     <Compile Include="Models\EmpJD.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
@@ -953,6 +955,7 @@
     <Compile Include="Models\JobDescription.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\jobIDEmpDTO.cs" />
     <Compile Include="Models\JobQualification.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>

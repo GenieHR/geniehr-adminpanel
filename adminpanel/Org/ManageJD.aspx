@@ -14,27 +14,34 @@
                 
                 <div class="modal-header">
                     <button type="button" data-dismiss="modal" class="close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title">Assign JD to Employee</h4>
-                    <small class="font-bold">Use the screen to assign a <strong class="jdTitle"></strong> to employee</small>
+                    <h4 class="modal-title">Assign Employee to JD</h4>
+                    <span class="font-bold">Use the screen to assign job to employee</span>
                 </div>
                 <div class="modal-body ">
-
 
                     <div class="row">
                       
                         <div class="form-group">
+                            <label class="col-lg-3 control-label">Job Title</label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control jobTitleModal" disabled="disabled"  />
+                            </div>
+                        </div>
+
+                        
+                          <div class="form-group">
                             <label class="col-lg-3 control-label">Employee</label>
                             <div class="col-lg-8">
-                                <select class="form-control" id="employeeSelect">
+                                <select class="form-control" id="employeeSelect" required="required">
                                         <option selected="selected" value="0">Loading...</option>
-                                    </select>
+                                 </select>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-lg-3 control-label">No. of Openings</label>
                             <div class="col-lg-8">
-                                <input type="number" class="form-control"  id="Openings"/>
+                                <input type="number" class="form-control" id="Openings"/>
                             </div>
                         </div>
 
@@ -52,6 +59,9 @@
                             </div>
                             
                         </div>
+<br />
+           <div class="text-center"> <strong class="text-primary successText"></strong></div>
+
                     </div>
                 
                 </div>
@@ -61,6 +71,7 @@
                 </div>
 
             </div>
+
                          </form>
         </div>
     </div>
@@ -97,7 +108,7 @@
                                     <div class="sk-bounce2"></div>
                                     <div class="sk-bounce3"></div>
 
-                                </div>
+                                </div>
 
                             <div class="project-list">
                                 <div class="tableclass">
@@ -123,9 +134,10 @@
 
 
 
-    var TRHtml = '<tr><td class="project-title"><strong class="JobShortName"></strong></td><td class="project-title"><a href="showJD.aspx" class="JobTitle"></a><br /><span class="ClientName"></span></td><td class="project-title"><strong class="JobLocation"></strong></td><td class="project-people text-right"></td><td class="project-actions"><a href="#" class="btn btn-white btn-sm assingButton"><i class="fa fa-user"></i> Assign </a><a href="#" class="btn btn-white btn-sm"><i class="fa fa-binoculars"></i>  Search </a></td></tr>';
+    var TRHtml = '<tr><td class="project-title"><strong class="JobShortName"></strong></td><td class="project-title"><a href="showJD.aspx" class="JobTitle"></a><br /><span class="ClientName"></span></td><td class="project-title"><strong class="JobLocation"></strong></td><td class="project-people text-right"></td><td class="project-actions"><a href="#" data-toggle="modal" data-target="#assignJDModal" class="btn btn-white btn-sm assingButton"><i class="fa fa-user"></i> Assign </a><a href="#" class="btn btn-white btn-sm"><i class="fa fa-binoculars"></i>  Search </a></td></tr>';
+    var gEmpId = <%= Session["EmpId"] %>;
     
-    var jdData;
+    var jdData, gJDId, gIndex;
 
     $.ajax({
         url: '../getJD/',
@@ -142,16 +154,16 @@
             var ClientName = $(".ClientName");
             var JobLocation = $(".JobLocation");
             var assingButton = $(".assingButton");
+            var projectpeople = $('.project-people');
 
-            JobShortName.each(function (i) {
+            $(jdData).each(function (i) {
                 $(JobShortName[i]).html(jdData[i].JobShortName);
                 $(JobTitle[i]).html(jdData[i].JobTitle);
                 $(ClientName[i]).html(jdData[i].ClientName);
                 $(JobLocation[i]).html(jdData[i].JobLocation);
-                $(assingButton[i]).on("click", function () { alertfn(jdData[i].JobTitle) });
+                $(assingButton[i]).on("click", function () { openAssignModal(jdData[i].Id, jdData[i].JobTitle, i) });
+                $(jdData[i].empIdJobId).each(function(p) {$(projectpeople[i]).append('<a title="' + jdData[i].empIdJobId[p].EmpName + '"><img alt="image" class="img-circle" src="../img/pp/' + jdData[i].empIdJobId[p].EmpId + '.JPG"></a>')});
             });
-
-            $('.project-people').each(function (i) { $(this).append('<a title="' + i + '"><img alt="image" class="img-circle" src="../img/pp/6.JPG"></a><a href=""><img alt="image" class="img-circle" src="../img/pp/7.JPG"></a><a href=""><img alt="image" class="img-circle" src="../img/pp/5.JPG"></a>'); })
 
             $('.sk-spinner-three-bounce').hide();
             $('.project-table').show("slow");
@@ -161,10 +173,61 @@
         }
     });
 
-    function alertfn(abc) {
+    function openAssignModal(jobId, jobTitle, index) {
 
-        $('#assignJDModal').modal('toggle');
+        gJDId = jobId;
+        gIndex = index;
+        setEmpAssignFields(jobTitle);
     }
-   
+
+    function setEmpAssignFields(jobTitle) {
+        var empsURL = '../getEmpNotInJD/' + gJDId;
+
+        $(".jobTitleModal").val(jobTitle);
+
+        $('#employeeSelect').find('option:gt(0)').remove();
+        $("#employeeSelect").val('0');
+        $('#employeeSelect option[value="0"]').text('Select Employee');
+
+        $.getJSON(empsURL, function (items) {
+            $.each(items, function (i, item) {
+                $('#employeeSelect').append($('<option>', {
+                    value: item.EmpId,
+                    text: item.EmpName
+                }));
+            });
+        });
+    }
+
+    $("#assignJDForm").submit(function (event) {
+        event.preventDefault();
+
+        if ($('#employeeSelect').val() == 0) { alert('Select an employee'); return false; }
+
+        var empJdJSON = {
+            EmpId:     $('#employeeSelect').val(),
+            JDId:      gJDId,
+            Openings:  $("#Openings").val(),
+            Expiry:    $("#Expiry").val(),
+            Remarks:   $("#Remarks").val(),
+            CreatedBy: gEmpId
+        }
+        $.ajax({
+            url: '../api/EmpJDs',
+            type: 'post',
+            dataType: 'json',
+            success: function (data) {
+                var EmpName = $('#employeeSelect option[value=' + data.EmpId + ']').text();
+                $(".successText").html(EmpName + ' added succesfully. You can add more employees or click close to exit');
+                var projectpeople = $('.project-people');
+                $(projectpeople[gIndex]).append('<a title="' + EmpName + '"><img alt="image" class="img-circle" src="../img/pp/' + data.EmpId + '.JPG"></a>');
+                var jobt = $(".jobTitleModal").val();
+                $("#assignJDForm")[0].reset();
+                setEmpAssignFields(jobt);
+            },
+            data: empJdJSON
+        });
+    });
+
 </script>
 </asp:Content>

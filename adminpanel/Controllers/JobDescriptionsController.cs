@@ -148,10 +148,32 @@ namespace adminpanel.Controllers
         [Route("getJD/")]
         [HttpGet]
 
-        public dynamic getJD()
+        public List<jobIDEmpDTO> getJD()
         {
-            return db.GetJobId();
+            var jobIdList = db.GetJobId().ToList();
+            List<jobIDEmpDTO> jobIDEmpDTOList = new List<jobIDEmpDTO>();
+
+            foreach (var JobId in jobIdList)
+            {
+                jobIDEmpDTO vari = new jobIDEmpDTO(JobId.Id,JobId.JobShortName,JobId.JobTitle,JobId.ClientName,JobId.JobLocation);
+
+                vari.empIdJobId = ( from recordset in db.EmpJDs
+                                    where recordset.JDId == JobId.Id
+                                    select new empIdJobId { EmpId = recordset.EmpId, EmpName = recordset.Employee.EmpName}).ToList();
+
+                jobIDEmpDTOList.Add(vari);
+            }
+            return jobIDEmpDTOList;
         }
+
+        [Route("getEmpNotInJD/{JDId}")]
+        [HttpGet]
+        public dynamic getEmpNotInJD(int JDId)
+        {
+            return db.getOrgEmpNotInJdId(JDId);
+        }
+
+
     }
 
 

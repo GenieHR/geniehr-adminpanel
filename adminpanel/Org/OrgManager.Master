@@ -82,12 +82,11 @@
                     <a href="#"><i class="fa  fa-user"></i> <span class="nav-label">ATS</span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
                         <li><a href="JobDescription.aspx">Job Description</a></li>
-                        <li><a href="#">Employee Performance</a></li>
+                        <li><a href="ManageJD.aspx">Manage JD</a></li>
                         <li><a href="AddCandidate.aspx">Candidate</a></li>
 
                     </ul>
                 </li>
-            
         </ul>
     </nav>
 
