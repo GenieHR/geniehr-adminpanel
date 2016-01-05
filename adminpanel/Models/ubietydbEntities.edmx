@@ -306,6 +306,22 @@
           <Property Name="modified" Type="datetime" />
           <Property Name="created" Type="datetime" />
         </EntityType>
+        <EntityType Name="EmployeeJD">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmpId" Type="int" Nullable="false" />
+          <Property Name="JobId" Type="int" Nullable="false" />
+          <Property Name="Expiry" Type="datetime" />
+          <Property Name="Openings" Type="int" />
+          <Property Name="Active" Type="tinyint" />
+          <Property Name="Remarks" Type="nvarchar" MaxLength="255" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="ModifiedBy" Type="int" />
+        </EntityType>
         <EntityType Name="EmpPastEmp">
           <Key>
             <PropertyRef Name="Id" />
@@ -991,6 +1007,54 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_EmployeeJD_CEmployee_EmpId">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="EmployeeJD" Type="Self.EmployeeJD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="EmployeeJD">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeJD_Employee_EmpId">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="EmployeeJD" Type="Self.EmployeeJD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="EmployeeJD">
+              <PropertyRef Name="EmpId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeJD_JobDescription_Id">
+          <End Role="JobDescription" Type="Self.JobDescription" Multiplicity="1" />
+          <End Role="EmployeeJD" Type="Self.EmployeeJD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JobDescription">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmployeeJD">
+              <PropertyRef Name="JobId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeJD_MEmployee_EmpId">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="EmployeeJD" Type="Self.EmployeeJD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="EmployeeJD">
+              <PropertyRef Name="ModifiedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_EmpPastEmp_Employee">
           <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
           <End Role="EmpPastEmp" Type="Self.EmpPastEmp" Multiplicity="*" />
@@ -1411,6 +1475,7 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <EntitySet Name="EmpJD" EntityType="Self.EmpJD" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmployeeDetail" EntityType="Self.EmployeeDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmployeeJD" EntityType="Self.EmployeeJD" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmpPastEmp" EntityType="Self.EmpPastEmp" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmpQualification" EntityType="Self.EmpQualification" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmpStatus" EntityType="Self.EmpStatus" Schema="dbo" store:Type="Tables" />
@@ -1612,6 +1677,22 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <AssociationSet Name="FK_EmployeeDetail_MaritalStatus" Association="Self.FK_EmployeeDetail_MaritalStatus">
             <End Role="MaritalStatus" EntitySet="MaritalStatus" />
             <End Role="EmployeeDetail" EntitySet="EmployeeDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeJD_CEmployee_EmpId" Association="Self.FK_EmployeeJD_CEmployee_EmpId">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="EmployeeJD" EntitySet="EmployeeJD" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeJD_Employee_EmpId" Association="Self.FK_EmployeeJD_Employee_EmpId">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="EmployeeJD" EntitySet="EmployeeJD" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeJD_JobDescription_Id" Association="Self.FK_EmployeeJD_JobDescription_Id">
+            <End Role="JobDescription" EntitySet="JobDescription" />
+            <End Role="EmployeeJD" EntitySet="EmployeeJD" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeJD_MEmployee_EmpId" Association="Self.FK_EmployeeJD_MEmployee_EmpId">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="EmployeeJD" EntitySet="EmployeeJD" />
           </AssociationSet>
           <AssociationSet Name="FK_EmpPastEmp_Employee" Association="Self.FK_EmpPastEmp_Employee">
             <End Role="Employee" EntitySet="Employee" />
@@ -2111,6 +2192,23 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <AssociationSet Name="FK_JobQualification_JobDescription_Id" Association="ubietydbModel.FK_JobQualification_JobDescription_Id">
             <End Role="JobDescription" EntitySet="JobDescriptions" />
             <End Role="JobQualification" EntitySet="JobQualifications" />
+          </AssociationSet>
+          <EntitySet Name="EmployeeJDs" EntityType="ubietydbModel.EmployeeJD" />
+          <AssociationSet Name="FK_EmployeeJD_CEmployee_EmpId" Association="ubietydbModel.FK_EmployeeJD_CEmployee_EmpId">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="EmployeeJD" EntitySet="EmployeeJDs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeJD_Employee_EmpId" Association="ubietydbModel.FK_EmployeeJD_Employee_EmpId">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="EmployeeJD" EntitySet="EmployeeJDs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeJD_MEmployee_EmpId" Association="ubietydbModel.FK_EmployeeJD_MEmployee_EmpId">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="EmployeeJD" EntitySet="EmployeeJDs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeJD_JobDescription_Id" Association="ubietydbModel.FK_EmployeeJD_JobDescription_Id">
+            <End Role="JobDescription" EntitySet="JobDescriptions" />
+            <End Role="EmployeeJD" EntitySet="EmployeeJDs" />
           </AssociationSet>
           </EntityContainer>
         <ComplexType Name="getEmpOfGroups_Result">
@@ -2640,6 +2738,9 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <NavigationProperty Name="JobDescriptions" Relationship="ubietydbModel.FK_JobDescription_Employee_EmpId" FromRole="Employee" ToRole="JobDescription" />
           <NavigationProperty Name="JobDescriptions1" Relationship="ubietydbModel.FK_JobDescriptionM_Employee_EmpId" FromRole="Employee" ToRole="JobDescription" />
           <NavigationProperty Name="Login" Relationship="ubietydbModel.FK_Login_Employee" FromRole="Employee" ToRole="Login" />
+          <NavigationProperty Name="EmployeeJDs" Relationship="ubietydbModel.FK_EmployeeJD_CEmployee_EmpId" FromRole="Employee" ToRole="EmployeeJD" />
+          <NavigationProperty Name="EmployeeJDs1" Relationship="ubietydbModel.FK_EmployeeJD_Employee_EmpId" FromRole="Employee" ToRole="EmployeeJD" />
+          <NavigationProperty Name="EmployeeJDs2" Relationship="ubietydbModel.FK_EmployeeJD_MEmployee_EmpId" FromRole="Employee" ToRole="EmployeeJD" />
         </EntityType>
         <EntityType Name="EmployeeDetail">
           <Key>
@@ -2830,6 +2931,7 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <Property Name="RExpTo" Type="Int32" />
           <Property Name="SalaryTo" Type="Decimal" Precision="19" Scale="4" />
           <NavigationProperty Name="JobQualifications" Relationship="ubietydbModel.FK_JobQualification_JobDescription_Id" FromRole="JobDescription" ToRole="JobQualification" />
+          <NavigationProperty Name="EmployeeJDs" Relationship="ubietydbModel.FK_EmployeeJD_JobDescription_Id" FromRole="JobDescription" ToRole="EmployeeJD" />
         </EntityType>
         <EntityType Name="JobSkill">
           <Key>
@@ -3718,6 +3820,74 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="EmployeeJD">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmpId" Type="Int32" Nullable="false" />
+          <Property Name="JobId" Type="Int32" Nullable="false" />
+          <Property Name="Expiry" Type="DateTime" Precision="3" />
+          <Property Name="Openings" Type="Int32" />
+          <Property Name="Active" Type="Byte" />
+          <Property Name="Remarks" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <NavigationProperty Name="Employee" Relationship="ubietydbModel.FK_EmployeeJD_CEmployee_EmpId" FromRole="EmployeeJD" ToRole="Employee" />
+          <NavigationProperty Name="Employee1" Relationship="ubietydbModel.FK_EmployeeJD_Employee_EmpId" FromRole="EmployeeJD" ToRole="Employee" />
+          <NavigationProperty Name="Employee2" Relationship="ubietydbModel.FK_EmployeeJD_MEmployee_EmpId" FromRole="EmployeeJD" ToRole="Employee" />
+          <NavigationProperty Name="JobDescription" Relationship="ubietydbModel.FK_EmployeeJD_JobDescription_Id" FromRole="EmployeeJD" ToRole="JobDescription" />
+        </EntityType>
+        <Association Name="FK_EmployeeJD_CEmployee_EmpId">
+          <End Type="ubietydbModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="ubietydbModel.EmployeeJD" Role="EmployeeJD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="EmployeeJD">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeJD_Employee_EmpId">
+          <End Type="ubietydbModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="ubietydbModel.EmployeeJD" Role="EmployeeJD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="EmployeeJD">
+              <PropertyRef Name="EmpId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeJD_MEmployee_EmpId">
+          <End Type="ubietydbModel.Employee" Role="Employee" Multiplicity="0..1" />
+          <End Type="ubietydbModel.EmployeeJD" Role="EmployeeJD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="EmployeeJD">
+              <PropertyRef Name="ModifiedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeJD_JobDescription_Id">
+          <End Type="ubietydbModel.JobDescription" Role="JobDescription" Multiplicity="1" />
+          <End Type="ubietydbModel.EmployeeJD" Role="EmployeeJD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JobDescription">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmployeeJD">
+              <PropertyRef Name="JobId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4524,6 +4694,23 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
                 <ScalarProperty Name="MinimumPercent" ColumnName="MinimumPercent" />
                 <ScalarProperty Name="DegreeId" ColumnName="DegreeId" />
                 <ScalarProperty Name="JobId" ColumnName="JobId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmployeeJDs">
+            <EntityTypeMapping TypeName="ubietydbModel.EmployeeJD">
+              <MappingFragment StoreEntitySet="EmployeeJD">
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Openings" ColumnName="Openings" />
+                <ScalarProperty Name="Expiry" ColumnName="Expiry" />
+                <ScalarProperty Name="JobId" ColumnName="JobId" />
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

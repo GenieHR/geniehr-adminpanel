@@ -69,7 +69,7 @@
 
                                 <label class="col-sm-2 control-label">Job Notes</label>
                                 <div class="col-sm-5">
-                                    <textarea  class="form-control" id="JobNotes"  ></textarea>
+                                    <textarea rows="8"  class="form-control" id="JobNotes"  ></textarea>
                                 </div>
                             </div>
 

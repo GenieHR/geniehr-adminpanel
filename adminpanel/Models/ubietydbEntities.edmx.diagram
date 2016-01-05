@@ -121,6 +121,11 @@
         <EntityTypeShape EntityType="ubietydbModel.JobQualification" Width="1.5" PointX="14.25" PointY="45.5" />
         <AssociationConnector Association="ubietydbModel.FK_JobQualification_Degree_Id" />
         <AssociationConnector Association="ubietydbModel.FK_JobQualification_JobDescription_Id" />
+        <EntityTypeShape EntityType="ubietydbModel.EmployeeJD" Width="1.5" PointX="13.5" PointY="28.25" />
+        <AssociationConnector Association="ubietydbModel.FK_EmployeeJD_CEmployee_EmpId" />
+        <AssociationConnector Association="ubietydbModel.FK_EmployeeJD_Employee_EmpId" />
+        <AssociationConnector Association="ubietydbModel.FK_EmployeeJD_MEmployee_EmpId" />
+        <AssociationConnector Association="ubietydbModel.FK_EmployeeJD_JobDescription_Id" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

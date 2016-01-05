@@ -59,6 +59,12 @@ public partial class Employee
 
         this.JobDescriptions1 = new HashSet<JobDescription>();
 
+        this.EmployeeJDs = new HashSet<EmployeeJD>();
+
+        this.EmployeeJDs1 = new HashSet<EmployeeJD>();
+
+        this.EmployeeJDs2 = new HashSet<EmployeeJD>();
+
     }
 
 
@@ -129,6 +135,12 @@ public partial class Employee
     public virtual ICollection<JobDescription> JobDescriptions1 { get; set; }
 
     public virtual Login Login { get; set; }
+
+    public virtual ICollection<EmployeeJD> EmployeeJDs { get; set; }
+
+    public virtual ICollection<EmployeeJD> EmployeeJDs1 { get; set; }
+
+    public virtual ICollection<EmployeeJD> EmployeeJDs2 { get; set; }
 
 }
 

@@ -440,6 +440,7 @@
     <Content Include="Org\HierarchyFrame.aspx" />
     <Content Include="Org\home.aspx" />
     <Content Include="Org\JobDescription.aspx" />
+    <Content Include="Org\ManageJD.aspx" />
     <Content Include="Org\MyCandidates.aspx" />
     <Content Include="Org\ShowClients.aspx" />
     <Content Include="packages.config">
@@ -843,6 +844,9 @@
     <Compile Include="Models\EmployeeDetail.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EmployeeJD.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\EmpPastEmp.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
@@ -1150,6 +1154,13 @@
     </Compile>
     <Compile Include="Org\JobDescription.aspx.designer.cs">
       <DependentUpon>JobDescription.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Org\ManageJD.aspx.cs">
+      <DependentUpon>ManageJD.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Org\ManageJD.aspx.designer.cs">
+      <DependentUpon>ManageJD.aspx</DependentUpon>
     </Compile>
     <Compile Include="Org\MyCandidates.aspx.cs">
       <DependentUpon>MyCandidates.aspx</DependentUpon>

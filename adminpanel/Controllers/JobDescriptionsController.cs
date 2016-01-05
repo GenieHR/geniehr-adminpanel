@@ -50,7 +50,6 @@ namespace adminpanel.Controllers
                                      Id = recordset.Id,
                                      BenefitName = recordset.BenefitName
                                  });
-
             return benefits.ToList();
         }
 
@@ -85,13 +84,15 @@ namespace adminpanel.Controllers
 
             db.JobDescriptions.Add(jd);
 
+
             if (db.SaveChanges() == 1) {
 
                 jdId = jd.Id;
                 retVal = 0;
 
                 JArray skillList = JArray.Parse(jddto.skillList);
-                foreach(string skillId in skillList)
+
+                foreach (string skillId in skillList)
                 {
                     JobSkill jobSkill = new JobSkill();
                     jobSkill.JobId = jdId;
@@ -99,7 +100,8 @@ namespace adminpanel.Controllers
                     db.JobSkills.Add(jobSkill);
                 }
 
-                try { 
+                try
+                { 
                         JArray certification = JArray.Parse(jddto.certification);
                         foreach(string certificate in certification)
                         {
@@ -108,34 +110,40 @@ namespace adminpanel.Controllers
                             jobcerti.JobId = jdId;
                             db.JobCertifications.Add(jobcerti);
                         }
-                
-                JArray qualification = JArray.Parse(jddto.qualification);
-                foreach(string degree in qualification)
-                {
-                    JobQualification jobqual = new JobQualification();
-                    jobqual.DegreeId = Int32.Parse(degree);
-                    jobqual.JobId = jdId;
-                    db.JobQualifications.Add(jobqual);       
-                }
-
-                JArray beneifts = JArray.Parse(jddto.benefit);
-                foreach(string benefit in beneifts)
-                {
-                    JObject o = JObject.Parse(benefit);
-                    JobBenefit jobBenefit = new JobBenefit();
-                    jobBenefit.JobId = jdId;
-                    jobBenefit.BenefitId = Int32.Parse((string)o["benefitId"]);
-                    jobBenefit.BenefitDesc = (string)o["benefitRem"];
-                    db.JobBenefits.Add(jobBenefit);
-                }
                 }
                 catch (Exception ex) { }
 
+                try
+                {
+                    JArray qualification = JArray.Parse(jddto.qualification);
+                        foreach(string degree in qualification)
+                        {
+                            JobQualification jobqual = new JobQualification();
+                            jobqual.DegreeId = Int32.Parse(degree);
+                            jobqual.JobId = jdId;
+                            db.JobQualifications.Add(jobqual);       
+                        }
+                }
+                catch (Exception ex) { }
+
+                try
+                {
+                    JArray beneifts = JArray.Parse(jddto.benefit);
+                        foreach(string benefit in beneifts)
+                        {
+                            JObject o = JObject.Parse(benefit);
+                            JobBenefit jobBenefit = new JobBenefit();
+                            jobBenefit.JobId = jdId;
+                            jobBenefit.BenefitId = Int32.Parse((string)o["benefitId"]);
+                            jobBenefit.BenefitDesc = (string)o["benefitRem"];
+                            db.JobBenefits.Add(jobBenefit);
+                        }
+                }
+                catch (Exception ex) { }  
+
                 retVal = db.SaveChanges();
             }
-
             return retVal;
         }
-
     }
 }
