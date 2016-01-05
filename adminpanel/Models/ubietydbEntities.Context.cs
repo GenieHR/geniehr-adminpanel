@@ -484,6 +484,25 @@ public partial class ubietydbEntities : DbContext
         return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllClientsOfEmpOrg_Result>("GetAllClientsOfEmpOrg", empIdParameter);
     }
 
+
+    public virtual ObjectResult<GetJobId_Result> GetJobId()
+    {
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetJobId_Result>("GetJobId");
+    }
+
+
+    public virtual ObjectResult<getOrgEmpNotInJdId_Result> getOrgEmpNotInJdId(Nullable<int> jobId)
+    {
+
+        var jobIdParameter = jobId.HasValue ?
+            new ObjectParameter("JobId", jobId) :
+            new ObjectParameter("JobId", typeof(int));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getOrgEmpNotInJdId_Result>("getOrgEmpNotInJdId", jobIdParameter);
+    }
+
 }
 
 }

@@ -301,6 +301,9 @@
     <Content Include="css\style.css" />
     <Content Include="Employees\docs.aspx" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="img\pp\3.JPG" />
+    <Content Include="img\pp\4.jpg" />
+    <Content Include="img\pp\5.jpg" />
     <Content Include="js\plugins\jqueryrange\jquery.range-min.js" />
     <Content Include="Org\AddCandidate.aspx" />
     <Content Include="Org\AddOrgEmployee.aspx" />
@@ -907,6 +910,9 @@
     <Compile Include="Models\getGroupTypeIncharge_Result.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\GetJobId_Result.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\getManagerDetail_Result.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
@@ -914,6 +920,9 @@
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\getOrgEmpDetail_Result.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\getOrgEmpNotInJdId_Result.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\getShortAddress_Result.cs">

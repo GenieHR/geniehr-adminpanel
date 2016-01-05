@@ -131,11 +131,11 @@ namespace adminpanel.Controllers
                     JArray beneifts = JArray.Parse(jddto.benefit);
                         foreach(string benefit in beneifts)
                         {
-                            JObject o = JObject.Parse(benefit);
+                            JObject benefitObject = JObject.Parse(benefit);
                             JobBenefit jobBenefit = new JobBenefit();
                             jobBenefit.JobId = jdId;
-                            jobBenefit.BenefitId = Int32.Parse((string)o["benefitId"]);
-                            jobBenefit.BenefitDesc = (string)o["benefitRem"];
+                            jobBenefit.BenefitId = Int32.Parse((string)benefitObject["benefitId"]);
+                            jobBenefit.BenefitDesc = (string)benefitObject["benefitRem"];
                             db.JobBenefits.Add(jobBenefit);
                         }
                 }
@@ -145,5 +145,15 @@ namespace adminpanel.Controllers
             }
             return retVal;
         }
+        [Route("getJD/")]
+        [HttpGet]
+
+        public dynamic getJD()
+        {
+            return db.GetJobId();
+        }
     }
+
+
+    
 }

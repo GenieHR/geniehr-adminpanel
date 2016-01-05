@@ -455,6 +455,7 @@
           <Property Name="RExpFrom" Type="int" />
           <Property Name="RExpTo" Type="int" />
           <Property Name="SalaryTo" Type="money" />
+          <Property Name="Expiry" Type="datetime" />
         </EntityType>
         <EntityType Name="JobQualification">
           <Key>
@@ -1422,6 +1423,7 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <Parameter Name="ManagerId" Type="int" Mode="In" />
         </Function>
         <Function Name="getIST" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="datetime" />
+        <Function Name="GetJobId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="getManagerDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EmpId" Type="int" Mode="In" />
         </Function>
@@ -1436,6 +1438,9 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
         </Function>
         <Function Name="getOpenCliamsByManagerId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="managerId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="getOrgEmpNotInJdId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="JobId" Type="int" Mode="In" />
         </Function>
         <Function Name="getShortAddress" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EntityType" Type="int" Mode="In" />
@@ -2210,6 +2215,10 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
             <End Role="JobDescription" EntitySet="JobDescriptions" />
             <End Role="EmployeeJD" EntitySet="EmployeeJDs" />
           </AssociationSet>
+          <FunctionImport Name="GetJobId" ReturnType="Collection(ubietydbModel.GetJobId_Result)" />
+          <FunctionImport Name="getOrgEmpNotInJdId" ReturnType="Collection(ubietydbModel.getOrgEmpNotInJdId_Result)">
+            <Parameter Name="JobId" Mode="In" Type="Int32" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="getEmpOfGroups_Result">
           <Property Type="String" Name="AuthUserId" Nullable="true" MaxLength="255" />
@@ -2932,6 +2941,7 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <Property Name="SalaryTo" Type="Decimal" Precision="19" Scale="4" />
           <NavigationProperty Name="JobQualifications" Relationship="ubietydbModel.FK_JobQualification_JobDescription_Id" FromRole="JobDescription" ToRole="JobQualification" />
           <NavigationProperty Name="EmployeeJDs" Relationship="ubietydbModel.FK_EmployeeJD_JobDescription_Id" FromRole="JobDescription" ToRole="EmployeeJD" />
+          <Property Name="Expiry" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="JobSkill">
           <Key>
@@ -3888,6 +3898,20 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="GetJobId_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="JobShortName" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="JobTitle" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="ClientName" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="JobLocation" Nullable="true" MaxLength="25" />
+        </ComplexType>
+        <ComplexType Name="getOrgEmpNotInJdId_Result">
+          <Property Type="Int32" Name="EmpId" Nullable="false" />
+          <Property Type="String" Name="EmpName" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="EmpNum" Nullable="true" MaxLength="50" />
+          <Property Type="Int64" Name="PrimaryMobile" Nullable="true" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="50" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4537,6 +4561,7 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <EntitySetMapping Name="JobDescriptions">
             <EntityTypeMapping TypeName="ubietydbModel.JobDescription">
               <MappingFragment StoreEntitySet="JobDescription">
+                <ScalarProperty Name="Expiry" ColumnName="Expiry" />
                 <ScalarProperty Name="SalaryTo" ColumnName="SalaryTo" />
                 <ScalarProperty Name="RExpTo" ColumnName="RExpTo" />
                 <ScalarProperty Name="RExpFrom" ColumnName="RExpFrom" />
@@ -4715,6 +4740,28 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetJobId" FunctionName="ubietydbModel.Store.GetJobId">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ubietydbModel.GetJobId_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="JobShortName" ColumnName="JobShortName" />
+                <ScalarProperty Name="JobTitle" ColumnName="JobTitle" />
+                <ScalarProperty Name="ClientName" ColumnName="ClientName" />
+                <ScalarProperty Name="JobLocation" ColumnName="JobLocation" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getOrgEmpNotInJdId" FunctionName="ubietydbModel.Store.getOrgEmpNotInJdId">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ubietydbModel.getOrgEmpNotInJdId_Result">
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
+                <ScalarProperty Name="EmpNum" ColumnName="EmpNum" />
+                <ScalarProperty Name="PrimaryMobile" ColumnName="PrimaryMobile" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

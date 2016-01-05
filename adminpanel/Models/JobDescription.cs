@@ -70,6 +70,8 @@ public partial class JobDescription
 
     public Nullable<decimal> SalaryTo { get; set; }
 
+    public Nullable<System.DateTime> Expiry { get; set; }
+
 
 
     public virtual Client Client { get; set; }
