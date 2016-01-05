@@ -97,18 +97,18 @@ namespace adminpanel.Controllers
                     jobSkill.JobId = jdId;
                     jobSkill.SkillId = Int32.Parse(skillId);
                     db.JobSkills.Add(jobSkill);
-
                 }
 
-                JArray certification = JArray.Parse(jddto.certification);
-                foreach(string certificate in certification)
-                {
-                    JobCertification jobcerti = new JobCertification();
-                    jobcerti.CertificationId = Int32.Parse(certificate);
-                    jobcerti.JobId = jdId;
-                    db.JobCertifications.Add(jobcerti);
-                }
-
+                try { 
+                        JArray certification = JArray.Parse(jddto.certification);
+                        foreach(string certificate in certification)
+                        {
+                            JobCertification jobcerti = new JobCertification();
+                            jobcerti.CertificationId = Int32.Parse(certificate);
+                            jobcerti.JobId = jdId;
+                            db.JobCertifications.Add(jobcerti);
+                        }
+                
                 JArray qualification = JArray.Parse(jddto.qualification);
                 foreach(string degree in qualification)
                 {
@@ -117,6 +117,19 @@ namespace adminpanel.Controllers
                     jobqual.JobId = jdId;
                     db.JobQualifications.Add(jobqual);       
                 }
+
+                JArray beneifts = JArray.Parse(jddto.benefit);
+                foreach(string benefit in beneifts)
+                {
+                    JObject o = JObject.Parse(benefit);
+                    JobBenefit jobBenefit = new JobBenefit();
+                    jobBenefit.JobId = jdId;
+                    jobBenefit.BenefitId = Int32.Parse((string)o["benefitId"]);
+                    jobBenefit.BenefitDesc = (string)o["benefitRem"];
+                    db.JobBenefits.Add(jobBenefit);
+                }
+                }
+                catch (Exception ex) { }
 
                 retVal = db.SaveChanges();
             }

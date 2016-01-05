@@ -68,8 +68,6 @@ public partial class JobDescription
 
     public Nullable<decimal> SalaryTo { get; set; }
 
-
-
     public virtual Client Client { get; set; }
 
     public virtual ICollection<EmpJD> EmpJDs { get; set; }

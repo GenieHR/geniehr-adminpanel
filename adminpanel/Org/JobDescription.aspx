@@ -156,7 +156,6 @@
                                             <span class="input-group-addon">To</span>
                                             <input class="form-control" type="number" min="0"  id="SalaryTo" required="required"/>
                                             <span class="input-group-addon">per month</span>
-
                                         </div>
                                     </div>
                                 </div>
@@ -226,10 +225,9 @@
                 "SalaryTo": $("#SalaryTo").val(),
                 "skillList":JSON.stringify($("#skills").val()),
                 "certification":JSON.stringify($("#certification").val()),
-                "qualification":JSON.stringify($("#degree").val())
+                "qualification":JSON.stringify($("#degree").val()),
+                "benefit":getAllBenefitVals
             };
-
-            prompt("",JSON.stringify($("#skills").val));
 
             $.ajax({
                 type: "POST",
@@ -345,8 +343,6 @@
       function addRowToBenefitTable() {
           $("#benefitTable tbody").append('<tr><td>' + benefitHTML + '</td><td>' + benefitRemHTML + '</td><td class="text-center text-danger remove"><span class="fa fa-remove"></span></td></tr>');
       }
-
-
 
       $( document ).on( "click", ".remove", function(){  $(this).parent("tr:first").remove() });
 

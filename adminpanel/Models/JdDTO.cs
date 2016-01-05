@@ -27,8 +27,7 @@ namespace adminpanel.Models
         public string skillList { get; set; }
 
         public string certification { get; set; }
-
         public string qualification { get; set; }
-
+        public string benefit { get; set; }
     }
 }
