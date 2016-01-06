@@ -23,6 +23,8 @@ public partial class Candidate
 
         this.CandidateSkills = new HashSet<CandidateSkill>();
 
+        this.CandidateRecruitmentLogs = new HashSet<CandidateRecruitmentLog>();
+
     }
 
 
@@ -79,6 +81,8 @@ public partial class Candidate
     public virtual Source Source { get; set; }
 
     public virtual ICollection<CandidateSkill> CandidateSkills { get; set; }
+
+    public virtual ICollection<CandidateRecruitmentLog> CandidateRecruitmentLogs { get; set; }
 
 }
 

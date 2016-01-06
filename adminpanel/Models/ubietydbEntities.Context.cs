@@ -145,6 +145,18 @@ public partial class ubietydbEntities : DbContext
 
     public virtual DbSet<EmployeeJD> EmployeeJDs { get; set; }
 
+    public virtual DbSet<CandidateRecruitmentLog> CandidateRecruitmentLogs { get; set; }
+
+    public virtual DbSet<LogTable> LogTables { get; set; }
+
+    public virtual DbSet<LogType> LogTypes { get; set; }
+
+    public virtual DbSet<RecruitmentStage> RecruitmentStages { get; set; }
+
+    public virtual DbSet<CandidateRecruitment> CandidateRecruitments { get; set; }
+
+    public virtual DbSet<vSkillMatch> vSkillMatches { get; set; }
+
 
     public virtual ObjectResult<getEmpOfGroups_Result> getEmpOfGroups()
     {

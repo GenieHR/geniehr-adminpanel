@@ -86,6 +86,29 @@
           <Property Name="SourceId" Type="int" />
           <Property Name="SourceNotes" Type="varchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="CandidateRecruitment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CandidateId" Type="int" Nullable="false" />
+          <Property Name="JobId" Type="int" Nullable="false" />
+          <Property Name="CurrentStage" Type="int" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="ModifiedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="CandidateRecruitmentLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CandidateId" Type="int" Nullable="false" />
+          <Property Name="JobId" Type="int" />
+          <Property Name="LogId" Type="int" Nullable="false" />
+          <Property Name="ActionBy" Type="int" />
+        </EntityType>
         <EntityType Name="CandidateSkill">
           <Key>
             <PropertyRef Name="id" />
@@ -483,6 +506,22 @@
           <Property Name="EmpId" Type="int" Nullable="false" />
           <Property Name="Password" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
+        <EntityType Name="LogTable">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LongDescription" Type="nvarchar" MaxLength="255" />
+          <Property Name="LogType" Type="int" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LogType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LogTypeName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="MaritalStatus">
           <Key>
             <PropertyRef Name="Id" />
@@ -503,6 +542,13 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="QualificationName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RecruitmentStage">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StageName" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Relation">
           <Key>
@@ -587,6 +633,18 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <Property Name="EmpId" Type="int" Nullable="false" />
           <Property Name="companyId" Type="int" />
           <Property Name="empname" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'ubietydb.dbo.vSkillMatch' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vSkillMatch">
+          <Key>
+            <PropertyRef Name="CandidateId" />
+            <PropertyRef Name="SkillId" />
+            <PropertyRef Name="JobId" />
+          </Key>
+          <Property Name="CandidateId" Type="int" Nullable="false" />
+          <Property Name="SkillId" Type="int" Nullable="false" />
+          <Property Name="JobId" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK__claimJSON__claim__2A164134">
           <End Role="ClaimStatus" Type="Self.ClaimStatus" Multiplicity="1" />
@@ -681,6 +739,78 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
             </Principal>
             <Dependent Role="Candidate">
               <PropertyRef Name="SourceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CandidateRecruitment_Employee_EmpId">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="CandidateRecruitment" Type="Self.CandidateRecruitment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="CandidateRecruitment">
+              <PropertyRef Name="ModifiedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CandidateRecruitment_Employee_REmpId">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="CandidateRecruitment" Type="Self.CandidateRecruitment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="CandidateRecruitment">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CandidateRecruitment_RecruitmentStage_Id">
+          <End Role="RecruitmentStage" Type="Self.RecruitmentStage" Multiplicity="0..1" />
+          <End Role="CandidateRecruitment" Type="Self.CandidateRecruitment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RecruitmentStage">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CandidateRecruitment">
+              <PropertyRef Name="CurrentStage" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CandidateRecruitmentLog_Candidate_Id">
+          <End Role="Candidate" Type="Self.Candidate" Multiplicity="1" />
+          <End Role="CandidateRecruitmentLog" Type="Self.CandidateRecruitmentLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Candidate">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CandidateRecruitmentLog">
+              <PropertyRef Name="CandidateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CandidateRecruitmentLog_Employee_EmpId">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="CandidateRecruitmentLog" Type="Self.CandidateRecruitmentLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="CandidateRecruitmentLog">
+              <PropertyRef Name="ActionBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CandidateRecruitmentLog_LogTable_Id">
+          <End Role="LogTable" Type="Self.LogTable" Multiplicity="1" />
+          <End Role="CandidateRecruitmentLog" Type="Self.CandidateRecruitmentLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LogTable">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CandidateRecruitmentLog">
+              <PropertyRef Name="LogId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1368,6 +1498,18 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_LogTable_LogType_Id">
+          <End Role="LogType" Type="Self.LogType" Multiplicity="0..1" />
+          <End Role="LogTable" Type="Self.LogTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LogType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LogTable">
+              <PropertyRef Name="LogType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Skill_SkillGroup">
           <End Role="SkillGroup" Type="Self.SkillGroup" Multiplicity="1" />
           <End Role="Skill" Type="Self.Skill" Multiplicity="*" />
@@ -1460,6 +1602,8 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <EntitySet Name="Benefit" EntityType="Self.Benefit" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BloodGroup" EntityType="Self.BloodGroup" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Candidate" EntityType="Self.Candidate" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CandidateRecruitment" EntityType="Self.CandidateRecruitment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CandidateRecruitmentLog" EntityType="Self.CandidateRecruitmentLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CandidateSkill" EntityType="Self.CandidateSkill" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Certification" EntityType="Self.Certification" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="claimHistory" EntityType="Self.claimHistory" Schema="dbo" store:Type="Tables" />
@@ -1497,9 +1641,12 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <EntitySet Name="JobQualification" EntityType="Self.JobQualification" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="JobSkill" EntityType="Self.JobSkill" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Login" EntityType="Self.Login" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LogTable" EntityType="Self.LogTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LogType" EntityType="Self.LogType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MaritalStatus" EntityType="Self.MaritalStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Organization" EntityType="Self.Organization" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Qualification" EntityType="Self.Qualification" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RecruitmentStage" EntityType="Self.RecruitmentStage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Relation" EntityType="Self.Relation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Skill" EntityType="Self.Skill" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SkillGroup" EntityType="Self.SkillGroup" Schema="dbo" store:Type="Tables" />
@@ -1543,6 +1690,13 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
     [clientEmployee].[empname] AS [empname]
     FROM [dbo].[clientEmployee] AS [clientEmployee]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="vSkillMatch" EntityType="Self.vSkillMatch" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vSkillMatch].[CandidateId] AS [CandidateId], 
+    [vSkillMatch].[SkillId] AS [SkillId], 
+    [vSkillMatch].[JobId] AS [JobId]
+    FROM [dbo].[vSkillMatch] AS [vSkillMatch]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK__claimJSON__claim__2A164134" Association="Self.FK__claimJSON__claim__2A164134">
             <End Role="ClaimStatus" EntitySet="ClaimStatus" />
             <End Role="claimJSON" EntitySet="claimJSON" />
@@ -1574,6 +1728,30 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <AssociationSet Name="FK_Candidate_Source_Id" Association="Self.FK_Candidate_Source_Id">
             <End Role="Source" EntitySet="Source" />
             <End Role="Candidate" EntitySet="Candidate" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CandidateRecruitment_Employee_EmpId" Association="Self.FK_CandidateRecruitment_Employee_EmpId">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="CandidateRecruitment" EntitySet="CandidateRecruitment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CandidateRecruitment_Employee_REmpId" Association="Self.FK_CandidateRecruitment_Employee_REmpId">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="CandidateRecruitment" EntitySet="CandidateRecruitment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CandidateRecruitment_RecruitmentStage_Id" Association="Self.FK_CandidateRecruitment_RecruitmentStage_Id">
+            <End Role="RecruitmentStage" EntitySet="RecruitmentStage" />
+            <End Role="CandidateRecruitment" EntitySet="CandidateRecruitment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CandidateRecruitmentLog_Candidate_Id" Association="Self.FK_CandidateRecruitmentLog_Candidate_Id">
+            <End Role="Candidate" EntitySet="Candidate" />
+            <End Role="CandidateRecruitmentLog" EntitySet="CandidateRecruitmentLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CandidateRecruitmentLog_Employee_EmpId" Association="Self.FK_CandidateRecruitmentLog_Employee_EmpId">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="CandidateRecruitmentLog" EntitySet="CandidateRecruitmentLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CandidateRecruitmentLog_LogTable_Id" Association="Self.FK_CandidateRecruitmentLog_LogTable_Id">
+            <End Role="LogTable" EntitySet="LogTable" />
+            <End Role="CandidateRecruitmentLog" EntitySet="CandidateRecruitmentLog" />
           </AssociationSet>
           <AssociationSet Name="FK_CandidateSkill_Candidate" Association="Self.FK_CandidateSkill_Candidate">
             <End Role="Candidate" EntitySet="Candidate" />
@@ -1802,6 +1980,10 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <AssociationSet Name="FK_Login_Employee" Association="Self.FK_Login_Employee">
             <End Role="Employee" EntitySet="Employee" />
             <End Role="Login" EntitySet="Login" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LogTable_LogType_Id" Association="Self.FK_LogTable_LogType_Id">
+            <End Role="LogType" EntitySet="LogType" />
+            <End Role="LogTable" EntitySet="LogTable" />
           </AssociationSet>
           <AssociationSet Name="FK_Skill_SkillGroup" Association="Self.FK_Skill_SkillGroup">
             <End Role="SkillGroup" EntitySet="SkillGroup" />
@@ -2217,8 +2399,42 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           </AssociationSet>
           <FunctionImport Name="GetJobId" ReturnType="Collection(ubietydbModel.GetJobId_Result)" />
           <FunctionImport Name="getOrgEmpNotInJdId" ReturnType="Collection(ubietydbModel.getOrgEmpNotInJdId_Result)">
-            <Parameter Name="JobId" Mode="In" Type="Int32" />
+          <Parameter Name="JobId" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="CandidateRecruitmentLogs" EntityType="ubietydbModel.CandidateRecruitmentLog" />
+          <EntitySet Name="LogTables" EntityType="ubietydbModel.LogTable" />
+          <EntitySet Name="LogTypes" EntityType="ubietydbModel.LogType" />
+          <AssociationSet Name="FK_CandidateRecruitmentLog_LogTable_Id" Association="ubietydbModel.FK_CandidateRecruitmentLog_LogTable_Id">
+            <End Role="LogTable" EntitySet="LogTables" />
+            <End Role="CandidateRecruitmentLog" EntitySet="CandidateRecruitmentLogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LogTable_LogType_Id" Association="ubietydbModel.FK_LogTable_LogType_Id">
+            <End Role="LogType" EntitySet="LogTypes" />
+            <End Role="LogTable" EntitySet="LogTables" />
+          </AssociationSet>
+          <EntitySet Name="RecruitmentStages" EntityType="ubietydbModel.RecruitmentStage" />
+          <AssociationSet Name="FK_CandidateRecruitmentLog_Employee_EmpId" Association="ubietydbModel.FK_CandidateRecruitmentLog_Employee_EmpId">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="CandidateRecruitmentLog" EntitySet="CandidateRecruitmentLogs" />
+          </AssociationSet>
+          <EntitySet Name="CandidateRecruitments" EntityType="ubietydbModel.CandidateRecruitment" />
+          <AssociationSet Name="FK_CandidateRecruitmentLog_Candidate_Id" Association="ubietydbModel.FK_CandidateRecruitmentLog_Candidate_Id">
+            <End Role="Candidate" EntitySet="Candidates" />
+            <End Role="CandidateRecruitmentLog" EntitySet="CandidateRecruitmentLogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CandidateRecruitment_Employee_EmpId" Association="ubietydbModel.FK_CandidateRecruitment_Employee_EmpId">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="CandidateRecruitment" EntitySet="CandidateRecruitments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CandidateRecruitment_Employee_REmpId" Association="ubietydbModel.FK_CandidateRecruitment_Employee_REmpId">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="CandidateRecruitment" EntitySet="CandidateRecruitments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CandidateRecruitment_RecruitmentStage_Id" Association="ubietydbModel.FK_CandidateRecruitment_RecruitmentStage_Id">
+            <End Role="RecruitmentStage" EntitySet="RecruitmentStages" />
+            <End Role="CandidateRecruitment" EntitySet="CandidateRecruitments" />
+          </AssociationSet>
+          <EntitySet Name="vSkillMatches" EntityType="ubietydbModel.vSkillMatch" />
           </EntityContainer>
         <ComplexType Name="getEmpOfGroups_Result">
           <Property Type="String" Name="AuthUserId" Nullable="true" MaxLength="255" />
@@ -2488,6 +2704,7 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <NavigationProperty Name="Qualification" Relationship="ubietydbModel.FK_Candidate_Qualification" FromRole="Candidate" ToRole="Qualification" />
           <NavigationProperty Name="Source" Relationship="ubietydbModel.FK_Candidate_Source_Id" FromRole="Candidate" ToRole="Source" />
           <NavigationProperty Name="CandidateSkills" Relationship="ubietydbModel.FK_CandidateSkill_Candidate" FromRole="Candidate" ToRole="CandidateSkill" />
+          <NavigationProperty Name="CandidateRecruitmentLogs" Relationship="ubietydbModel.FK_CandidateRecruitmentLog_Candidate_Id" FromRole="Candidate" ToRole="CandidateRecruitmentLog" />
         </EntityType>
         <EntityType Name="CandidateSkill">
           <Key>
@@ -2750,6 +2967,9 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <NavigationProperty Name="EmployeeJDs" Relationship="ubietydbModel.FK_EmployeeJD_CEmployee_EmpId" FromRole="Employee" ToRole="EmployeeJD" />
           <NavigationProperty Name="EmployeeJDs1" Relationship="ubietydbModel.FK_EmployeeJD_Employee_EmpId" FromRole="Employee" ToRole="EmployeeJD" />
           <NavigationProperty Name="EmployeeJDs2" Relationship="ubietydbModel.FK_EmployeeJD_MEmployee_EmpId" FromRole="Employee" ToRole="EmployeeJD" />
+          <NavigationProperty Name="CandidateRecruitmentLogs" Relationship="ubietydbModel.FK_CandidateRecruitmentLog_Employee_EmpId" FromRole="Employee" ToRole="CandidateRecruitmentLog" />
+          <NavigationProperty Name="CandidateRecruitments" Relationship="ubietydbModel.FK_CandidateRecruitment_Employee_EmpId" FromRole="Employee" ToRole="CandidateRecruitment" />
+          <NavigationProperty Name="CandidateRecruitments1" Relationship="ubietydbModel.FK_CandidateRecruitment_Employee_REmpId" FromRole="Employee" ToRole="CandidateRecruitment" />
         </EntityType>
         <EntityType Name="EmployeeDetail">
           <Key>
@@ -3912,6 +4132,156 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <Property Type="Int64" Name="PrimaryMobile" Nullable="true" />
           <Property Type="String" Name="Email" Nullable="true" MaxLength="50" />
         </ComplexType>
+        <EntityType Name="CandidateRecruitmentLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CandidateId" Type="Int32" Nullable="false" />
+          <Property Name="JobId" Type="Int32" />
+          <Property Name="LogId" Type="Int32" Nullable="false" />
+          <Property Name="ActionBy" Type="Int32" />
+          <NavigationProperty Name="LogTable" Relationship="ubietydbModel.FK_CandidateRecruitmentLog_LogTable_Id" FromRole="CandidateRecruitmentLog" ToRole="LogTable" />
+          <NavigationProperty Name="Employee" Relationship="ubietydbModel.FK_CandidateRecruitmentLog_Employee_EmpId" FromRole="CandidateRecruitmentLog" ToRole="Employee" />
+          <NavigationProperty Name="Candidate" Relationship="ubietydbModel.FK_CandidateRecruitmentLog_Candidate_Id" FromRole="CandidateRecruitmentLog" ToRole="Candidate" />
+        </EntityType>
+        <EntityType Name="LogTable">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LongDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="LogType" Type="Int32" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="CandidateRecruitmentLogs" Relationship="ubietydbModel.FK_CandidateRecruitmentLog_LogTable_Id" FromRole="LogTable" ToRole="CandidateRecruitmentLog" />
+          <NavigationProperty Name="LogType1" Relationship="ubietydbModel.FK_LogTable_LogType_Id" FromRole="LogTable" ToRole="LogType" />
+        </EntityType>
+        <EntityType Name="LogType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LogTypeName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="LogTables" Relationship="ubietydbModel.FK_LogTable_LogType_Id" FromRole="LogType" ToRole="LogTable" />
+        </EntityType>
+        <Association Name="FK_CandidateRecruitmentLog_LogTable_Id">
+          <End Type="ubietydbModel.LogTable" Role="LogTable" Multiplicity="1" />
+          <End Type="ubietydbModel.CandidateRecruitmentLog" Role="CandidateRecruitmentLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LogTable">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CandidateRecruitmentLog">
+              <PropertyRef Name="LogId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LogTable_LogType_Id">
+          <End Type="ubietydbModel.LogType" Role="LogType" Multiplicity="0..1" />
+          <End Type="ubietydbModel.LogTable" Role="LogTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LogType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LogTable">
+              <PropertyRef Name="LogType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="RecruitmentStage">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StageName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CandidateRecruitments" Relationship="ubietydbModel.FK_CandidateRecruitment_RecruitmentStage_Id" FromRole="RecruitmentStage" ToRole="CandidateRecruitment" />
+        </EntityType>
+        <Association Name="FK_CandidateRecruitmentLog_Employee_EmpId">
+          <End Type="ubietydbModel.Employee" Role="Employee" Multiplicity="0..1" />
+          <End Type="ubietydbModel.CandidateRecruitmentLog" Role="CandidateRecruitmentLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="CandidateRecruitmentLog">
+              <PropertyRef Name="ActionBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="CandidateRecruitment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CandidateId" Type="Int32" Nullable="false" />
+          <Property Name="JobId" Type="Int32" Nullable="false" />
+          <Property Name="CurrentStage" Type="Int32" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <NavigationProperty Name="Employee" Relationship="ubietydbModel.FK_CandidateRecruitment_Employee_EmpId" FromRole="CandidateRecruitment" ToRole="Employee" />
+          <NavigationProperty Name="Employee1" Relationship="ubietydbModel.FK_CandidateRecruitment_Employee_REmpId" FromRole="CandidateRecruitment" ToRole="Employee" />
+          <NavigationProperty Name="RecruitmentStage" Relationship="ubietydbModel.FK_CandidateRecruitment_RecruitmentStage_Id" FromRole="CandidateRecruitment" ToRole="RecruitmentStage" />
+        </EntityType>
+        <Association Name="FK_CandidateRecruitmentLog_Candidate_Id">
+          <End Type="ubietydbModel.Candidate" Role="Candidate" Multiplicity="1" />
+          <End Type="ubietydbModel.CandidateRecruitmentLog" Role="CandidateRecruitmentLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Candidate">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CandidateRecruitmentLog">
+              <PropertyRef Name="CandidateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CandidateRecruitment_Employee_EmpId">
+          <End Type="ubietydbModel.Employee" Role="Employee" Multiplicity="0..1" />
+          <End Type="ubietydbModel.CandidateRecruitment" Role="CandidateRecruitment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="CandidateRecruitment">
+              <PropertyRef Name="ModifiedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CandidateRecruitment_Employee_REmpId">
+          <End Type="ubietydbModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="ubietydbModel.CandidateRecruitment" Role="CandidateRecruitment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="CandidateRecruitment">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CandidateRecruitment_RecruitmentStage_Id">
+          <End Type="ubietydbModel.RecruitmentStage" Role="RecruitmentStage" Multiplicity="0..1" />
+          <End Type="ubietydbModel.CandidateRecruitment" Role="CandidateRecruitment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RecruitmentStage">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CandidateRecruitment">
+              <PropertyRef Name="CurrentStage" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="vSkillMatch">
+          <Key>
+            <PropertyRef Name="CandidateId" />
+            <PropertyRef Name="SkillId" />
+            <PropertyRef Name="JobId" />
+          </Key>
+          <Property Name="CandidateId" Type="Int32" Nullable="false" />
+          <Property Name="SkillId" Type="Int32" Nullable="false" />
+          <Property Name="JobId" Type="Int32" Nullable="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4762,6 +5132,66 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="CandidateRecruitmentLogs">
+            <EntityTypeMapping TypeName="ubietydbModel.CandidateRecruitmentLog">
+              <MappingFragment StoreEntitySet="CandidateRecruitmentLog">
+                <ScalarProperty Name="ActionBy" ColumnName="ActionBy" />
+                <ScalarProperty Name="LogId" ColumnName="LogId" />
+                <ScalarProperty Name="JobId" ColumnName="JobId" />
+                <ScalarProperty Name="CandidateId" ColumnName="CandidateId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LogTables">
+            <EntityTypeMapping TypeName="ubietydbModel.LogTable">
+              <MappingFragment StoreEntitySet="LogTable">
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="LogType" ColumnName="LogType" />
+                <ScalarProperty Name="LongDescription" ColumnName="LongDescription" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LogTypes">
+            <EntityTypeMapping TypeName="ubietydbModel.LogType">
+              <MappingFragment StoreEntitySet="LogType">
+                <ScalarProperty Name="LogTypeName" ColumnName="LogTypeName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RecruitmentStages">
+            <EntityTypeMapping TypeName="ubietydbModel.RecruitmentStage">
+              <MappingFragment StoreEntitySet="RecruitmentStage">
+                <ScalarProperty Name="StageName" ColumnName="StageName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CandidateRecruitments">
+            <EntityTypeMapping TypeName="ubietydbModel.CandidateRecruitment">
+              <MappingFragment StoreEntitySet="CandidateRecruitment">
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CurrentStage" ColumnName="CurrentStage" />
+                <ScalarProperty Name="JobId" ColumnName="JobId" />
+                <ScalarProperty Name="CandidateId" ColumnName="CandidateId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vSkillMatches">
+            <EntityTypeMapping TypeName="ubietydbModel.vSkillMatch">
+              <MappingFragment StoreEntitySet="vSkillMatch">
+                <ScalarProperty Name="JobId" ColumnName="JobId" />
+                <ScalarProperty Name="SkillId" ColumnName="SkillId" />
+                <ScalarProperty Name="CandidateId" ColumnName="CandidateId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

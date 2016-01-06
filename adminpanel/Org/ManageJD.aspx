@@ -27,7 +27,6 @@
                                 <input type="text" class="form-control jobTitleModal" disabled="disabled"  />
                             </div>
                         </div>
-
                         
                           <div class="form-group">
                             <label class="col-lg-3 control-label">Employee</label>

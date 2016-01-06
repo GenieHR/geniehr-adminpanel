@@ -65,6 +65,12 @@ public partial class Employee
 
         this.EmployeeJDs2 = new HashSet<EmployeeJD>();
 
+        this.CandidateRecruitmentLogs = new HashSet<CandidateRecruitmentLog>();
+
+        this.CandidateRecruitments = new HashSet<CandidateRecruitment>();
+
+        this.CandidateRecruitments1 = new HashSet<CandidateRecruitment>();
+
     }
 
 
@@ -141,6 +147,12 @@ public partial class Employee
     public virtual ICollection<EmployeeJD> EmployeeJDs1 { get; set; }
 
     public virtual ICollection<EmployeeJD> EmployeeJDs2 { get; set; }
+
+    public virtual ICollection<CandidateRecruitmentLog> CandidateRecruitmentLogs { get; set; }
+
+    public virtual ICollection<CandidateRecruitment> CandidateRecruitments { get; set; }
+
+    public virtual ICollection<CandidateRecruitment> CandidateRecruitments1 { get; set; }
 
 }
 
