@@ -25,6 +25,8 @@ public partial class claimJSON
 
         this.ClaimRevisions = new HashSet<ClaimRevision>();
 
+        this.claimManagers = new HashSet<claimManager>();
+
     }
 
 
@@ -44,6 +46,10 @@ public partial class claimJSON
 
     public int claimstatus { get; set; }
 
+    public Nullable<System.DateTime> ClaimPeriodFrom { get; set; }
+
+    public Nullable<System.DateTime> ClaimPeriodTo { get; set; }
+
 
 
     public virtual ICollection<claimHistory> claimHistories { get; set; }
@@ -53,6 +59,8 @@ public partial class claimJSON
     public virtual Employee Employee { get; set; }
 
     public virtual ICollection<ClaimRevision> ClaimRevisions { get; set; }
+
+    public virtual ICollection<claimManager> claimManagers { get; set; }
 
 }
 

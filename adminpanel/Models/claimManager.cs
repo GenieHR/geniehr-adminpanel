@@ -15,18 +15,20 @@ namespace adminpanel.Models
 using System;
     using System.Collections.Generic;
     
-public partial class EmpClient
+public partial class claimManager
 {
 
     public int Id { get; set; }
 
-    public int EmpId { get; set; }
+    public int claimId { get; set; }
 
-    public int ClientId { get; set; }
+    public int managerId { get; set; }
+
+    public int level { get; set; }
 
 
 
-    public virtual Client Client { get; set; }
+    public virtual claimJSON claimJSON { get; set; }
 
     public virtual Employee Employee { get; set; }
 

@@ -67,12 +67,10 @@
                     <a href="#"><i class="fa  fa-money"></i> <span class="nav-label">Claims</span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
                         <li><a href="claim.aspx">Create Claim</a></li>
-                        <li><a href="#">View Old Claims</a></li>
+                        <li><a href="MyClaims.aspx">My Claims</a></li>
                     </ul>
                 </li>
                 
-                
-
                 <li>
                     <a href="#"><i class="fa  fa-book"></i> <span class="nav-label">Attendance</span></a>
                 </li>

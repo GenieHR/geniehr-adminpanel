@@ -1,6 +1,6 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Client/ClientManager.Master" Title="Process Claim" CodeBehind="changeClaim.aspx.cs" Inherits="adminpanel.Client.viewClaim" %>
 
-<asp:Content ID="Content2" ContentPlaceHolderID="body" runat="server">
+<asp:Content ID="Content3" ContentPlaceHolderID="head" runat="server">
     <style>
         .vertical-alignment-helper {
             display: table;
@@ -23,6 +23,10 @@
         }
 </style>
 
+</asp:Content>
+
+<asp:Content ID="Content2" ContentPlaceHolderID="body" runat="server">
+    
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
             <h2>View Claim</h2>
@@ -488,7 +492,7 @@
                                 <div class="col-sm-8">
                                     <div class="input-group m-b">
                                         <span class="input-group-addon">&#x20B9</span>
-                                        <input type="number" readonly id="totalApprovedAmt" class="form-control" />
+                                        <input type="number" readonly="readonly" id="totalApprovedAmt" class="form-control" />
                                     </div>
                                 </div>
                             </div>
@@ -665,8 +669,9 @@
                 "claimStatus": -1,
                 "revisionText": "",
                 "revisionRemarks": $("#claimRemarks").val(),
-                "claimText": ""
+                "claimText": JSON.stringify(claimJSON)
             };
+
 
             if (claimResponse == 'A') {
 
@@ -680,13 +685,12 @@
                 {
                     claimUploadJson.claimStatus = 3;
                 }
-                     
 
                 if (claimJSON.totalExpenseA != submittedClaim.totalExpense) {
 
                     claimUploadJson.revisionText = originalClaimText;
-                    claimUploadJson.claimText = JSON.stringify(claimJSON);
                 }
+
             }
             else if (claimResponse == 'R') {
                 claimUploadJson.claimStatus = 4;
@@ -703,15 +707,24 @@
                     alert('Claim Succesfully Updated');
                     $('#myModal').modal('hide');
 
-                    //Mail to Employee if claim is rejected
+                    //Mail to Employee if claim is approved/rejected
+
+                    var claimResponseText;
 
                     if (claimResponse == 'R'){
+                        claimResponseText = 'Rejected'
+                    }
+                    else
+                    {
+                        claimResponseText = 'Approved'
+                    }
+                    
                     var emailJSON = {
 
                         "toEmailAddress":gEmpDetails.employee[0].Email,
                         "ccEmailAddress":orgEmpInfo[0].Email,
-                        "mailSubject": "Claim (" + cliamNum  + ") has been Rejected!!",
-                        "mailBody":'<html><body>Dear ' +  gEmpDetails.employee[0].EmpName +' ,<br /> <br /> Your claim no. '+ cliamNum + ' is rejected. Please login to <a href="http://ubiety.geniehr.com">Ubiety</a> to view further details. <br /><br />Thank You.<br /><br />For,<br/>Team GenieHR Solutions Pvt. Ltd.<br/><br/>Please Note: This is a system generated email and is not monitored. Please don’t reply to this email.</body></html>'
+                        "mailSubject": "Claim (" + cliamNum  + ") has been " + claimResponseText + "!!",
+                        "mailBody":'<html><body>Dear ' +  gEmpDetails.employee[0].EmpName +' ,<br /> <br /> Your claim no. '+ cliamNum + ' is ' + claimResponseText + '. Please login to <a href="http://ubiety.geniehr.com">Ubiety</a> to view further details. <br /><br />Thank You.<br /><br />For,<br/>Team GenieHR Solutions Pvt. Ltd.<br/><br/>Please Note: This is a system generated email and is not monitored. Please don’t reply to this email.</body></html>'
                     }
                     
                     $.ajax({
@@ -721,8 +734,7 @@
                         contentType: 'application/json',
                         dataType: "json"
                     });
-                    }
-                    
+
                     // Mail to Second Level Manager if exists
 
                     if (manager2Exists && claimResponse == 'A') {
@@ -781,10 +793,10 @@
         function addApprovalItems() {
 
             claimJSON.travelExpenseA = $("#sumTravelAmtA").val();
-            claimJSON.foodExpenseA = $("#sumFoodAmtA").val();
-            claimJSON.otherExpenseA = $("#summOthAmtA").val();
-            claimJSON.hotelExpenseA = $("#sumHotelAmtA").val();
-            claimJSON.totalExpenseA = $("#summTotAmt").html();
+            claimJSON.foodExpenseA   = $("#sumFoodAmtA").val();
+            claimJSON.otherExpenseA  = $("#summOthAmtA").val();
+            claimJSON.hotelExpenseA  = $("#sumHotelAmtA").val();
+            claimJSON.totalExpenseA  = $("#summTotAmt").html();
 
             for (i = 0; i < claimJSON.Travels.length; i++) {
                 claimJSON.Travels[i].approvedAmt = $("#travel" + i).val();

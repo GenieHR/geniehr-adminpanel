@@ -78,7 +78,7 @@
           <Property Name="NativePlace" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="HighestQualification" Type="int" Nullable="false" />
           <Property Name="CreatedBy" Type="int" Nullable="false" />
-          <Property Name="CreatedOn" Type="datetime" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="ModifiedOn" Type="datetime" />
           <Property Name="ModifiedBy" Type="int" />
           <Property Name="degree" Type="int" />
@@ -109,11 +109,15 @@
           <Property Name="LogId" Type="int" Nullable="false" />
           <Property Name="ActionBy" Type="int" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'ubietydb.dbo.CandidateSkill' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="CandidateSkill">
           <Key>
             <PropertyRef Name="id" />
+            
+            
           </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="CandidateId" Type="int" Nullable="false" />
           <Property Name="SkillId" Type="int" Nullable="false" />
         </EntityType>
@@ -151,6 +155,17 @@
           <Property Name="claimText" Type="nvarchar(max)" Nullable="false" />
           <Property Name="totalAmount" Type="money" Nullable="false" />
           <Property Name="claimstatus" Type="int" Nullable="false" />
+          <Property Name="ClaimPeriodFrom" Type="datetime" />
+          <Property Name="ClaimPeriodTo" Type="datetime" />
+        </EntityType>
+        <EntityType Name="claimManager">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="claimId" Type="int" Nullable="false" />
+          <Property Name="managerId" Type="int" Nullable="false" />
+          <Property Name="level" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="ClaimRevision">
           <Key>
@@ -646,7 +661,33 @@ warning 6002: The table/view 'ubietydb.dbo.vSkillMatch' does not have a primary 
           <Property Name="SkillId" Type="int" Nullable="false" />
           <Property Name="JobId" Type="int" Nullable="false" />
         </EntityType>
-        <Association Name="FK__claimJSON__claim__2A164134">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'ubietydb.dbo.vSubmittedClaims' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vSubmittedClaims">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="empid" />
+            <PropertyRef Name="claimNo" />
+            <PropertyRef Name="claimDate" />
+            <PropertyRef Name="claimPurpose" />
+            <PropertyRef Name="totalAmount" />
+            <PropertyRef Name="claimstatus" />
+            <PropertyRef Name="ClaimStatusName" />
+            <PropertyRef Name="claimText" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="empid" Type="int" Nullable="false" />
+          <Property Name="claimNo" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="claimDate" Type="datetime" Nullable="false" />
+          <Property Name="claimPurpose" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="totalAmount" Type="money" Nullable="false" />
+          <Property Name="claimstatus" Type="int" Nullable="false" />
+          <Property Name="ClaimStatusName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="claimText" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="claimperiodfrom" Type="datetime" />
+          <Property Name="claimperiodto" Type="datetime" />
+        </EntityType>
+        <Association Name="FK__claimJSON__claim__025D5595">
           <End Role="ClaimStatus" Type="Self.ClaimStatus" Multiplicity="1" />
           <End Role="claimJSON" Type="Self.claimJSON" Multiplicity="*" />
           <ReferentialConstraint>
@@ -727,18 +768,6 @@ warning 6002: The table/view 'ubietydb.dbo.vSkillMatch' does not have a primary 
             </Principal>
             <Dependent Role="Candidate">
               <PropertyRef Name="HighestQualification" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Candidate_Source_Id">
-          <End Role="Source" Type="Self.Source" Multiplicity="0..1" />
-          <End Role="Candidate" Type="Self.Candidate" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Source">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Candidate">
-              <PropertyRef Name="SourceId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -898,6 +927,30 @@ warning 6002: The table/view 'ubietydb.dbo.vSkillMatch' does not have a primary 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_claimManager_claimJSON_id">
+          <End Role="claimJSON" Type="Self.claimJSON" Multiplicity="1" />
+          <End Role="claimManager" Type="Self.claimManager" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="claimJSON">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="claimManager">
+              <PropertyRef Name="claimId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_claimManager_Employee_EmpId">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="claimManager" Type="Self.claimManager" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="claimManager">
+              <PropertyRef Name="managerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ClaimRevision_claimJSON">
           <End Role="claimJSON" Type="Self.claimJSON" Multiplicity="1" />
           <End Role="ClaimRevision" Type="Self.ClaimRevision" Multiplicity="*" />
@@ -979,6 +1032,30 @@ warning 6002: The table/view 'ubietydb.dbo.vSkillMatch' does not have a primary 
             </Principal>
             <Dependent Role="EmergencyContact">
               <PropertyRef Name="Relation" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpClient_Client_ClientId">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="EmpClient" Type="Self.EmpClient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ClientId" />
+            </Principal>
+            <Dependent Role="EmpClient">
+              <PropertyRef Name="ClientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpClient_Employee_EmpId">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="EmpClient" Type="Self.EmpClient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="EmpClient">
+              <PropertyRef Name="EmpId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1564,6 +1641,9 @@ warning 6002: The table/view 'ubietydb.dbo.vSkillMatch' does not have a primary 
         <Function Name="getEmpsofManager" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ManagerId" Type="int" Mode="In" />
         </Function>
+        <Function Name="getGroupTypeIncharge" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EmpId" Type="int" Mode="In" />
+        </Function>
         <Function Name="getIST" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="datetime" />
         <Function Name="GetJobId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="getManagerDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -1580,6 +1660,9 @@ warning 6002: The table/view 'ubietydb.dbo.vSkillMatch' does not have a primary 
         </Function>
         <Function Name="getOpenCliamsByManagerId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="managerId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="getOrgEmpDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EmpId" Type="int" Mode="In" />
         </Function>
         <Function Name="getOrgEmpNotInJdId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="JobId" Type="int" Mode="In" />
@@ -1604,10 +1687,10 @@ warning 6002: The table/view 'ubietydb.dbo.vSkillMatch' does not have a primary 
           <EntitySet Name="Candidate" EntityType="Self.Candidate" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CandidateRecruitment" EntityType="Self.CandidateRecruitment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CandidateRecruitmentLog" EntityType="Self.CandidateRecruitmentLog" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="CandidateSkill" EntityType="Self.CandidateSkill" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Certification" EntityType="Self.Certification" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="claimHistory" EntityType="Self.claimHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="claimJSON" EntityType="Self.claimJSON" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="claimManager" EntityType="Self.claimManager" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ClaimRevision" EntityType="Self.ClaimRevision" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ClaimStatus" EntityType="Self.ClaimStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ClaimStatusHistory" EntityType="Self.ClaimStatusHistory" Schema="dbo" store:Type="Tables" />
@@ -1651,6 +1734,13 @@ warning 6002: The table/view 'ubietydb.dbo.vSkillMatch' does not have a primary 
           <EntitySet Name="Skill" EntityType="Self.Skill" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SkillGroup" EntityType="Self.SkillGroup" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Source" EntityType="Self.Source" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CandidateSkill" EntityType="Self.CandidateSkill" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [CandidateSkill].[id] AS [id], 
+    [CandidateSkill].[CandidateId] AS [CandidateId], 
+    [CandidateSkill].[SkillId] AS [SkillId]
+    FROM [dbo].[CandidateSkill] AS [CandidateSkill]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="test_att" EntityType="Self.test_att" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [test_att].[AttendanceId] AS [AttendanceId], 
@@ -1697,7 +1787,22 @@ warning 6002: The table/view 'ubietydb.dbo.vSkillMatch' does not have a primary 
     [vSkillMatch].[JobId] AS [JobId]
     FROM [dbo].[vSkillMatch] AS [vSkillMatch]</DefiningQuery>
           </EntitySet>
-          <AssociationSet Name="FK__claimJSON__claim__2A164134" Association="Self.FK__claimJSON__claim__2A164134">
+          <EntitySet Name="vSubmittedClaims" EntityType="Self.vSubmittedClaims" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vSubmittedClaims].[id] AS [id], 
+    [vSubmittedClaims].[empid] AS [empid], 
+    [vSubmittedClaims].[claimNo] AS [claimNo], 
+    [vSubmittedClaims].[claimDate] AS [claimDate], 
+    [vSubmittedClaims].[claimPurpose] AS [claimPurpose], 
+    [vSubmittedClaims].[totalAmount] AS [totalAmount], 
+    [vSubmittedClaims].[claimstatus] AS [claimstatus], 
+    [vSubmittedClaims].[ClaimStatusName] AS [ClaimStatusName], 
+    [vSubmittedClaims].[claimText] AS [claimText], 
+    [vSubmittedClaims].[claimperiodfrom] AS [claimperiodfrom], 
+    [vSubmittedClaims].[claimperiodto] AS [claimperiodto]
+    FROM [dbo].[vSubmittedClaims] AS [vSubmittedClaims]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__claimJSON__claim__025D5595" Association="Self.FK__claimJSON__claim__025D5595">
             <End Role="ClaimStatus" EntitySet="ClaimStatus" />
             <End Role="claimJSON" EntitySet="claimJSON" />
           </AssociationSet>
@@ -1723,10 +1828,6 @@ warning 6002: The table/view 'ubietydb.dbo.vSkillMatch' does not have a primary 
           </AssociationSet>
           <AssociationSet Name="FK_Candidate_Qualification" Association="Self.FK_Candidate_Qualification">
             <End Role="Qualification" EntitySet="Qualification" />
-            <End Role="Candidate" EntitySet="Candidate" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Candidate_Source_Id" Association="Self.FK_Candidate_Source_Id">
-            <End Role="Source" EntitySet="Source" />
             <End Role="Candidate" EntitySet="Candidate" />
           </AssociationSet>
           <AssociationSet Name="FK_CandidateRecruitment_Employee_EmpId" Association="Self.FK_CandidateRecruitment_Employee_EmpId">
@@ -1781,6 +1882,14 @@ warning 6002: The table/view 'ubietydb.dbo.vSkillMatch' does not have a primary 
             <End Role="Employee" EntitySet="Employee" />
             <End Role="claimJSON" EntitySet="claimJSON" />
           </AssociationSet>
+          <AssociationSet Name="FK_claimManager_claimJSON_id" Association="Self.FK_claimManager_claimJSON_id">
+            <End Role="claimJSON" EntitySet="claimJSON" />
+            <End Role="claimManager" EntitySet="claimManager" />
+          </AssociationSet>
+          <AssociationSet Name="FK_claimManager_Employee_EmpId" Association="Self.FK_claimManager_Employee_EmpId">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="claimManager" EntitySet="claimManager" />
+          </AssociationSet>
           <AssociationSet Name="FK_ClaimRevision_claimJSON" Association="Self.FK_ClaimRevision_claimJSON">
             <End Role="claimJSON" EntitySet="claimJSON" />
             <End Role="ClaimRevision" EntitySet="ClaimRevision" />
@@ -1808,6 +1917,14 @@ warning 6002: The table/view 'ubietydb.dbo.vSkillMatch' does not have a primary 
           <AssociationSet Name="FK_EmergencyContact_Relation" Association="Self.FK_EmergencyContact_Relation">
             <End Role="Relation" EntitySet="Relation" />
             <End Role="EmergencyContact" EntitySet="EmergencyContact" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpClient_Client_ClientId" Association="Self.FK_EmpClient_Client_ClientId">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="EmpClient" EntitySet="EmpClient" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpClient_Employee_EmpId" Association="Self.FK_EmpClient_Employee_EmpId">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="EmpClient" EntitySet="EmpClient" />
           </AssociationSet>
           <AssociationSet Name="FK_EmpContactDetail_contactType" Association="Self.FK_EmpContactDetail_contactType">
             <End Role="contactType" EntitySet="contactType" />
@@ -2435,6 +2552,33 @@ warning 6002: The table/view 'ubietydb.dbo.vSkillMatch' does not have a primary 
             <End Role="CandidateRecruitment" EntitySet="CandidateRecruitments" />
           </AssociationSet>
           <EntitySet Name="vSkillMatches" EntityType="ubietydbModel.vSkillMatch" />
+          <FunctionImport Name="getGroupTypeIncharge1" ReturnType="Collection(ubietydbModel.getGroupTypeIncharge1_Result)">
+          <Parameter Name="EmpId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="getOrgEmpDetail1" ReturnType="Collection(ubietydbModel.getOrgEmpDetail1_Result)">
+          <Parameter Name="EmpId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="getOrgEmpDetail2" ReturnType="Collection(ubietydbModel.getOrgEmpDetail2_Result)">
+          <Parameter Name="EmpId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="vSubmittedClaims" EntityType="ubietydbModel.vSubmittedClaim" />
+          <EntitySet Name="claimManagers" EntityType="ubietydbModel.claimManager" />
+          <AssociationSet Name="FK_claimManager_claimJSON_id" Association="ubietydbModel.FK_claimManager_claimJSON_id">
+            <End Role="claimJSON" EntitySet="claimJSONs" />
+            <End Role="claimManager" EntitySet="claimManagers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_claimManager_Employee_EmpId" Association="ubietydbModel.FK_claimManager_Employee_EmpId">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="claimManager" EntitySet="claimManagers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpClient_Client_ClientId" Association="ubietydbModel.FK_EmpClient_Client_ClientId">
+            <End Role="Client" EntitySet="Clients" />
+            <End Role="EmpClient" EntitySet="EmpClients" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpClient_Employee_EmpId" Association="ubietydbModel.FK_EmpClient_Employee_EmpId">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="EmpClient" EntitySet="EmpClients" />
+          </AssociationSet>
           </EntityContainer>
         <ComplexType Name="getEmpOfGroups_Result">
           <Property Type="String" Name="AuthUserId" Nullable="true" MaxLength="255" />
@@ -2692,7 +2836,7 @@ warning 6002: The table/view 'ubietydb.dbo.vSkillMatch' does not have a primary 
           <Property Name="NativePlace" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="HighestQualification" Type="Int32" Nullable="false" />
           <Property Name="CreatedBy" Type="Int32" Nullable="false" />
-          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" Nullable="false" />
           <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
           <Property Name="ModifiedBy" Type="Int32" />
           <Property Name="degree" Type="Int32" />
@@ -2759,6 +2903,9 @@ warning 6002: The table/view 'ubietydb.dbo.vSkillMatch' does not have a primary 
           <NavigationProperty Name="ClaimStatu" Relationship="ubietydbModel.FK__claimJSON__claim__2A164134" FromRole="claimJSON" ToRole="ClaimStatu" />
           <NavigationProperty Name="Employee" Relationship="ubietydbModel.FK_claimJSON_Employee" FromRole="claimJSON" ToRole="Employee" />
           <NavigationProperty Name="ClaimRevisions" Relationship="ubietydbModel.FK_ClaimRevision_claimJSON" FromRole="claimJSON" ToRole="ClaimRevision" />
+          <Property Name="ClaimPeriodFrom" Type="DateTime" Precision="3" />
+          <Property Name="ClaimPeriodTo" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="claimManagers" Relationship="ubietydbModel.FK_claimManager_claimJSON_id" FromRole="claimJSON" ToRole="claimManager" />
         </EntityType>
         <EntityType Name="ClaimRevision">
           <Key>
@@ -2804,6 +2951,7 @@ warning 6002: The table/view 'ubietydb.dbo.vSkillMatch' does not have a primary 
           <Property Name="ClientLogoURL" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="GroupTypes" Relationship="ubietydbModel.FK_GroupType_Client" FromRole="Client" ToRole="GroupType" />
           <NavigationProperty Name="JobDescriptions" Relationship="ubietydbModel.FK_JobDescription_Client_ClientId" FromRole="Client" ToRole="JobDescription" />
+          <NavigationProperty Name="EmpClients" Relationship="ubietydbModel.FK_EmpClient_Client_ClientId" FromRole="Client" ToRole="EmpClient" />
         </EntityType>
         <EntityType Name="contactType">
           <Key>
@@ -2854,6 +3002,8 @@ warning 6002: The table/view 'ubietydb.dbo.vSkillMatch' does not have a primary 
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="EmpId" Type="Int32" Nullable="false" />
           <Property Name="ClientId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Client" Relationship="ubietydbModel.FK_EmpClient_Client_ClientId" FromRole="EmpClient" ToRole="Client" />
+          <NavigationProperty Name="Employee" Relationship="ubietydbModel.FK_EmpClient_Employee_EmpId" FromRole="EmpClient" ToRole="Employee" />
         </EntityType>
         <EntityType Name="EmpContactDetail">
           <Key>
@@ -2970,6 +3120,8 @@ warning 6002: The table/view 'ubietydb.dbo.vSkillMatch' does not have a primary 
           <NavigationProperty Name="CandidateRecruitmentLogs" Relationship="ubietydbModel.FK_CandidateRecruitmentLog_Employee_EmpId" FromRole="Employee" ToRole="CandidateRecruitmentLog" />
           <NavigationProperty Name="CandidateRecruitments" Relationship="ubietydbModel.FK_CandidateRecruitment_Employee_EmpId" FromRole="Employee" ToRole="CandidateRecruitment" />
           <NavigationProperty Name="CandidateRecruitments1" Relationship="ubietydbModel.FK_CandidateRecruitment_Employee_REmpId" FromRole="Employee" ToRole="CandidateRecruitment" />
+          <NavigationProperty Name="claimManagers" Relationship="ubietydbModel.FK_claimManager_Employee_EmpId" FromRole="Employee" ToRole="claimManager" />
+          <NavigationProperty Name="EmpClients" Relationship="ubietydbModel.FK_EmpClient_Employee_EmpId" FromRole="Employee" ToRole="EmpClient" />
         </EntityType>
         <EntityType Name="EmployeeDetail">
           <Key>
@@ -4282,6 +4434,104 @@ warning 6002: The table/view 'ubietydb.dbo.vSkillMatch' does not have a primary 
           <Property Name="SkillId" Type="Int32" Nullable="false" />
           <Property Name="JobId" Type="Int32" Nullable="false" />
         </EntityType>
+        <ComplexType Name="getGroupTypeIncharge1_Result">
+          <Property Type="String" Name="EmpName" Nullable="false" MaxLength="100" />
+          <Property Type="Int64" Name="PrimaryMobile" Nullable="true" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="getOrgEmpDetail1_Result">
+          <Property Type="String" Name="EmpName" Nullable="false" MaxLength="100" />
+          <Property Type="Int64" Name="PrimaryMobile" Nullable="true" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="getOrgEmpDetail2_Result">
+          <Property Type="String" Name="EmpName" Nullable="false" MaxLength="100" />
+          <Property Type="Int64" Name="PrimaryMobile" Nullable="true" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <EntityType Name="vSubmittedClaim">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="empid" />
+            <PropertyRef Name="claimNo" />
+            <PropertyRef Name="claimDate" />
+            <PropertyRef Name="claimPurpose" />
+            <PropertyRef Name="totalAmount" />
+            <PropertyRef Name="claimstatus" />
+            <PropertyRef Name="ClaimStatusName" />
+            <PropertyRef Name="claimText" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="empid" Type="Int32" Nullable="false" />
+          <Property Name="claimNo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="claimDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="claimPurpose" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="totalAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="claimstatus" Type="Int32" Nullable="false" />
+          <Property Name="ClaimStatusName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="claimText" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="claimperiodfrom" Type="DateTime" Precision="3" />
+          <Property Name="claimperiodto" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="claimManager">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="claimId" Type="Int32" Nullable="false" />
+          <Property Name="managerId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="claimJSON" Relationship="ubietydbModel.FK_claimManager_claimJSON_id" FromRole="claimManager" ToRole="claimJSON" />
+          <NavigationProperty Name="Employee" Relationship="ubietydbModel.FK_claimManager_Employee_EmpId" FromRole="claimManager" ToRole="Employee" />
+          <Property Name="level" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_claimManager_claimJSON_id">
+          <End Type="ubietydbModel.claimJSON" Role="claimJSON" Multiplicity="1" />
+          <End Type="ubietydbModel.claimManager" Role="claimManager" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="claimJSON">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="claimManager">
+              <PropertyRef Name="claimId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_claimManager_Employee_EmpId">
+          <End Type="ubietydbModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="ubietydbModel.claimManager" Role="claimManager" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="claimManager">
+              <PropertyRef Name="managerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpClient_Client_ClientId">
+          <End Type="ubietydbModel.Client" Role="Client" Multiplicity="1" />
+          <End Type="ubietydbModel.EmpClient" Role="EmpClient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ClientId" />
+            </Principal>
+            <Dependent Role="EmpClient">
+              <PropertyRef Name="ClientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpClient_Employee_EmpId">
+          <End Type="ubietydbModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="ubietydbModel.EmpClient" Role="EmpClient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="EmpClient">
+              <PropertyRef Name="EmpId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4600,6 +4850,8 @@ warning 6002: The table/view 'ubietydb.dbo.vSkillMatch' does not have a primary 
           <EntitySetMapping Name="claimJSONs">
             <EntityTypeMapping TypeName="ubietydbModel.claimJSON">
               <MappingFragment StoreEntitySet="claimJSON">
+                <ScalarProperty Name="ClaimPeriodTo" ColumnName="ClaimPeriodTo" />
+                <ScalarProperty Name="ClaimPeriodFrom" ColumnName="ClaimPeriodFrom" />
                 <ScalarProperty Name="claimstatus" ColumnName="claimstatus" />
                 <ScalarProperty Name="totalAmount" ColumnName="totalAmount" />
                 <ScalarProperty Name="claimText" ColumnName="claimText" />
@@ -5189,6 +5441,51 @@ warning 6002: The table/view 'ubietydb.dbo.vSkillMatch' does not have a primary 
                 <ScalarProperty Name="JobId" ColumnName="JobId" />
                 <ScalarProperty Name="SkillId" ColumnName="SkillId" />
                 <ScalarProperty Name="CandidateId" ColumnName="CandidateId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="getGroupTypeIncharge1" FunctionName="ubietydbModel.Store.getGroupTypeIncharge">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ubietydbModel.getGroupTypeIncharge1_Result">
+                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
+                <ScalarProperty Name="PrimaryMobile" ColumnName="PrimaryMobile" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getOrgEmpDetail2" FunctionName="ubietydbModel.Store.getOrgEmpDetail">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ubietydbModel.getOrgEmpDetail2_Result">
+                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
+                <ScalarProperty Name="PrimaryMobile" ColumnName="PrimaryMobile" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="vSubmittedClaims">
+            <EntityTypeMapping TypeName="ubietydbModel.vSubmittedClaim">
+              <MappingFragment StoreEntitySet="vSubmittedClaims">
+                <ScalarProperty Name="claimperiodto" ColumnName="claimperiodto" />
+                <ScalarProperty Name="claimperiodfrom" ColumnName="claimperiodfrom" />
+                <ScalarProperty Name="claimText" ColumnName="claimText" />
+                <ScalarProperty Name="ClaimStatusName" ColumnName="ClaimStatusName" />
+                <ScalarProperty Name="claimstatus" ColumnName="claimstatus" />
+                <ScalarProperty Name="totalAmount" ColumnName="totalAmount" />
+                <ScalarProperty Name="claimPurpose" ColumnName="claimPurpose" />
+                <ScalarProperty Name="claimDate" ColumnName="claimDate" />
+                <ScalarProperty Name="claimNo" ColumnName="claimNo" />
+                <ScalarProperty Name="empid" ColumnName="empid" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="claimManagers">
+            <EntityTypeMapping TypeName="ubietydbModel.claimManager">
+              <MappingFragment StoreEntitySet="claimManager">
+                <ScalarProperty Name="level" ColumnName="level" />
+                <ScalarProperty Name="managerId" ColumnName="managerId" />
+                <ScalarProperty Name="claimId" ColumnName="claimId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

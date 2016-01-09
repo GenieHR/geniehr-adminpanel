@@ -29,7 +29,6 @@
                     <div id="dZUpload" class="dropzone">
                         <div class="dz-default dz-message">
                             Click to select image 
-                       
                         </div>
                     </div>
 

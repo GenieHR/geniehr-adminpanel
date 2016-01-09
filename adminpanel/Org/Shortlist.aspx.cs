@@ -13,5 +13,20 @@ namespace adminpanel.Org
         {
 
         }
+
+        protected void Page_PreInit(object sender, EventArgs e)
+        {
+            if (System.Web.HttpContext.Current.User.IsInRole("OrgManager"))
+            {
+                this.MasterPageFile = "~/Org/OrgManager.Master";
+            }
+
+            else if (System.Web.HttpContext.Current.User.IsInRole("OrgEmployee"))
+            {
+                this.MasterPageFile = "~/Org/OrgTemplate1.Master";
+            }
+
+        }
     }
-}
+
+    }

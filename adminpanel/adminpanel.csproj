@@ -267,6 +267,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="css\imgEffects.css" />
+    <Content Include="css\material.css" />
     <Content Include="css\plugins\datatables\dataTables.bootstrap.css" />
     <Content Include="css\plugins\datatables\dataTables.responsive.css" />
     <Content Include="css\plugins\datatables\dataTables.tableTools.min.css" />
@@ -300,6 +301,9 @@
     <Content Include="css\spinners.css" />
     <Content Include="css\style.css" />
     <Content Include="Employees\docs.aspx" />
+    <Content Include="Employees\MyClaims.aspx" />
+    <Content Include="Employees\printClaim.aspx" />
+    <Content Include="Employees\viewClaim.aspx" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="img\pp\1.jpg" />
     <Content Include="img\pp\2.jpg" />
@@ -308,6 +312,7 @@
     <Content Include="img\pp\5.jpg" />
     <Content Include="img\pp\6.jpg" />
     <Content Include="img\pp\7.jpg" />
+    <Content Include="img\print-logo.png" />
     <Content Include="js\plugins\jqueryrange\jquery.range-min.js" />
     <Content Include="Org\AddCandidate.aspx" />
     <Content Include="Org\AddOrgEmployee.aspx" />
@@ -752,6 +757,27 @@
     <Compile Include="Employees\docs.aspx.designer.cs">
       <DependentUpon>docs.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Employees\MyClaims.aspx.cs">
+      <DependentUpon>MyClaims.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Employees\MyClaims.aspx.designer.cs">
+      <DependentUpon>MyClaims.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Employees\printClaim.aspx.cs">
+      <DependentUpon>printClaim.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Employees\printClaim.aspx.designer.cs">
+      <DependentUpon>printClaim.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Employees\viewClaim.aspx.cs">
+      <DependentUpon>viewClaim.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Employees\viewClaim.aspx.designer.cs">
+      <DependentUpon>viewClaim.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Models\Address.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
@@ -797,6 +823,7 @@
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CertificationDTO.cs" />
+    <Compile Include="Models\claimDTO.cs" />
     <Compile Include="Models\claimHistory.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
@@ -806,6 +833,11 @@
     <Compile Include="Models\claimLog_Result.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\claimManager.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\claimManagerDTO.cs" />
+    <Compile Include="Models\claimPrintDTO.cs" />
     <Compile Include="Models\ClaimRevision.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
@@ -919,6 +951,9 @@
     <Compile Include="Models\getEmpOfGroups_Result.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\getGroupTypeIncharge1_Result.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\getGroupTypeIncharge_Result.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
@@ -929,6 +964,12 @@
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\getOpenCliamsByManagerId_Result.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\getOrgEmpDetail1_Result.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\getOrgEmpDetail2_Result.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\getOrgEmpDetail_Result.cs">
@@ -1019,6 +1060,9 @@
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vSkillMatch.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vSubmittedClaim.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Org\AddCandidate.aspx.cs">

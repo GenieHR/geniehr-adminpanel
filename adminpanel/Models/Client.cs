@@ -25,6 +25,8 @@ public partial class Client
 
         this.JobDescriptions = new HashSet<JobDescription>();
 
+        this.EmpClients = new HashSet<EmpClient>();
+
     }
 
 
@@ -41,6 +43,8 @@ public partial class Client
     public virtual ICollection<GroupType> GroupTypes { get; set; }
 
     public virtual ICollection<JobDescription> JobDescriptions { get; set; }
+
+    public virtual ICollection<EmpClient> EmpClients { get; set; }
 
 }
 

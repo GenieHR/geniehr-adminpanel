@@ -71,6 +71,10 @@ public partial class Employee
 
         this.CandidateRecruitments1 = new HashSet<CandidateRecruitment>();
 
+        this.claimManagers = new HashSet<claimManager>();
+
+        this.EmpClients = new HashSet<EmpClient>();
+
     }
 
 
@@ -153,6 +157,10 @@ public partial class Employee
     public virtual ICollection<CandidateRecruitment> CandidateRecruitments { get; set; }
 
     public virtual ICollection<CandidateRecruitment> CandidateRecruitments1 { get; set; }
+
+    public virtual ICollection<claimManager> claimManagers { get; set; }
+
+    public virtual ICollection<EmpClient> EmpClients { get; set; }
 
 }
 

@@ -139,6 +139,12 @@
         <AssociationConnector Association="ubietydbModel.FK_CandidateRecruitment_Employee_REmpId" />
         <AssociationConnector Association="ubietydbModel.FK_CandidateRecruitment_RecruitmentStage_Id" />
         <EntityTypeShape EntityType="ubietydbModel.vSkillMatch" Width="1.5" PointX="8.375" PointY="0.75" />
+        <EntityTypeShape EntityType="ubietydbModel.vSubmittedClaim" Width="1.5" PointX="8.375" PointY="3.75" />
+        <EntityTypeShape EntityType="ubietydbModel.claimManager" Width="1.5" PointX="16.5000005" PointY="43.552775065104164" />
+        <AssociationConnector Association="ubietydbModel.FK_claimManager_claimJSON_id" />
+        <AssociationConnector Association="ubietydbModel.FK_claimManager_Employee_EmpId" />
+        <AssociationConnector Association="ubietydbModel.FK_EmpClient_Client_ClientId" />
+        <AssociationConnector Association="ubietydbModel.FK_EmpClient_Employee_EmpId" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

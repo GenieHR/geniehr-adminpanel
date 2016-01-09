@@ -35,10 +35,10 @@ namespace adminpanel.Controllers
             claimJSON claim = db.claimJSONs.Find(claimUpdateDTO.claimId);
             claim.claimstatus = claimUpdateDTO.claimStatus;
 
-            if (!(claimUpdateDTO.revisionText == null))
-            { 
+          //  if (!(claimUpdateDTO.revisionText == null))
+           // { 
                 claim.claimText = claimUpdateDTO.claimText;
-            }
+            //}
             
             db.Entry(claim).State = System.Data.Entity.EntityState.Modified;
 

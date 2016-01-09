@@ -157,6 +157,10 @@ public partial class ubietydbEntities : DbContext
 
     public virtual DbSet<vSkillMatch> vSkillMatches { get; set; }
 
+    public virtual DbSet<vSubmittedClaim> vSubmittedClaims { get; set; }
+
+    public virtual DbSet<claimManager> claimManagers { get; set; }
+
 
     public virtual ObjectResult<getEmpOfGroups_Result> getEmpOfGroups()
     {
@@ -513,6 +517,42 @@ public partial class ubietydbEntities : DbContext
 
 
         return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getOrgEmpNotInJdId_Result>("getOrgEmpNotInJdId", jobIdParameter);
+    }
+
+
+    public virtual ObjectResult<getGroupTypeIncharge1_Result> getGroupTypeIncharge1(Nullable<int> empId)
+    {
+
+        var empIdParameter = empId.HasValue ?
+            new ObjectParameter("EmpId", empId) :
+            new ObjectParameter("EmpId", typeof(int));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getGroupTypeIncharge1_Result>("getGroupTypeIncharge1", empIdParameter);
+    }
+
+
+    public virtual ObjectResult<getOrgEmpDetail1_Result> getOrgEmpDetail1(Nullable<int> empId)
+    {
+
+        var empIdParameter = empId.HasValue ?
+            new ObjectParameter("EmpId", empId) :
+            new ObjectParameter("EmpId", typeof(int));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getOrgEmpDetail1_Result>("getOrgEmpDetail1", empIdParameter);
+    }
+
+
+    public virtual ObjectResult<getOrgEmpDetail2_Result> getOrgEmpDetail2(Nullable<int> empId)
+    {
+
+        var empIdParameter = empId.HasValue ?
+            new ObjectParameter("EmpId", empId) :
+            new ObjectParameter("EmpId", typeof(int));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getOrgEmpDetail2_Result>("getOrgEmpDetail2", empIdParameter);
     }
 
 }

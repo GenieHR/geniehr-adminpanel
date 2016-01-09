@@ -133,7 +133,7 @@
 
 
 
-    var TRHtml = '<tr><td class="project-title"><strong class="JobShortName"></strong></td><td class="project-title"><a href="showJD.aspx" class="JobTitle"></a><br /><span class="ClientName"></span></td><td class="project-title"><strong class="JobLocation"></strong></td><td class="project-people text-right"></td><td class="project-actions"><a href="#" data-toggle="modal" data-target="#assignJDModal" class="btn btn-white btn-sm assingButton"><i class="fa fa-user"></i> Assign </a><a href="#" class="btn btn-white btn-sm"><i class="fa fa-binoculars"></i>  Search </a></td></tr>';
+    var TRHtml = '<tr><td class="project-title"><strong class="JobShortName"></strong></td><td class="project-title"><a href="showJD.aspx" class="JobTitle"></a><br /><span class="ClientName"></span></td><td class="project-title"><strong class="JobLocation"></strong></td><td class="project-people text-right"></td><td class="project-actions"><a href="#" data-toggle="modal" data-target="#assignJDModal" class="btn btn-white btn-sm assingButton"><i class="fa fa-user"></i> Assign </a><a href="#" class="btn btn-white btn-sm searchButton"><i class="fa fa-binoculars"></i>Search </a></td></tr>';
     var gEmpId = <%= Session["EmpId"] %>;
     
     var jdData, gJDId, gIndex;
@@ -154,6 +154,7 @@
             var JobLocation = $(".JobLocation");
             var assingButton = $(".assingButton");
             var projectpeople = $('.project-people');
+            var searchButton = $('.searchButton');
 
             $(jdData).each(function (i) {
                 $(JobShortName[i]).html(jdData[i].JobShortName);
@@ -161,6 +162,9 @@
                 $(ClientName[i]).html(jdData[i].ClientName);
                 $(JobLocation[i]).html(jdData[i].JobLocation);
                 $(assingButton[i]).on("click", function () { openAssignModal(jdData[i].Id, jdData[i].JobTitle, i) });
+                $(searchButton[i]).on("click", function() { openEmpMan(jdData[i].Id, jdData[i].JobTitle, jdData[i].ClientName);    });
+
+
                 $(jdData[i].empIdJobId).each(function(p) {$(projectpeople[i]).append('<a title="' + jdData[i].empIdJobId[p].EmpName + '"><img alt="image" class="img-circle" src="../img/pp/' + jdData[i].empIdJobId[p].EmpId + '.JPG"></a>')});
             });
 
@@ -178,6 +182,16 @@
         gIndex = index;
         setEmpAssignFields(jobTitle);
     }
+
+    function openEmpMan(jobId, jobTitle, clientName) {
+
+        localStorage.setItem('org_jdId', jobId);
+        localStorage.setItem('org_jdTitle', jobTitle);
+        localStorage.setItem('org_clientName', clientName);
+
+        window.location = "shortlist.aspx";
+    }
+
 
     function setEmpAssignFields(jobTitle) {
         var empsURL = '../getEmpNotInJD/' + gJDId;

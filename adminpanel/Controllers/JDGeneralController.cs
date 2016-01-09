@@ -18,14 +18,6 @@ namespace adminpanel.Controllers
 
         public List<CandidateBySkillDTO> getCandidate(int JobId)
         {
-            //List<vSkillMatch> sklllMatches = db.vSkillMatches.ToList();
-
-            //foreach(var Match in sklllMatches)
-            //{
-            //   var abc =  (from recordset in Match
-            //               select new empIdJobId { EmpId = recordset.EmpId, EmpName = recordset.Employee.EmpName }).ToList();
-            //}
-
             return db
                .vSkillMatches
                .Where(e => e.JobId == JobId)

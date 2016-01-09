@@ -1,6 +1,7 @@
 <%@ Page Title="Claims" Language="C#" MasterPageFile="~/Employees/EmployeeTemplate.Master" AutoEventWireup="true" CodeBehind="claim.aspx.cs" Inherits="adminpanel.passwords.claim" %>
 
-<asp:Content ID="Content2" ContentPlaceHolderID="body" runat="server">
+<asp:Content ID="Content3" ContentPlaceHolderID="head" runat="server">
+    
     <style>
         .vertical-alignment-helper {
             display: table;
@@ -27,6 +28,13 @@
         }
 
     </style>
+
+    <link href="../css/plugins/sweetalert/sweetalert.css" rel="stylesheet" />
+
+
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="body" runat="server">
+    
 
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
@@ -63,7 +71,29 @@
                                         </div>
                                     </div>
 
-                                    <div class="hr-line-dashed"></div>
+                                    <!-- <div class="hr-line-dashed"></div> -->
+
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">Period From</label>
+
+                                        <div class="col-sm-4">
+                                            <div class="input-group m-b">
+                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                <input type="text" id="periodFrom" required="required" class="form-control" />
+                                            </div>
+                                        </div>
+                                        <label class="col-sm-2 control-label">To</label>
+
+                                        <div class="col-sm-4">
+                                            <div class="input-group m-b">
+                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                <input type="text" id="periodTo" required="required" class="form-control" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- <div class="hr-line-dashed"></div> -->
+
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">Date</label>
 
@@ -79,7 +109,7 @@
                                             <input type="text" readonly class="form-control" value="Create" />
                                         </div>
                                     </div>
-                                    <hr class="hr-line-dashed" style="margin-top: 0px" />
+                                    <%--<hr class="hr-line-dashed" style="margin-top: 0px" />--%>
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">Manager</label>
 
@@ -488,6 +518,8 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="javascriptPart" runat="server">
 
+    <script src="../js/plugins/sweetalert/sweetalert.min.js"></script>
+
 <script>
         
     var empId = <%= Session["EmpId"] %>;
@@ -498,6 +530,10 @@
     var managerInfo, orgEmpInfo;
     var travelLineId,hotelLineId,foodLineId,othersLineId;
 
+    $('#periodFrom').datepicker({ dateFormat: 'MM dd, yy' });
+    $('#periodTo').datepicker({ dateFormat: 'MM dd, yy' });
+
+    
     $('#myModal').on('hidden.bs.modal', function () {
         window.location = 'claim.aspx';
     })
@@ -514,23 +550,28 @@
             url: '../api/getClaimDraft/' + empId,
             success: function (data) {
 
-
                 if (data.length > 0) {
 
+                    sweetAlert({
+                        title:"Draft Claim",
+                        text:"System automatically has saved your claim. You can continue updating the draft or discard it to start a fresh claim.", 
+                        type: "info"});
+                    
                     gClaimNo = data[0].claimNo;
                     gClaimId = data[0].id;
 
                     claimJSON = JSON.parse(data[0].claimText);
-
+                    //console.log(JSON.stringify(claimJSON));
                     $("#sumTravelAmt").html(claimJSON.travelExpense);
                     $("#sumFoodAmt").html(claimJSON.foodExpense);
                     $("#summOthAmt").html(claimJSON.otherExpense);
                     $("#sumHotelAmt").html(claimJSON.hotelExpense);
                     $("#summTotAmt").html(claimJSON.totalExpense);
+                    $("#periodFrom").val(data[0].ClaimPeriodFrom.substring(0, 10));
+                    $("#periodTo").val(data[0].ClaimPeriodTo.substring(0, 10));
                     $("#claimPurpose").val(data[0].claimPurpose);
                     $("#claimDate").val(data[0].claimDate.substring(0, 10));
                     $("#claimNo").val(data[0].claimNo);
-
                            
                     if($("#expensesTable").length == 0) {
                         $('#expensesTableDiv').html('<table id="expensesTable" class=" table table-stripped table-bordered table-hover table-condensed"><thead><tr><th style="width: 10%;">Type </th><th style="width: 10%;">Date </th><th style="width: 60%">Notes</th><th style="width: 10%" class="curr">Amount</th><th style="width: 10%">Manage</th></tr></thead><tbody></tbody></table>');
@@ -560,7 +601,6 @@
                 }
             }
         });
-        
 
         $.ajax({
             url: '../api/getOrgEmployeeDetails/' + empId,
@@ -592,8 +632,31 @@ function activateTab(tab) {
     $('.nav-tabs a[href="#' + tab + '"]').tab('show');
 }
 
+function discardClaim()
+{
+    sweetAlert({ 
+        title: "Discard Draft?",   
+        text: "All your saved changes will be lost",   
+        type: "warning",   
+        showCancelButton: true,   
+        confirmButtonColor: "#DD6B55",   
+        confirmButtonText: "Yes, discard it!",   
+        closeOnConfirm: false,
+        showLoaderOnConfirm: true
+    }, 
+    function(){   
+        $.ajax({    
+            url: '../api/discardDraft/' + gClaimId,
+            type: 'post',
+            success: function (data) {
+                sweetAlert("Your claim has been discarded", "success");
+                window.location = 'claim.aspx';
+            }
+        });  
+    });
+}
     
-function saveDraftClaim() {
+function saveDraftClaim(background) {
   
     if( $.trim($("#claimPurpose").val()) == "") {
         alert("Claim pupose cannot be blank");
@@ -601,12 +664,16 @@ function saveDraftClaim() {
         return false;
     }
 
+    if(!background) {
+
     $('#draftClaimModal').modal({
         backdrop: 'static',
         keyboard: false
     });
 
     $('#draftClaimModal').modal();
+    }
+
            
     claimJSON.travelExpense = parseInt($("#sumTravelAmt").html());
     claimJSON.claimpurpose = $("#claimPurpose").val();
@@ -624,6 +691,8 @@ function saveDraftClaim() {
         "claimPurpose": claimJSON.claimpurpose,
         "claimText": JSON.stringify(claimJSON),
         "totalAmount": parseInt($("#summTotAmt").html()),
+        "ClaimPeriodFrom" : $("#periodFrom").val(),
+        "ClaimPeriodTo" : $("#periodTo").val(),
         "claimstatus": 0
     };
     }
@@ -636,9 +705,12 @@ function saveDraftClaim() {
             "claimPurpose": claimJSON.claimpurpose,
             "claimText": JSON.stringify(claimJSON),
             "totalAmount": parseInt($("#summTotAmt").html()),
+            "ClaimPeriodFrom" : $("#periodFrom").val(),
+            "ClaimPeriodTo" : $("#periodTo").val(),
             "claimstatus": 0
         };
     }
+    console.log(JSON.stringify(uploadVal));
 
     $.ajax({
         url: '../api/draftClaimJSON',
@@ -666,11 +738,25 @@ function submitClaim() {
         return false;
     }
 
+
     if( $.trim($("#claimPurpose").val()) == "") {
         alert("Claim pupose cannot be blank");
         $("#claimPurpose").focus();
         return false;
     }
+
+    if( $("#periodFrom").val() == "") {
+        alert("Enter claim period");
+        $("#periodFrom").focus();
+        return false;
+    }
+
+    if( $("#periodTo").val() == "") {
+        alert("Enter claim period");
+        $("#periodTo").focus();
+        return false;
+    }
+
 
     $('#myModal').modal({
         backdrop: 'static',
@@ -692,7 +778,9 @@ function submitClaim() {
         "claimPurpose": claimJSON.claimpurpose,
         "claimText": JSON.stringify(claimJSON),
         "totalAmount": parseInt($("#summTotAmt").html()),
-        "claimstatus": 1
+        "claimstatus": 1,
+        "ClaimPeriodFrom":$("#periodFrom").val(),
+        "ClaimPeriodTo":$("#periodTo").val()
     };
 
     $.ajax({
@@ -703,6 +791,12 @@ function submitClaim() {
         success: function (data) {
             $("#loadingContent").html('<h3>Claim no. <span class="text-success">' + data.claimNo + ' </span> submitted succesfully</h3><a data-dismiss="modal">Close</a>');
             
+            $.ajax({    
+                url: '../api/discardDraft/' + gClaimId,
+                type: 'post',
+                success: function (data) {
+                }
+            });
     
             var emailJSON = {
                 "toEmailAddress":managerInfo[0].Manager_Email,
@@ -743,6 +837,8 @@ $("#foodForm").submit(function (event) {
     addExpense('Food');
     $('#foodForm').trigger("reset");
     activateTab('tabSummary');
+
+    saveDraftClaim(true);
 });
 
 
@@ -763,6 +859,8 @@ $("#travelForm").submit(function (event) {
     addExpense('Travel');
     $('#travelForm').trigger("reset");
     activateTab('tabSummary');
+
+    saveDraftClaim(true);
 });
 
 
@@ -778,6 +876,9 @@ $("#hotelForm").submit(function (event) {
     addExpense('Hotel');
     $('#hotelForm').trigger("reset");
     activateTab('tabSummary');
+
+    saveDraftClaim(true);
+
 });
 
 
@@ -793,6 +894,9 @@ $("#othersForm").submit(function (event) {
     addExpense('Others');
     $('#othersForm').trigger("reset");
     activateTab('tabSummary');
+
+    saveDraftClaim(true);
+
 });
 
 

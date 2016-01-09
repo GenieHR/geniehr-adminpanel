@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using adminpanel.Models;
+using Newtonsoft.Json.Linq;
 
 namespace adminpanel.Controllers
 {
@@ -94,7 +95,8 @@ namespace adminpanel.Controllers
             try
             {
                 if (db.SaveChanges() == 1) {
-                    createClaimLog(claimJSON.id, claimJSON.claimstatus, claimJSON.EmpId,"Claim Created");
+                    createClaimLog(claimJSON.id, claimJSON.claimstatus, claimJSON.EmpId, "Claim Created");
+
                 };
             }
             catch (DbUpdateException)
@@ -122,6 +124,106 @@ namespace adminpanel.Controllers
         }
 
 
+        [Route("api/discardDraft/{DraftId}")]
+        [HttpPost]
+
+        public int discardDraft(int DraftId)
+        {
+            claimJSON draftClaim = db.claimJSONs.Find(DraftId);
+            draftClaim.claimstatus = 8;
+            db.Entry(draftClaim).State = EntityState.Modified;
+
+            if (db.SaveChanges() == 1)
+            {
+                createClaimLog(draftClaim.id, draftClaim.claimstatus, draftClaim.EmpId, "Draft Discarded");
+            };
+
+            return 1;
+        }
+
+        [Route("api/empMyClaims/{EmpId}")]
+        [HttpGet]
+        public dynamic empMyClaims (int EmpId)
+        {
+            List<vSubmittedClaim> AllClaims = db.vSubmittedClaims.Where(e => e.empid == EmpId).ToList();
+            List<claimDTO> empClaims = new List<claimDTO>();
+            foreach(var claim in AllClaims)
+            {
+                claimDTO thisClaim = new claimDTO();
+
+                thisClaim.claimDate = claim.claimDate;
+                thisClaim.claimId = claim.id;
+                thisClaim.claimNo = claim.claimNo;
+                thisClaim.claimPurpose = claim.claimPurpose;
+                thisClaim.claimStatusName = claim.ClaimStatusName;
+                thisClaim.claimStatusId = claim.claimstatus;
+                thisClaim.empId = claim.empid;
+                thisClaim.totalAmount = claim.totalAmount;
+
+                if (claim.claimstatus == 1)
+                {
+                    thisClaim.approvedAmount = "  ";
+                }
+                else
+                {
+                    JObject o = JObject.Parse(claim.claimText);
+                    thisClaim.approvedAmount = (string)o["totalExpenseA"];
+                }
+
+                empClaims.Add(thisClaim);
+            }
+            return empClaims;
+        }
+
+        [Route("api/printClaim/{claimId}")]
+        [HttpGet]
+
+        public dynamic getPrintClaimDet(int claimId)
+        {
+            db.Configuration.ProxyCreationEnabled = false;
+
+            db.Database.Log = s => System.Diagnostics.Debug.WriteLine(s);
+
+            var abc = db
+                .claimJSONs
+                .Where(e => e.id == claimId)
+                .Select(e => new
+                {
+                    employeeInfo = db.EmployeeDetails.FirstOrDefault(ED => ED.EmpId == e.EmpId),
+                    clientInfo = db.Clients.FirstOrDefault(CF => CF.ClientId == e.Employee.CompanyId),
+                    claimInfo = e
+                })
+                .Select(e => new claimPrintDTO {
+                    claimNo = e.claimInfo.claimNo,
+                    clientName = e.clientInfo.ClientName,
+                    workLocation = e.employeeInfo.WorkLocation,
+                    designation = e.claimInfo.Employee.Designation,
+                    claimStatus = e.claimInfo.ClaimStatu.Status,
+                    periodFrom = e.claimInfo.ClaimPeriodFrom,
+                    periodTO = e.claimInfo.ClaimPeriodTo,
+                    claimText = e.claimInfo.claimText,
+                    createDate = e.claimInfo.claimDate,
+                    empName = e.claimInfo.Employee.EmpName,
+                    mobileNO = e.claimInfo.Employee.PrimaryMobile,
+                    managers = e.claimInfo.claimManagers
+                                            .Where(m => m.claimId == claimId)
+                                            .OrderBy(x => x.level)
+                                            .Select(n => new claimManagerDTO
+                                                {
+                                                    managerId = n.Employee.EmpName,
+                                                    managerEmail = n.Employee.Email,
+                                                    managerName = n.Employee.EmpName,
+                                                    managerMobile = n.Employee.PrimaryMobile,
+                                                    levelInClaim = n.level
+                                            }).ToList(),
+                    email = e.claimInfo.Employee.Email
+                   
+                }).First();
+
+
+            return abc;
+        }
+
         [Route("api/draftClaimJSON")]
         [HttpPost]
 
@@ -137,7 +239,7 @@ namespace adminpanel.Controllers
             { 
                 claimJSON.claimNo = "Draft/" + db.getNextClaimNo(claimJSON.EmpId).FirstOrDefault();
 
-            db.claimJSONs.Add(claimJSON);
+                db.claimJSONs.Add(claimJSON);
 
             try
             {
@@ -162,10 +264,12 @@ namespace adminpanel.Controllers
             {
                 claimJSON claim = new claimJSON();
                 claim = db.claimJSONs.Find(claimJSON.id);
-
+                
                 claim.claimPurpose = claimJSON.claimPurpose;
                 claim.claimText = claimJSON.claimText;
                 claim.totalAmount = claimJSON.totalAmount;
+                claim.ClaimPeriodFrom = claimJSON.ClaimPeriodFrom;
+                claim.ClaimPeriodTo = claimJSON.ClaimPeriodTo;
 
                 db.Entry(claim).State = EntityState.Modified;
 
@@ -174,10 +278,8 @@ namespace adminpanel.Controllers
                     createClaimLog(claimJSON.id, claimJSON.claimstatus, claimJSON.EmpId, "Draft Claim Updated");
                 };
             }
-
             return claimJSON;
         }
-
 
         private int createClaimLog(int claimId, int statusId, int empId, string remarks)
         {
@@ -257,7 +359,7 @@ namespace adminpanel.Controllers
         public dynamic getOrgEmployeeDetails(int EmpId)
         {
             db.Configuration.ProxyCreationEnabled = false;
-            return db.getOrgEmpDetail(EmpId);
+            return db.getOrgEmpDetail2(EmpId);
         }
 
         [Route("api/getDivIncharge/{EmpId}")]
@@ -265,7 +367,11 @@ namespace adminpanel.Controllers
 
         public dynamic getDivIncharge(int EmpId)
         {
-            return db.getGroupTypeIncharge(EmpId);
+            return db.getGroupTypeIncharge1(EmpId);
         }
+
+
+
+
     }
 }
