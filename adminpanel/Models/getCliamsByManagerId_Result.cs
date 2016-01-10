@@ -13,32 +13,27 @@ namespace adminpanel.Models
 {
 
 using System;
-    using System.Collections.Generic;
     
-public partial class vSubmittedClaim
+public partial class getCliamsByManagerId_Result
 {
 
-    public int id { get; set; }
-
-    public int empid { get; set; }
+    public int claimId { get; set; }
 
     public string claimNo { get; set; }
 
-    public System.DateTime claimDate { get; set; }
+    public string EmpName { get; set; }
+
+    public Nullable<long> PrimaryMobile { get; set; }
+
+    public string ClaimDate { get; set; }
 
     public string claimPurpose { get; set; }
 
     public decimal totalAmount { get; set; }
 
-    public int claimstatus { get; set; }
-
-    public string ClaimStatusName { get; set; }
-
-    public Nullable<System.DateTime> claimperiodfrom { get; set; }
-
-    public Nullable<System.DateTime> claimperiodto { get; set; }
-
     public Nullable<decimal> ApprovedAmount { get; set; }
+
+    public string Status { get; set; }
 
 }
 

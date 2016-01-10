@@ -13,6 +13,8 @@ namespace adminpanel.Models
         public int claimId { get; set; }
         public String revisionText { get; set; }
 
+        public decimal? ApprovedAmount { get; set; }
+
         public String claimText { get; set; }
 
         public DateTime actionDateTime

@@ -50,6 +50,8 @@ public partial class claimJSON
 
     public Nullable<System.DateTime> ClaimPeriodTo { get; set; }
 
+    public Nullable<decimal> ApprovedAmount { get; set; }
+
 
 
     public virtual ICollection<claimHistory> claimHistories { get; set; }

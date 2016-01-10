@@ -157,6 +157,7 @@ warning 6002: The table/view 'ubietydb.dbo.CandidateSkill' does not have a prima
           <Property Name="claimstatus" Type="int" Nullable="false" />
           <Property Name="ClaimPeriodFrom" Type="datetime" />
           <Property Name="ClaimPeriodTo" Type="datetime" />
+          <Property Name="ApprovedAmount" Type="money" />
         </EntityType>
         <EntityType Name="claimManager">
           <Key>
@@ -673,7 +674,6 @@ warning 6002: The table/view 'ubietydb.dbo.vSubmittedClaims' does not have a pri
             <PropertyRef Name="totalAmount" />
             <PropertyRef Name="claimstatus" />
             <PropertyRef Name="ClaimStatusName" />
-            <PropertyRef Name="claimText" />
           </Key>
           <Property Name="id" Type="int" Nullable="false" />
           <Property Name="empid" Type="int" Nullable="false" />
@@ -683,9 +683,9 @@ warning 6002: The table/view 'ubietydb.dbo.vSubmittedClaims' does not have a pri
           <Property Name="totalAmount" Type="money" Nullable="false" />
           <Property Name="claimstatus" Type="int" Nullable="false" />
           <Property Name="ClaimStatusName" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="claimText" Type="nvarchar(max)" Nullable="false" />
           <Property Name="claimperiodfrom" Type="datetime" />
           <Property Name="claimperiodto" Type="datetime" />
+          <Property Name="ApprovedAmount" Type="money" />
         </EntityType>
         <Association Name="FK__claimJSON__claim__025D5595">
           <End Role="ClaimStatus" Type="Self.ClaimStatus" Multiplicity="1" />
@@ -1619,6 +1619,9 @@ warning 6002: The table/view 'ubietydb.dbo.vSubmittedClaims' does not have a pri
         <Function Name="getCandidatesByCreatedBy" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EmpId" Type="int" Mode="In" />
         </Function>
+        <Function Name="getCliamsByManagerId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="managerId" Type="int" Mode="In" />
+        </Function>
         <Function Name="getDivIncharge" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EmpId" Type="int" Mode="In" />
         </Function>
@@ -1797,9 +1800,9 @@ warning 6002: The table/view 'ubietydb.dbo.vSubmittedClaims' does not have a pri
     [vSubmittedClaims].[totalAmount] AS [totalAmount], 
     [vSubmittedClaims].[claimstatus] AS [claimstatus], 
     [vSubmittedClaims].[ClaimStatusName] AS [ClaimStatusName], 
-    [vSubmittedClaims].[claimText] AS [claimText], 
     [vSubmittedClaims].[claimperiodfrom] AS [claimperiodfrom], 
-    [vSubmittedClaims].[claimperiodto] AS [claimperiodto]
+    [vSubmittedClaims].[claimperiodto] AS [claimperiodto], 
+    [vSubmittedClaims].[ApprovedAmount] AS [ApprovedAmount]
     FROM [dbo].[vSubmittedClaims] AS [vSubmittedClaims]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK__claimJSON__claim__025D5595" Association="Self.FK__claimJSON__claim__025D5595">
@@ -2579,6 +2582,12 @@ warning 6002: The table/view 'ubietydb.dbo.vSubmittedClaims' does not have a pri
             <End Role="Employee" EntitySet="Employees" />
             <End Role="EmpClient" EntitySet="EmpClients" />
           </AssociationSet>
+          <FunctionImport Name="getCliamsByManagerId" ReturnType="Collection(ubietydbModel.getCliamsByManagerId_Result)">
+          <Parameter Name="managerId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="getCliamsByManagerId1" ReturnType="Collection(ubietydbModel.getCliamsByManagerId1_Result)">
+            <Parameter Name="managerId" Mode="In" Type="Int32" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="getEmpOfGroups_Result">
           <Property Type="String" Name="AuthUserId" Nullable="true" MaxLength="255" />
@@ -2906,6 +2915,7 @@ warning 6002: The table/view 'ubietydb.dbo.vSubmittedClaims' does not have a pri
           <Property Name="ClaimPeriodFrom" Type="DateTime" Precision="3" />
           <Property Name="ClaimPeriodTo" Type="DateTime" Precision="3" />
           <NavigationProperty Name="claimManagers" Relationship="ubietydbModel.FK_claimManager_claimJSON_id" FromRole="claimJSON" ToRole="claimManager" />
+          <Property Name="ApprovedAmount" Type="Decimal" Precision="19" Scale="4" />
         </EntityType>
         <EntityType Name="ClaimRevision">
           <Key>
@@ -4459,7 +4469,6 @@ warning 6002: The table/view 'ubietydb.dbo.vSubmittedClaims' does not have a pri
             <PropertyRef Name="totalAmount" />
             <PropertyRef Name="claimstatus" />
             <PropertyRef Name="ClaimStatusName" />
-            <PropertyRef Name="claimText" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" />
           <Property Name="empid" Type="Int32" Nullable="false" />
@@ -4469,9 +4478,9 @@ warning 6002: The table/view 'ubietydb.dbo.vSubmittedClaims' does not have a pri
           <Property Name="totalAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="claimstatus" Type="Int32" Nullable="false" />
           <Property Name="ClaimStatusName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="claimText" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="claimperiodfrom" Type="DateTime" Precision="3" />
           <Property Name="claimperiodto" Type="DateTime" Precision="3" />
+          <Property Name="ApprovedAmount" Type="Decimal" Precision="19" Scale="4" />
         </EntityType>
         <EntityType Name="claimManager">
           <Key>
@@ -4532,6 +4541,29 @@ warning 6002: The table/view 'ubietydb.dbo.vSubmittedClaims' does not have a pri
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="getCliamsByManagerId_Result">
+          <Property Type="Int32" Name="claimId" Nullable="false" />
+          <Property Type="String" Name="claimNo" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="EmpName" Nullable="false" MaxLength="100" />
+          <Property Type="Int64" Name="PrimaryMobile" Nullable="true" />
+          <Property Type="String" Name="ClaimDate" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="claimPurpose" Nullable="false" MaxLength="255" />
+          <Property Type="Decimal" Name="totalAmount" Nullable="false" Precision="19" />
+          <Property Type="Decimal" Name="ApprovedAmount" Nullable="true" Precision="19" />
+          <Property Type="String" Name="Status" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="getCliamsByManagerId1_Result">
+          <Property Type="Int32" Name="claimId" Nullable="false" />
+          <Property Type="String" Name="claimNo" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="EmpName" Nullable="false" MaxLength="100" />
+          <Property Type="Int64" Name="PrimaryMobile" Nullable="true" />
+          <Property Type="String" Name="ClaimDate" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="claimPurpose" Nullable="false" MaxLength="255" />
+          <Property Type="Decimal" Name="totalAmount" Nullable="false" Precision="19" />
+          <Property Type="Decimal" Name="ApprovedAmount" Nullable="true" Precision="19" />
+          <Property Type="Int32" Name="claimstatus" Nullable="false" />
+          <Property Type="String" Name="Status" Nullable="false" MaxLength="50" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4850,6 +4882,7 @@ warning 6002: The table/view 'ubietydb.dbo.vSubmittedClaims' does not have a pri
           <EntitySetMapping Name="claimJSONs">
             <EntityTypeMapping TypeName="ubietydbModel.claimJSON">
               <MappingFragment StoreEntitySet="claimJSON">
+                <ScalarProperty Name="ApprovedAmount" ColumnName="ApprovedAmount" />
                 <ScalarProperty Name="ClaimPeriodTo" ColumnName="ClaimPeriodTo" />
                 <ScalarProperty Name="ClaimPeriodFrom" ColumnName="ClaimPeriodFrom" />
                 <ScalarProperty Name="claimstatus" ColumnName="claimstatus" />
@@ -5465,9 +5498,9 @@ warning 6002: The table/view 'ubietydb.dbo.vSubmittedClaims' does not have a pri
           <EntitySetMapping Name="vSubmittedClaims">
             <EntityTypeMapping TypeName="ubietydbModel.vSubmittedClaim">
               <MappingFragment StoreEntitySet="vSubmittedClaims">
+                <ScalarProperty Name="ApprovedAmount" ColumnName="ApprovedAmount" />
                 <ScalarProperty Name="claimperiodto" ColumnName="claimperiodto" />
                 <ScalarProperty Name="claimperiodfrom" ColumnName="claimperiodfrom" />
-                <ScalarProperty Name="claimText" ColumnName="claimText" />
                 <ScalarProperty Name="ClaimStatusName" ColumnName="ClaimStatusName" />
                 <ScalarProperty Name="claimstatus" ColumnName="claimstatus" />
                 <ScalarProperty Name="totalAmount" ColumnName="totalAmount" />
@@ -5489,6 +5522,22 @@ warning 6002: The table/view 'ubietydb.dbo.vSubmittedClaims' does not have a pri
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="getCliamsByManagerId1" FunctionName="ubietydbModel.Store.getCliamsByManagerId">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ubietydbModel.getCliamsByManagerId1_Result">
+                <ScalarProperty Name="claimId" ColumnName="claimId" />
+                <ScalarProperty Name="claimNo" ColumnName="claimNo" />
+                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
+                <ScalarProperty Name="PrimaryMobile" ColumnName="PrimaryMobile" />
+                <ScalarProperty Name="ClaimDate" ColumnName="ClaimDate" />
+                <ScalarProperty Name="claimPurpose" ColumnName="claimPurpose" />
+                <ScalarProperty Name="totalAmount" ColumnName="totalAmount" />
+                <ScalarProperty Name="ApprovedAmount" ColumnName="ApprovedAmount" />
+                <ScalarProperty Name="claimstatus" ColumnName="claimstatus" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

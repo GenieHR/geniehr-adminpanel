@@ -29,17 +29,17 @@ namespace adminpanel.Controllers
         {
             db.Configuration.ProxyCreationEnabled = false;
 
-            claimJSON claimJSON = db.claimJSONs.Find(id);
-            if (claimJSON == null)
-            {
-                return NotFound();
-            }
+            //claimJSON claimJSON = db.claimJSONs.Find(id);
+            //if (claimJSON == null)
+            //{
+            //    return NotFound();
+            //}
 
-            return Ok(claimJSON);
+            //return Ok(claimJSON);
 
-            //return db.claimJSONs.Where(b => b.id == claimJSON.id)
-            //                     .Include(b => b.Employee)
-            //                     .ToList();
+            return db.claimJSONs.Where(b => b.id == id)
+                                 .Include(b => b.ClaimStatu)
+                                 .First();
 
 
         }
@@ -145,34 +145,24 @@ namespace adminpanel.Controllers
         [HttpGet]
         public dynamic empMyClaims (int EmpId)
         {
-            List<vSubmittedClaim> AllClaims = db.vSubmittedClaims.Where(e => e.empid == EmpId).ToList();
-            List<claimDTO> empClaims = new List<claimDTO>();
-            foreach(var claim in AllClaims)
-            {
-                claimDTO thisClaim = new claimDTO();
 
-                thisClaim.claimDate = claim.claimDate;
-                thisClaim.claimId = claim.id;
-                thisClaim.claimNo = claim.claimNo;
-                thisClaim.claimPurpose = claim.claimPurpose;
-                thisClaim.claimStatusName = claim.ClaimStatusName;
-                thisClaim.claimStatusId = claim.claimstatus;
-                thisClaim.empId = claim.empid;
-                thisClaim.totalAmount = claim.totalAmount;
-
-                if (claim.claimstatus == 1)
+            return 
+                db.vSubmittedClaims
+                .Where(e => e.empid == EmpId)
+                .Select(e => new claimDTO
                 {
-                    thisClaim.approvedAmount = "  ";
-                }
-                else
-                {
-                    JObject o = JObject.Parse(claim.claimText);
-                    thisClaim.approvedAmount = (string)o["totalExpenseA"];
-                }
-
-                empClaims.Add(thisClaim);
-            }
-            return empClaims;
+                    claimDate = e.claimDate,
+                    claimId = e.id,
+                    claimNo = e.claimNo,
+                    claimPurpose = e.claimPurpose,
+                    claimStatusName = e.ClaimStatusName,
+                    claimStatusId = e.claimstatus,
+                    empId = e.empid,
+                    totalAmount = e.totalAmount,
+                    approvedAmount = e.ApprovedAmount
+                })
+                .ToList();
+            
         }
 
         [Route("api/printClaim/{claimId}")]
@@ -207,7 +197,7 @@ namespace adminpanel.Controllers
                     mobileNO = e.claimInfo.Employee.PrimaryMobile,
                     managers = e.claimInfo.claimManagers
                                             .Where(m => m.claimId == claimId)
-                                            .OrderBy(x => x.level)
+                                            .OrderByDescending(x => x.level)
                                             .Select(n => new claimManagerDTO
                                                 {
                                                     managerId = n.Employee.EmpName,
@@ -219,7 +209,6 @@ namespace adminpanel.Controllers
                     email = e.claimInfo.Employee.Email
                    
                 }).First();
-
 
             return abc;
         }
@@ -342,6 +331,39 @@ namespace adminpanel.Controllers
         {
             db.Configuration.ProxyCreationEnabled = false;
             return db.getOpenCliamsByManagerId(ManagerId);
+        }
+
+        [Route("api/getActiveClaims/{ManagerId}")]
+        [HttpGet]
+
+        public dynamic getActiveClaims(int ManagerId)
+        {
+            db.Configuration.ProxyCreationEnabled = false;
+
+            return db.getCliamsByManagerId1(ManagerId).ToList();
+            
+            
+            //var myEmps = db.getEmpDetofManager(ManagerId).ToList();
+
+            //IEnumerable<int> empIds = myEmps.Select(f => f.EmpId);
+
+            //return db.vSubmittedClaims
+            //            .Where(e => empIds.Contains(e.empid) && e.claimstatus != 0 && e.claimstatus != 8)
+            //            .Select(q => new
+            //            {
+            //                employeeInfo => db.Employees.FirstOrDefault(EI => EI.empid = q.empid}
+            //            )
+            //            .ToList();
+
+            //.vSubmittedClaims
+            //.Where(e => empIds.Contains(e.empid) && e.claimstatus != 0 && e.claimstatus != 8)
+            //.Select(e => new
+            //{
+            //    employeeInfo = db.Employees.FirstOrDefault(ED => ED.EmpId == e.empid)
+            //})
+            ////.Include(r => r.employeeInfo)
+            //.ToList();
+
         }
 
         [Route("api/getEmployeeManagers/{EmpId}")]

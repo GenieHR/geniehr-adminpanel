@@ -262,7 +262,9 @@
     <Content Include="Account\TwoFactorAuthenticationSignIn.aspx" />
     <Content Include="Account\VerifyPhoneNumber.aspx" />
     <Content Include="AddClaim.aspx" />
+    <Content Include="Client\AllClaims.aspx" />
     <Content Include="Client\empProfile.aspx" />
+    <Content Include="Client\viewClaim.aspx" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -687,6 +689,13 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Client\AllClaims.aspx.cs">
+      <DependentUpon>AllClaims.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Client\AllClaims.aspx.designer.cs">
+      <DependentUpon>AllClaims.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Client\ClientManager.Master.cs">
       <DependentUpon>ClientManager.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -700,6 +709,13 @@
     </Compile>
     <Compile Include="Client\empProfile.aspx.designer.cs">
       <DependentUpon>empProfile.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Client\viewClaim.aspx.cs">
+      <DependentUpon>viewClaim.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Client\viewClaim.aspx.designer.cs">
+      <DependentUpon>viewClaim.aspx</DependentUpon>
     </Compile>
     <Compile Include="Controllers\CandidateController.cs" />
     <Compile Include="Controllers\CandidateSkillsController.cs" />
@@ -928,6 +944,12 @@
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\getCandidatesByCreatedBy_Result.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\getCliamsByManagerId1_Result.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\getCliamsByManagerId_Result.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\getDivIncharge1_Result.cs">

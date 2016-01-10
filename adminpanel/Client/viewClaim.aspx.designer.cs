@@ -7,9 +7,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace adminpanel.Client {
+namespace adminpanel.Employees {
     
     
-    public partial class main {
+    public partial class viewClaim {
     }
 }

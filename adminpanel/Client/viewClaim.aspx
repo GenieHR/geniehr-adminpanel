@@ -1,6 +1,6 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Client/ClientManager.Master" Title="Process Claim" CodeBehind="changeClaim.aspx.cs" Inherits="adminpanel.Client.viewClaim" %>
+﻿<%@ Page Title="View Claim" Language="C#" MasterPageFile="~/Client/ClientManager.Master" AutoEventWireup="true" CodeBehind="viewClaim.aspx.cs" Inherits="adminpanel.Employees.viewClaim" %>
 
-<asp:Content ID="Content3" ContentPlaceHolderID="head" runat="server">
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style>
         .vertical-alignment-helper {
             display: table;
@@ -22,11 +22,10 @@
             pointer-events: all;
         }
 </style>
-
 </asp:Content>
-
 <asp:Content ID="Content2" ContentPlaceHolderID="body" runat="server">
     
+
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
             <h2>View Claim</h2>
@@ -102,7 +101,7 @@
                                                     <label class="col-sm-2 control-label">Status</label>
 
                                                     <div class="col-sm-4">
-                                                        <input type="text" readonly="readonly"  class="form-control" id="ClaimStatus" />
+                                                        <input type="text" readonly = "readonly" id="ClaimStatus"  class="form-control"  />
                                                     </div>
                                                 </div>
                                             </form>
@@ -121,33 +120,33 @@
                                                     <tr>
                                                         <td>Travel</td>
                                                         <td class="curr" id="sumTravelAmt">0.00</td>
-                                                        <td  ><input style="width:60px;border:hidden"  id="sumTravelAmtA" readonly onchange="updateSummVal()" onclick="this.select();" type="number" /></td>
+                                                        <td  ><input style="width:60px;border:hidden"  id="sumTravelAmtA" readonly = "readonly"   type="number" /></td>
 
                                                     </tr>
                                                     <tr>
                                                         <td>Hotel</td>
                                                         <td class="curr" id="sumHotelAmt">0.00</td>
-                                                        <td  ><input style="width:60px;border:hidden" id="sumHotelAmtA"  readonly  onchange="updateSummVal()"  onclick="this.select();" type="number" /></td>
+                                                        <td  ><input style="width:60px;border:hidden" id="sumHotelAmtA"  readonly = "readonly"     type="number" /></td>
 
 
                                                     </tr>
                                                     <tr>
                                                         <td>Food</td>
                                                         <td class="curr" id="sumFoodAmt">0.00</td>
-                                                        <td  ><input style="width:60px;border:hidden" id="sumFoodAmtA"  readonly  onchange="updateSummVal()"  onclick="this.select();" type="number" /></td>
+                                                        <td  ><input style="width:60px;border:hidden" id="sumFoodAmtA"  readonly = "readonly"     type="number" /></td>
                                                     </tr>
 
                                                     <tr>
                                                         <td>Others</td>
                                                         <td class="curr" id="summOthAmt">0.00</td>
-                                                        <td  ><input style="width:60px;border:hidden" id="summOthAmtA"  readonly  onchange="updateSummVal()" onclick="this.select();" type="number" /></td>
+                                                        <td  ><input style="width:60px;border:hidden" id="summOthAmtA"  readonly = "readonly"    type="number" /></td>
 
                                                     </tr>
                                                 </tbody>
                                                 <tfoot>
                                                     <tr style="background-color: lightgray">
-                                                        <td><b>Total Approved ( &#x20B9 )</b></td>
-                                                        <td colspan="2" class="curr"><b id="summTotAmt">0.00</b></td>
+                                                        <td><b>Total ( &#x20B9 )</b></td>
+                                                        <td colspan="2" class="curr" style="text-align:right"><b id="summTotAmt">0.00</b></td>
 
                                                     </tr>
                                                 </tfoot>
@@ -177,11 +176,12 @@
                                             </table>
                                         </div>
                                     </div>
-                                    <div class="row text-center">
+                                 <%--   
+                                     <div class="row text-center">
                                     <input type="button" onclick="saveClaimChanges('A')" value="Approve" id="btnApprove" class="btn btn-info" />
                                     <input type="button" onclick="saveClaimChanges('R')" value="Reject" id="btnReject"  class="btn btn-danger" />
-            
                                                                 </div>
+                                 --%>
                                 </div>
                             </div>
 
@@ -482,9 +482,6 @@
                 <div class="modal-content">
                     <div class="modal-body">
                         <div class="row">
-              
-
-
 
                             <div class="form-group" id="appAmountDiv">
                                 <label class="col-sm-4 control-label">Total Approved Amount</label>
@@ -492,7 +489,7 @@
                                 <div class="col-sm-8">
                                     <div class="input-group m-b">
                                         <span class="input-group-addon">&#x20B9</span>
-                                        <input type="number" readonly="readonly" id="totalApprovedAmt" class="form-control" />
+                                        <input type="number" readonly = "readonly" id="totalApprovedAmt" class="form-control" />
                                     </div>
                                 </div>
                             </div>
@@ -513,8 +510,10 @@
                                 <label class="col-sm-4 control-label"></label>
                                                        
                                 <div class="col-sm-8">
-                                    <input type="submit" class="btn btn-success" onclick="saveClaim()" value="Save" style="margin-right: 4px"  />
+                                    <%--
+                                        <input type="submit" class="btn btn-success" onclick="saveClaim()" value="Save" style="margin-right: 4px"  />
                                     <input type="button" data-dismiss="modal" class="btn btn-danger" value="Cancel" />
+                                        --%>
 
                                 </div>
                                 </div>
@@ -530,7 +529,7 @@
 
 </asp:Content>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="javascriptPart" runat="server">
+<asp:Content ID="Content3" ContentPlaceHolderID="javascriptPart" runat="server">
 
     <script>
 
@@ -583,24 +582,27 @@
                 claimJSON = JSON.parse(originalClaimText);
 
                 $("#sumTravelAmt").html(claimJSON.travelExpense);
-                $("#sumTravelAmtA").val(claimJSON.travelExpense);
 
                 $("#sumFoodAmt").html(claimJSON.foodExpense);
-                $("#sumFoodAmtA").val(claimJSON.foodExpense);
 
                 $("#summOthAmt").html(claimJSON.otherExpense);
-                $("#summOthAmtA").val(claimJSON.otherExpense);
 
                 $("#sumHotelAmt").html(claimJSON.hotelExpense);
-                $("#sumHotelAmtA").val(claimJSON.hotelExpense);
-
-                $("#summTotAmt").html(claimJSON.totalExpense);
+                $("#summTotAmt").html(claimJSON.totalExpenseA);
 
                 $("#claimPurpose").val(result.claimPurpose);
 
                 $("#claimDate").val(result.claimDate.substring(0, 10));
                 $("#claimNo").val(result.claimNo);
                 $("#ClaimStatus").val(result.ClaimStatu.Status)
+
+                if (result.ClaimStatu.Id != 4) {
+                $("#sumTravelAmtA").val(claimJSON.travelExpenseA);
+                $("#sumFoodAmtA").val(claimJSON.foodExpenseA);
+                $("#summOthAmtA").val(claimJSON.otherExpenseA);
+                $("#sumHotelAmtA").val(claimJSON.hotelExpenseA);
+                }
+
 
                 cliamNum = result.claimNo;
 
@@ -631,166 +633,39 @@
                 });
 
                 var i = 0;
+                var val;
 
                 for (i = 0; i < claimJSON.Travels.length; i++) {
                     var lineId = 'Travel_' + i;
-                    $('#expensesTable  tbody').append('<tr><td>Travel</td><td>' + claimJSON.Travels[i].traveldate + '</td><td>' + claimJSON.Travels[i].purpose + '</td><td class="curr">' + claimJSON.Travels[i].totalamount + '</td><td><input style="width:100px"  onchange="updateTotals(\'Travel\')"  type="number" id="travel' + i + '" value="' + claimJSON.Travels[i].totalamount + '" /></td><td class="text-center text-info"><a href="#" onclick="viewvalues(\'' + lineId + '\')"><i class="fa fa-eye"></i></a></tr>');
+                    val = (claimJSON.Travels[i].approvedAmt === undefined || result.ClaimStatu.Id == 4) ? '' : claimJSON.Travels[i].approvedAmt;
+
+                    $('#expensesTable  tbody').append('<tr><td>Travel</td><td>' + claimJSON.Travels[i].traveldate + '</td><td>' + claimJSON.Travels[i].purpose + '</td><td class="curr">' + claimJSON.Travels[i].totalamount + '</td><td class="curr">' + val + '</td><td class="text-center text-info"><a href="#" onclick="viewvalues(\'' + lineId + '\')"><i class="fa fa-eye"></i></a></tr>');
                 }
 
                 for (i = 0; i < claimJSON.Hotels.length; i++) {
+
                     var lineId = 'Hotel_' + i;
-                    $('#expensesTable  tbody').append('<tr><td>Hotel</td><td>' + claimJSON.Hotels[i].staytodate + '</td><td>' + claimJSON.Hotels[i].hotelname + '</td><td class="curr">' + claimJSON.Hotels[i].totalamount + '</td><td><input style="width:100px" type="number"  onchange="updateTotals(\'Hotel\')"  id="hotel' + i + '"  value="' + claimJSON.Hotels[i].totalamount + '" /></td><td class="text-center text-info"><a href="#" onclick="viewvalues(\'' + lineId + '\')"><i class="fa fa-eye"></i></a></tr>');
+                    val = (claimJSON.Hotels[i].approvedAmt === undefined || result.ClaimStatu.Id == 4) ? '' : claimJSON.Hotels[i].approvedAmt;
+                    
+                    $('#expensesTable  tbody').append('<tr><td>Hotel</td><td>' + claimJSON.Hotels[i].staytodate + '</td><td>' + claimJSON.Hotels[i].hotelname + '</td><td class="curr">' + claimJSON.Hotels[i].totalamount + '</td><td class="curr">' + val + '</td><td class="text-center text-info"><a href="#" onclick="viewvalues(\'' + lineId + '\')"><i class="fa fa-eye"></i></a></tr>');
                 }
 
                 for (i = 0; i < claimJSON.Food.length; i++) {
                     var lineId = 'Food_' + i;
-                    $('#expensesTable  tbody').append('<tr><td>Food</td><td>' + claimJSON.Food[i].expensedate + '</td><td>' + claimJSON.Food[i].restaurantname + '</td><td class="curr">' + claimJSON.Food[i].totalamount + '</td><td><input style="width:100px"  onchange="updateTotals(\'Food\')"  type="number" id="food' + i + '"  value="' + claimJSON.Food[i].totalamount + '" /></td><td class="text-center text-info"><a href="#" onclick="viewvalues(\'' + lineId + '\')"><i class="fa fa-eye"></i></a></tr>');
+                    val = (claimJSON.Food[i].approvedAmt === undefined || result.ClaimStatu.Id == 4) ? '' : claimJSON.Food[i].approvedAmt;
+                    $('#expensesTable  tbody').append('<tr><td>Food</td><td>' + claimJSON.Food[i].expensedate + '</td><td>' + claimJSON.Food[i].restaurantname + '</td><td class="curr">' + claimJSON.Food[i].totalamount + '</td><td class="curr">' + val + '</td><td class="text-center text-info"><a href="#" onclick="viewvalues(\'' + lineId + '\')"><i class="fa fa-eye"></i></a></tr>');
                 }
 
                 for (i = 0; i < claimJSON.Others.length; i++) {
                     var lineId = 'Others_' + i;
-                    $('#expensesTable  tbody').append('<tr><td>Others</td><td>' + claimJSON.Others[i].otherexpensedate + '</td><td>' + claimJSON.Others[i].otherdesc + '</td><td class="curr">' + claimJSON.Others[i].otherexpenseamt + '</td><td><input style="width:100px" onchange="updateTotals(\'Others\')"  type="number" id="other' + i + '"  value="' + claimJSON.Others[i].otherexpenseamt + '" /></td><td class="text-center text-info"><a href="#" onclick="viewvalues(\'' + lineId + '\')"><i class="fa fa-eye"></i></a></tr>');
+                    val = (claimJSON.Others[i].approvedAmt === undefined || result.ClaimStatu.Id == 4) ? '' : claimJSON.Others[i].approvedAmt;
+                    $('#expensesTable  tbody').append('<tr><td>Others</td><td>' + claimJSON.Others[i].otherexpensedate + '</td><td>' + claimJSON.Others[i].otherdesc + '</td><td class="curr">' + claimJSON.Others[i].otherexpenseamt + '</td><td class="curr">' + val + '</td><td class="text-center text-info"><a href="#" onclick="viewvalues(\'' + lineId + '\')"><i class="fa fa-eye"></i></a></tr>');
                 }
 
                 addApprovalItems();
 
             });
         });
-
-        function saveClaim() {
-
-            if($("#claimRemarks").val() === "") {
-                alert("Please enter remarks");
-                return false;
-            }
-
-            var claimUploadJson = {
-                "claimId": window.localStorage.getItem("cliamId"),
-                "actionBy": <%= Session["EmpId"] %>,
-                "claimStatus": -1,
-                "revisionText": "",
-                "revisionRemarks": $("#claimRemarks").val(),
-                "claimText": JSON.stringify(claimJSON)
-            };
-
-
-            if (claimResponse == 'A') {
-
-                claimUploadJson.ApprovedAmount = claimJSON.totalExpenseA;
-
-                var submittedClaim = JSON.parse(originalClaimText);
-                
-                if (manager2Exists) {
-                    claimUploadJson.claimStatus = 2;
-                }
-                else
-                {
-                    claimUploadJson.claimStatus = 3;
-                }
-
-                if (claimJSON.totalExpenseA != submittedClaim.totalExpense) {
-
-                    claimUploadJson.revisionText = originalClaimText;
-                }
-
-            }
-            else if (claimResponse == 'R') {
-                claimUploadJson.claimStatus = 4;
-            }
-
-            $.ajax({
-                url: '../api/ClaimUpdate',
-                type: 'post',
-                dataType: 'json',
-                data: claimUploadJson,
-                success: function (data) {
-                    $('#btnApprove').hide();
-                    $('#btnReject').hide();
-                    alert('Claim Succesfully Updated');
-                    $('#myModal').modal('hide');
-
-                    //Mail to Employee if claim is approved/rejected
-
-                    var claimResponseText;
-
-                    if (claimResponse == 'R'){
-                        claimResponseText = 'Rejected'
-                    }
-                    else
-                    {
-                        claimResponseText = 'Approved'
-                    }
-                    
-                    var emailJSON = {
-
-                        "toEmailAddress":gEmpDetails.employee[0].Email,
-                        "ccEmailAddress":orgEmpInfo[0].Email,
-                        "mailSubject": "Claim (" + cliamNum  + ") has been " + claimResponseText + "!!",
-                        "mailBody":'<html><body>Dear ' +  gEmpDetails.employee[0].EmpName +' ,<br /> <br /> Your claim no. '+ cliamNum + ' is ' + claimResponseText + '. Please login to <a href="http://ubiety.geniehr.com">Ubiety</a> to view further details. <br /><br />Thank You.<br /><br />For,<br/>Team GenieHR Solutions Pvt. Ltd.<br/><br/>Please Note: This is a system generated email and is not monitored. Please don’t reply to this email.</body></html>'
-                    }
-                    
-                    $.ajax({
-                        type: "post",
-                        url: '../sendmail',
-                        data: JSON.stringify(emailJSON),
-                        contentType: 'application/json',
-                        dataType: "json"
-                    });
-
-                    // Mail to Second Level Manager if exists
-
-                    if (manager2Exists && claimResponse == 'A') {
-
-                    var emailJSON = {
-
-                        "toEmailAddress":manager2Info[0].Email,
-                        "ccEmailAddress":orgEmpInfo[0].Email,
-                        "mailSubject": "Claim (" + cliamNum  + ") from " + gEmpDetails.employee[0].EmpName,
-                        "mailBody":'<html><body>Dear ' +  manager2Info[0].EmpName +' ,<br /> <br />' + gEmpDetails.employee[0].EmpName + ' claim no. '+ cliamNum + ' requires your action. Please login to <a href="http://ubiety.geniehr.com">Ubiety</a> to view the claim and approve / reject for further processing.<br /><br />Thank You.<br /><br />For,<br/>Team GenieHR Solutions Pvt. Ltd.<br/><br/>Please Note: This is a system generated email and is not monitored. Please don’t reply to this email.</body></html>'
-                    }
-                    
-                    $.ajax({
-                        type: "post",
-                        url: '../sendmail',
-                        data: JSON.stringify(emailJSON),
-                        contentType: 'application/json',
-                        dataType: "json"
-                     });
-                }
-
-                },
-                error: function(XMLHttpRequest, textStatus, errorThrown) {
-                    alert(errorThrown);
-                }
-            });
-        }
-
-        function saveClaimChanges(actionTaken) {
-            claimResponse = actionTaken;
-
-            if (actionTaken == 'A') {
-                $("#appAmountDiv").show();
-                addApprovalItems();
-                $("#totalApprovedAmt").val(claimJSON.totalExpenseA);
-            
-            }
-
-            else if(actionTaken == 'R') {
-                $("#appAmountDiv").hide();
-                $("#claimRemarks").val('');
-            }
-
-            $('#myModal').modal({
-                backdrop: 'static',
-                keyboard: false
-            });
-
-            $('#myModal').modal();
-        }
-
-        function updateSummVal() {
-            $("#summTotAmt").html(parseInt($("#sumTravelAmtA").val()) + parseInt($("#sumFoodAmtA").val()) + parseInt($("#sumHotelAmtA").val()) + parseInt($("#summOthAmtA").val()));
-        }
 
         function addApprovalItems() {
 

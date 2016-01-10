@@ -25,7 +25,7 @@ namespace adminpanel.Models
         public decimal totalAmount { get; set; }
         public int claimStatusId { get; set; }
         public string claimStatusName { get; set; }
-        public string approvedAmount { get; set; }
+        public decimal? approvedAmount { get; set; }
 
     }
 }

@@ -555,6 +555,30 @@ public partial class ubietydbEntities : DbContext
         return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getOrgEmpDetail2_Result>("getOrgEmpDetail2", empIdParameter);
     }
 
+
+    public virtual ObjectResult<getCliamsByManagerId_Result> getCliamsByManagerId(Nullable<int> managerId)
+    {
+
+        var managerIdParameter = managerId.HasValue ?
+            new ObjectParameter("managerId", managerId) :
+            new ObjectParameter("managerId", typeof(int));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getCliamsByManagerId_Result>("getCliamsByManagerId", managerIdParameter);
+    }
+
+
+    public virtual ObjectResult<getCliamsByManagerId1_Result> getCliamsByManagerId1(Nullable<int> managerId)
+    {
+
+        var managerIdParameter = managerId.HasValue ?
+            new ObjectParameter("managerId", managerId) :
+            new ObjectParameter("managerId", typeof(int));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getCliamsByManagerId1_Result>("getCliamsByManagerId1", managerIdParameter);
+    }
+
 }
 
 }

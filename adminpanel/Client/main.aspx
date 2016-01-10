@@ -60,8 +60,7 @@
                             <div class="col-lg-12 ">
                             <span class="text-capitalize text-color">Open Claims</span>
 
-                                <span class="pull-right text-muted "><a href="#">Show All Claims</a></span>
-
+                                <span class="pull-right text-muted "><a href="AllClaims.aspx">Show All Claims</a></span>
 
                             
                                 </div>
