@@ -120,6 +120,7 @@ namespace adminpanel.Controllers
         public dynamic getClaimDraft(int EmpId)
         {
             db.Configuration.ProxyCreationEnabled = false;
+
             return (from recordset in db.claimJSONs where recordset.EmpId == EmpId && recordset.claimstatus == 0 select recordset).ToList();
         }
 
@@ -131,6 +132,7 @@ namespace adminpanel.Controllers
         {
             claimJSON draftClaim = db.claimJSONs.Find(DraftId);
             draftClaim.claimstatus = 8;
+
             db.Entry(draftClaim).State = EntityState.Modified;
 
             if (db.SaveChanges() == 1)
@@ -140,6 +142,7 @@ namespace adminpanel.Controllers
 
             return 1;
         }
+
 
         [Route("api/empMyClaims/{EmpId}")]
         [HttpGet]
@@ -184,6 +187,7 @@ namespace adminpanel.Controllers
                     claimInfo = e
                 })
                 .Select(e => new claimPrintDTO {
+                    empNum = e.claimInfo.Employee.EmpNum,
                     claimNo = e.claimInfo.claimNo,
                     clientName = e.clientInfo.ClientName,
                     workLocation = e.employeeInfo.WorkLocation,
@@ -222,7 +226,8 @@ namespace adminpanel.Controllers
             {
                 return BadRequest(ModelState);
             }
-
+            if (claimJSON.claimPurpose == null)
+                claimJSON.claimPurpose = " ";
             if (claimJSON.claimNo == null)
 
             { 
@@ -374,6 +379,16 @@ namespace adminpanel.Controllers
             db.Configuration.ProxyCreationEnabled = false;
             return db.getManagerDetail(EmpId);
         }
+
+        [Route("api/getAllClaimsByClient/{ClientId}")]
+        [HttpGet]
+
+        public dynamic getAllClaimsByClient(int ClientId)
+        {
+            db.Configuration.ProxyCreationEnabled = false;
+            return db.getAllClaimsByClient1(ClientId);
+        }
+
 
         [Route("api/getOrgEmployeeDetails/{EmpId}")]
         [HttpGet]

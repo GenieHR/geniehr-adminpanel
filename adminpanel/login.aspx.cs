@@ -5,6 +5,7 @@ using Microsoft.Owin.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -81,8 +82,31 @@ namespace Admin
             TextBox tbUserName = (TextBox)form1.FindControl("username");
             TextBox tbPassword = (TextBox)form1.FindControl("password");
 
+            string userName = tbUserName.Text;
+            string password = tbPassword.Text;
+
             var userManager = new UserManager<IdentityUser>(userStore);
-            var user = userManager.Find(tbUserName.Text, tbPassword.Text);
+
+            IdentityUser user = null;
+
+            Regex rgx = new Regex(@"^\d{10}$"); //10 digit mobile number
+
+            if (rgx.IsMatch(userName))
+            {
+                using (ubietydbEntities db = new ubietydbEntities())
+                {
+                    string authUserId;
+                    Employee emp = (from recordset in db.Employees where recordset.PrimaryMobile.ToString() == userName select recordset).FirstOrDefault();
+                    if (emp != null) { 
+                        authUserId = emp.AuthUserId;
+                        user = userManager.FindById(authUserId);
+                    }
+                }
+            }
+            else
+            {
+                user = userManager.Find(userName, password);
+            }
 
             if (user != null)
             {

@@ -15,6 +15,8 @@ namespace adminpanel.Models
         public int skillId { get; set; }
         public string jobTitle { get; set; }
         public string jobCreated { get; set; }
+        public string jobLocation { get; set; }
+        public string candidateLocation { get; set; }
         
     }
 }

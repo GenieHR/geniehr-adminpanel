@@ -76,10 +76,6 @@
     </div>
 
 
- 
-    
-
-
     <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-sm-4">
                     <h1>Manage Jobs</h1>
@@ -130,8 +126,6 @@
 
 <asp:Content ID="Content3" ContentPlaceHolderID="javascriptPart" runat="server">
 <script>
-
-
 
     var TRHtml = '<tr><td class="project-title"><strong class="JobShortName"></strong></td><td class="project-title"><a href="showJD.aspx" class="JobTitle"></a><br /><span class="ClientName"></span></td><td class="project-title"><strong class="JobLocation"></strong></td><td class="project-people text-right"></td><td class="project-actions"><a href="#" data-toggle="modal" data-target="#assignJDModal" class="btn btn-white btn-sm assingButton"><i class="fa fa-user"></i> Assign </a><a href="#" class="btn btn-white btn-sm searchButton"><i class="fa fa-binoculars"></i>Search </a></td></tr>';
     var gEmpId = <%= Session["EmpId"] %>;

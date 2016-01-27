@@ -1,4 +1,5 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="printClaim.aspx.cs" Inherits="adminpanel.Employees.printClaim" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="printClaim.aspx.cs" Inherits="adminpanel.Common.printClaim" %>
+
 
 
 <!DOCTYPE html>
@@ -270,15 +271,21 @@
                             <td class="curr">72</td>
                             </tr>
 
-                    
-     --%>                       
-                            <tr>
-                            <td colspan="3" class="curr">Total</td>
-                            <td class="curr data-value totalC"></td>
-                            <td class="curr data-value totalA"></td>
-                            </tr>
+         
+                            <tr><td class="expType">Travel</td><td class="expType">2016-01-19</td><td>site viset <br />Gulbarga to local<br /> Mode: Auto, Rate: 300 <br /> Remarks: NA</td><td class="curr">72</td><td class="curr">72</td></tr>
 
+
+
+     --%>                      
                         </tbody>
+
+                        <tfoot> 
+                            <tr>
+                                <td colspan="3" class="curr">Total</td>
+                                <td class="curr data-value totalC"></td>
+                                <td class="curr data-value totalA"></td>
+                            </tr>
+                         </tfoot>
 
                     </table>
                     <div class="row" style=" text-align:center; margin-top:100px">
@@ -301,7 +308,7 @@
 
     <script>
 
-        localStorage.setItem("cliamId", 124);
+       // localStorage.setItem("cliamId", 124);
 
         $(".claimId").html(localStorage.getItem("cliamId"));
 
@@ -335,10 +342,32 @@
             $(".totalC").html(claimText.totalExpense);
             $(".totalA").html(claimText.totalExpenseA);
 
+            var expenseArray = [];
 
+            var i = 0;
 
+            for (i = 0; i < claimText.Travels.length; i++) {
+                expenseArray.push({ 'ExpType': 'Travel', 'Date': claimText.Travels[i].traveldate, 'Description': claimText.Travels[i].purpose + '<br />' + claimText.Travels[i].from + ' to ' + claimText.Travels[i].to + '<br />' + 'Mode: ' + claimText.Travels[i].modeoftravel + ', Distance: ' + claimText.Travels[i].distance + ' km<br /> Remarks: ' + claimText.Travels[i].remarks, 'claimed': claimText.Travels[i].totalamount, 'approved': claimText.Travels[i].approvedAmt })
+            }
+
+            for (i = 0; i < claimText.Food.length; i++) {
+                expenseArray.push({ 'ExpType': 'Food', 'Date': claimText.Food[i].expensedate, 'Description': claimText.Food[i].restaurantname + '<br />No. of Persons: ' + claimText.Food[i].noofpersons  + '<br />' + 'Remarks: ' + claimText.Food[i].remarks, 'claimed': claimText.Food[i].totalamount, 'approved': claimText.Food[i].approvedAmt })
+            }
+
+            for (i = 0; i < claimText.Hotels.length; i++) {
+                expenseArray.push({ 'ExpType': 'Hotel', 'Date': claimText.Hotels[i].stayfromdate + '<br />  To <br/>' + claimText.Hotels[i].staytodate, 'Description': claimText.Hotels[i].hotelname + '<br />No. of Nights: ' + claimText.Hotels[i].noofnights + ', ' + 'Rate: ' + claimText.Hotels[i].rate + ' <br /> Remarks: ' + claimText.Hotels[i].remarks, 'claimed': claimText.Hotels[i].totalamount, 'approved': claimText.Hotels[i].approvedAmt })
+            }
+
+            //for (i = 0; i < claimText.Others.lenght; i++) {
+            //    expenseArray.push({ 'ExpType': 'Others', 'Date': claimText.Others[i].stayfromdate + '<br />  To <br/>' + claimText.Hotels[i].staytodate, 'Description': claimText.Hotels[i].hotelname + '<br />No. of Nights: ' + claimText.Hotels[i].noofnights + ', ' + 'Rate: ' + claimText.Hotels[i].rate + ' <br /> Remarks: ' + claimText.Hotels[i].remarks, 'claimed': claimText.Hotels[i].totalamount, 'approved': claimText.Hotels[i].approvedAmt })
+
+            //}
+
+            $(expenseArray).each(function (i) { $('.expenseTable tbody').append('<tr><td class="expType">' + expenseArray[i].ExpType + '</td><td class="expType">' + expenseArray[i].Date + '</td><td>' + expenseArray[i].Description + '</td><td class="curr">' + expenseArray[i].claimed + '</td><td class="curr">' + expenseArray[i].approved + '</td></tr>') })
+            
 
             $('title').html(claim.claimNo);
+
         });
 
 

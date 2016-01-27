@@ -1605,6 +1605,9 @@ warning 6002: The table/view 'ubietydb.dbo.vSubmittedClaims' does not have a pri
         <Function Name="empProfBasicDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EmpId" Type="int" Mode="In" />
         </Function>
+        <Function Name="getAllClaimsByClient" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ClientId" Type="int" Mode="In" />
+        </Function>
         <Function Name="GetAllClientsOfEmpOrg" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EmpId" Type="int" Mode="In" />
         </Function>
@@ -2586,7 +2589,13 @@ warning 6002: The table/view 'ubietydb.dbo.vSubmittedClaims' does not have a pri
           <Parameter Name="managerId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="getCliamsByManagerId1" ReturnType="Collection(ubietydbModel.getCliamsByManagerId1_Result)">
-            <Parameter Name="managerId" Mode="In" Type="Int32" />
+          <Parameter Name="managerId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="getAllClaimsByClient" ReturnType="Collection(ubietydbModel.getAllClaimsByClient_Result)">
+          <Parameter Name="ClientId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="getAllClaimsByClient1" ReturnType="Collection(ubietydbModel.getAllClaimsByClient1_Result)">
+            <Parameter Name="ClientId" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="getEmpOfGroups_Result">
@@ -4564,6 +4573,37 @@ warning 6002: The table/view 'ubietydb.dbo.vSubmittedClaims' does not have a pri
           <Property Type="Int32" Name="claimstatus" Nullable="false" />
           <Property Type="String" Name="Status" Nullable="false" MaxLength="50" />
         </ComplexType>
+        <ComplexType Name="getAllClaimsByClient_Result">
+          <Property Type="Int32" Name="claimId" Nullable="false" />
+          <Property Type="String" Name="claimNo" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="EmpName" Nullable="false" MaxLength="100" />
+          <Property Type="Int64" Name="PrimaryMobile" Nullable="true" />
+          <Property Type="String" Name="ClaimDate" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="claimPurpose" Nullable="false" MaxLength="255" />
+          <Property Type="Decimal" Name="totalAmount" Nullable="false" Precision="19" />
+          <Property Type="Decimal" Name="ApprovedAmount" Nullable="true" Precision="19" />
+          <Property Type="Int32" Name="claimstatus" Nullable="false" />
+          <Property Type="String" Name="Status" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="ManagerId" Nullable="false" />
+          <Property Type="Int64" Name="ManagerMobile" Nullable="true" />
+          <Property Type="Int64" Name="ManagerMobile1" Nullable="true" />
+          <Property Type="String" Name="ManagerEmail" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="getAllClaimsByClient1_Result">
+          <Property Type="Int32" Name="claimId" Nullable="false" />
+          <Property Type="String" Name="claimNo" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="EmpName" Nullable="false" MaxLength="100" />
+          <Property Type="Int64" Name="PrimaryMobile" Nullable="true" />
+          <Property Type="String" Name="ClaimDate" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="claimPurpose" Nullable="false" MaxLength="255" />
+          <Property Type="Decimal" Name="totalAmount" Nullable="false" Precision="19" />
+          <Property Type="Decimal" Name="ApprovedAmount" Nullable="true" Precision="19" />
+          <Property Type="Int32" Name="claimstatus" Nullable="false" />
+          <Property Type="String" Name="Status" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="ManagerId" Nullable="false" />
+          <Property Type="Int64" Name="ManagerMobile" Nullable="true" />
+          <Property Type="String" Name="ManagerEmail" Nullable="true" MaxLength="50" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5535,6 +5575,25 @@ warning 6002: The table/view 'ubietydb.dbo.vSubmittedClaims' does not have a pri
                 <ScalarProperty Name="ApprovedAmount" ColumnName="ApprovedAmount" />
                 <ScalarProperty Name="claimstatus" ColumnName="claimstatus" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getAllClaimsByClient1" FunctionName="ubietydbModel.Store.getAllClaimsByClient">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ubietydbModel.getAllClaimsByClient1_Result">
+                <ScalarProperty Name="claimId" ColumnName="claimId" />
+                <ScalarProperty Name="claimNo" ColumnName="claimNo" />
+                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
+                <ScalarProperty Name="PrimaryMobile" ColumnName="PrimaryMobile" />
+                <ScalarProperty Name="ClaimDate" ColumnName="ClaimDate" />
+                <ScalarProperty Name="claimPurpose" ColumnName="claimPurpose" />
+                <ScalarProperty Name="totalAmount" ColumnName="totalAmount" />
+                <ScalarProperty Name="ApprovedAmount" ColumnName="ApprovedAmount" />
+                <ScalarProperty Name="claimstatus" ColumnName="claimstatus" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ManagerId" ColumnName="ManagerId" />
+                <ScalarProperty Name="ManagerMobile" ColumnName="ManagerMobile" />
+                <ScalarProperty Name="ManagerEmail" ColumnName="ManagerEmail" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

@@ -68,6 +68,8 @@
                         <li><a href="showClients.aspx"><i class="fa fa-home"></i> <span class="nav-label">Select Clients</span></a></li>
                         <li><a href="#">Employees</a></li>
                         <li><a href="empProfileList.aspx">Profiles</a></li>
+                        <li><a href="AllClaims.aspx">Claims</a></li>
+
                     </ul>
                 </li>
 

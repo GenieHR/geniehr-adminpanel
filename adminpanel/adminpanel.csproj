@@ -265,6 +265,7 @@
     <Content Include="Client\AllClaims.aspx" />
     <Content Include="Client\empProfile.aspx" />
     <Content Include="Client\viewClaim.aspx" />
+    <Content Include="Common\printClaim.aspx" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -318,6 +319,8 @@
     <Content Include="js\plugins\jqueryrange\jquery.range-min.js" />
     <Content Include="Org\AddCandidate.aspx" />
     <Content Include="Org\AddOrgEmployee.aspx" />
+    <Content Include="Org\AllClaims.aspx" />
+    <Content Include="Org\BulkUpload.aspx" />
     <Content Include="Org\CreateEmployee.aspx" />
     <Content Include="Org\dashboard.aspx" />
     <Content Include="Employees\home.aspx" />
@@ -454,6 +457,7 @@
     <Content Include="Org\MyCandidates.aspx" />
     <Content Include="Org\Shortlist.aspx" />
     <Content Include="Org\ShowClients.aspx" />
+    <Content Include="Org\viewClaim.aspx" />
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
@@ -717,6 +721,13 @@
     <Compile Include="Client\viewClaim.aspx.designer.cs">
       <DependentUpon>viewClaim.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Common\printClaim.aspx.cs">
+      <DependentUpon>printClaim.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Common\printClaim.aspx.designer.cs">
+      <DependentUpon>printClaim.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\CandidateController.cs" />
     <Compile Include="Controllers\CandidateSkillsController.cs" />
     <Compile Include="Controllers\DocumentController.cs" />
@@ -928,6 +939,12 @@
     <Compile Include="Models\EntityType.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\getAllClaimsByClient1_Result.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\getAllClaimsByClient_Result.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\GetAllClientsOfEmpOrg_Result.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
@@ -1100,6 +1117,20 @@
     </Compile>
     <Compile Include="Org\AddOrgEmployee.aspx.designer.cs">
       <DependentUpon>AddOrgEmployee.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Org\AllClaims.aspx.cs">
+      <DependentUpon>AllClaims.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Org\AllClaims.aspx.designer.cs">
+      <DependentUpon>AllClaims.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Org\BulkUpload.aspx.cs">
+      <DependentUpon>BulkUpload.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Org\BulkUpload.aspx.designer.cs">
+      <DependentUpon>BulkUpload.aspx</DependentUpon>
     </Compile>
     <Compile Include="Org\CreateEmployee.aspx.cs">
       <DependentUpon>CreateEmployee.aspx</DependentUpon>
@@ -1296,6 +1327,13 @@
     </Compile>
     <Compile Include="Org\ShowClients.aspx.designer.cs">
       <DependentUpon>ShowClients.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Org\viewClaim.aspx.cs">
+      <DependentUpon>viewClaim.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Org\viewClaim.aspx.designer.cs">
+      <DependentUpon>viewClaim.aspx</DependentUpon>
     </Compile>
     <Compile Include="profile.aspx.cs">
       <DependentUpon>profile.aspx</DependentUpon>

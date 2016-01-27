@@ -30,7 +30,7 @@
                  <form class="m-t" role="form" id="form1" name="form1" runat="server">
 
                     <div class="form-group">
-                        <asp:TextBox runat="server" type="email" class="form-control" name="username" ID="username" placeholder="Username" required="" />
+                        <asp:TextBox runat="server" type="text" class="form-control" name="username" ID="username" placeholder="Email / Moblie No" required="" />
                     </div>
 
                     <div class="form-group">

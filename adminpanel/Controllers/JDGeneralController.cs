@@ -31,6 +31,8 @@ namespace adminpanel.Controllers
                 .Select(e => new CandidateBySkillDTO
                 {
                     candidateId = e.candidateInfo.Id,
+                    candidateLocation = e.candidateInfo.CurrentLocation,
+                    jobLocation = e.JDInfo.JobLocation,
                     candidateMobile = e.candidateInfo.PrimaryMobile,
                     candidateName = e.candidateInfo.CandidateName,
                     SkillName = e.skillInfo.SkillName,
@@ -38,6 +40,7 @@ namespace adminpanel.Controllers
                     jobCreated = e.JDInfo.Employee.EmpName,
                     jobTitle = e.JDInfo.JobTitle,
                     skillId = e.skillInfo.Id
+                    
                 }
                 ).ToList();
         }

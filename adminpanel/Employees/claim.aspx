@@ -58,16 +58,18 @@
             <div class="tab-content ">
 
                 <div id="tabSummary" class="tab-pane active">
+                                <form id="summaryForm" method="get" class="form-horizontal">
+
                     <div class="panel-body">
                         <div class="row">
 
                             <div class="col-lg-8 col-sm-8 col-md-8">
-                                <form id="summaryForm" method="get" class="form-horizontal">
 
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">Purpose</label>
                                         <div class="col-sm-10">
-                                            <input type="text" required="required" id="claimPurpose" class="form-control" />
+                                            <input type="text" id="claimPurpose" class="form-control" />
+                                            <%--<span class="help-block m-b-none text-danger"><strong id="claimPurposeMsg"></strong></span>--%>
                                         </div>
                                     </div>
 
@@ -79,7 +81,7 @@
                                         <div class="col-sm-4">
                                             <div class="input-group m-b">
                                                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                <input type="text" id="periodFrom" required="required" class="form-control" />
+                                                <input type="text" name="periodFrom" id ="periodFrom" class="form-control" />
                                             </div>
                                         </div>
                                         <label class="col-sm-2 control-label">To</label>
@@ -87,7 +89,7 @@
                                         <div class="col-sm-4">
                                             <div class="input-group m-b">
                                                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                <input type="text" id="periodTo" required="required" class="form-control" />
+                                                <input type="text" id="periodTo" class="form-control" />
                                             </div>
                                         </div>
                                     </div>
@@ -106,7 +108,7 @@
                                         <label class="col-sm-2 control-label">Status</label>
 
                                         <div class="col-sm-4">
-                                            <input type="text" readonly class="form-control" value="Create" />
+                                            <input type="text" readonly="readonly" class="form-control" value="Create" />
                                         </div>
                                     </div>
                                     <%--<hr class="hr-line-dashed" style="margin-top: 0px" />--%>
@@ -114,10 +116,9 @@
                                         <label class="col-sm-2 control-label">Manager</label>
 
                                         <div class="col-sm-10">
-                                            <input type="text" readonly id="managerName" class="form-control" />
+                                            <input type="text" readonly="readonly" id="managerName" class="form-control" />
                                         </div>
                                     </div>
-                                </form>
                             </div>
                             <div class="col-lg-4 col-sm-4 col-md-4">
                                 <table class="table table-bordered">
@@ -179,13 +180,15 @@
                             </div>
                         </div>
                         <div class="row text-right">
-                            <input type="button" value="Submit" onclick="javascript:submitClaim()" class="btn btn-success" />
+                            <input type="button" value="Submit" class="btn btn-success" onclick="javascript:submitClaim()"/>  
                             <input type="button" value="Save" onclick="javascript:saveDraftClaim()" class="btn btn-info" />
                             <input type="button" value="Discard" onclick="javascript:discardClaim()" class="btn btn-danger" />
 
 
                         </div>
                     </div>
+                                </form>
+
                 </div>
 
                 <div id="tabTravel" class="tab-pane fade in">
@@ -196,7 +199,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Travel Purpose</label>
                                 <div class="col-sm-10">
-                                    <input type="text" required="required" id="travelpurpose" class="form-control" />
+                                    <input type="text" required id="travelpurpose" class="form-control" />
                                 </div>
                             </div>
                             <div class="hr-line-dashed"></div>
@@ -206,25 +209,25 @@
                                 <div class="col-sm-4">
                                     <div class="input-group m-b">
                                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                        <input type="date" required="required" id="traveldate" class="form-control" />
+                                        <input type="text" required id="traveldate" class="form-control" />
                                     </div>
                                 </div>
                                 <label class="col-sm-2 control-label">Mode of Travel</label>
                                 <div class="col-sm-4">
                                     <label class="checkbox-inline">
-                                        <input type="radio" required="required" name="modeoftravel" value="Auto" id="inlineCheckbox1" />
+                                        <input type="radio" required name="modeoftravel" value="Auto" id="inlineCheckbox1" />
                                         Auto
                                     </label>
                                     <label class="checkbox-inline">
-                                        <input type="radio" required="required" value="Train" name="modeoftravel" id="inlineCheckbox2" />
+                                        <input type="radio" required value="Train" name="modeoftravel" id="inlineCheckbox2" />
                                         Train
                                     </label>
                                     <label class="checkbox-inline">
-                                        <input type="radio" required="required" value="Bus" name="modeoftravel" id="inlineCheckbox3" />
+                                        <input type="radio" required value="Bus" name="modeoftravel" id="inlineCheckbox3" />
                                         Bus
                                     </label>
                                     <label class="checkbox-inline">
-                                        <input type="radio" required="required" value="Bike" name="modeoftravel" id="inlineCheckbox4" />
+                                        <input type="radio" required value="Bike" name="modeoftravel" id="inlineCheckbox4" />
                                         Bike
                                     </label>
                                 </div>
@@ -235,13 +238,13 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">From</label>
                                 <div class="col-sm-4">
-                                    <input type="text" required="required" id="travelfrom" class="form-control" />
+                                    <input type="text" required id="travelfrom" class="form-control" />
 
 
                                 </div>
                                 <label class="col-sm-2 control-label">To</label>
                                 <div class="col-sm-4">
-                                    <input type="text" required="required" id="travelto" class="form-control" />
+                                    <input type="text" required id="travelto" class="form-control" />
                                 </div>
                             </div>
 
@@ -251,7 +254,7 @@
 
                                 <div class="col-sm-4">
                                     <div class="input-group m-b">
-                                        <input type="text" required="required" id="traveldistance" class="form-control" /><span class="input-group-addon">Kms</span>
+                                        <input type="text" required id="traveldistance" class="form-control" /><span class="input-group-addon">Kms</span>
                                     </div>
                                 </div>
                                 <label class="col-sm-2 control-label">Rate</label>
@@ -278,7 +281,7 @@
                                 <div class="col-sm-4">
                                     <div class="input-group m-b">
                                         <span class="input-group-addon">&#x20B9</span>
-                                        <input type="number" required="required" id="travelamount" class="form-control" />
+                                        <input type="number" required id="travelamount" class="form-control" />
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
@@ -303,7 +306,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Hotel Name</label>
                                 <div class="col-sm-10">
-                                    <input type="text" required="required" id="hotelname" class="form-control" />
+                                    <input type="text" required id="hotelname" class="form-control" />
                                 </div>
                             </div>
                             <div class="hr-line-dashed"></div>
@@ -313,7 +316,7 @@
                                 <div class="col-sm-4">
                                     <div class="input-group m-b">
                                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                        <input type="date" required="required" id="stayfromdate" class="form-control" />
+                                        <input type="text" required id="stayfromdate" class="form-control" />
                                     </div>
                                 </div>
                                 <label class="col-sm-2 control-label">Stay To Date</label>
@@ -321,7 +324,7 @@
                                 <div class="col-sm-4">
                                     <div class="input-group m-b">
                                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                        <input type="date" required="required" id="staytodate" class="form-control" />
+                                        <input type="text" required id="staytodate" class="form-control" />
                                     </div>
                                 </div>
 
@@ -342,7 +345,7 @@
                                 <div class="col-sm-4">
                                     <div class="input-group m-b">
                                         <span class="input-group-addon">&#x20B9</span>
-                                        <input type="number" id="hotelrate" required="required" class="form-control" />
+                                        <input type="number" id="hotelrate" required class="form-control" />
                                         <span class="input-group-addon">per night</span>
                                     </div>
                                 </div>
@@ -351,7 +354,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Remarks</label>
                                 <div class="col-sm-10">
-                                    <input type="text" required="required" id="hotelremarks" class="form-control" />
+                                    <input type="text" required id="hotelremarks" class="form-control" />
                                 </div>
                             </div>
                             <div class="hr-line-dashed"></div>
@@ -361,7 +364,7 @@
                                 <div class="col-sm-4">
                                     <div class="input-group m-b">
                                         <span class="input-group-addon">&#x20B9</span>
-                                        <input type="number" required="required" id="hotelamount" class="form-control" />
+                                        <input type="number" required id="hotelamount" class="form-control" />
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
@@ -385,7 +388,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Restaurant Name</label>
                                 <div class="col-sm-10">
-                                    <input type="text" required="required" id="restaurantname" class="form-control" />
+                                    <input type="text" required id="restaurantname" class="form-control" />
                                 </div>
                             </div>
 
@@ -396,7 +399,7 @@
                                 <div class="col-sm-4">
                                     <div class="input-group m-b">
                                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                        <input type="date" required="required" id="foodexpensedate" class="form-control" />
+                                        <input type="text" required id="foodexpensedate" class="form-control" />
                                     </div>
                                 </div>
                                 <label class="col-sm-2 control-label">No. of Persons</label>
@@ -409,7 +412,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Remarks</label>
                                 <div class="col-sm-10">
-                                    <input type="text" required="required" id="foodremarks" class="form-control" />
+                                    <input type="text" required id="foodremarks" class="form-control" />
                                 </div>
                             </div>
                             <div class="hr-line-dashed"></div>
@@ -419,7 +422,7 @@
                                 <div class="col-sm-4">
                                     <div class="input-group m-b">
                                         <span class="input-group-addon">&#x20B9</span>
-                                        <input type="number" required="required" id="foodtotalamount" class="form-control" />
+                                        <input type="number" required id="foodtotalamount" class="form-control" />
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
@@ -439,7 +442,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Expense Description</label>
                                 <div class="col-sm-10">
-                                    <input type="text" required="required" id="otherdesc" class="form-control" />
+                                    <input type="text" required id="otherdesc" class="form-control" />
                                 </div>
                             </div>
                             <div class="hr-line-dashed"></div>
@@ -448,7 +451,7 @@
                                 <div class="col-sm-4">
                                     <div class="input-group m-b">
                                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                        <input type="date" required="required" id="otherexpensedate" class="form-control" />
+                                        <input type="text" required id="otherexpensedate" class="form-control" />
                                     </div>
                                 </div>
                             </div>
@@ -456,7 +459,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Remarks</label>
                                 <div class="col-sm-10">
-                                    <input type="text" required="required" id="otherexpenseremarks" class="form-control" />
+                                    <input type="text" required id="otherexpenseremarks" class="form-control" />
                                 </div>
                             </div>
                             <div class="hr-line-dashed"></div>
@@ -466,7 +469,7 @@
                                 <div class="col-sm-4">
                                     <div class="input-group m-b">
                                         <span class="input-group-addon">&#x20B9</span>
-                                        <input type="number" required="required" id="otherexpenseamt" class="form-control" />
+                                        <input type="number" required id="otherexpenseamt" class="form-control" />
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
@@ -520,6 +523,7 @@
 
     <script src="../js/plugins/sweetalert/sweetalert.min.js"></script>
 
+    <script src="../js/plugins/validate/jquery.validate.min.js"></script>
 <script>
         
     var empId = <%= Session["EmpId"] %>;
@@ -530,8 +534,26 @@
     var managerInfo, orgEmpInfo;
     var travelLineId,hotelLineId,foodLineId,othersLineId;
 
+
+
+    function setMessage(parentElementId, message) 
+    {
+        var parentElement = $('#' + parentElementId); 
+        var msgEleId = parentElementId  + 'Msg';
+        parentElement.parent().append('<span class="help-block" id="' + msgEleId + '"></span>');
+        var msgElement = $('#' + msgEleId );
+        msgElement.addClass('text-danger');
+        msgElement.html(message);
+    }
+
+
     $('#periodFrom').datepicker({ dateFormat: 'MM dd, yy' });
     $('#periodTo').datepicker({ dateFormat: 'MM dd, yy' });
+    $('#traveldate').datepicker({ dateFormat: 'MM dd, yy' });
+    $('#stayfromdate').datepicker({ dateFormat: 'MM dd, yy' });
+    $('#staytodate').datepicker({ dateFormat: 'MM dd, yy' });
+    $('#foodexpensedate').datepicker({ dateFormat: 'MM dd, yy' });
+    $('#otherexpensedate').datepicker({ dateFormat: 'MM dd, yy' });
 
     
     $('#myModal').on('hidden.bs.modal', function () {
@@ -658,11 +680,11 @@ function discardClaim()
     
 function saveDraftClaim(background) {
   
-    if( $.trim($("#claimPurpose").val()) == "") {
-        alert("Claim pupose cannot be blank");
-        $("#claimPurpose").focus();
-        return false;
-    }
+    //if( $.trim($("#claimPurpose").val()) == "") {
+    //    alert("Claim pupose cannot be blank");
+    //    $("#claimPurpose").focus();
+    //    return false;
+    //}
 
     if(!background) {
 
@@ -673,7 +695,6 @@ function saveDraftClaim(background) {
 
     $('#draftClaimModal').modal();
     }
-
            
     claimJSON.travelExpense = parseInt($("#sumTravelAmt").html());
     claimJSON.claimpurpose = $("#claimPurpose").val();
@@ -730,33 +751,87 @@ function saveDraftClaim(background) {
     });
 }
 
+function submitClaim_test() {
+    $('#summaryForm').validate(
+       {
+           rules: {
+               claimPurpose: {  
+                    required: true, 
+                    minlenght:10
+               },
+               periodFrom: {
+                   required: true
+               }
+           },
+           messages: {
+               claimPurpose: {
+                   required:"Please specify claim purpose", 
+                   minlenght:"Has to be minimun 10 characters long"
+               },
+               periodFrom: {
+                   required: "Please enter claim From"
+               }
+           }
+       }
+      );
+
+}
+
+function submitClaim_new() {
+
+    setMessage("claimPurpose", "cliamPurpose Error Message Succesfully Set");
+
+}
+
+function showErrorMessage(element,message,errorType) {
+
+    sweetAlert(
+    {
+        title:'',
+        text:message,
+        type:errorType
+    }, 
+    function() {
+        $(element).focus();
+    });
+
+}
 
 function submitClaim() {
-                
-    if(parseInt($("#summTotAmt").html()) == 0) {
-        alert("Add atleast one expense");
-        return false;
-    }
 
+    var isError = false;
 
     if( $.trim($("#claimPurpose").val()) == "") {
-        alert("Claim pupose cannot be blank");
+        
+        alert("Claim purpose cannot be blank");
+        
+        //showErrorMessage($("#claimPurpose"),"Claim Purpose Cannot be blank","error");
+
         $("#claimPurpose").focus();
+
         return false;
     }
 
-    if( $("#periodFrom").val() == "") {
-        alert("Enter claim period");
-        $("#periodFrom").focus();
-        return false;
-    }
 
-    if( $("#periodTo").val() == "") {
-        alert("Enter claim period");
-        $("#periodTo").focus();
-        return false;
-    }
+    //if( $("#periodFrom").val() == "") {
+    //    swal('','Enter Period From', "error");
+    //    $("#periodFrom").focus();
+    //    return false;
+    //}
 
+    //if( $("#periodTo").val() == "") {
+    //    swal('','Enter Period To', "error");
+    //    $("#periodTo").focus();
+    //    return false;
+    //}
+
+    //if(isError) 
+    //    return false;
+
+    //if(parseInt($("#summTotAmt").html()) == 0) {
+    //    sweetAlert("Add atleast one expense","error");
+    //    return false;
+    //}
 
     $('#myModal').modal({
         backdrop: 'static',

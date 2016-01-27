@@ -8,6 +8,8 @@ namespace adminpanel.Models
     public class claimPrintDTO
     {
         public string claimNo { get; set; }
+        public string empNum { get; set; }
+
         public string empName { get; set; }
         public string workLocation { get; set; }
         public string designation { get; set; }

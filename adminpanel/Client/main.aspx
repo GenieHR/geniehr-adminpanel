@@ -15,10 +15,45 @@
         <div class="col-lg-2 pull-right">
             <br />
             <br />
-
-            </div>
+        </div>
             
         </div>
+
+    <div class="row">
+
+        <div class="col-lg-4">
+                        <div class="ibox">
+                            <div class="ibox-title">
+                                <h4>Total / Active Employees</h4>
+
+                            </div>
+                            <div class="ibox-content">
+                                <h1 class="no-margins"><strong>14 / 14</strong></h1>
+                                <%--<div class="stat-percent font-bold text-navy">98% <i class="fa fa-bolt"></i></div>--%>
+                                <%--<small>Show</small>--%>
+                            </div>
+                        </div>
+                    </div>
+        <div class="col-lg-4">
+            <div class="ibox">
+                <div class="ibox-content">
+                    <h5>Open Claims</h5>
+                    <h1 class="no-margins">0</h1>
+                    <%--<div class="stat-percent font-bold text-danger">12% <i class="fa fa-level-down"></i></div>--%>
+                    <%--<small>Show</small>--%>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="ibox">
+                <div class="ibox-content">
+                    <h5>Total Claimed Amount</h5>
+                    <h1 class="no-margins">10,883</h1>
+                </div>
+            </div>
+        </div>
+
+</div>
     <div class="row">
     <div class="col-lg-4">
     <div class="ibox">
