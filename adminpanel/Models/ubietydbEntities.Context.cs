@@ -603,6 +603,23 @@ public partial class ubietydbEntities : DbContext
         return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getAllClaimsByClient1_Result>("getAllClaimsByClient1", clientIdParameter);
     }
 
+
+    public virtual ObjectResult<getClaimLogByStatus_Result> getClaimLogByStatus(Nullable<int> claimId, Nullable<int> claimStatus)
+    {
+
+        var claimIdParameter = claimId.HasValue ?
+            new ObjectParameter("ClaimId", claimId) :
+            new ObjectParameter("ClaimId", typeof(int));
+
+
+        var claimStatusParameter = claimStatus.HasValue ?
+            new ObjectParameter("ClaimStatus", claimStatus) :
+            new ObjectParameter("ClaimStatus", typeof(int));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getClaimLogByStatus_Result>("getClaimLogByStatus", claimIdParameter, claimStatusParameter);
+    }
+
 }
 
 }

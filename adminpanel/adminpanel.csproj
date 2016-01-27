@@ -963,6 +963,9 @@
     <Compile Include="Models\getCandidatesByCreatedBy_Result.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\getClaimLogByStatus_Result.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\getCliamsByManagerId1_Result.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>

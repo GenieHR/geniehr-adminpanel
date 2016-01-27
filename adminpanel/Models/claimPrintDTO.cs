@@ -22,6 +22,7 @@ namespace adminpanel.Models
         public string claimStatus { get; set; }
         public List<claimManagerDTO> managers { get; set; }
         public String claimText { get; set; }
+        public String approvingManager { get; set; }
         
     }
 }

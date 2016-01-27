@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="d76620c6670b4486b189f239cd5a8336" Name="Diagram1" ZoomLevel="114" ShowGrid="false" SnapToGrid="false" DisplayType="false">
+      <Diagram DiagramId="d76620c6670b4486b189f239cd5a8336" Name="Diagram1" ZoomLevel="86" ShowGrid="false" SnapToGrid="false" DisplayType="false">
         <EntityTypeShape EntityType="ubietydbModel.Address" Width="1.5" PointX="3.75" PointY="59.625" />
         <EntityTypeShape EntityType="ubietydbModel.AddressType" Width="1.5" PointX="1.5" PointY="60.375" />
         <EntityTypeShape EntityType="ubietydbModel.Attendance" Width="1.5" PointX="8.25" PointY="51.75" />

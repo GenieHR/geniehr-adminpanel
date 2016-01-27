@@ -102,8 +102,6 @@
         .expenseTable tr:nth-child(odd) td {
             background: #FEFEFE;
         }
-
-         
     </style>
 </head>
 
@@ -247,37 +245,7 @@
                         </thead>
 
                         <tbody>
-     <%--                       <tr>
-                            <td class="expType">Hotel</td>
-                            <td class="expType">2015-12-28 <br />to <br />2015-12-28</td>
-                            <td>sagar hotel <br /> No of Nights: 1, Rate: 300 <br /> Remarks: NA</td>
-                            <td class="curr">300</td>
-                            <td class="curr">300</td>
-                            </tr>
-                            
-                            <tr>
-                            <td class="expType">Food</td>
-                            <td class="expType">2015-12-28</td>
-                            <td>sagar hotel <br /> No of Persons: 1<br /> Remarks: NA</td>
-                            <td class="curr">300</td>
-                            <td class="curr">300</td>
-                            </tr>
-                            
-                            <tr>
-                            <td class="expType">Travel</td>
-                            <td class="expType">2016-01-19</td>
-                            <td>site viset <br />Gulbarga to local<br /> Mode: Auto, Rate: 300 <br /> Remarks: NA</td>
-                            <td class="curr">72</td>
-                            <td class="curr">72</td>
-                            </tr>
-
-         
-                            <tr><td class="expType">Travel</td><td class="expType">2016-01-19</td><td>site viset <br />Gulbarga to local<br /> Mode: Auto, Rate: 300 <br /> Remarks: NA</td><td class="curr">72</td><td class="curr">72</td></tr>
-
-
-
-     --%>                      
-                        </tbody>
+                       </tbody>
 
                         <tfoot> 
                             <tr>
@@ -326,6 +294,8 @@
             $(".empNum").html(claim.empNum);
             $(".empEmail").html(claim.email);
             $(".clientName").html(claim.clientName);
+            $(".managerName").html(claim.approvingManager);
+
 
             var claimText = JSON.parse(claim.claimText);
 
@@ -360,7 +330,6 @@
 
             //for (i = 0; i < claimText.Others.lenght; i++) {
             //    expenseArray.push({ 'ExpType': 'Others', 'Date': claimText.Others[i].stayfromdate + '<br />  To <br/>' + claimText.Hotels[i].staytodate, 'Description': claimText.Hotels[i].hotelname + '<br />No. of Nights: ' + claimText.Hotels[i].noofnights + ', ' + 'Rate: ' + claimText.Hotels[i].rate + ' <br /> Remarks: ' + claimText.Hotels[i].remarks, 'claimed': claimText.Hotels[i].totalamount, 'approved': claimText.Hotels[i].approvedAmt })
-
             //}
 
             $(expenseArray).each(function (i) { $('.expenseTable tbody').append('<tr><td class="expType">' + expenseArray[i].ExpType + '</td><td class="expType">' + expenseArray[i].Date + '</td><td>' + expenseArray[i].Description + '</td><td class="curr">' + expenseArray[i].claimed + '</td><td class="curr">' + expenseArray[i].approved + '</td></tr>') })

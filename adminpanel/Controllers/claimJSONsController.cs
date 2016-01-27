@@ -175,7 +175,9 @@ namespace adminpanel.Controllers
         {
             db.Configuration.ProxyCreationEnabled = false;
 
-            db.Database.Log = s => System.Diagnostics.Debug.WriteLine(s);
+            //db.Database.Log = s => System.Diagnostics.Debug.WriteLine(s);
+
+            string managerName = db.getClaimLogByStatus(claimId, 3).FirstOrDefault().Action_By;
 
             var abc = db
                 .claimJSONs
@@ -199,6 +201,7 @@ namespace adminpanel.Controllers
                     createDate = e.claimInfo.claimDate,
                     empName = e.claimInfo.Employee.EmpName,
                     mobileNO = e.claimInfo.Employee.PrimaryMobile,
+                    approvingManager = managerName,
                     managers = e.claimInfo.claimManagers
                                             .Where(m => m.claimId == claimId)
                                             .OrderByDescending(x => x.level)
@@ -323,6 +326,17 @@ namespace adminpanel.Controllers
             db.Configuration.ProxyCreationEnabled = false;
             return db.claimLog(claimId);
         }
+
+        [Route("api/getClaimLogByStatus/{claimId}/{StatusId}")]
+        [HttpGet]
+
+        public dynamic getClaimLogByStatus(int claimId, int StatusId)
+        {
+
+            db.Configuration.ProxyCreationEnabled = false;
+            return db.getClaimLogByStatus(claimId,StatusId);
+        }
+
         private bool claimJSONExists(int id)
         {
             return db.claimJSONs.Count(e => e.id == id) > 0;

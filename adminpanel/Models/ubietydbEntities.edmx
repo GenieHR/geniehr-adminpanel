@@ -1622,6 +1622,10 @@ warning 6002: The table/view 'ubietydb.dbo.vSubmittedClaims' does not have a pri
         <Function Name="getCandidatesByCreatedBy" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EmpId" Type="int" Mode="In" />
         </Function>
+        <Function Name="getClaimLogByStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ClaimId" Type="int" Mode="In" />
+          <Parameter Name="ClaimStatus" Type="int" Mode="In" />
+        </Function>
         <Function Name="getCliamsByManagerId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="managerId" Type="int" Mode="In" />
         </Function>
@@ -2595,7 +2599,11 @@ warning 6002: The table/view 'ubietydb.dbo.vSubmittedClaims' does not have a pri
           <Parameter Name="ClientId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="getAllClaimsByClient1" ReturnType="Collection(ubietydbModel.getAllClaimsByClient1_Result)">
-            <Parameter Name="ClientId" Mode="In" Type="Int32" />
+          <Parameter Name="ClientId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="getClaimLogByStatus" ReturnType="Collection(ubietydbModel.getClaimLogByStatus_Result)">
+            <Parameter Name="ClaimId" Mode="In" Type="Int32" />
+            <Parameter Name="ClaimStatus" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="getEmpOfGroups_Result">
@@ -4604,6 +4612,12 @@ warning 6002: The table/view 'ubietydb.dbo.vSubmittedClaims' does not have a pri
           <Property Type="Int64" Name="ManagerMobile" Nullable="true" />
           <Property Type="String" Name="ManagerEmail" Nullable="true" MaxLength="50" />
         </ComplexType>
+        <ComplexType Name="getClaimLogByStatus_Result">
+          <Property Type="String" Name="Claim_Status" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Date" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="Remarks" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="Action_By" Nullable="false" MaxLength="100" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5594,6 +5608,16 @@ warning 6002: The table/view 'ubietydb.dbo.vSubmittedClaims' does not have a pri
                 <ScalarProperty Name="ManagerId" ColumnName="ManagerId" />
                 <ScalarProperty Name="ManagerMobile" ColumnName="ManagerMobile" />
                 <ScalarProperty Name="ManagerEmail" ColumnName="ManagerEmail" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getClaimLogByStatus" FunctionName="ubietydbModel.Store.getClaimLogByStatus">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ubietydbModel.getClaimLogByStatus_Result">
+                <ScalarProperty Name="Claim_Status" ColumnName="Claim Status" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="Action_By" ColumnName="Action By" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

@@ -173,6 +173,9 @@
                                                 <tbody>
                                                 </tbody>
                                             </table>
+                                             <div class="text-center">
+                                        <input type="button" class="btn btn-danger" onclick="printClaim()" id="btnPrintClaim" value="Print" style="margin-right: 4px;"  />
+                                                </div>
                                         </div>
                                     </div>
                                  <%--   
@@ -537,7 +540,9 @@
         var logPopulated = false;
 
         //
-
+        function printClaim() {
+            window.open('../common/printclaim.aspx', '_blank');
+        }
 
         function populateClaimLog()
         {
@@ -593,7 +598,15 @@
 
                 $("#claimDate").val(result.claimDate.substring(0, 10));
                 $("#claimNo").val(result.claimNo);
-                $("#ClaimStatus").val(result.ClaimStatu.Status)
+                $("#ClaimStatus").val(result.ClaimStatu.Status);
+
+                if (result.ClaimStatu.Id == 3) {
+                    $("#btnPrintClaim").show();
+                }
+                else {
+                    $("#btnPrintClaim").hide();
+
+                }
 
                 if (result.ClaimStatu.Id != 4) {
                 $("#sumTravelAmtA").val(claimJSON.travelExpenseA);
