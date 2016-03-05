@@ -195,6 +195,13 @@
 
     var url = '<%= ConfigurationManager.AppSettings["StorageURL"] %>';
 
+
+    function showProfile(empId) {
+        localStorage.org_empid = empId;
+        window.location.href = "../Org/empProfile.aspx";
+            }
+
+
     $(document).ready(function () {
 
         $('input').click(function () {
@@ -246,8 +253,21 @@
     {
         $("#claimsTable").find("tr:gt(0)").remove();
 
-        var claimsURL = '../api/getopenclaimsbyman/<%= Session["EmpId"] %>';
+        var claimsURL = '';
+
         
+
+        <% 
+    string claimsURL = "../api/getopenclaimsbyman/" + Session["EmpId"] ;
+
+    if (System.Web.HttpContext.Current.User.IsInRole("SecondLevelManager"))
+         claimsURL = "../api/getOpenClaimsSecondLevelManager/" + Session["EmpId"] ;
+        %>
+
+
+      claimsURL = '<%= claimsURL %>';
+
+
         $.getJSON(claimsURL, function (result) {
          
             for (i = 0; i < result.length; i++) {
@@ -281,7 +301,7 @@
                     rowStr = '<li class= "list-group-item">';
                 }
 
-                rowStr += '<span class="text-success">' + result[i].EmpName + '</span><a class="pull-right" href="profile.aspx?EmpId=' + result[i].EmpId + '" >' + result[i].PrimaryMobile + '</a>';
+                rowStr += '<span class="text-success">' + result[i].EmpName + '</span><a class="pull-right" href="javascript:showProfile(' + result[i].EmpId + ')" >' + result[i].PrimaryMobile + '</a>';
                  
                 rowStr += '</li>';
                 $("#empTable").append(rowStr);
@@ -312,7 +332,7 @@
             for (i = 0; i < orgJSON.length; i++) {
                 rowStr = '<tr>';
 
-                rowStr += '<td><a href="profile.aspx?EmpId=' + orgJSON[i].EmpId + '" >' + orgJSON[i].Emp_Name + '</a></td>';
+                rowStr += '<td><a href="javascript:showProfile(' + orgJSON[i].EmpId + ')" >' + orgJSON[i].Emp_Name + '</a></td>';
 
                 rowStr += '<td>' + orgJSON[i].MarkingTime.substring(0, 5) + '</td>';
 

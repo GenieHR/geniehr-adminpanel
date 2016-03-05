@@ -13,30 +13,19 @@ namespace adminpanel.Models
 {
 
 using System;
-    using System.Collections.Generic;
     
-public partial class EmpDoc
+public partial class getOpenClaimsOfSecondLevelManager_Result
 {
 
-    public int Id { get; set; }
+    public int claimId { get; set; }
 
-    public int EmpId { get; set; }
+    public string EmpName { get; set; }
 
-    public int DocTypeId { get; set; }
+    public string ClaimDate { get; set; }
 
-    public string DocRemarks { get; set; }
+    public string claimPurpose { get; set; }
 
-    public string DocReference { get; set; }
-
-    public Nullable<System.DateTime> uploadDate { get; set; }
-
-    public Nullable<int> uploadBy { get; set; }
-
-
-
-    public virtual DocType DocType { get; set; }
-
-    public virtual Employee Employee { get; set; }
+    public decimal totalAmount { get; set; }
 
 }
 

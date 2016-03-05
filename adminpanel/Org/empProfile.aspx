@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Org/OrgTemplate1.Master" AutoEventWireup="true" CodeBehind="empProfile.aspx.cs" Inherits="adminpanel.Client.empProfile" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Client/ClientManager.Master" AutoEventWireup="true" CodeBehind="empProfile.aspx.cs" Inherits="adminpanel.Client.empProfile" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link href="../css/plugins/jcrop/jquery.Jcrop.min.css" rel="stylesheet" />
     <link href="../css/plugins/dropzone/basic.css" rel="stylesheet" />

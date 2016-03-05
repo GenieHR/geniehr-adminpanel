@@ -568,7 +568,7 @@
         }
 
         var originalClaimText;
-        var claimResponse;
+        var claimResponse, currentClaimStatus;
         var manager2Exists = false;
         var manager2Info, orgEmpInfo, gEmpDetails;
 
@@ -581,6 +581,8 @@
                 originalClaimText = result.claimText;
 
                 claimJSON = JSON.parse(originalClaimText);
+
+                currentClaimStatus = claimJSON.claimstatus;
 
                 $("#sumTravelAmt").html(claimJSON.travelExpense);
                 $("#sumTravelAmtA").val(claimJSON.travelExpense);
@@ -680,7 +682,7 @@
 
                 var submittedClaim = JSON.parse(originalClaimText);
                 
-                if (manager2Exists) {
+                if (manager2Exists && currentClaimStatus == 1) {
                     claimUploadJson.claimStatus = 2;
                 }
                 else
@@ -739,7 +741,7 @@
 
                     // Mail to Second Level Manager if exists
 
-                    if (manager2Exists && claimResponse == 'A') {
+                    if (manager2Exists && claimResponse == 'A' && currentClaimStatus == 1) {
 
                     var emailJSON = {
 

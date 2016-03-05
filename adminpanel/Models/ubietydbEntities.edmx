@@ -267,6 +267,8 @@ warning 6002: The table/view 'ubietydb.dbo.CandidateSkill' does not have a prima
           <Property Name="DocTypeId" Type="int" Nullable="false" />
           <Property Name="DocRemarks" Type="nvarchar" MaxLength="255" />
           <Property Name="DocReference" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="uploadDate" Type="datetime" />
+          <Property Name="uploadBy" Type="int" />
         </EntityType>
         <EntityType Name="EmpFinDetail">
           <Key>
@@ -649,6 +651,21 @@ warning 6002: The table/view 'ubietydb.dbo.clientEmployee' does not have a prima
           <Property Name="EmpId" Type="int" Nullable="false" />
           <Property Name="companyId" Type="int" />
           <Property Name="empname" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'ubietydb.dbo.vEmpDocs' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vEmpDocs">
+          <Key>
+            <PropertyRef Name="EmpId" />
+            <PropertyRef Name="DocTypeId" />
+            <PropertyRef Name="DocReference" />
+          </Key>
+          <Property Name="EmpId" Type="int" Nullable="false" />
+          <Property Name="DocTypeName" Type="nchar" MaxLength="10" />
+          <Property Name="DocTypeId" Type="int" Nullable="false" />
+          <Property Name="DocRemarks" Type="nvarchar" MaxLength="255" />
+          <Property Name="DocReference" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="uploadDate" Type="datetime" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'ubietydb.dbo.vSkillMatch' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -1668,6 +1685,9 @@ warning 6002: The table/view 'ubietydb.dbo.vSubmittedClaims' does not have a pri
         <Function Name="getNextContactLineId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EmpId" Type="int" Mode="In" />
         </Function>
+        <Function Name="getOpenClaimsOfSecondLevelManager" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="InchargeId" Type="int" Mode="In" />
+        </Function>
         <Function Name="getOpenCliamsByManagerId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="managerId" Type="int" Mode="In" />
         </Function>
@@ -1680,6 +1700,9 @@ warning 6002: The table/view 'ubietydb.dbo.vSubmittedClaims' does not have a pri
         <Function Name="getShortAddress" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EntityType" Type="int" Mode="In" />
           <Parameter Name="EmpId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="getUsersInRole" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="RoleName" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="profilestatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ClientId" Type="int" Mode="In" />
@@ -1789,6 +1812,16 @@ warning 6002: The table/view 'ubietydb.dbo.vSubmittedClaims' does not have a pri
     [clientEmployee].[companyId] AS [companyId], 
     [clientEmployee].[empname] AS [empname]
     FROM [dbo].[clientEmployee] AS [clientEmployee]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vEmpDocs" EntityType="Self.vEmpDocs" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vEmpDocs].[EmpId] AS [EmpId], 
+    [vEmpDocs].[DocTypeName] AS [DocTypeName], 
+    [vEmpDocs].[DocTypeId] AS [DocTypeId], 
+    [vEmpDocs].[DocRemarks] AS [DocRemarks], 
+    [vEmpDocs].[DocReference] AS [DocReference], 
+    [vEmpDocs].[uploadDate] AS [uploadDate]
+    FROM [dbo].[vEmpDocs] AS [vEmpDocs]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vSkillMatch" EntityType="Self.vSkillMatch" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -2605,6 +2638,13 @@ warning 6002: The table/view 'ubietydb.dbo.vSubmittedClaims' does not have a pri
             <Parameter Name="ClaimId" Mode="In" Type="Int32" />
             <Parameter Name="ClaimStatus" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="vEmpDocs" EntityType="ubietydbModel.vEmpDoc" />
+          <FunctionImport Name="getUsersInRole" ReturnType="Collection(ubietydbModel.getUsersInRole_Result)">
+          <Parameter Name="RoleName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="getOpenClaimsOfSecondLevelManager" ReturnType="Collection(ubietydbModel.getOpenClaimsOfSecondLevelManager_Result)">
+            <Parameter Name="InchargeId" Mode="In" Type="Int32" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="getEmpOfGroups_Result">
           <Property Type="String" Name="AuthUserId" Nullable="true" MaxLength="255" />
@@ -3056,6 +3096,8 @@ warning 6002: The table/view 'ubietydb.dbo.vSubmittedClaims' does not have a pri
           <Property Name="DocReference" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="DocType" Relationship="ubietydbModel.FK_EmpDocs_DocTypes" FromRole="EmpDoc" ToRole="DocType" />
           <NavigationProperty Name="Employee" Relationship="ubietydbModel.FK_EmpDocs_Employee" FromRole="EmpDoc" ToRole="Employee" />
+          <Property Name="uploadDate" Type="DateTime" Precision="3" />
+          <Property Name="uploadBy" Type="Int32" />
         </EntityType>
         <EntityType Name="EmpFinDetail">
           <Key>
@@ -4618,6 +4660,38 @@ warning 6002: The table/view 'ubietydb.dbo.vSubmittedClaims' does not have a pri
           <Property Type="String" Name="Remarks" Nullable="false" MaxLength="255" />
           <Property Type="String" Name="Action_By" Nullable="false" MaxLength="100" />
         </ComplexType>
+        <EntityType Name="vEmpDoc">
+          <Key>
+            <PropertyRef Name="EmpId" />
+            <PropertyRef Name="DocTypeId" />
+            <PropertyRef Name="DocReference" />
+          </Key>
+          <Property Name="EmpId" Type="Int32" Nullable="false" />
+          <Property Name="DocTypeName" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="DocTypeId" Type="Int32" Nullable="false" />
+          <Property Name="DocRemarks" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="DocReference" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="uploadDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <ComplexType Name="getUsersInRole_Result">
+          <Property Type="Int32" Name="EmpId" Nullable="false" />
+          <Property Type="String" Name="EmpNum" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="EmpName" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="ProfilePic" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="EmpStatus" Nullable="false" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="50" />
+          <Property Type="Int64" Name="PrimaryMobile" Nullable="true" />
+          <Property Type="String" Name="Designation" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="AuthUserId" Nullable="true" MaxLength="255" />
+          <Property Type="Int32" Name="CompanyId" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="getOpenClaimsOfSecondLevelManager_Result">
+          <Property Type="Int32" Name="claimId" Nullable="false" />
+          <Property Type="String" Name="EmpName" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="ClaimDate" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="claimPurpose" Nullable="false" MaxLength="255" />
+          <Property Type="Decimal" Name="totalAmount" Nullable="false" Precision="19" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5053,6 +5127,8 @@ warning 6002: The table/view 'ubietydb.dbo.vSubmittedClaims' does not have a pri
           <EntitySetMapping Name="EmpDocs">
             <EntityTypeMapping TypeName="ubietydbModel.EmpDoc">
               <MappingFragment StoreEntitySet="EmpDocs">
+                <ScalarProperty Name="uploadBy" ColumnName="uploadBy" />
+                <ScalarProperty Name="uploadDate" ColumnName="uploadDate" />
                 <ScalarProperty Name="DocReference" ColumnName="DocReference" />
                 <ScalarProperty Name="DocRemarks" ColumnName="DocRemarks" />
                 <ScalarProperty Name="DocTypeId" ColumnName="DocTypeId" />
@@ -5618,6 +5694,45 @@ warning 6002: The table/view 'ubietydb.dbo.vSubmittedClaims' does not have a pri
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="Remarks" ColumnName="Remarks" />
                 <ScalarProperty Name="Action_By" ColumnName="Action By" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="vEmpDocs">
+            <EntityTypeMapping TypeName="ubietydbModel.vEmpDoc">
+              <MappingFragment StoreEntitySet="vEmpDocs">
+                <ScalarProperty Name="uploadDate" ColumnName="uploadDate" />
+                <ScalarProperty Name="DocReference" ColumnName="DocReference" />
+                <ScalarProperty Name="DocRemarks" ColumnName="DocRemarks" />
+                <ScalarProperty Name="DocTypeId" ColumnName="DocTypeId" />
+                <ScalarProperty Name="DocTypeName" ColumnName="DocTypeName" />
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="getUsersInRole" FunctionName="ubietydbModel.Store.getUsersInRole">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ubietydbModel.getUsersInRole_Result">
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+                <ScalarProperty Name="EmpNum" ColumnName="EmpNum" />
+                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
+                <ScalarProperty Name="ProfilePic" ColumnName="ProfilePic" />
+                <ScalarProperty Name="EmpStatus" ColumnName="EmpStatus" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PrimaryMobile" ColumnName="PrimaryMobile" />
+                <ScalarProperty Name="Designation" ColumnName="Designation" />
+                <ScalarProperty Name="AuthUserId" ColumnName="AuthUserId" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getOpenClaimsOfSecondLevelManager" FunctionName="ubietydbModel.Store.getOpenClaimsOfSecondLevelManager">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ubietydbModel.getOpenClaimsOfSecondLevelManager_Result">
+                <ScalarProperty Name="claimId" ColumnName="claimId" />
+                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
+                <ScalarProperty Name="ClaimDate" ColumnName="ClaimDate" />
+                <ScalarProperty Name="claimPurpose" ColumnName="claimPurpose" />
+                <ScalarProperty Name="totalAmount" ColumnName="totalAmount" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

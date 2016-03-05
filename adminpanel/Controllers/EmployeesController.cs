@@ -120,7 +120,7 @@ namespace Admin.Controllers
         
             // IdentityResult result = manager.Create(user, Environment.GetEnvironmentVariable("DefaultPassword"));
 
-            string[] roles =  { "", "", "", "", "ClientEmployee", "ClientAdmin", "OrgEmployee", "OrgManager" };
+            string[] roles =  { "", "", "", "", "ClientEmployee", "ClientAdmin", "OrgEmployee", "OrgManager", "SecondLevelManager" };
             int roleIndex = employee.EmpStatus;
             if (result.Succeeded)
             {

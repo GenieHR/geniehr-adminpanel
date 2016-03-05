@@ -352,6 +352,17 @@ namespace adminpanel.Controllers
             return db.getOpenCliamsByManagerId(ManagerId);
         }
 
+
+        [Route("api/getOpenClaimsSecondLevelManager/{ManagerId}")]
+        [HttpGet]
+
+        public dynamic getOpenClaimsSecondLevelManager(int ManagerId)
+        {
+            db.Configuration.ProxyCreationEnabled = false;
+            return db.getOpenClaimsOfSecondLevelManager(ManagerId);
+        }
+
+
         [Route("api/getActiveClaims/{ManagerId}")]
         [HttpGet]
 

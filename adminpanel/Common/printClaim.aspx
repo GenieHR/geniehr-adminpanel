@@ -19,13 +19,14 @@
     <style>
         body {
             overflow-y: scroll;
+            font-size:smaller;
             font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 
         }
         .center {
             margin: auto;
             width: 100%;
-            padding: 20px;
+            padding: 10px;
         }
 
         .data-label {

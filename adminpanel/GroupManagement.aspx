@@ -125,22 +125,25 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                     <h4 class="modal-title">Edit Division</h4>
-                    <small>Use this screen to edit name & manager detail</small>
+                    <small>Use this screen to set manager detail</small>
                 </div>
                 <div class="modal-body">
                     <div class="text-center">
-                        <form id="groupTypeEditForm" action="api/GroupTypes" class="m-t form-horizontal" role="form">
+                        <form id="groupTypeEditForm" class="m-t form-horizontal" role="form">
                             <div class="form-group">
 
-                            <input type="text" placeholder="Division Name" class="form-control" id="groupTypeEditName" name="groupTypeName" />
+                            <input type="text" placeholder="Division Name" readonly="readonly" class="form-control" id="groupTypeEditName" name="groupTypeName" />
                                 </div>
                             <div class="form-group">
 
-                            <input type="text" placeholder="Division Manager" class="form-control" id="groupTypeManagerName" name="groupTypeManagerName" />
+                                 <select class="form-control" id="groupTypeManagerName">
+                                        <option selected="selected" value="0">Loading...</option>
+                                    </select>
+
                                 </div>
 
                             <br />
-                            <button type="submit" id="btnEditGroupType" data-loading-text="<i class='fa fa-spinner fa-pulse'></i>" class="btn btn-primary ">Update</button>
+                            <button type="button" id="btnEditGroupType" onclick="updateGroupId()" data-loading-text="<i class='fa fa-spinner fa-pulse'></i>" class="btn btn-primary ">Update</button>
                         </form>
                     </div>
                 </div>
@@ -225,12 +228,60 @@
             document.getElementById("groupNameSpan").innerHTML = $(this).data('grouptypename');
         });
 
+
         $(document).on("click", "#groupTypeEdit", function () {
+            //
             $('#groupTypeEditName').val($(this).data('grouptype-name'));
 
 
+            var managerNameURL = "getSecondLevelManager/" + <%= Session["ClientId"] %>;
+
+            if ( $('#groupTypeManagerName option').length == 1) {
+                $.getJSON(managerNameURL, function (items) {
+                    $.each(items, function (i, item) {
+                        $('#groupTypeManagerName').append($('<option>', { 
+                            value: item.EmpId,
+                            text : item.EmpName 
+                        }));
+                    });
+
+                    $('#groupTypeManagerName option[value="0"]').text('Select Manager');
+                });
+            }
+            else
+            {
+                $("#groupTypeManagerName").val('0');
+            }
         });
 
+        function updateGroupId() {
+
+            var managerId = $('#groupTypeManagerName').val();
+
+            if (managerId != 0) {
+
+            var managerUpdateURL = "editGroupTypeManager/" + managerId + "/" + ggroupTypeId;
+
+            $.ajax({
+                url: managerUpdateURL,
+                type: "GET",
+                
+                success: function(data) {
+                    if (data==1) {
+                        alert("Manager Succesfully Updated");
+                    }
+                    else{
+                        alert("Unknown Error, Please try again later!!");
+                    }
+                }
+            });
+
+            }
+            else {
+                alert("Please select manager");
+            }
+
+        }
 
         function showGroups(groupType) {
             $('#employeesContainer').fadeOut(500,'linear');

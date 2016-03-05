@@ -45,7 +45,7 @@ namespace Admin
 
                     Response.Redirect("~/GroupManagement.aspx");
                 }
-                else if (System.Web.HttpContext.Current.User.IsInRole("ClientManager"))
+                else if (System.Web.HttpContext.Current.User.IsInRole("ClientManager") || System.Web.HttpContext.Current.User.IsInRole("SecondLevelManager"))
                 {
                     Session["ClientId"] = employee.CompanyId;
                     Session["SelectClientId"] = employee.CompanyId;

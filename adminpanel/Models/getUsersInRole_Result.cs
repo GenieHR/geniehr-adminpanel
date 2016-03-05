@@ -13,30 +13,29 @@ namespace adminpanel.Models
 {
 
 using System;
-    using System.Collections.Generic;
     
-public partial class EmpDoc
+public partial class getUsersInRole_Result
 {
-
-    public int Id { get; set; }
 
     public int EmpId { get; set; }
 
-    public int DocTypeId { get; set; }
+    public string EmpNum { get; set; }
 
-    public string DocRemarks { get; set; }
+    public string EmpName { get; set; }
 
-    public string DocReference { get; set; }
+    public string ProfilePic { get; set; }
 
-    public Nullable<System.DateTime> uploadDate { get; set; }
+    public int EmpStatus { get; set; }
 
-    public Nullable<int> uploadBy { get; set; }
+    public string Email { get; set; }
 
+    public Nullable<long> PrimaryMobile { get; set; }
 
+    public string Designation { get; set; }
 
-    public virtual DocType DocType { get; set; }
+    public string AuthUserId { get; set; }
 
-    public virtual Employee Employee { get; set; }
+    public Nullable<int> CompanyId { get; set; }
 
 }
 

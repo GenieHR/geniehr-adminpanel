@@ -1,4 +1,4 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="EmployeeTemplate.master.cs" Inherits="adminpanel.passwords.EmployeeTemplate" %>
+<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="EmployeeTemplate.master.cs" Inherits="adminpanel.passwords.EmployeeTemplate" %>
 
 
 <!DOCTYPE html>

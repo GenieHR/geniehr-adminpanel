@@ -20,28 +20,29 @@ namespace Admin
             //var userStore = new UserStore<IdentityUser>();
             //var manager = new UserManager<IdentityUser>(userStore);
 
-           // var user = new IdentityUser();
+            // var user = new IdentityUser();
 
-           //user =  ;
+            //user =  ;
 
-        //    manager.Delete(manager.FindById("9d334fe5-f2e9-4c14-bc1d-68c1ad9d1e4e"));
+            //    manager.Delete(manager.FindById("9d334fe5-f2e9-4c14-bc1d-68c1ad9d1e4e"));
 
-            //var roleManager = new RoleManager<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
-            // if (!roleManager.RoleExists("SuperAdmin"))
-            //roleManager.Create(new IdentityRole("OrgAdmin"));
+            var roleManager = new RoleManager<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
+            if (!roleManager.RoleExists("SecondLevelManager"))
+                roleManager.Create(new IdentityRole("SecondLevelManager"));
+
             //roleManager.Create(new IdentityRole("OrgManager"));
             //roleManager.Create(new IdentityRole("OrgEmployee"));
             //roleManager.Create(new IdentityRole("ClientAdmin"));
             //roleManager.Create(new IdentityRole("ClientManager"));
             //roleManager.Create(new IdentityRole("ClientEmployee"));
 
-			//DefaultConnection1 context = new DefaultConnection1();
+            //DefaultConnection1 context = new DefaultConnection1();
 
             //var userStore = new UserStore<IdentityUser>();
             //var UserManager = new UserManager<IdentityUser>(userStore);
 
-        //try
-        //{
+            //try
+            //{
             //var user = UserManager.FindByName("aakshi.garg@talentpull.in");
             //UserManager.AddToRole(user.Id, "OrgManager");
             //UserManager.RemoveFromRole(user.Id, "ClientEmployee");
@@ -51,16 +52,16 @@ namespace Admin
             //UserManager.AddToRole(user.Id, "ClientEmployee");
 
 
-        //    user = UserManager.FindByName("preeti.negi@geniehr.com");
-        //    UserManager.AddToRole(user.Id, "OrgEmployee");
+            //    user = UserManager.FindByName("preeti.negi@geniehr.com");
+            //    UserManager.AddToRole(user.Id, "OrgEmployee");
 
-        //    user = UserManager.FindByName("laks@geniehr.com");
-        //    UserManager.AddToRole(user.Id, "SuperAdmin");
-        //}
-        //catch
-        //{
-        //    throw;
-        //}
+            //    user = UserManager.FindByName("laks@geniehr.com");
+            //    UserManager.AddToRole(user.Id, "SuperAdmin");
+            //}
+            //catch
+            //{
+            //    throw;
+            //}
 
         }
 

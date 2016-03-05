@@ -161,6 +161,8 @@ public partial class ubietydbEntities : DbContext
 
     public virtual DbSet<claimManager> claimManagers { get; set; }
 
+    public virtual DbSet<vEmpDoc> vEmpDocs { get; set; }
+
 
     public virtual ObjectResult<getEmpOfGroups_Result> getEmpOfGroups()
     {
@@ -618,6 +620,30 @@ public partial class ubietydbEntities : DbContext
 
 
         return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getClaimLogByStatus_Result>("getClaimLogByStatus", claimIdParameter, claimStatusParameter);
+    }
+
+
+    public virtual ObjectResult<getUsersInRole_Result> getUsersInRole(string roleName)
+    {
+
+        var roleNameParameter = roleName != null ?
+            new ObjectParameter("RoleName", roleName) :
+            new ObjectParameter("RoleName", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getUsersInRole_Result>("getUsersInRole", roleNameParameter);
+    }
+
+
+    public virtual ObjectResult<getOpenClaimsOfSecondLevelManager_Result> getOpenClaimsOfSecondLevelManager(Nullable<int> inchargeId)
+    {
+
+        var inchargeIdParameter = inchargeId.HasValue ?
+            new ObjectParameter("InchargeId", inchargeId) :
+            new ObjectParameter("InchargeId", typeof(int));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getOpenClaimsOfSecondLevelManager_Result>("getOpenClaimsOfSecondLevelManager", inchargeIdParameter);
     }
 
 }

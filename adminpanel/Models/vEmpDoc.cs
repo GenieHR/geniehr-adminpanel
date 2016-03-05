@@ -15,12 +15,12 @@ namespace adminpanel.Models
 using System;
     using System.Collections.Generic;
     
-public partial class EmpDoc
+public partial class vEmpDoc
 {
 
-    public int Id { get; set; }
-
     public int EmpId { get; set; }
+
+    public string DocTypeName { get; set; }
 
     public int DocTypeId { get; set; }
 
@@ -29,14 +29,6 @@ public partial class EmpDoc
     public string DocReference { get; set; }
 
     public Nullable<System.DateTime> uploadDate { get; set; }
-
-    public Nullable<int> uploadBy { get; set; }
-
-
-
-    public virtual DocType DocType { get; set; }
-
-    public virtual Employee Employee { get; set; }
 
 }
 

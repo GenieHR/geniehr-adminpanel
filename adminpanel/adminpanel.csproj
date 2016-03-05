@@ -308,6 +308,8 @@
     <Content Include="Employees\printClaim.aspx" />
     <Content Include="Employees\viewClaim.aspx" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="img\k9542856.jpg" />
+    <Content Include="img\k9542856.png" />
     <Content Include="img\pp\1.jpg" />
     <Content Include="img\pp\2.jpg" />
     <Content Include="img\pp\3.JPG" />
@@ -318,6 +320,7 @@
     <Content Include="img\print-logo.png" />
     <Content Include="js\plugins\jqueryrange\jquery.range-min.js" />
     <Content Include="Org\AddCandidate.aspx" />
+    <Content Include="Org\AddClient.aspx" />
     <Content Include="Org\AddOrgEmployee.aspx" />
     <Content Include="Org\AllClaims.aspx" />
     <Content Include="Org\BulkUpload.aspx" />
@@ -893,9 +896,11 @@
     <Compile Include="Models\EmergencyContact.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EmpBasicDetailDTO.cs" />
     <Compile Include="Models\EmpClient.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EmpClientModel.cs" />
     <Compile Include="Models\EmpContactDetail.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
@@ -1005,6 +1010,9 @@
     <Compile Include="Models\getManagerDetail_Result.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\getOpenClaimsOfSecondLevelManager_Result.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\getOpenCliamsByManagerId_Result.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
@@ -1021,6 +1029,9 @@
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\getShortAddress_Result.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\getUsersInRole_Result.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Group.cs">
@@ -1101,6 +1112,9 @@
     <Compile Include="Models\test_att.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\vEmpDoc.cs">
+      <DependentUpon>ubietydbEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\vSkillMatch.cs">
       <DependentUpon>ubietydbEntities.tt</DependentUpon>
     </Compile>
@@ -1113,6 +1127,13 @@
     </Compile>
     <Compile Include="Org\AddCandidate.aspx.designer.cs">
       <DependentUpon>AddCandidate.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Org\AddClient.aspx.cs">
+      <DependentUpon>AddClient.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Org\AddClient.aspx.designer.cs">
+      <DependentUpon>AddClient.aspx</DependentUpon>
     </Compile>
     <Compile Include="Org\AddOrgEmployee.aspx.cs">
       <DependentUpon>AddOrgEmployee.aspx</DependentUpon>

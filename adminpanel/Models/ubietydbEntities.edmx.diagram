@@ -145,6 +145,7 @@
         <AssociationConnector Association="ubietydbModel.FK_claimManager_Employee_EmpId" />
         <AssociationConnector Association="ubietydbModel.FK_EmpClient_Client_ClientId" />
         <AssociationConnector Association="ubietydbModel.FK_EmpClient_Employee_EmpId" />
+        <EntityTypeShape EntityType="ubietydbModel.vEmpDoc" Width="1.5" PointX="9.375" PointY="7.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
