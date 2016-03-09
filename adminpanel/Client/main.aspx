@@ -19,7 +19,7 @@
             
         </div>
 
-    <div class="row">
+    <%--<div class="row">
 
         <div class="col-lg-4">
                         <div class="ibox">
@@ -29,8 +29,6 @@
                             </div>
                             <div class="ibox-content">
                                 <h1 class="no-margins"><strong>14 / 14</strong></h1>
-                                <%--<div class="stat-percent font-bold text-navy">98% <i class="fa fa-bolt"></i></div>--%>
-                                <%--<small>Show</small>--%>
                             </div>
                         </div>
                     </div>
@@ -39,8 +37,6 @@
                 <div class="ibox-content">
                     <h5>Open Claims</h5>
                     <h1 class="no-margins">0</h1>
-                    <%--<div class="stat-percent font-bold text-danger">12% <i class="fa fa-level-down"></i></div>--%>
-                    <%--<small>Show</small>--%>
                 </div>
             </div>
         </div>
@@ -53,7 +49,8 @@
             </div>
         </div>
 
-</div>
+</div>--%>
+
     <div class="row">
     <div class="col-lg-4">
     <div class="ibox">
@@ -195,10 +192,11 @@
 
     var url = '<%= ConfigurationManager.AppSettings["StorageURL"] %>';
 
+    localStorage.setItem('org_clientName', '<%= Session["ClientName"] %>');
 
     function showProfile(empId) {
         localStorage.org_empid = empId;
-        window.location.href = "../Org/empProfile.aspx";
+        window.location.href = "empProfile.aspx";
             }
 
 

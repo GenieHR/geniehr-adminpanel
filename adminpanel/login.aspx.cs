@@ -26,9 +26,9 @@ namespace Admin
 
             //    manager.Delete(manager.FindById("9d334fe5-f2e9-4c14-bc1d-68c1ad9d1e4e"));
 
-            var roleManager = new RoleManager<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
-            if (!roleManager.RoleExists("SecondLevelManager"))
-                roleManager.Create(new IdentityRole("SecondLevelManager"));
+            //var roleManager = new RoleManager<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
+            //if (!roleManager.RoleExists("SecondLevelManager"))
+            //    roleManager.Create(new IdentityRole("SecondLevelManager"));
 
             //roleManager.Create(new IdentityRole("OrgManager"));
             //roleManager.Create(new IdentityRole("OrgEmployee"));
@@ -38,8 +38,8 @@ namespace Admin
 
             //DefaultConnection1 context = new DefaultConnection1();
 
-            //var userStore = new UserStore<IdentityUser>();
-            //var UserManager = new UserManager<IdentityUser>(userStore);
+            var userStore = new UserStore<IdentityUser>();
+            var UserManager = new UserManager<IdentityUser>(userStore);
 
             //try
             //{
@@ -48,12 +48,12 @@ namespace Admin
             //UserManager.RemoveFromRole(user.Id, "ClientEmployee");
             //UserManager.RemoveFromRole(user.Id, "ClientManager");
 
-            //var user = UserManager.FindByName("yogi.tomer@gmail.com");
-            //UserManager.AddToRole(user.Id, "ClientEmployee");
+            //var user = UserManager.FindByName("sanjay.kulkarni@necindia.in");
+            //UserManager.AddToRole(user.Id, "SecondLevelManager");
 
 
-            //    user = UserManager.FindByName("preeti.negi@geniehr.com");
-            //    UserManager.AddToRole(user.Id, "OrgEmployee");
+            //user = UserManager.FindByName("Vijay.Chaturvedi@necindia.in");
+            //UserManager.AddToRole(user.Id, "ClientManager");
 
             //    user = UserManager.FindByName("laks@geniehr.com");
             //    UserManager.AddToRole(user.Id, "SuperAdmin");
